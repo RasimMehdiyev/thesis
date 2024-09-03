@@ -5,6 +5,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.main-content {
+    margin-left: 320px;
+    padding: 20px;
+    width: calc(100% - 320px);
+    overflow-y: auto;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

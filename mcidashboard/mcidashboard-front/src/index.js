@@ -3,14 +3,14 @@ import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './css/auth.css'
+import './css/sidebar.css'
+import './css/home.css'
 import App from './App';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render( <
-    BrowserRouter >
-    <
-    App / >
-    <
-    /BrowserRouter>
+root.render( 
+    <BrowserRouter>
+        <App / >
+    </BrowserRouter>
 );
