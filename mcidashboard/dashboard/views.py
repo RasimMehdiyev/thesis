@@ -17,10 +17,10 @@ def about(request):
     return HttpResponse("Welcome to the About Page")
 
 
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 class SignUpView(APIView):
-    permission_classes = [AllowAny]
-
+    permission_classes = [IsAdminUser]
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -33,10 +33,17 @@ class SignUpView(APIView):
         user.save()
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
 
-class LoginView(APIView):
-    permission_classes = [AllowAny]
 
+class LoginView(APIView):
+    # only staff can access this view
+    # permission_classes = [AllowAny]
     def post(self, request):
+        # Check if the user is an admin
+        if not request.user.is_staff:
+            if request.headers.get('X-Custom-Token') != 'admin_power':
+                self.permission_classes = [IsAdminUser]
+                return Response({'error': 'Only admins can access this URL'}, status=status.HTTP_403_FORBIDDEN)
+
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(request, username=username, password=password)
@@ -46,6 +53,9 @@ class LoginView(APIView):
             return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
+            
+
 
 class LogoutView(APIView):
     def post(self, request):

@@ -14,12 +14,13 @@ function Signup() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-Custom-Token': 'admin_power',
             },
             body: JSON.stringify({ username, password, email }),
         });
 
         if (response.ok) {
-            history.push('/login');
+            history('/login');
         } else {
             const data = await response.json();
             setError(data.error || 'Something went wrong');

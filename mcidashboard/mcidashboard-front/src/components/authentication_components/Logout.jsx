@@ -10,6 +10,7 @@ function Logout() {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken'),
+                'X-Custom-Token': 'admin_power',
             },
         });
 

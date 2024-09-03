@@ -5,7 +5,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const history = useNavigate();
+    const navigate = useNavigate();  // useNavigate hook
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,12 +14,13 @@ function Login() {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken'),
+                'X-Custom-Token': 'admin_power',
             },
             body: JSON.stringify({ username, password }),
         });
 
         if (response.ok) {
-            history.push('/');
+            navigate('/');
         } else {
             const data = await response.json();
             setError(data.error || 'Invalid credentials');

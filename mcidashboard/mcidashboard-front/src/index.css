@@ -9,6 +9,10 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+button {
+    cursor: pointer;
+}
+
 .poppins-thin {
     font-family: "Poppins", sans-serif;
     font-weight: 100;
