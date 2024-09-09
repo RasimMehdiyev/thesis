@@ -1,0 +1,136 @@
+.search-bar {
+    border-radius: 8px;
+    width: 317px;
+    height: 47px;
+    border: none;
+    box-shadow: 0px 10px 60px 0px rgba(226, 236, 249, 0.50);
+    color: #B5B7C0;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.14px;
+}
+
+.search-bar::placeholder {
+    color: #B5B7C0;
+    font-size: 16px;
+}
+
+.search-bar-container {
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-direction: row;
+    background: #FAFBFF;
+}
+
+.search-bar-container img {
+    margin: 0 10px;
+}
+
+.search-bar:focus {
+    outline: none;
+}
+
+.sidebar {
+    width: 320px;
+    height: 100vh;
+    box-shadow: 0px 10px 60px 0px rgba(226, 236, 249, 0.50);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(123, 97, 255, 0.16);
+    padding-top: 20px;
+    z-index: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: 50px;
+}
+
+.name {
+    font-size: 26px;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.player-list {
+    border-radius: 8px;
+    background: #5932EA;
+    height: 41px;
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.18px;
+    padding-top: 10px;
+    padding-left: 40px;
+}
+
+.patients {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.patients li {
+    color: #9197B3;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.14px;
+}
+
+.patient-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.patient-item:hover {
+    border-radius: 8px;
+    background: #7B61FF;
+    color: #FFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.patient-item p {
+    margin-left: 61px;
+}
+
+.chevron-right-icon {
+    width: 18px;
+    height: 16px;
+    background: url('../../public/assets/chevron-right.svg') no-repeat center;
+    background-size: contain;
+    transition: background-color 0.3s ease;
+    margin-right: 54px;
+}
+
+.patient-item:hover .chevron-right-icon {
+    background: url('../../public/assets/chevron-right-hover.svg') no-repeat center;
+}
