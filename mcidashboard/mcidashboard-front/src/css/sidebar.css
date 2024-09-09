@@ -83,3 +83,54 @@
     padding-top: 10px;
     padding-left: 40px;
 }
+
+.patients {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.patients li {
+    color: #9197B3;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.14px;
+}
+
+.patient-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.patient-item:hover {
+    border-radius: 8px;
+    background: #7B61FF;
+    color: #FFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.patient-item p {
+    margin-left: 61px;
+}
+
+.chevron-right-icon {
+    width: 18px;
+    height: 16px;
+    background: url('../../public/assets/chevron-right.svg') no-repeat center;
+    background-size: contain;
+    transition: background-color 0.3s ease;
+    margin-right: 54px;
+}
+
+.patient-item:hover .chevron-right-icon {
+    background: url('../../public/assets/chevron-right-hover.svg') no-repeat center;
+}

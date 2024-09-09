@@ -63,8 +63,13 @@ REST_FRAMEWORK = {
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'mcidashboard-front/build/static')
+    os.path.join(BASE_DIR, 'mcidashboard-front/build/static'),
+    os.path.join(BASE_DIR, 'mcidashboard-front/build/'),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# images
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'mcidashboard-front/build/assets')
 
 ROOT_URLCONF = 'mcidashboard.urls'
 

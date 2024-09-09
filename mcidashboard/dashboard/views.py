@@ -71,3 +71,38 @@ class UserDetailView(APIView):
             })
         else:
             return JsonResponse({'error': 'Not authenticated'}, status=401)
+
+from .models import Patient    
+class PatientsView(APIView):
+    def get(self, request):
+        patients = Patient.objects.all()
+        return Response({
+            'patients': list(patients.values())
+        })
+    def post(self, request):
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+        age = request.data.get('age')
+        birth_date = request.data.get('birth_date')
+        education = request.data.get('education')
+        MMSE = request.data.get('MMSE')
+        MoCA = request.data.get('MoCA')
+        has_depression = request.data.get('has_depression')
+        has_anxiety = request.data.get('has_anxiety')
+
+        patient = Patient.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            age=age,
+            birth_date=birth_date,
+            education=education,
+            MMSE=MMSE,
+            MoCA=MoCA,
+            has_depression=has_depression,
+            has_anxiety=has_anxiety
+        )
+        patient.save()
+        return JsonResponse({
+            'message': 'Patient created successfully'
+        })
+

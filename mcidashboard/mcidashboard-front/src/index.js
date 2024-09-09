@@ -5,6 +5,7 @@ import './index.css';
 import './css/auth.css'
 import './css/sidebar.css'
 import './css/home.css'
+import './css/overview.css'
 import App from './App';
 
 
