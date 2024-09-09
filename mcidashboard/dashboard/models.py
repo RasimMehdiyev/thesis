@@ -5,7 +5,7 @@ from django.db import models
 class Patient(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    age = models.IntegerField
+    age = models.IntegerField( default=0)
     birth_date = models.DateField()
     education = models.CharField(max_length=100)
     # # Mini-Mental State Examination max scoer is 30

@@ -72,7 +72,22 @@ class UserDetailView(APIView):
         else:
             return JsonResponse({'error': 'Not authenticated'}, status=401)
 
-from .models import Patient    
+
+from .models import Patient 
+from rest_framework.decorators import api_view   
+from .serializers import PatientSerializer
+
+@api_view(['GET'])
+def get_one_patient(request, pk):
+    try:
+        patient = Patient.objects.get(pk=pk)
+        print(patient)
+        serializer = PatientSerializer(patient)  # Use the serializer to serialize the patient object
+        print(serializer.data)
+        return Response(serializer.data)  # Return the serialized data as JSON
+    except Patient.DoesNotExist:
+        return Response({'error': 'Patient not found'}, status=404)
+    
 class PatientsView(APIView):
     def get(self, request):
         patients = Patient.objects.all()

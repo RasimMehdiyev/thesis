@@ -40,3 +40,7 @@
 .personal-info-container .info ul li {
     font-weight: bold;
 }
+
+.not-bold {
+    font-weight: normal;
+}

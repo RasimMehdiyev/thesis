@@ -1,15 +1,14 @@
 import React from 'react'
 import SearchBarComponent from './SearchBarComponent'
-// useState
-// useEffect
-// fetch
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const SidebarComponent = () => {
 
   // state
   const [patients, setPatients] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   // useEffect
   useEffect(() => {
@@ -27,6 +26,20 @@ const SidebarComponent = () => {
     }
   }
 
+  const getPatient = async (id) => {
+    console.log('get patient');
+    try {
+      const response = await fetch('/dashboard/patient/' + id + '/');
+      const data = await response.json();
+      console.log(data);
+      
+      // Pass patient data when navigating to /overview
+      navigate('/overview', { state: { patient: data } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   return (
     <div className='sidebar'>
@@ -41,16 +54,11 @@ const SidebarComponent = () => {
               {/* list all patients */}
           <ul className='patients'>
               {patients.map(patient => (
-              <li className='patient-item' key={patient.id}>
-                 <p>{patient.first_name} {patient.last_name}</p>
+                <li onClick={() => getPatient(patient.id)} className='patient-item' key={patient.id}>
+                <p>{patient.first_name} {patient.last_name}</p>
                  <div className='chevron-right-icon'></div>
               </li>
               ))}              
-              {/* <li className='patient-item'>
-                  <p>Rasim Mehdiyev</p>
-                 <img src={process.env.PUBLIC_URL + "/assets/chevron-right.svg"} alt="arrow-right" />
-              </li> */}
-
           </ul>
     </div>
   )
