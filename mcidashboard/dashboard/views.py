@@ -7,6 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
+from rest_framework.decorators import api_view  
+from .models import * 
+from .serializers import *
 
 
 # Create your views here.
@@ -72,52 +75,13 @@ class UserDetailView(APIView):
         else:
             return JsonResponse({'error': 'Not authenticated'}, status=401)
 
-
-from .models import Patient 
-from rest_framework.decorators import api_view   
-from .serializers import PatientSerializer
-
 @api_view(['GET'])
-def get_one_patient(request, pk):
-    try:
-        patient = Patient.objects.get(pk=pk)
-        print(patient)
-        serializer = PatientSerializer(patient)  # Use the serializer to serialize the patient object
-        print(serializer.data)
-        return Response(serializer.data)  # Return the serialized data as JSON
-    except Patient.DoesNotExist:
-        return Response({'error': 'Patient not found'}, status=404)
-    
-class PatientsView(APIView):
-    def get(self, request):
-        patients = Patient.objects.all()
-        return Response({
-            'patients': list(patients.values())
-        })
-    def post(self, request):
-        first_name = request.data.get('first_name')
-        last_name = request.data.get('last_name')
-        age = request.data.get('age')
-        birth_date = request.data.get('birth_date')
-        education = request.data.get('education')
-        MMSE = request.data.get('MMSE')
-        MoCA = request.data.get('MoCA')
-        has_depression = request.data.get('has_depression')
-        has_anxiety = request.data.get('has_anxiety')
-
-        patient = Patient.objects.create(
-            first_name=first_name,
-            last_name=last_name,
-            age=age,
-            birth_date=birth_date,
-            education=education,
-            MMSE=MMSE,
-            MoCA=MoCA,
-            has_depression=has_depression,
-            has_anxiety=has_anxiety
-        )
-        patient.save()
-        return JsonResponse({
-            'message': 'Patient created successfully'
-        })
-
+def get_person_data(request, pk):
+    person = Person.objects.get(pk=pk)
+    serializer = PersonSerializer(person)
+    return JsonResponse(serializer.data)
+@api_view(['GET'])
+def get_all_persons(request):
+    persons = Person.objects.all()
+    serializer = PersonSerializer(persons, many=True)
+    return JsonResponse(serializer.data, safe=False)

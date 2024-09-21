@@ -1,8 +1,21 @@
 from rest_framework import serializers
-from .models import Patient
+from .models import *
 
-class PatientSerializer(serializers.ModelSerializer):
+
+class PersonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Patient
-        fields = ['first_name', 'last_name', 'age', 'birth_date', 'education', 'MMSE', 'MoCA', 'has_depression', 'has_anxiety']
+        model = Person
+        fields = '__all__'
+
+class GameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = '__all__'
+
+class MoveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Move
+        fields = '__all__'
+
+
 
