@@ -27,7 +27,7 @@ admin.site.register(Person, PersonAdmin)
 
 class GameAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = GameResource
-    list_display = ('id', 'personID', 'gametime', 'issolved', 'gameseed', 'score')
+    list_display = ('id', 'personID', 'gametime', 'issolved', 'gameseed', 'score','timestamp')
     list_filter = ['personID', 'issolved']
     search_fields = ['personID', 'issolved']
     ordering = ['personID']
@@ -41,4 +41,24 @@ class MoveAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     ordering = ['gameID']
 admin.site.register(Move, MoveAdmin)
 
+class BiomarkerTypeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'description')
+    list_filter = ['name']
+    search_fields = ['name']
+    ordering = ['name']
+admin.site.register(BiomarkerType, BiomarkerTypeAdmin)
+
+class BiomarkerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'type', 'unit')
+    list_filter = ['name']
+    search_fields = ['name']
+    ordering = ['name']
+admin.site.register(Biomarker, BiomarkerAdmin)
+
+
+class BiomarkerStatsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'biomarkerID')
+    list_filter = ['biomarkerID']
+    search_fields = ['biomarkerID']
+admin.site.register(BiomarkerStats, BiomarkerStatsAdmin)
 

@@ -85,3 +85,47 @@ def get_all_persons(request):
     persons = Person.objects.all()
     serializer = PersonSerializer(persons, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_user_moves(request, pk):
+    user = Person.objects.get(pk=pk)
+    games = Game.objects.filter(personID=user)
+    serializer = GameSerializer(games, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_total_moves_last_session(request, pk):
+    user = Person.objects.get(pk=pk)
+    games = Game.objects.filter(personID=user)
+    moves = Move.objects.filter(gameID__in=games)
+    serializer = MoveSerializer(moves, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_total_moves_last_session_num(request, pk):
+    # Check if the user with the given pk exists
+    if not Person.objects.filter(pk=pk).exists():
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+    
+    # Get the user if exists
+    user = Person.objects.get(pk=pk)
+    
+    # Get the last game based on the timestamp (if not null)
+    last_game = Game.objects.filter(personID=user).order_by('-timestamp').first()
+    
+    if last_game:
+        # Count the number of moves for the last game
+        move_count = Move.objects.filter(gameID=last_game).count()
+        
+        # Return the count as JSON response
+        return JsonResponse({'total_moves': move_count}, safe=False)
+    else:
+        return JsonResponse({'error': 'No games found for user'}, status=404)
+    
+
+@api_view(['GET'])
+def get_all_biomarkers(request):
+    biomarkers = BiomarkerType.objects.all()
+    serializer = BiomarkerTypeSerializer(biomarkers, many=True)
+    return JsonResponse(serializer.data, safe=False)
+

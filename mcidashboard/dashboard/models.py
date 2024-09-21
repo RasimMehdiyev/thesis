@@ -8,6 +8,10 @@ class Game(models.Model):
     issolved = models.IntegerField(db_column='isSolved')  # Field name made lowercase.
     gameseed = models.IntegerField()
     score = models.BigIntegerField()
+    timestamp = models.BigIntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
 
 
 
@@ -34,6 +38,9 @@ class Move(models.Model):
     noaceonsuiterror = models.IntegerField(db_column='noAceOnSuitError')  # Field name made lowercase.
     nokingonbuildstackerror = models.IntegerField(db_column='noKingOnBuildStackError')  # Field name made lowercase.
 
+    def __str__(self):
+        return "Game ID: " + str(self.gameID.id) + ' | Move type: ' + self.type
+
 
 class Person(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -45,4 +52,34 @@ class Person(models.Model):
     playlevel = models.IntegerField(db_column='playLevel')  # Field name made lowercase.
     tabletlevel = models.IntegerField(db_column='tabletLevel')  # Field name made lowercase.
 
+    def __str__(self):
+        return self.username
+
+class BiomarkerType(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=45)
+    description = models.CharField(max_length=45, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Biomarker(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=45)
+    type = models.ForeignKey(BiomarkerType, on_delete=models.CASCADE)
+    unit = models.CharField(max_length=45, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
+
+class BiomarkerStats(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    biomarkerID = models.ForeignKey(Biomarker, on_delete=models.CASCADE)
+    avgMCI = models.FloatField()  # Field name made lowercase.
+    sdMCI = models.FloatField()  # Field name made lowercase.
+    avgHealthy = models.FloatField()  # Field name made lowercase.
+    sdHealthy = models.FloatField()  # Field name made lowercase.
+
+    def __str__(self):
+        return self.biomarkerID.name
     
