@@ -7,6 +7,7 @@ import './css/sidebar.css'
 import './css/home.css'
 import './css/overview.css'
 import './css/digital_biomarkers.css'
+import './css/navbar.css'
 import App from './App';
 
 
