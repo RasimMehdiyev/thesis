@@ -7,6 +7,7 @@ const SidebarComponent = () => {
   // state
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   // useEffect
@@ -50,6 +51,15 @@ const SidebarComponent = () => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter patients based on search query
+  const filteredPatients = patients.filter((patient) => {
+    return patient.username.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   // If loading, show a loading indicator
   if (loading) {
     return <div>Loading...</div>; // Display a loading message or spinner
@@ -63,10 +73,10 @@ const SidebarComponent = () => {
         <p className='name'>SOLITAIRE DSS</p>
       </div>
       <p className='player-list'>Player List</p>
-      <SearchBarComponent />
+      <SearchBarComponent searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
       {/* List all patients */}
       <ul className='patients'>
-        {patients.map((patient) => (
+        {filteredPatients.map((patient) => (
           <li onClick={() => getPatient(patient.id)} className='patient-item' key={patient.id}>
             <p>{patient.username}</p>
             <div className='chevron-right-icon'></div>
