@@ -1,11 +1,20 @@
-import React from 'react'
-import PersonalInformation from '../components/PersonalInformation'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import PersonalInformation from '../components/PersonalInformation';
+
 const OverviewPage = () => {
+  const location = useLocation();
+  const patient = location.state?.patient;  // Get the patient data passed from SidebarComponent
+
+  if (!patient) {
+    return <div>No patient selected</div>;  // Fallback if no patient data is available
+  }
+
   return (
     <div className='container'>
-        <PersonalInformation></PersonalInformation>
+      <PersonalInformation patient={patient} />
     </div>
-  )
+  );
 }
 
-export default OverviewPage
+export default OverviewPage;

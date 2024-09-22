@@ -7,6 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
+from rest_framework.decorators import api_view  
+from .models import * 
+from .serializers import *
 
 
 # Create your views here.
@@ -72,37 +75,57 @@ class UserDetailView(APIView):
         else:
             return JsonResponse({'error': 'Not authenticated'}, status=401)
 
-from .models import Patient    
-class PatientsView(APIView):
-    def get(self, request):
-        patients = Patient.objects.all()
-        return Response({
-            'patients': list(patients.values())
-        })
-    def post(self, request):
-        first_name = request.data.get('first_name')
-        last_name = request.data.get('last_name')
-        age = request.data.get('age')
-        birth_date = request.data.get('birth_date')
-        education = request.data.get('education')
-        MMSE = request.data.get('MMSE')
-        MoCA = request.data.get('MoCA')
-        has_depression = request.data.get('has_depression')
-        has_anxiety = request.data.get('has_anxiety')
+@api_view(['GET'])
+def get_person_data(request, pk):
+    person = Person.objects.get(pk=pk)
+    serializer = PersonSerializer(person)
+    return JsonResponse(serializer.data)
+@api_view(['GET'])
+def get_all_persons(request):
+    persons = Person.objects.all()
+    serializer = PersonSerializer(persons, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
-        patient = Patient.objects.create(
-            first_name=first_name,
-            last_name=last_name,
-            age=age,
-            birth_date=birth_date,
-            education=education,
-            MMSE=MMSE,
-            MoCA=MoCA,
-            has_depression=has_depression,
-            has_anxiety=has_anxiety
-        )
-        patient.save()
-        return JsonResponse({
-            'message': 'Patient created successfully'
-        })
+@api_view(['GET'])
+def get_user_moves(request, pk):
+    user = Person.objects.get(pk=pk)
+    games = Game.objects.filter(personID=user)
+    serializer = GameSerializer(games, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_total_moves_last_session(request, pk):
+    user = Person.objects.get(pk=pk)
+    games = Game.objects.filter(personID=user)
+    moves = Move.objects.filter(gameID__in=games)
+    serializer = MoveSerializer(moves, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_total_moves_last_session_num(request, pk):
+    # Check if the user with the given pk exists
+    if not Person.objects.filter(pk=pk).exists():
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+    
+    # Get the user if exists
+    user = Person.objects.get(pk=pk)
+    
+    # Get the last game based on the timestamp (if not null)
+    last_game = Game.objects.filter(personID=user).order_by('-timestamp').first()
+    
+    if last_game:
+        # Count the number of moves for the last game
+        move_count = Move.objects.filter(gameID=last_game).count()
+        
+        # Return the count as JSON response
+        return JsonResponse({'total_moves': move_count}, safe=False)
+    else:
+        return JsonResponse({'error': 'No games found for user'}, status=404)
+    
+
+@api_view(['GET'])
+def get_all_biomarkers(request):
+    biomarkers = BiomarkerType.objects.all()
+    serializer = BiomarkerTypeSerializer(biomarkers, many=True)
+    return JsonResponse(serializer.data, safe=False)
 

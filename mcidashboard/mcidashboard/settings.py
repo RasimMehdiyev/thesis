@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'django.conf',
+    'import_export',
 ]
 
 MIDDLEWARE = [

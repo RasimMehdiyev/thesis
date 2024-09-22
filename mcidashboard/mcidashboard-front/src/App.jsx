@@ -6,6 +6,7 @@ import Login from './pages/authentication_pages/Login';
 import Signup from './pages/authentication_pages/Signup';
 import Overview from './pages/OverviewPage';
 import SidebarComponent from './components/SidebarComponent'; // Import the SidebarComponent
+import DigitalBiomarkersPage from './pages/DigitalBiomarkersPage';
 
 const App = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const App = () => {
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
 
   return (
-    <div className='main-content'>
+    <>
       {shouldShowSidebar && <SidebarComponent />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,8 +26,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path='/overview' element={<Overview/>}></Route>
+        <Route path='/digital-biomarkers' element={<DigitalBiomarkersPage/>}></Route>
       </Routes>
-    </div>
+    </>
   );
 };
 

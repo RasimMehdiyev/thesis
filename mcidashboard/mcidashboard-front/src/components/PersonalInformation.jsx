@@ -1,6 +1,15 @@
 import React from 'react'
+import { useEffect } from 'react'
+const PersonalInformation = ({ patient }) => {
 
-const PersonalInformation = () => {
+    useEffect(() => {
+        printPatientInfo()
+    }, [])
+    function printPatientInfo() {
+        console.log(patient)
+    }
+
+
   return (
     <div className='personal-info-container'>
         <h2>Personal Information</h2>
@@ -8,27 +17,34 @@ const PersonalInformation = () => {
             <h3>Demographics</h3>
             <img src={process.env.PUBLIC_URL + "/static/assets/underline.svg"} alt="" />
             <ul>
-                <li>Name:</li>
-                <li>Gender:</li>
-                <li>Education:</li>
-                <li>Age:</li>
-                <li>Birthdate:</li>
+                <li>Name: <span className='not-bold'>{patient.username}</span></li>
+                <li>Gender: <span className='not-bold'>{patient.gender}</span></li>
+                {/* <li>Education: <span className='not-bold'>{patient.education}</span></li> */}
+                <li>Age: <span className='not-bold'>{patient.age}</span></li>
+                {/* <li>Birthdate: <span className='not-bold'>{patient.birth_date}</span></li> */}
             </ul>
         </div>
         <div className='info'>
             <h3>Neuropsychological Test Score</h3>
             <img src={process.env.PUBLIC_URL + "/static/assets/underline.svg"} alt="" />
             <ul>
-                <li>MMSE:</li>
-                <li>MoCA:</li>
+                <li>Has MCI: 
+                    <span>
+                        {
+                            patient.mci ? <span className='not-bold'>Yes</span> : <span className='not-bold'>No</span>
+                        }
+                    </span>
+                </li>
+                {/* <li>MMSE: <span className='not-bold'>{patient.MMSE}</span></li> */}
+                {/* <li>MoCA: <span className='not-bold'>{patient.MoCA}</span></li> */}
             </ul>
         </div>
         <div className='info'>
             <h3>Self-report Assessment</h3>
             <img src={process.env.PUBLIC_URL + "/static/assets/underline.svg"} alt="" />
             <ul>
-                <li>Depression:</li>
-                <li>Anxiety:</li>
+                {/* <li>Depression: <span className='not-bold'>{patient.has_depression ? 'Yes' : 'No'}</span></li> */}
+                {/* <li>Anxiety: <span className='not-bold'>{patient.has_anxiety ? 'Yes' : 'No'}</span></li> */}
             </ul>
         </div>
     </div>
