@@ -1,0 +1,41 @@
+.biomarkers-list {
+    flex-grow: 1;
+    /* Allows the element to grow with the content */
+    width: 100%;
+    /* Full width */
+    overflow: visible;
+    /* Ensure content is not hidden */
+    background-color: white;
+    width: 380px;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.solitaire-overview {
+    width: 100%;
+    /* Full width */
+    overflow: visible;
+    /* Ensure content is not hidden */
+}
+
+.biomarkers-list h1 {
+    font-size: 22px;
+    font-weight: semibold;
+    margin-bottom: 20px;
+}
+
+.biomarkers {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.biomarkers li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 12px;
+}
+
+.biomarkers li b {
+    font-size: 15px;
+}

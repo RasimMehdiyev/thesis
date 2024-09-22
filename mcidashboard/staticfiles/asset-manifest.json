@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.71d3428b.css",
+    "main.js": "/static/js/main.9a386f1a.js",
+    "index.html": "/index.html",
+    "static/media/chevron-right.svg": "/static/media/chevron-right.488f9482f8f4f7b1bd91.svg",
+    "static/media/chevron-right-hover.svg": "/static/media/chevron-right-hover.4f455c1e622b066aa5fc.svg",
+    "main.71d3428b.css.map": "/static/css/main.71d3428b.css.map",
+    "main.9a386f1a.js.map": "/static/js/main.9a386f1a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.71d3428b.css",
+    "static/js/main.9a386f1a.js"
+  ]
+}
