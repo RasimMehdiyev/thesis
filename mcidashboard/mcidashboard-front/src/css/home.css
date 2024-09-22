@@ -17,6 +17,7 @@
     /* For Internet Explorer and Edge */
     scrollbar-width: none;
     /* For Firefox */
+    margin-top: 80px;
 }
 
 .container::-webkit-scrollbar {

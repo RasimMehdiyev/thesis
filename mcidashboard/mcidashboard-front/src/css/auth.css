@@ -27,13 +27,14 @@
     padding: 20px;
 }
 
-body {
+
+/* body {
     background: rgba(123, 97, 255, 0.16);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
+} */
 
 .auth-title {
     color: #000;
