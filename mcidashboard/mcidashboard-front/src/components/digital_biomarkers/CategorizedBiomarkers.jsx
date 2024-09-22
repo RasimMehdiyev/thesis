@@ -12,7 +12,7 @@ const CategorizedBiomarkers = ({biomarker_type}) => {
         return <div>No biomarkers found</div>
     }
     return (
-        <div>
+        <div className='biomarker-item'>
             <h1>{biomarker_type.name}</h1>
             <ul className='biomarkers'>
                 {biomarker_type.biomarkers.map(

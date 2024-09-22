@@ -38,7 +38,7 @@ const DigitalBiomarkersPage = () => {
 
 
   return (
-    <div className='container'>
+    <div className='container' id="biomarker-container">
         <div class="biomarkers-list">
             {/* <CategorizedBiomarker biomarker_type={biomarkers}/> */}
             {
@@ -47,7 +47,13 @@ const DigitalBiomarkersPage = () => {
                 ))
             }
         </div>
-        <div className='solitaire-overview'></div>
+        <div className='solitaire-overview'>
+            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_2.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_3.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_4.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_5.png"} alt="" />
+        </div>
     </div>
   )
 }
