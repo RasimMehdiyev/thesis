@@ -3,7 +3,7 @@
 const DemographicSummary= () => {
 
 return (
-    <div className="demographic-summary">
+    <div className="card demographic-summary">
         <p>Demographic summary</p>
         
     </div>

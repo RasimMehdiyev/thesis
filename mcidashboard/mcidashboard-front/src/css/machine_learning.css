@@ -1,16 +1,13 @@
 .machine-learning-container {
-    display: flex;
-    flex-direction: row; /* Arrange the cards side by side */
-    /*justify-content: space-between; /* Add space between the cards */
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    grid-template-rows: auto auto; /* Two rows */
     width: 100%;
-    padding: 20px; /* Optional */
+    padding: 20px;
 }
 
-.demographic-summary, .performance-metrics {
-    
-    width: 48%; /* Ensure both elements fit side by side */
-    height: 50%;
-    justify-content: space-between;
+.card {
     background-color: white;
     border-radius: 30px;
     padding: 20px;
@@ -20,13 +17,39 @@
     font-weight: 600;
 }
 
-.demographic-summary{
-    width: 50%; /* Ensure both elements fit side by side */
-    height: 50%;
-    margin-right: 25px;
+
+.demographic-summary {
+    grid-column: 1 / 2; /* Spans 1st column */
+    grid-row: 1 / 2; /* Spans 1st row */
+    width: 95%; 
 }
 
-.performance-metrics{
-    width: 40%; /* Ensure both elements fit side by side */
+
+.performance-metrics {
+    grid-column: 2 / 3; /* Spans 2nd column */
+    grid-row: 1 / 3; /* Spans 1st and 2nd row */
     height: 100%;
+    margin-left: 20px;
+    margin-right: 60px;
 }
+
+
+.models-data-container {
+    grid-column: 1 / 2; /* Spans 1st column */
+    grid-row: 2 / 3; /*Spans 2nd row */
+    display: flex;
+    gap: 30px;
+    width: 100%; 
+}
+
+.models, .data-preprocessing {
+    flex: 1; /* Both cards take equal width */
+    background-color: white;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Poppins, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
