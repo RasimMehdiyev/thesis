@@ -1,0 +1,32 @@
+.machine-learning-container {
+    display: flex;
+    flex-direction: row; /* Arrange the cards side by side */
+    /*justify-content: space-between; /* Add space between the cards */
+    width: 100%;
+    padding: 20px; /* Optional */
+}
+
+.demographic-summary, .performance-metrics {
+    
+    width: 48%; /* Ensure both elements fit side by side */
+    height: 50%;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Poppins, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.demographic-summary{
+    width: 50%; /* Ensure both elements fit side by side */
+    height: 50%;
+    margin-right: 25px;
+}
+
+.performance-metrics{
+    width: 40%; /* Ensure both elements fit side by side */
+    height: 100%;
+}

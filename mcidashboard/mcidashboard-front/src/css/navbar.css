@@ -16,6 +16,8 @@
     display: flex;
     /* Flexbox layout for the navbar content */
     align-items: center;
+    /* Center items horizontally */
+    justify-content: center;
     /* Center items vertically */
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     /* Optional shadow for the navbar */

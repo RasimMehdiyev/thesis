@@ -7,6 +7,7 @@ import Signup from './pages/authentication_pages/Signup';
 import Overview from './pages/OverviewPage';
 import SidebarComponent from './components/SidebarComponent'; // Import the SidebarComponent
 import DigitalBiomarkersPage from './pages/DigitalBiomarkersPage';
+import MachineLearningPage from './pages/MachineLearningPage';
 import NavbarComponent from './components/NavbarComponent'; // Import the NavbarComponent
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path='/overview' element={<Overview/>}></Route>
         <Route path='/digital-biomarkers' element={<DigitalBiomarkersPage/>}></Route>
+        <Route path='/machine-learning' element={<MachineLearningPage/>}></Route>
       </Routes>
     </>
   );
