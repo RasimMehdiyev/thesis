@@ -94,17 +94,17 @@ return (
           </tr>
           <tr>
             <td className="category dt-title">Gender</td>
-            <td>
+            <td className="numbers vertical-line-left vertical-line"> 
             <StackedBarChart  dataSets={genderSet} maxRange={100} />
             </td>
-            <td>
+            <td >
             <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} />
             </td>
           </tr>
           <tr>
             <td className="category dt-title">Education*</td>
    
-            <td>
+            <td className="numbers vertical-line-left vertical-line">
             <StackedBarChart  dataSets={educationSet} maxRange={100}  />
             </td>
               
@@ -114,7 +114,7 @@ return (
           </tr>
           <tr>
             <td className="category dt-title">Tablet use frequency</td>
-            <td>
+            <td className="numbers vertical-line-left vertical-line">
             <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
             </td>
             <td>
@@ -123,8 +123,8 @@ return (
           </tr>
           <tr>
             <td className="category dt-title">Klondike use frequency</td>
-            <td>
-            <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
+            <td className="numbers vertical-line-left vertical-line">
+            <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false}/>
             </td>
             <td>
             <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
