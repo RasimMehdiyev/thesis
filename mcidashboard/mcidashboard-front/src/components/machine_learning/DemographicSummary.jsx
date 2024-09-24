@@ -5,7 +5,7 @@ const DemographicSummary= () => {
 
 
     
-    const dataSets = [
+    const genderSet = [
         {
           label: 'Male',
           data: 47, 
@@ -17,6 +17,22 @@ const DemographicSummary= () => {
           backgroundColor: '#7B61FF', 
         }
         
+      ];
+
+      const educationSet = [
+        {
+          label: 'ISCED 1/2',
+          data: 22, 
+        },
+        {
+          label: 'ISCED 3/4',
+          data: 30, 
+        },
+        {
+            label: 'ISCED 5/6',
+            data: 48, 
+          },
+
       ];
 
 return (
@@ -59,41 +75,22 @@ return (
           <tr>
             <td className="category dt-title">Gender</td>
             <td>
-            <StackedBarChart  dataSets={dataSets} maxRange={100} />
+            <StackedBarChart  dataSets={genderSet} maxRange={100} />
             </td>
             <td>
-            <StackedBarChart  dataSets={dataSets} maxRange={100} showLegend={false} />
+            <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} />
             </td>
           </tr>
           <tr>
             <td className="category dt-title">Education*</td>
+            
+              
             <td>
-              <div className="education-bar vertical-line-left vertical-line">
-                <span>ISCED 1/2</span>
-                <span>22%</span>
-              </div>
-              <div className="education-bar vertical-line-left vertical-line">
-                <span>ISCED 3/4</span>
-                <span>52%</span>
-              </div>
-              <div className="education-bar vertical-line-left vertical-line">
-                <span>ISCED 5/6</span>
-                <span>100%</span>
-              </div>
+            <StackedBarChart  dataSets={educationSet} maxRange={100}  />
             </td>
+              
             <td>
-              <div className="education-bar">
-                <span>ISCED 1/2</span>
-                <span>17%</span>
-              </div>
-              <div className="education-bar">
-                <span>ISCED 3/4</span>
-                <span>74%</span>
-              </div>
-              <div className="education-bar">
-                <span>ISCED 5/6</span>
-                <span>100%</span>
-              </div>
+            <StackedBarChart  dataSets={educationSet} maxRange={100} showLegend={false}  />
             </td>
           </tr>
           <tr>

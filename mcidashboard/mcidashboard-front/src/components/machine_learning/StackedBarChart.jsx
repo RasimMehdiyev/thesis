@@ -4,27 +4,35 @@ import 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels'; 
 import { Chart } from 'chart.js'; 
 
-
+// Register the plugin with Chart.js
 Chart.register(ChartDataLabels);
 
+// Function to apply transparency to the color
+const getTransparentColor = (color, alpha) => {
+  const [r, g, b] = color.match(/\w\w/g).map((hex) => parseInt(hex, 16));
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
+  const baseColor = '#7B61FF'; // Darkest base color
+
   const data = {
     labels: [''], 
-    datasets: dataSets.map((dataSet) => ({
+    datasets: dataSets.map((dataSet, index) => ({
       label: dataSet.label,
       data: [dataSet.data], 
-      backgroundColor: dataSet.backgroundColor,
+      backgroundColor: getTransparentColor(baseColor, index * 0.2 + 0.2), // Transparency decreases for each dataset
       barThickness: 30,
     })),
   };
 
   const options = {
-    maintainAspectRatio: false, // Disable the aspect ratio to control the chart size
-    indexAxis: 'y', // Make the bar chart horizontal
+    maintainAspectRatio: false, 
+    indexAxis: 'y', 
     layout: {
       padding: {
-        top: 0, 
-        bottom: 0, 
+        top: 0,
+        bottom: 0,
       },
     },
     plugins: {
@@ -43,11 +51,11 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
           const percentage = ((value / total) * 100).toFixed(2);
           return percentage + '%'; 
         },
-        color: '#000', // Black
+        color: '#000', 
         anchor: 'center', 
         align: 'center', 
         font: {
-        family: 'Poppins',
+          family: 'Poppins',
           size: 12, 
         },
       },
@@ -55,10 +63,10 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
     scales: {
       x: {
         beginAtZero: true, 
-        max: maxRange, // Set maximum value of the X-axis to control bar length
+        max: maxRange, 
         stacked: true, 
         ticks: {
-          stepSize: maxRange / 5, // Divide the steps based on the max range
+          stepSize: maxRange / 5, 
           display: false, 
         },
         grid: {
@@ -74,7 +82,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
           display: false, 
         },
         ticks: {
-          display: false, // Hide Y-axis labels (since it's a single bar)
+          display: false, 
         },
         border: {
           display: false, 
@@ -82,11 +90,11 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
       },
     },
   };
-  
-  const containerHeight = showLegend ? '100px' : '135px'; 
+
+  const containerHeight = showLegend ? '110px' : '145px'; 
+
   return (
     <div style={{ height: containerHeight, width: '220px' }}> 
-
       <Bar data={data} options={options} />
     </div>
   );
