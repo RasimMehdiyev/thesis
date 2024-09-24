@@ -98,7 +98,7 @@ return (
             <StackedBarChart  dataSets={genderSet} maxRange={100} />
             </td>
             <td >
-            <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} />
+            <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} padding={5}/>
             </td>
           </tr>
           <tr>

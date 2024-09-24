@@ -13,7 +13,7 @@ const getTransparentColor = (color, alpha) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
+const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding=20 }) => {
   const baseColor = '#7B61FF'; // Darkest base color
 
   const data = {
@@ -31,7 +31,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
     indexAxis: 'y', 
     layout: {
       padding: {
-        top: 0,
+        top: showLegend ? 0 : padding, // Add top padding (margin) when there's no legend
         bottom: 0,
       },
     },
@@ -95,7 +95,8 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
     },
   };
 
-  const containerHeight = showLegend ? '110px' : '145px'; 
+  // Adjust container height based on the presence of the legend
+  const containerHeight = showLegend ? '110px' : '145px';
 
   return (
     <div style={{ height: containerHeight, width: '250px' }}> 
