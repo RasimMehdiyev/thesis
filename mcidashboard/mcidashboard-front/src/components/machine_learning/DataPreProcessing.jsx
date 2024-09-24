@@ -2,7 +2,7 @@ const DataPreProcessing= () => {
 
     return (
         <div className="card data-preprocessing">
-            <p className="subtitle">Data pre-processing</p>
+            <p className="ml-subtitle">Data pre-processing</p>
             
         </div>
     )

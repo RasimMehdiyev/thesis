@@ -2,7 +2,7 @@ const PerformanceMetrics= () => {
 
     return (
         <div className="card performance-metrics">
-            <p className="subtitle">Performance metrics</p>
+            <p className="ml-subtitle">Performance metrics</p>
             
         </div>
     )

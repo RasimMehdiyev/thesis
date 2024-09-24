@@ -1,10 +1,27 @@
-
+import React from 'react';
+import StackedBarChart from './StackedBarChart'; 
 
 const DemographicSummary= () => {
 
+
+    
+    const dataSets = [
+        {
+          label: 'Male',
+          data: 47, 
+          backgroundColor: '#C2B9F0', 
+        },
+        {
+          label: 'Female',
+          data: 53, 
+          backgroundColor: '#7B61FF', 
+        }
+        
+      ];
+
 return (
     <div className="card demographic-summary">
-        <p className="subtitle">Demographic summary</p>
+        <p className="ml-subtitle">Demographic summary</p>
         <table className="demographic-table">
         <thead>
           <tr>
@@ -42,24 +59,10 @@ return (
           <tr>
             <td className="category dt-title">Gender</td>
             <td>
-              <div className="gender-bar vertical-line-left vertical-line">
-                <span>Male</span>
-                <span>Female</span>
-              </div>
-              <div className="gender-bar vertical-line-left vertical-line">
-                <span>47%</span>
-                <span>100%</span>
-              </div>
+            <StackedBarChart  dataSets={dataSets} maxRange={100} />
             </td>
             <td>
-              <div className="gender-bar">
-                <span>Male</span>
-                <span>Female</span>
-              </div>
-              <div className="gender-bar">
-                <span>57%</span>
-                <span>100%</span>
-              </div>
+            <StackedBarChart  dataSets={dataSets} maxRange={100} />
             </td>
           </tr>
           <tr>

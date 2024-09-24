@@ -2,7 +2,7 @@ const Models= () => {
 
     return (
         <div className="card models">
-            <p className="subtitle">Models</p>
+            <p className="ml-subtitle">Models</p>
             
         </div>
     )
