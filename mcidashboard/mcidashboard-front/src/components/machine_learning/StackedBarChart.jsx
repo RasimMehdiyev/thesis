@@ -48,8 +48,12 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
         display: true, 
         formatter: (value, context) => {
           const total = context.chart.data.datasets.reduce((acc, dataset) => acc + dataset.data[0], 0);
-          const percentage = ((value / total) * 100).toFixed(0); // Rounded to the nearest integer
-          return percentage + '%'; // Display percentage without decimals
+          const percentage = (value / total) * 100;
+          const chartWidth = context.chart.width;
+          const barWidth = (value / maxRange) * chartWidth;
+
+          // Only show the label if the bar is wide enough for the percentage
+          return barWidth > 30 ? (percentage % 1 === 0 ? `${percentage.toFixed(0)}%` : `${percentage.toFixed(1)}%`) : '';
         },
         color: '#000', 
         anchor: 'center', 

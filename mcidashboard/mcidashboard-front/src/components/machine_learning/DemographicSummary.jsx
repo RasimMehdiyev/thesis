@@ -42,8 +42,12 @@ const DemographicSummary= () => {
           data: 9, 
         },
         {
+            label: 'Monthly',
+            data: 4.5, 
+          },
+        {
             label: 'Yearly or less',
-            data: 9, 
+            data: 4.5, 
           },
         {
             label: 'Never',
@@ -99,8 +103,7 @@ return (
           </tr>
           <tr>
             <td className="category dt-title">Education*</td>
-            
-              
+   
             <td>
             <StackedBarChart  dataSets={educationSet} maxRange={100}  />
             </td>
@@ -113,6 +116,18 @@ return (
             <td className="category dt-title">Tablet use frequency</td>
             <td>
             <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
+            </td>
+            <td>
+            <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+            </td>
+          </tr>
+          <tr>
+            <td className="category dt-title">Klondike use frequency</td>
+            <td>
+            <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
+            </td>
+            <td>
+            <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
             </td>
           </tr>
         </tbody>
