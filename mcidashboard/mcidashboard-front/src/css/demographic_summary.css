@@ -46,6 +46,7 @@
 /* Add vertical line to the left of the Healthy column */
 .vertical-line-left {
   border-left: 1px solid #000;
+  
 }
 
 /* Remove vertical line for last column (MCI) */
@@ -74,6 +75,14 @@
   color: gray;
   margin-top: -4px; 
   display: block; 
+}
+
+.chart-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  height: 100%; 
+  width: 100%;
 }
 
 

@@ -94,40 +94,58 @@ return (
           </tr>
           <tr>
             <td className="category dt-title">Gender</td>
+            
             <td className="numbers vertical-line-left vertical-line"> 
-            <StackedBarChart  dataSets={genderSet} maxRange={100} />
+                <div className="chart-container">
+                   <StackedBarChart  dataSets={genderSet} maxRange={100} />
+                </div>
             </td>
+        
             <td >
-            <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} padding={5}/>
+            <div className="chart-container">
+                <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} padding={5}/>
+            </div>
             </td>
           </tr>
           <tr>
             <td className="category dt-title">Education*</td>
    
             <td className="numbers vertical-line-left vertical-line">
-            <StackedBarChart  dataSets={educationSet} maxRange={100}  />
+            <div className="chart-container">
+                <StackedBarChart  dataSets={educationSet} maxRange={100}  />
+            </div>
             </td>
               
             <td>
-            <StackedBarChart  dataSets={educationSet} maxRange={100} showLegend={false}  />
+            <div className="chart-container">
+                <StackedBarChart  dataSets={educationSet} maxRange={100} showLegend={false}  />
+            </div>
             </td>
           </tr>
           <tr>
             <td className="category dt-title">Tablet use frequency</td>
             <td className="numbers vertical-line-left vertical-line">
-            <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
+            <div className="chart-container">
+               <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
+            </div>
             </td>
             <td>
-            <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+            <div className="chart-container">
+               <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+            </div>
             </td>
           </tr>
           <tr>
             <td className="category dt-title">Klondike use frequency</td>
             <td className="numbers vertical-line-left vertical-line">
-            <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false}/>
+            <div className="chart-container">
+                <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false}/>
+            </div>
             </td>
             <td>
-            <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+            <div className="chart-container">
+                <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+            </div> 
             </td>
           </tr>
         </tbody>
