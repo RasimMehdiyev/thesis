@@ -62,7 +62,7 @@ return (
             <StackedBarChart  dataSets={dataSets} maxRange={100} />
             </td>
             <td>
-            <StackedBarChart  dataSets={dataSets} maxRange={100} />
+            <StackedBarChart  dataSets={dataSets} maxRange={100} showLegend={false} />
             </td>
           </tr>
           <tr>
