@@ -9,14 +9,12 @@ const DemographicSummary= () => {
         {
           label: 'Male',
           data: 47, 
-          backgroundColor: '#C2B9F0', 
         },
         {
           label: 'Female',
           data: 53, 
-          backgroundColor: '#7B61FF', 
         }
-        
+  
       ];
 
       const educationSet = [
@@ -32,7 +30,25 @@ const DemographicSummary= () => {
             label: 'ISCED 5/6',
             data: 48, 
           },
+      ];
 
+      const tabletSet = [
+        {
+          label: 'Daily',
+          data: 52, 
+        },
+        {
+          label: 'Weekly',
+          data: 9, 
+        },
+        {
+            label: 'Yearly or less',
+            data: 9, 
+          },
+        {
+            label: 'Never',
+            data: 30, 
+        },
       ];
 
 return (
@@ -96,32 +112,7 @@ return (
           <tr>
             <td className="category dt-title">Tablet use frequency</td>
             <td>
-              <div className="frequency-bar vertical-line-left vertical-line">
-                <span>Daily</span>
-                <span>52%</span>
-              </div>
-              <div className="frequency-bar vertical-line-left vertical-line">
-                <span>Weekly</span>
-                <span>87%</span>
-              </div>
-              <div className="frequency-bar vertical-line-left vertical-line">
-                <span>Never</span>
-                <span>100%</span>
-              </div>
-            </td>
-            <td>
-              <div className="frequency-bar">
-                <span>Daily</span>
-                <span>30%</span>
-              </div>
-              <div className="frequency-bar">
-                <span>Weekly</span>
-                <span>65%</span>
-              </div>
-              <div className="frequency-bar">
-                <span>Never</span>
-                <span>100%</span>
-              </div>
+            <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
             </td>
           </tr>
         </tbody>

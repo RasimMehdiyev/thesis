@@ -6,7 +6,7 @@
 .demographic-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 10px 0;
   font-size: 16px;
 }
 
@@ -54,23 +54,7 @@
   border-right: none;
 }
 
-.gender-bar,
-.education-bar,
-.frequency-bar {
-  margin-top: 5px;
-  background-color: #e9e1f4;
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
 
-.gender-bar span,
-.education-bar span,
-.frequency-bar span {
-  color: #333;
-  font-weight: bold;
-}
 
 .notes {
   font-size: 12px;

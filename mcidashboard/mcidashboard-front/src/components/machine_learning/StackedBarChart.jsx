@@ -1,8 +1,8 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
-import ChartDataLabels from 'chartjs-plugin-datalabels'; 
-import { Chart } from 'chart.js'; 
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart } from 'chart.js';
 
 // Register the plugin with Chart.js
 Chart.register(ChartDataLabels);
@@ -48,8 +48,8 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
         display: true, 
         formatter: (value, context) => {
           const total = context.chart.data.datasets.reduce((acc, dataset) => acc + dataset.data[0], 0);
-          const percentage = ((value / total) * 100).toFixed(2);
-          return percentage + '%'; 
+          const percentage = ((value / total) * 100).toFixed(0); // Rounded to the nearest integer
+          return percentage + '%'; // Display percentage without decimals
         },
         color: '#000', 
         anchor: 'center', 
@@ -94,7 +94,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true }) => {
   const containerHeight = showLegend ? '110px' : '145px'; 
 
   return (
-    <div style={{ height: containerHeight, width: '220px' }}> 
+    <div style={{ height: containerHeight, width: '250px' }}> 
       <Bar data={data} options={options} />
     </div>
   );
