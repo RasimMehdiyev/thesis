@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -13,7 +13,7 @@ const getTransparentColor = (color, alpha) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding=20 }) => {
+const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding = 20 }) => {
   const baseColor = '#7B61FF'; // Darkest base color
 
   const data = {
@@ -75,6 +75,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding=
         },
         grid: {
           display: false, 
+          drawBorder: false, 
         },
         border: {
           display: false, 
@@ -82,11 +83,12 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding=
       },
       y: {
         stacked: true, 
-        grid: {
-          display: false, 
-        },
         ticks: {
           display: false, 
+        },
+        grid: {
+          display: false, 
+          drawBorder: false, 
         },
         border: {
           display: false, 
@@ -98,7 +100,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding=
   const containerHeight = showLegend ? '110px' : '145px';
 
   return (
-    <div  style={{ height: containerHeight, width: '250px' }}> 
+    <div style={{ height: containerHeight, width: '250px' }}> 
       <Bar data={data} options={options} />
     </div>
   );
