@@ -1,0 +1,62 @@
+.dropdown-table-container {
+    position: relative;
+    width: 250px; /* Width of the dropdown button */
+  }
+  
+  .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 15px;
+    background-color: #fff;
+    width: 100%; 
+  }
+  
+  .dropdown-arrow {
+    margin-left: 10px;
+  }
+  
+  .table-container {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 750px; /* Width of the table */
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .metrics-table th,
+  .metrics-table td {
+    padding: 10px;
+    border: none; 
+  }
+  
+  /* Highlight a cell on hover */
+  .metrics-table td {
+    cursor: pointer;
+  }
+  
+  .metrics-table td:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown-list-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-list-item:hover {
+    background-color: #f0f0f0;
+  }

@@ -1,5 +1,6 @@
 import Tooltip from '../Tooltip'; // Import the Tooltip component
 import React, { useState} from 'react';
+import DropdownTable from './DropdownTable'; 
 
 const DigitalBiomarkers = () => {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
@@ -46,6 +47,7 @@ const DigitalBiomarkers = () => {
                     </div>
                 </div>
            </div>
+           <DropdownTable />
         </div>
     )
 }
