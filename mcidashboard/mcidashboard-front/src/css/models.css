@@ -1,9 +1,11 @@
 .centered {
     text-align: center;
+    
 }
 
 .models-table{
     border-collapse: collapse;
+    color: #585858;
 }
 
 
@@ -23,10 +25,7 @@
     padding-left: 10px;
 }
 
-
-  
-  
+   
 .no-margin li {
     margin: 0; 
-    
 }
