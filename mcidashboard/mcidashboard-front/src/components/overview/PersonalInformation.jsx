@@ -57,7 +57,6 @@ const PersonalInformation = () => {
       <div className='info'>
         <h3>Demographics</h3>
         <hr className='horizontal-line' />
-        <img src={process.env.PUBLIC_URL + '/static/assets/underline.svg'} alt='' />
         <ul className='demographics-list'>
             <li className='demographic-item'>
             <span className='label'><strong>Name:</strong></span>
@@ -79,7 +78,6 @@ const PersonalInformation = () => {
         <div className="test-scores">
         <h3>Neuropsychological Test Score</h3>
         <hr className='horizontal-line' />
-        <img src={process.env.PUBLIC_URL + '/static/assets/underline.svg'} alt='' />
             <ul className='demographics-list'>
                 <li className='demographic-item'>
                 <span className='label'><strong>MMSE:</strong></span>
@@ -96,7 +94,6 @@ const PersonalInformation = () => {
       <div className='info'>
         <h3>Self-report Assessment</h3>
         <hr className='horizontal-line' />
-        <img src={process.env.PUBLIC_URL + '/static/assets/underline.svg'} alt='' />
         <ul className='demographics-list'>
                 <li className='demographic-item'>
                 <span className='label'><strong>Depression:</strong></span>
