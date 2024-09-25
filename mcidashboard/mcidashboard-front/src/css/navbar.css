@@ -1,0 +1,82 @@
+/* General styling for the navbar */
+
+.navbar {
+    position: fixed;
+    /* Fix the navbar to the top */
+    top: 0;
+    /* Align it to the top of the page */
+    left: 280px;
+    /* Offset by the width of the sidebar */
+    width: calc(100% - 280px);
+    /* Width should be full minus the sidebar width */
+    background-color: #f8f9fa;
+    /* Background color for the navbar */
+    height: 60px;
+    /* Height of the navbar */
+    display: flex;
+    /* Flexbox layout for the navbar content */
+    align-items: center;
+    /* Center items vertically */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for the navbar */
+    z-index: 1000;
+    /* Ensure the navbar stays on top of other elements */
+    padding: 0 20px;
+    /* Horizontal padding for some space */
+    box-sizing: border-box;
+    /* Include padding in the total width */
+}
+
+
+/* Styling for the navbar list */
+
+.navbar-list {
+    display: flex;
+    /* Align the list items horizontally */
+    list-style-type: none;
+    /* Remove default list styles */
+    margin: 0;
+    /* Remove default margin */
+    padding: 0;
+    /* Remove default padding */
+    flex-direction: row;
+    /* Align items in a row */
+    justify-content: center;
+    gap: 40px;
+}
+
+
+/* Styling for each list item */
+
+.navbar-list li {
+    margin-right: 20px;
+    /* Space between each item */
+}
+
+
+/* Styling for the links */
+
+.navbar-list a {
+    text-decoration: none;
+    /* Remove underline from links */
+    color: #333;
+    /* Text color */
+    font-size: 16px;
+    /* Font size */
+    font-family: 'Poppins', sans-serif;
+    /* Font family */
+    padding: 10px 15px;
+    /* Padding for each link */
+    border-radius: 5px;
+    /* Rounded corners */
+}
+
+
+/* Hover effect for links */
+
+.navbar-list a:hover {
+    background-color: #e9ecef;
+    /* Light background on hover */
+    color: #007bff;
+    /* Change text color on hover */
+}

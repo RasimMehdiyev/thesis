@@ -7,6 +7,7 @@ import Signup from './pages/authentication_pages/Signup';
 import Overview from './pages/OverviewPage';
 import SidebarComponent from './components/SidebarComponent'; // Import the SidebarComponent
 import DigitalBiomarkersPage from './pages/DigitalBiomarkersPage';
+import NavbarComponent from './components/NavbarComponent'; // Import the NavbarComponent
 
 const App = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const App = () => {
 
   return (
     <>
+      {shouldShowSidebar && <NavbarComponent />}
       {shouldShowSidebar && <SidebarComponent />}
       <Routes>
         <Route path="/" element={<Home />} />
