@@ -16,7 +16,7 @@ const Models = () => {
               </ul>
             </td>
             <td className="vertical-line-left"></td>
-            <td className="centered"> 83.3% </td>
+            <td className="centered"> <strong>83.3% </strong></td>
           </tr>
           <tr>
             <td>

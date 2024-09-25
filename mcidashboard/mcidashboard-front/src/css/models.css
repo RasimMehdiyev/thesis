@@ -18,9 +18,13 @@
 }
   
 .no-margin {
-    margin: 0; 
-    
+    margin: 0;  
+    list-style-position: inside; 
+    padding-left: 10px;
 }
+
+
+  
   
 .no-margin li {
     margin: 0; 

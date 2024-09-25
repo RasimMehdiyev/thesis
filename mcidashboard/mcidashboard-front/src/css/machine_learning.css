@@ -1,7 +1,7 @@
 .machine-learning-container {
     display: grid;
     gap: 20px;
-    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    grid-template-columns: 1.5fr 1fr; /* Two equal-width columns */
     grid-template-rows: auto auto; /* Two rows */
     width: 100%;
     padding: 20px;
@@ -51,3 +51,18 @@
     flex: 1; /* Both cards take equal width */
 }
 
+.datapreproc-table{
+    border-collapse: collapse;
+
+}
+/*
+
+.datapreproc-table td {
+    padding: 5px 10px; 
+  }
+  
+  .datapreproc-table tr {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2; 
+  }*/
