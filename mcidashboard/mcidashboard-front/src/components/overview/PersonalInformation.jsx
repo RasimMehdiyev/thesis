@@ -49,7 +49,7 @@ const PersonalInformation = () => {
         />
 
         <Tooltip
-          content="Neuropsychological tests are clinical results and Self-report Information is based on player’s own weekly report."
+          content="<strong>Neuropsychological tests </strong> are clinical results and <strong> Self-report information </strong> is based on player’s own weekly report."
           isVisible={isTooltipVisible}
         />
       </div>
@@ -95,8 +95,18 @@ const PersonalInformation = () => {
 
       <div className='info'>
         <h3>Self-report Assessment</h3>
+        <hr className='horizontal-line' />
         <img src={process.env.PUBLIC_URL + '/static/assets/underline.svg'} alt='' />
-        <ul></ul>
+        <ul className='demographics-list'>
+                <li className='demographic-item'>
+                <span className='label'><strong>Depression:</strong></span>
+                <span className='not-bold value'style={{color: '#21AEEE'}}>No</span>
+                </li>
+                <li className='demographic-item'>
+                <span className='label'><strong>Anxiety:</strong></span>
+                <span className='not-bold value'style={{color: '#21AEEE'}}>No</span>
+                </li>
+            </ul>
       </div>
     </div>
   );
