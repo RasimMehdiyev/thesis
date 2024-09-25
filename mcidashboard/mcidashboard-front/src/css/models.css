@@ -1,0 +1,28 @@
+.centered {
+    text-align: center;
+}
+
+.models-table{
+    border-collapse: collapse;
+}
+
+
+.models-table td {
+    padding: 5px 0; 
+    vertical-align: middle; 
+  }
+  
+.models-table tr {
+    margin: 0; 
+   
+}
+  
+.no-margin {
+    margin: 0; 
+    
+}
+  
+.no-margin li {
+    margin: 0; 
+    
+}

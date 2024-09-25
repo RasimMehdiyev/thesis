@@ -10,6 +10,7 @@ import './css/digital_biomarkers.css'
 import './css/machine_learning.css'
 import './css/demographic_summary.css'
 import './css/navbar.css'
+import './css/models.css'
 import App from './App';
 
 

@@ -11,7 +11,7 @@ const Models = () => {
           </tr>  
           <tr>
             <td>
-              <ul>
+              <ul className="no-margin">
                 <li>Nu-Support Vector</li>
               </ul>
             </td>
@@ -20,7 +20,7 @@ const Models = () => {
           </tr>
           <tr>
             <td>
-              <ul>
+              <ul className="no-margin">
                 <li>Gradient Boosting Classifier</li>
               </ul>
             </td>
@@ -29,7 +29,7 @@ const Models = () => {
           </tr>
           <tr>
             <td>
-              <ul>
+              <ul className="no-margin">
                 <li>Extra Trees Classifier</li>
               </ul>
             </td>

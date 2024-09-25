@@ -51,10 +51,3 @@
     flex: 1; /* Both cards take equal width */
 }
 
-.centered {
-    text-align: center;
-  }
-
-.models-table{
-    border-collapse: collapse;
-}
