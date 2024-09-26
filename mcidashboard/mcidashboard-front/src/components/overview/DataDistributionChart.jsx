@@ -127,7 +127,7 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
   };
 
   return (
-    <div style={{ width: '400px', height: '150px' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <Line data={data} options={options} plugins={[options.plugins.thresholdLine]} />
     </div>
   );
