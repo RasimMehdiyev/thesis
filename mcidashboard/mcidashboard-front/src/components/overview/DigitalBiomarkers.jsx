@@ -16,6 +16,8 @@ const DigitalBiomarkers = () => {
         setIsTooltipVisible(false);
     };
 
+    const data = [55, 57, 60, 65, 62, 67, 70];
+    const labels = ['13 Jan', '22 Jan', '26 Jan', '2 Feb', '5 Feb']; 
     
     return (
         <div className="card" style={{width:'60%'}}>
@@ -51,7 +53,7 @@ const DigitalBiomarkers = () => {
            <DropdownTable />
            <div className="grid-container">
                 <div className="grid-item">
-                    <GameHistoryLineChart />
+                    <GameHistoryLineChart data={data} labels={labels} />
                 </div>
                 <div style={{marginTop: 60}}className="grid-item">
                     <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
