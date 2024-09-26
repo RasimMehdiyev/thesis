@@ -35,7 +35,7 @@ const DivergingBarChart = ({ features, percentages }) => {
     scales: {
       x: {
         beginAtZero: true,
-        min: -10, // Adjust the minimum value on the x-axis (adjust this depending on your data)
+        min: -12, // Adjust the minimum value on the x-axis (adjust this depending on your data)
         max: 12, // Adjust the maximum value on the x-axis
         grid: {
           display: true, // Enable vertical grid lines
