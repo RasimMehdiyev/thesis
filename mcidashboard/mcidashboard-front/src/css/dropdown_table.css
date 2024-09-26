@@ -60,3 +60,8 @@
   .dropdown-list-item:hover {
     background-color: #f0f0f0;
   }
+
+.selected-option {
+    background-color: #efefff;
+    
+  }

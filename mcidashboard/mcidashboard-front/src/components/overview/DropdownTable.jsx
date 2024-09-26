@@ -5,12 +5,10 @@ const DropdownTable = () => {
   const [selectedOption, setSelectedOption] = useState('Total Moves');
   const dropdownRef = useRef(null);
 
-
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setIsOpen(false); // Close the dropdown after selecting
@@ -44,13 +42,12 @@ const DropdownTable = () => {
 
   return (
     <div className="dropdown-table-container" ref={dropdownRef}>
-      
+
       <div className="dropdown-header" onClick={handleToggle}>
         <span>{selectedOption}</span>
         <span className="dropdown-arrow">▼</span>
       </div>
 
-      
       {isOpen && (
         <div className="table-container">
           <table className="metrics-table">
@@ -60,7 +57,7 @@ const DropdownTable = () => {
                   {row.map((option, colIndex) => (
                     <td
                       key={colIndex}
-                      className="dropdown-table-item"
+                      className={`dropdown-table-item ${option === selectedOption ? 'selected-option' : ''}`}
                       onClick={() => handleOptionClick(option)}
                     >
                       {option}
