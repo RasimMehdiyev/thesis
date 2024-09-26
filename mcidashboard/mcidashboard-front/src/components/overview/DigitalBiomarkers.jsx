@@ -2,6 +2,7 @@ import Tooltip from '../Tooltip'; // Import the Tooltip component
 import React, { useState} from 'react';
 import DropdownTable from './DropdownTable'; 
 import GameHistoryLineChart from './GameHistoryLineChart';
+import DataDistributionChart from './DataDistributionChart';
 
 const DigitalBiomarkers = () => {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
@@ -18,6 +19,11 @@ const DigitalBiomarkers = () => {
 
     const data = [55, 57, 60, 65, 62, 67, 70];
     const labels = ['13 Jan', '22 Jan', '26 Jan', '2 Feb', '5 Feb']; 
+
+    const xData=[40, 60, 66, 80, 100, 120];
+    const yData=[50, 62, 66, 75, 70, 68];
+    const threshold = 66;
+
     
     return (
         <div className="card" style={{width:'60%'}}>
@@ -57,11 +63,7 @@ const DigitalBiomarkers = () => {
                 </div>
                 <div style={{marginTop: 60}}className="grid-item">
                     <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
-                    <img
-                    src="/assets/data-distribution1.png"
-                    alt="Performance Metrics"
-                    style={{ width: '100%', height: 'auto' }}
-                    />
+                    <DataDistributionChart xData={xData} yData={yData} threshold={threshold}/>
                 </div>
                 <div className="grid-item test-scores" style={{fontSize: 14, fontWeight: 600, marginTop:50}}>
                     <p>Total moves of the last session: <span style={{color:'#FA5D5D'}}>66</span></p>
