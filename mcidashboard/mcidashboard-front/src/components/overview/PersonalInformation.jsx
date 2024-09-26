@@ -1,10 +1,7 @@
-// Import React and useState, useEffect hooks
 import React, { useState, useEffect } from 'react';
-import Tooltip from '../Tooltip'; // Import the Tooltip component
+import Tooltip from '../Tooltip'; 
 
-// Define the PersonalInformation component
 const PersonalInformation = () => {
-  // State to manage tooltip visibility
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   // Show tooltip on mouse enter
@@ -17,17 +14,17 @@ const PersonalInformation = () => {
     setIsTooltipVisible(false);
   };
 
-  // This useEffect hook is used to call printPatientInfo when the component mounts
+
   useEffect(() => {
     printPatientInfo();
   }, []);
 
-  // This function prints the patient data in the console
+
   function printPatientInfo() {
-    console.log(patient); // Now it prints the static patient data instead
+    console.log(patient); 
   }
 
-  // Static patient data
+
   const patient = {
     username: 'JohnDoe',
     gender: 'Male',
