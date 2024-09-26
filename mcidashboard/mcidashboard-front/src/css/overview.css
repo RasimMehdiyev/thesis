@@ -100,8 +100,10 @@
 
   .test-scores{
     background-color: #E9E6FA;
-    border-radius: 15px;
+    border-radius: 30px;
     padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin-bottom: 30px;
     margin-top: 30px;
   }
@@ -137,3 +139,10 @@
   .legend-item p{
     margin: 0;
   }
+
+.accuracy{
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-top: -20px;
+}
