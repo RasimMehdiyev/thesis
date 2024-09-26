@@ -53,14 +53,14 @@ const MachineLearningModel = () => {
 
             <div className='test-scores'>
                 <p style={{fontWeight: 600, fontSize: 24}}>Solitaire DSS prediction:</p>
-                <p style={{marginTop:-40}}>
+                <p style={{marginTop:-30}}>
                     The <span style={{ textDecoration: 'underline' }}>most accurate</span> machine learning model predicts that the patient is <span style={{ fontSize:30,color:'#FA5D5D', fontWeight:600 }}>MCI</span> .
                 </p>
             </div>
 
             <div className="accuracy">
                 <p style={{fontSize:20, fontWeight: 600}}>Highest model accuracy:</p>
-                <p style={{marginTop:-20, fontWeight:600, fontSize:30, color:'#21AEEE'}}>83.3%</p>
+                <p style={{marginTop: -20, fontWeight:600, fontSize:30, color:'#21AEEE'}}>83.3%</p>
                 <a href="/machine-learning/" style={{textDecoration: 'underline', color: '#5A21EB', fontWeight: 600, marginTop:-30}}>More</a>
             </div>
         </div>
