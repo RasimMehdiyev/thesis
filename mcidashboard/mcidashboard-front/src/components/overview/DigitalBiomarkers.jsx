@@ -50,12 +50,15 @@ const DigitalBiomarkers = () => {
            <DropdownTable />
            <div className="grid-container">
                 <div className="grid-item">
-                     <div className="dropdown-container">
-                        <select className="game-history-dropdown">
-                            <option>3 months</option>
-                            <option>6 months</option>
-                            <option>1 year</option>
-                        </select>
+                    <div className="line-chart-h">
+                        <p style={{fontSize: 14}}>Game history</p>
+                        <div className="dropdown-container">
+                            <select className="game-history-dropdown">
+                                <option>3 months</option>
+                                <option>6 months</option>
+                                <option>1 year</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div className="grid-item">
