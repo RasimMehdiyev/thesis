@@ -1,6 +1,7 @@
 import Tooltip from '../Tooltip'; // Import the Tooltip component
 import React, { useState} from 'react';
 import DropdownTable from './DropdownTable'; 
+import GameHistoryLineChart from './GameHistoryLineChart';
 
 const DigitalBiomarkers = () => {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
@@ -50,16 +51,7 @@ const DigitalBiomarkers = () => {
            <DropdownTable />
            <div className="grid-container">
                 <div className="grid-item">
-                    <div className="line-chart-h">
-                        <p style={{fontSize: 14}}>Game history</p>
-                        <div className="dropdown-container">
-                            <select className="game-history-dropdown">
-                                <option>3 months</option>
-                                <option>6 months</option>
-                                <option>1 year</option>
-                            </select>
-                        </div>
-                    </div>
+                    <GameHistoryLineChart />
                 </div>
                 <div className="grid-item">
                     <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
@@ -69,7 +61,7 @@ const DigitalBiomarkers = () => {
                     style={{ width: '100%', height: 'auto' }}
                     />
                 </div>
-                <div className="grid-item test-scores" style={{fontSize: 14, fontWeight: 600}}>
+                <div className="grid-item test-scores" style={{fontSize: 14, fontWeight: 600, marginTop:0}}>
                     <p>Total moves of the last session: <span style={{color:'#FA5D5D'}}>66</span></p>
                     <p className="counterfactuals">If Total Moves <span style={{color:'#21AEEE'}}>reduces to 62</span>, Solitaire DSS would think the player is normally aging.</p>
                 </div>

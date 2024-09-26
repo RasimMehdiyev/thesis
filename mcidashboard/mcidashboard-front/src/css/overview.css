@@ -1,5 +1,4 @@
 
-
 .info {
     margin-left: 20px;
     margin-top: -10px;
@@ -150,7 +149,6 @@
 
 .grid-container {
     display: grid;
-    margin-top: 20px;
     grid-template-columns: 1fr 1fr; 
     grid-template-rows: 1fr 1fr; 
     gap: 20px; 
