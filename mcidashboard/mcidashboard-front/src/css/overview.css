@@ -33,6 +33,7 @@
     flex-grow: 1; 
     width: 100%; 
     gap: 20px; 
+    margin-bottom: 20px;
 }
 
 .personal-info-h {
