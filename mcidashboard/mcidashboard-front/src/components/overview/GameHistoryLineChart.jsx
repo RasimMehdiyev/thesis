@@ -40,7 +40,19 @@ const GameHistoryLineChart = ({ data, labels }) => {
         min: 40,
         max: 80, 
         grid: {
-          display: false,
+          display: true, // Display grid lines only at max
+          color: (context) => {
+            if (context.tick.value === 80) {
+              return 'rgba(0, 0, 0, 0.1)'; // Set color for the grid line at the max value
+            }
+            return 'transparent'; // Hide all other grid lines
+          },
+          lineWidth: (context) => {
+            if (context.tick.value === 80) {
+              return 1; // Set thickness of the grid line at max value
+            }
+            return 0; // No line for other ticks
+          },
         },
         ticks: {
           stepSize: 10, 
