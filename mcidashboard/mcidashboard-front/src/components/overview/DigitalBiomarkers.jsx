@@ -22,7 +22,7 @@ const DigitalBiomarkers = () => {
 
     const xData=[40, 60, 66, 80, 100, 120];
     const yData=[50, 62, 66, 75, 70, 68];
-    const threshold = 65;
+    const threshold = 62;
 
     
     return (

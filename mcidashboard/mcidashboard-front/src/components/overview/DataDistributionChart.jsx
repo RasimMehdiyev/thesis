@@ -6,19 +6,50 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, ChartDataLabels);
 
 const DataDistributionChart = ({ xData, yData, threshold }) => {
-  // Divide the data based on the threshold
-  const belowThresholdData = yData.map((y, index) => (xData[index] < threshold ? y : null));
-  const aboveThresholdData = yData.map((y, index) => (xData[index] >= threshold ? y : null));
+  // Helper function to perform linear interpolation
+  const interpolate = (x1, y1, x2, y2, x) => {
+    return y1 + ((y2 - y1) * (x - x1)) / (x2 - x1);
+  };
+
+  // Check if the threshold exists in xData
+  let xDataWithThreshold = [...xData];
+  let yDataWithThreshold = [...yData];
+
+  const thresholdIndex = xData.findIndex((x) => x === threshold);
+
+  // If threshold is not found, interpolate and insert it
+  if (thresholdIndex === -1) {
+    // Find the closest points around the threshold
+    const indexBefore = xData.findIndex((x) => x < threshold && xData[xData.indexOf(x) + 1] >= threshold);
+
+    if (indexBefore !== -1) {
+      const x1 = xData[indexBefore];
+      const y1 = yData[indexBefore];
+      const x2 = xData[indexBefore + 1];
+      const y2 = yData[indexBefore + 1];
+
+      // Interpolate the y-value for the threshold
+      const interpolatedY = interpolate(x1, y1, x2, y2, threshold);
+
+      // Insert the threshold point into the data arrays
+      xDataWithThreshold.splice(indexBefore + 1, 0, threshold);
+      yDataWithThreshold.splice(indexBefore + 1, 0, interpolatedY);
+    }
+  }
+
+  // Divide the data based on the threshold (no value display on points)
+  const belowThresholdData = yDataWithThreshold.map((y, index) => (xDataWithThreshold[index] < threshold ? y : null));
+  const aboveThresholdData = yDataWithThreshold.map((y, index) => (xDataWithThreshold[index] >= threshold ? y : null));
 
   // Ensure the point at the threshold is included in both datasets
-  const thresholdIndex = xData.findIndex((x) => x >= threshold);
-  if (thresholdIndex !== -1) {
-    belowThresholdData[thresholdIndex] = yData[thresholdIndex];
-    aboveThresholdData[thresholdIndex] = yData[thresholdIndex];
+  const updatedThresholdIndex = xDataWithThreshold.findIndex((x) => x === threshold);
+  if (updatedThresholdIndex !== -1) {
+    belowThresholdData[updatedThresholdIndex] = yDataWithThreshold[updatedThresholdIndex];
+    aboveThresholdData[updatedThresholdIndex] = yDataWithThreshold[updatedThresholdIndex];
   }
 
   const data = {
-    labels: xData, 
+    labels: xDataWithThreshold,
     datasets: [
       {
         label: 'Below Threshold',
@@ -47,76 +78,74 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
     scales: {
       x: {
         grid: {
-          display: true, 
+          display: true, // Show vertical grid lines
           drawBorder: false,
-          color: 'rgba(0, 0, 0, 0.1)', 
+          color: function (context) {
+            const label = context.tick.label;
+            if (label === threshold) {
+              return '#21AEEE'; // Blue grid line for threshold
+            }
+            return 'rgba(0, 0, 0, 0.1)'; // Default gray grid line for others
+          },
+          borderDash: function (context) {
+            const label = context.tick.label;
+            if (label === threshold) {
+              return [5, 5]; // Dashed line for threshold
+            }
+            return []; // Solid line for other grid lines
+          },
+        },
+        ticks: {
+          font: function (context) {
+            // Check if the label matches the threshold and apply bold font and increased font size
+            if (context.tick.label === threshold) {
+              return {
+                weight: 'bold', // Make the threshold label bold
+                size: 14, // Increase the font size for the threshold label
+              };
+            }
+            return {
+              weight: 'normal', // Default label font weight
+              size: 10, // Default font size for other labels
+            };
+          },
+          color: function (context) {
+            // Change the color of the threshold label to blue
+            if (context.tick.label === threshold) {
+              return '#21AEEE'; // Blue color for the threshold label
+            }
+            return 'rgba(0, 0, 0, 1)'; // Default black color for other labels
+          },
         },
       },
       y: {
-        min: 40, 
+        min: 40,
         max: 80,
-        display: false, 
+        display: false, // Hide the y-axis labels
         grid: {
           drawBorder: false,
           color: function (context) {
             // Only draw a line at the max value (80)
             if (context.tick.value === 80) {
-              return 'rgba(0, 0, 0, 0.1)'; 
+              return 'rgba(0, 0, 0, 0.1)';
             }
-            return null; 
+            return null;
           },
           lineWidth: function (context) {
-            return context.tick.value === 80 ? 2 : 0; 
+            return context.tick.value === 80 ? 2 : 0;
           },
         },
       },
     },
     plugins: {
       tooltip: {
-        enabled: true, 
+        enabled: true,
       },
       legend: {
-        display: false, 
+        display: false,
       },
       datalabels: {
-        display: function (context) {
-          // Only display the data label for the threshold point
-          const xValue = context.chart.data.labels[context.dataIndex];
-          return xValue === threshold;
-        },
-        align: 'end', // Align above the threshold point
-        anchor: 'end', // Anchor the label at the top
-        offset: 10, // Move the label above the line for better visibility
-        color: '#000', // Set the color to black
-        font: {
-          weight: 'bold', // Make the threshold label bold
-          size: 14, 
-        },
-        formatter: function (value) {
-          return value; // Show the actual value
-        },
-      },
-      // Add plugin to draw vertical dashed line at threshold
-      thresholdLine: {
-        afterDatasetsDraw: (chart) => {
-          const ctx = chart.ctx;
-          const xScale = chart.scales.x;
-          const yScale = chart.scales.y;
-
-          // Find the pixel for the threshold value on the x-axis
-          const thresholdPixel = xScale.getPixelForValue(threshold);
-
-          // Draw the dashed line
-          ctx.save();
-          ctx.beginPath();
-          ctx.setLineDash([5, 5]); // Set the dash pattern
-          ctx.moveTo(thresholdPixel, yScale.top);
-          ctx.lineTo(thresholdPixel, yScale.bottom);
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = '#FA5D5D'; // Red dashed line
-          ctx.stroke();
-          ctx.restore();
-        },
+        display: false, // Disable the display of values on all points
       },
     },
     elements: {
@@ -128,7 +157,7 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Line data={data} options={options} plugins={[options.plugins.thresholdLine]} />
+      <Line data={data} options={options} />
     </div>
   );
 };
