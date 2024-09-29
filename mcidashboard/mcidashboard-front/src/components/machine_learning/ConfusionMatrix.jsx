@@ -7,7 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title, ChartDataLabels);
 
 const ConfusionMatrix = ({ model, data: actualData }) => {
-  // State to manage the custom tooltip visibility and content
+
   const [tooltip, setTooltip] = useState({ visible: false, text: '', x: 0, y: 0 });
   const chartRef = useRef(null); // Ref to track the chart element
 
@@ -26,20 +26,17 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
         label: 'True Healthy',
         data: [1, 1], // Fake data to ensure equal-sized squares
         backgroundColor: [getColorShade(actualData[0][0]), getColorShade(actualData[0][1])], // Use dynamic shading
-        borderColor: ['rgba(123, 97, 255, 1)', 'rgba(123, 97, 255, 1)'], // Border color fixed
         borderWidth: 1,
       },
       {
         label: 'True MCI',
         data: [1, 1], // Fake data to ensure equal-sized squares
         backgroundColor: [getColorShade(actualData[1][0]), getColorShade(actualData[1][1])], // Use dynamic shading
-        borderColor: ['rgba(123, 97, 255, 1)', 'rgba(123, 97, 255, 1)'], // Border color fixed
         borderWidth: 1,
       },
     ],
   };
 
-  // Handle mouse hover event
   const handleMouseEnter = (event) => {
     const element = chartRef.current.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
 
@@ -76,36 +73,36 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
   };
 
   const options = {
-    indexAxis: 'y', // Horizontal bars
+    indexAxis: 'y', 
     scales: {
       x: {
         stacked: true,
         grid: {
-          display: false, // Remove the grid lines
+          display: false, 
         },
         ticks: {
-          display: false, // Hide default x-axis labels
+          display: false, 
         },
         title: {
           display: true,
           text: 'Predicted Label',
           padding: {
-            top: 30, // Add some padding to make room for custom labels
+            top: 30, 
           },
         },
       },
       y: {
         stacked: true,
         grid: {
-          display: false, // Remove the grid lines
+          display: false, 
         },
         title: {
           display: true,
           text: 'True Label',
         },
         ticks: {
-          align: 'center', // Center the y-axis labels
-          padding: 0, // Adjust vertical label alignment
+          align: 'center', 
+          padding: 0, 
         },
       },
     },
@@ -116,26 +113,26 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
       title: {
         display: true,
         text: ['Confusion Matrix', model], // Multi-line title: First line is "Confusion Matrix", second line is the model
-        align: 'center', // Center the title
+        align: 'center', 
         font: {
-          size: 16, // Adjust font size
-          family: 'Poppins', // Customize font family
+          size: 16,
+          family: 'Poppins', 
           weight: 'normal',
         },
         padding: {
-          bottom: 10, // Padding between title and chart
+          bottom: 10, 
         },
         color: 'black'
         
       },
       legend: {
-        display: false, // Hide legend
+        display: false,
       },
       datalabels: {
         display: true,
         color: 'black',
         font: {
-          weight: 'normal', // Set labels inside the bars to be non-bold
+          weight: 'normal', 
           size: 16,
           family: 'Poppins',
         },
