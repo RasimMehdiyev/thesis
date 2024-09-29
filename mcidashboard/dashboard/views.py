@@ -8,9 +8,14 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
 from rest_framework.decorators import api_view  
+from collections import Counter
 from .models import * 
 from .serializers import *
-
+from django.db.models import Count
+from django.db.models import Max
+import matplotlib.pyplot as plt
+from collections import defaultdict
+from collections import Counter
 
 # Create your views here.
 def index(request):
@@ -94,6 +99,40 @@ def get_user_moves(request, pk):
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
+def get_user_total_moves_count(request, pk):
+    user = Person.objects.get(pk=pk)
+    games = Game.objects.filter(personID=user)
+    moves = Move.objects.filter(gameID__in=games)
+    move_count = moves.count()
+    return JsonResponse({'total_moves': move_count}, safe=False)
+
+@api_view(['GET'])
+def get_games_count(request, pk):
+    user = Person.objects.get(pk=pk)
+    games = Game.objects.filter(personID=user)
+    return JsonResponse({'total_games': games.count()}, safe=False)
+
+@api_view(['GET'])
+def get_total_games(request):
+    # Aggregate total number of games per user
+    total_games_per_user = (
+        Person.objects.annotate(total_games=Count('game'))
+        .values('id', 'username', 'total_games')
+    )
+    
+    # Format the response
+    response_data = [
+        {
+            'user': person['username'],
+            'total_games': person['total_games']
+        }
+        for person in total_games_per_user
+    ]
+    
+    return JsonResponse(response_data, safe=False)
+
+
+@api_view(['GET'])
 def get_total_moves_last_session(request, pk):
     user = Person.objects.get(pk=pk)
     games = Game.objects.filter(personID=user)
@@ -122,6 +161,18 @@ def get_total_moves_last_session_num(request, pk):
     else:
         return JsonResponse({'error': 'No games found for user'}, status=404)
     
+@api_view(['GET'])
+def get_total_moves_per_game_count(request, pk):
+    game = Game.objects.get(pk=pk)
+    moves = Move.objects.filter(gameID=game)
+    move_count = moves.count()
+    return JsonResponse({'total_moves': move_count}, safe=False)
+
+@api_view(['GET'])
+def get_all_biomarkers_list(request):
+    biomarkers = Biomarker.objects.all()
+    serializer = BiomarkerSerializer(biomarkers, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
 def get_all_biomarkers(request):
@@ -129,3 +180,66 @@ def get_all_biomarkers(request):
     serializer = BiomarkerTypeSerializer(biomarkers, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@api_view(['GET'])
+def biomarker_frequency_histogram(request, userID, biomarker_id):
+
+    try:
+        user = Person.objects.get(id=userID)
+    except Person.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+
+    last_game_user = Game.objects.filter(personID=user).order_by('-timestamp').first()
+
+    current_user_biomarker_value = None
+
+    if last_game_user:
+        current_user_biomarker_value = PersonBiomarkers.objects.filter(
+            biomarkerID=biomarker_id, gameID=last_game_user
+        ).values_list('value', flat=True).first()
+
+    if current_user_biomarker_value is None:
+        current_user_biomarker_value = 0
+
+    healthy_users = Person.objects.filter(mci=0)
+    healthy_last_games_subquery = Game.objects.filter(personID__in=healthy_users).values('personID').annotate(
+        last_game_timestamp=Max('timestamp')
+    ).values_list('personID', 'last_game_timestamp')
+
+    healthy_last_games = Game.objects.filter(personID__in=healthy_users).filter(
+        timestamp__in=[t[1] for t in healthy_last_games_subquery]
+    )
+
+    mci_users = Person.objects.filter(mci=1)
+    mci_last_games_subquery = Game.objects.filter(personID__in=mci_users).values('personID').annotate(
+        last_game_timestamp=Max('timestamp')
+    ).values_list('personID', 'last_game_timestamp')
+
+    mci_last_games = Game.objects.filter(personID__in=mci_users).filter(
+        timestamp__in=[t[1] for t in mci_last_games_subquery]
+    )
+
+
+    mci_biomarker_values = PersonBiomarkers.objects.filter(biomarkerID=biomarker_id, gameID__in=mci_last_games).values_list('value', flat=True)
+    healthy_biomarker_values = PersonBiomarkers.objects.filter(biomarkerID=biomarker_id, gameID__in=healthy_last_games).values_list('value', flat=True)
+
+    mci_biomarker_frequency = Counter(mci_biomarker_values)
+    healthy_biomarker_frequency = Counter(healthy_biomarker_values)
+
+
+    mci_biomarker_frequency_list = [{'biomarker_value': value, 'frequency': frequency} for value, frequency in mci_biomarker_frequency.items()]
+    healthy_biomarker_frequency_list = [{'biomarker_value': value, 'frequency': frequency} for value, frequency in healthy_biomarker_frequency.items()]
+
+
+    mci_biomarker_frequency_list = sorted(mci_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
+    healthy_biomarker_frequency_list = sorted(healthy_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
+
+
+    return JsonResponse({
+        'current_user': {
+            'biomarker_value': current_user_biomarker_value,
+            'mci': user.mci
+        },
+        'mci': mci_biomarker_frequency_list,
+        'healthy': healthy_biomarker_frequency_list
+    }, safe=False)

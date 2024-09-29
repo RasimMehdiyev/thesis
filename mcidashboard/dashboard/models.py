@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Game(models.Model):
@@ -51,6 +52,9 @@ class Person(models.Model):
     gender = models.CharField(max_length=10)
     playlevel = models.IntegerField(db_column='playLevel')  # Field name made lowercase.
     tabletlevel = models.IntegerField(db_column='tabletLevel')  # Field name made lowercase.
+    patient_code = models.CharField(max_length=45, blank=True, null=True)
+    MMSE = models.IntegerField( blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
+    MoCA = models.FloatField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
 
     def __str__(self):
         return self.username
@@ -82,4 +86,14 @@ class BiomarkerStats(models.Model):
 
     def __str__(self):
         return self.biomarkerID.name
+    
+class PersonBiomarkers(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    personID = models.ForeignKey(Person, on_delete=models.CASCADE)
+    gameID = models.ForeignKey(Game, on_delete=models.CASCADE,  null=True, blank=True)
+    biomarkerID = models.ForeignKey(Biomarker, on_delete=models.CASCADE)
+    value = models.FloatField()
+
+    def __str__(self):
+        return self.personID.username + ' | ' + self.biomarkerID.name
     
