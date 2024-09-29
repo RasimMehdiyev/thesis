@@ -61,7 +61,7 @@ const DigitalBiomarkers = () => {
                 <div className="grid-item">
                     <GameHistoryLineChart data={data} labels={labels} />
                 </div>
-                <div style={{marginTop: 60}}className="grid-item">
+                <div style={{}}className="grid-item">
                     <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
                     <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99} swapColors={true}/>
                 </div>
@@ -72,11 +72,7 @@ const DigitalBiomarkers = () => {
                 
                 <div className="grid-item">
                 <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-                <img
-                    src="/assets/data-distribution2.png"
-                    alt="Performance Metrics"
-                    style={{ width: '100%', height: 'auto' }}
-                    />
+                <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99}/>
                 </div>
             </div>
         </div>

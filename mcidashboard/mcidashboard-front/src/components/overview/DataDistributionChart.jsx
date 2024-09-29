@@ -16,7 +16,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
   const aboveThresholdColor = swapColors ? 'rgba(33, 174, 238, 1)' : 'rgba(250, 93, 93, 1)'; // Blue if swapped, else Red
 
   // Threshold color set to gray
-  const thresholdColor = 'rgba(128, 128, 128, 1)'; // Gray color for threshold
+  const thresholdColor = '#BBBBBB'; // Gray color for threshold
 
   // Check if the threshold exists in xData
   let xDataWithThreshold = [...xData];
@@ -132,9 +132,9 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
           lineWidth: function (context) {
             const label = context.tick.label;
             if (label === threshold) {
-              return 2; // Thinner line for the threshold (neutral)
+              return 3; // Thinner line for the threshold (neutral)
             } else if (label === xUser) {
-              return 3; // Thicker line for xUser
+              return 4; // Thicker line for xUser
             }
             return 1; // Default line width for others
           },
@@ -145,7 +145,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
             if (label === threshold || label === xUser) {
               return {
                 weight: 'bold', // Make the threshold and xUser label bold
-                size: 14, // Increase the font size for the threshold and xUser label
+                size: 16, // Increase the font size for the threshold and xUser label
               };
             }
             return {
@@ -185,7 +185,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
     },
     plugins: {
       tooltip: {
-        enabled: true,
+        enabled: false, // Enable tooltips for other datasets
       },
       legend: {
         display: false,
