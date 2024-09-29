@@ -63,7 +63,7 @@ const DigitalBiomarkers = () => {
                 </div>
                 <div style={{marginTop: 60}}className="grid-item">
                     <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
-                    <DataDistributionChart xData={xData} yData={yData} threshold={threshold}/>
+                    <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99} swapColors={true}/>
                 </div>
                 <div className="grid-item test-scores" style={{fontSize: 14, fontWeight: 600, marginTop:50}}>
                     <p>Total moves of the last session: <span style={{color:'#FA5D5D'}}>66</span></p>

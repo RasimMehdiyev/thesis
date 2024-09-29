@@ -5,17 +5,22 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, ChartDataLabels);
 
-const DataDistributionChart = ({ xData, yData, threshold }) => {
+const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) => {
   // Helper function to perform linear interpolation
   const interpolate = (x1, y1, x2, y2, x) => {
     return y1 + ((y2 - y1) * (x - x1)) / (x2 - x1);
   };
+
+  // Define the colors based on swapColors prop
+  const belowThresholdColor = swapColors ? 'rgba(250, 93, 93, 1)' : 'rgba(33, 174, 238, 1)'; // Red if swapped, else Blue
+  const aboveThresholdColor = swapColors ? 'rgba(33, 174, 238, 1)' : 'rgba(250, 93, 93, 1)'; // Blue if swapped, else Red
 
   // Check if the threshold exists in xData
   let xDataWithThreshold = [...xData];
   let yDataWithThreshold = [...yData];
 
   const thresholdIndex = xData.findIndex((x) => x === threshold);
+  const xUserIndex = xData.findIndex((x) => x === xUser);
 
   // If threshold is not found, interpolate and insert it
   if (thresholdIndex === -1) {
@@ -37,6 +42,26 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
     }
   }
 
+  // Handle xUser even if it's not part of xData
+  if (xUserIndex === -1 && xUser !== undefined) {
+    // Find the closest points around xUser
+    const indexBefore = xData.findIndex((x) => x < xUser && xData[xData.indexOf(x) + 1] >= xUser);
+
+    if (indexBefore !== -1) {
+      const x1 = xData[indexBefore];
+      const y1 = yData[indexBefore];
+      const x2 = xData[indexBefore + 1];
+      const y2 = yData[indexBefore + 1];
+
+      // Interpolate the y-value for xUser
+      const interpolatedY = interpolate(x1, y1, x2, y2, xUser);
+
+      // Insert xUser into the data arrays
+      xDataWithThreshold.splice(indexBefore + 1, 0, xUser);
+      yDataWithThreshold.splice(indexBefore + 1, 0, interpolatedY);
+    }
+  }
+
   // Divide the data based on the threshold (no value display on points)
   const belowThresholdData = yDataWithThreshold.map((y, index) => (xDataWithThreshold[index] < threshold ? y : null));
   const aboveThresholdData = yDataWithThreshold.map((y, index) => (xDataWithThreshold[index] >= threshold ? y : null));
@@ -48,14 +73,17 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
     aboveThresholdData[updatedThresholdIndex] = yDataWithThreshold[updatedThresholdIndex];
   }
 
+  // Determine the color of the xUser line based on whether it's above or below the threshold
+  const xUserColor = xUser < threshold ? belowThresholdColor : aboveThresholdColor; // Color for xUser based on its position
+
   const data = {
     labels: xDataWithThreshold,
     datasets: [
       {
         label: 'Below Threshold',
         data: belowThresholdData,
-        borderColor: 'rgba(33, 174, 238, 1)', // Blue line for "Below Threshold"
-        backgroundColor: 'rgba(33, 174, 238, 0.2)', // Blue area below threshold
+        borderColor: belowThresholdColor, // Dynamic color for "Below Threshold"
+        backgroundColor: belowThresholdColor.replace('1)', '0.2)'), // Dynamic area color below threshold
         fill: true,
         tension: 0.4, // Curved line
         pointRadius: 0, // Hide points
@@ -63,8 +91,8 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
       {
         label: 'Above Threshold',
         data: aboveThresholdData,
-        borderColor: 'rgba(250, 93, 93, 1)', // Red line for "Above Threshold"
-        backgroundColor: 'rgba(250, 93, 93, 0.2)', // Red area above threshold
+        borderColor: aboveThresholdColor, // Dynamic color for "Above Threshold"
+        backgroundColor: aboveThresholdColor.replace('1)', '0.2)'), // Dynamic area color above threshold
         fill: true,
         tension: 0.4, // Curved line
         pointRadius: 0, // Hide points
@@ -83,25 +111,27 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
           color: function (context) {
             const label = context.tick.label;
             if (label === threshold) {
-              return '#21AEEE'; // Blue grid line for threshold
+              return belowThresholdColor; // Grid line color for threshold
+            } else if (label === xUser) {
+              return xUserColor; // Grid line color for xUser
             }
             return 'rgba(0, 0, 0, 0.1)'; // Default gray grid line for others
           },
           lineWidth: function (context) {
             const label = context.tick.label;
-            if (label === threshold) {
-              return 3; // Thicker line for the threshold
+            if (label === threshold || label === xUser) {
+              return 3; // Thicker line for the threshold and xUser
             }
             return 1; // Default line width for others
           },
         },
         ticks: {
           font: function (context) {
-            // Check if the label matches the threshold and apply bold font and increased font size
-            if (context.tick.label === threshold) {
+            const label = context.tick.label;
+            if (label === threshold || label === xUser) {
               return {
-                weight: 'bold', // Make the threshold label bold
-                size: 14, // Increase the font size for the threshold label
+                weight: 'bold', // Make the threshold and xUser label bold
+                size: 14, // Increase the font size for the threshold and xUser label
               };
             }
             return {
@@ -110,9 +140,11 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
             };
           },
           color: function (context) {
-            // Change the color of the threshold label to blue
-            if (context.tick.label === threshold) {
-              return '#21AEEE'; // Blue color for the threshold label
+            const label = context.tick.label;
+            if (label === threshold) {
+              return belowThresholdColor; // Color for the threshold label
+            } else if (label === xUser) {
+              return xUserColor; // Color for the xUser label
             }
             return 'rgba(0, 0, 0, 1)'; // Default black color for other labels
           },
