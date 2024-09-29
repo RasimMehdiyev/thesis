@@ -62,7 +62,7 @@ const SidebarComponent = () => {
 
   // If loading, show a loading indicator
   if (loading) {
-    return <div>Loading...</div>; // Display a loading message or spinner
+    return <div className='sidebar'>Loading...</div>; // Display a loading message or spinner
   }
 
   // Render the sidebar component once data is available
