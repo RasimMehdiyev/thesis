@@ -87,13 +87,6 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
             }
             return 'rgba(0, 0, 0, 0.1)'; // Default gray grid line for others
           },
-          borderDash: function (context) {
-            const label = context.tick.label;
-            if (label === threshold) {
-              return [5, 5]; // Dashed line for threshold
-            }
-            return []; // Solid line for other grid lines
-          },
           lineWidth: function (context) {
             const label = context.tick.label;
             if (label === threshold) {
