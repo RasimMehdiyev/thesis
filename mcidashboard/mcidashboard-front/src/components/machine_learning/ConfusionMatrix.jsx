@@ -125,6 +125,8 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
         padding: {
           bottom: 10, // Padding between title and chart
         },
+        color: 'black'
+        
       },
       legend: {
         display: false, // Hide legend
@@ -151,7 +153,7 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
 
   return (
     <div
-      style={{ width: '100%', height: '350px', position: 'relative', marginTop: 40 }}
+      style={{ width: '100%', height: '350px', position: 'relative', marginBottom: 40 }}
       onMouseLeave={handleMouseLeave}
     >
       <Bar ref={chartRef} data={data} options={options} />

@@ -34,7 +34,7 @@ const PerformanceMetrics = () => {
 
 
   return (
-    <div className="card performance-metrics" style={{ position: 'relative' }}>
+    <div className="card performance-metrics" style={{ position: 'relative'}}>
       <p className="ml-subtitle" style={{ paddingBottom: '20px' }}>
         Performance metrics
       </p>
