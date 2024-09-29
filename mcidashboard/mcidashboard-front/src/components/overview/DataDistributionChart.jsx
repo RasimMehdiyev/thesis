@@ -94,6 +94,13 @@ const DataDistributionChart = ({ xData, yData, threshold }) => {
             }
             return []; // Solid line for other grid lines
           },
+          lineWidth: function (context) {
+            const label = context.tick.label;
+            if (label === threshold) {
+              return 3; // Thicker line for the threshold
+            }
+            return 1; // Default line width for others
+          },
         },
         ticks: {
           font: function (context) {
