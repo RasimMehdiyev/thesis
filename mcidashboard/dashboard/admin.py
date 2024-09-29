@@ -17,9 +17,15 @@ class MoveResource(resources.ModelResource):
         model = Move
 
 
+class PersonBiomarkerResource(resources.ModelResource):
+    class Meta:
+        model = PersonBiomarkers
+    
+
+
 class PersonAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     resource_class = PersonResource
-    list_display = ('id', 'username', 'password', 'mci', 'age','gender')
+    list_display = ('id', 'username','patient_code' , 'password', 'mci', 'age','gender')
     list_filter = ['username', 'mci']
     search_fields = ['username', 'mci']
     ordering = ['username']
@@ -61,4 +67,13 @@ class BiomarkerStatsAdmin(admin.ModelAdmin):
     list_filter = ['biomarkerID']
     search_fields = ['biomarkerID']
 admin.site.register(BiomarkerStats, BiomarkerStatsAdmin)
+
+
+class PersonBiomarkerAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = PersonBiomarkerResource
+    list_display = ('personID', 'biomarkerID', 'value')
+    list_filter = ['personID', 'biomarkerID']
+    search_fields = ['personID', 'biomarkerID']
+    ordering = ['personID']
+admin.site.register(PersonBiomarkers, PersonBiomarkerAdmin)
 

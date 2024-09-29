@@ -7,7 +7,7 @@ const OverviewPage = () => {
   const patient = location.state?.patient;  // Get the patient data passed from SidebarComponent
 
   if (!patient) {
-    return <div>No patient selected</div>;  // Fallback if no patient data is available
+    return <div className='container'>No patient selected</div>;  // Fallback if no patient data is available
   }
 
   return (
