@@ -15,10 +15,11 @@
     width: 100%; 
     gap: 20px; 
     height: auto;
+    align-items: flex-start;
 }
 
 .personal-info{
-    flex: 0 0 300px;
+    flex: 0 0 auto;
     max-width: 300px;
 }
 
