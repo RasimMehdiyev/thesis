@@ -15,6 +15,9 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
   const belowThresholdColor = swapColors ? 'rgba(250, 93, 93, 1)' : 'rgba(33, 174, 238, 1)'; // Red if swapped, else Blue
   const aboveThresholdColor = swapColors ? 'rgba(33, 174, 238, 1)' : 'rgba(250, 93, 93, 1)'; // Blue if swapped, else Red
 
+  // Threshold color set to gray
+  const thresholdColor = 'rgba(128, 128, 128, 1)'; // Gray color for threshold
+
   // Check if the threshold exists in xData
   let xDataWithThreshold = [...xData];
   let yDataWithThreshold = [...yData];
@@ -97,6 +100,15 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
         tension: 0.4, // Curved line
         pointRadius: 0, // Hide points
       },
+      {
+        label: 'xUser',
+        data: yDataWithThreshold.map((y, index) => (xDataWithThreshold[index] === xUser ? y : null)), // Single point for xUser
+        borderColor: xUserColor, // Color of xUser
+        backgroundColor: xUserColor, // Match background color
+        pointRadius: 6, // Large point to highlight xUser
+        fill: false, // No fill for xUser
+        showLine: false, // No line, just a point
+      },
     ],
   };
 
@@ -111,7 +123,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
           color: function (context) {
             const label = context.tick.label;
             if (label === threshold) {
-              return belowThresholdColor; // Grid line color for threshold
+              return thresholdColor; // Gray grid line for threshold
             } else if (label === xUser) {
               return xUserColor; // Grid line color for xUser
             }
@@ -119,8 +131,10 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
           },
           lineWidth: function (context) {
             const label = context.tick.label;
-            if (label === threshold || label === xUser) {
-              return 3; // Thicker line for the threshold and xUser
+            if (label === threshold) {
+              return 2; // Thinner line for the threshold (neutral)
+            } else if (label === xUser) {
+              return 3; // Thicker line for xUser
             }
             return 1; // Default line width for others
           },
@@ -142,7 +156,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
           color: function (context) {
             const label = context.tick.label;
             if (label === threshold) {
-              return belowThresholdColor; // Color for the threshold label
+              return thresholdColor; // Gray color for the threshold label
             } else if (label === xUser) {
               return xUserColor; // Color for the xUser label
             }
