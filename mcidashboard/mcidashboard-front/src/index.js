@@ -7,7 +7,11 @@ import './css/sidebar.css'
 import './css/home.css'
 import './css/overview.css'
 import './css/digital_biomarkers.css'
+import './css/machine_learning.css'
+import './css/demographic_summary.css'
 import './css/navbar.css'
+import './css/models.css'
+import './css/dropdown_table.css'
 import App from './App';
 
 

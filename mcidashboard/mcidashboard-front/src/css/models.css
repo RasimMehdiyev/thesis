@@ -1,0 +1,31 @@
+.centered {
+    text-align: center;
+    
+}
+
+.models-table{
+    border-collapse: collapse;
+    color: #585858;
+}
+
+
+.models-table td {
+    padding: 5px 0; 
+    vertical-align: middle; 
+  }
+  
+.models-table tr {
+    margin: 0; 
+   
+}
+  
+.no-margin {
+    margin: 0;  
+    list-style-position: inside; 
+    padding-left: 10px;
+}
+
+   
+.no-margin li {
+    margin: 0; 
+}

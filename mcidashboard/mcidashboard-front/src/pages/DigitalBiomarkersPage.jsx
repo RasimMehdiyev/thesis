@@ -16,7 +16,7 @@ const DigitalBiomarkersPage = () => {
     const fetchBiomarkers = async () => {
         console.log('Attempting to fetch biomarkers...');
         try {
-            const response = await fetch('/dashboard/biomarkers/');
+            const response = await fetch('/dashboard/biomarkers_type/');
             console.log('Response status:', response.status);
             
             const data = await response.json();

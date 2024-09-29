@@ -1,18 +1,37 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import PersonalInformation from '../components/PersonalInformation';
+import PersonalInformation from '../components/overview/PersonalInformation';
+import DigitalBiomarkers from '../components/overview/DigitalBiomarkers';
+import FeatureImportance from '../components/overview/FeatureImportance';
+import MachineLearningModel from '../components/overview/MachineLearningModel';
 
 const OverviewPage = () => {
   const location = useLocation();
-  const patient = location.state?.patient;  // Get the patient data passed from SidebarComponent
+  /*const patient = location.state?.patient;  // Get the patient data passed from SidebarComponent
 
   if (!patient) {
-    return <div className='container'>No patient selected</div>;  // Fallback if no patient data is available
-  }
+    return <div>No patient selected</div>;  // Fallback if no patient data is available
+  }*/
+
+    const patient = {
+      username: "JohnDoe",
+      gender: "Male",
+      age: 45,
+      mci: true,
+      // Additional static data can be added here as needed
+  };
+
 
   return (
-    <div className='container'>
-      <PersonalInformation patient={patient} />
+    <div className="container">
+      <div className="overview-row1">
+        <PersonalInformation className="personal-info" patient={patient} />
+        <DigitalBiomarkers className="digital-bio"/>
+      </div>
+      <div className="overview-row2">
+        <FeatureImportance className="feature-importance"  />
+        <MachineLearningModel className="ML-model"/>
+      </div>
     </div>
   );
 }
