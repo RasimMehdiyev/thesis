@@ -78,7 +78,7 @@ const SidebarComponent = () => {
       <ul className='patients'>
         {filteredPatients.map((patient) => (
           <li onClick={() => getPatient(patient.id)} className='patient-item' key={patient.id}>
-            <p>{patient.username}</p>
+            <p>{patient.full_name}</p>
             <div className='chevron-right-icon'></div>
           </li>
         ))}

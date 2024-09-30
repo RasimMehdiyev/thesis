@@ -45,6 +45,7 @@ class Move(models.Model):
 
 class Person(models.Model):
     id = models.BigAutoField(primary_key=True)
+    full_name = models.CharField(max_length=64, blank=True, null=True)
     username = models.CharField(max_length=45)
     password = models.CharField(max_length=45)
     mci = models.IntegerField(db_column='MCI')  # Field name made lowercase.
