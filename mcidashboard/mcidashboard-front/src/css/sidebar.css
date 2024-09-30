@@ -13,7 +13,7 @@
     letter-spacing: -0.14px;
 }
 
-.search-bar::placeholder {
+.search-bar-container input::placeholder {
     color: #B5B7C0;
     font-size: 16px;
 }
@@ -25,11 +25,11 @@
     align-items: center;
     margin-bottom: 20px;
     flex-direction: row;
-    background: #FAFBFF;
+    background: #FFF;
 }
 
 .search-bar-container img {
-    margin: 0 10px;
+    margin: 0 14px;
 }
 
 .search-bar:focus {
@@ -68,13 +68,14 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    margin-right: 50px;
+    margin-right: 25px;
 }
 
 .name {
     font-size: 26px;
     font-weight: 600;
     margin-left: 5px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .player-list {
@@ -90,7 +91,7 @@
     line-height: normal;
     letter-spacing: -0.18px;
     padding-top: 10px;
-    padding-left: 40px;
+    padding-left: 60px;
 }
 
 .patients {

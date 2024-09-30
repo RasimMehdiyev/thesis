@@ -70,7 +70,7 @@ const SidebarComponent = () => {
     <div className='sidebar'>
       <div className='logo'>
         <img src={process.env.PUBLIC_URL + "/static/solitairedss-logo.png"} alt="logo" />
-        <p className='name'>SOLITAIRE DSS</p>
+        <p className='name'>Solitaire DSS</p>
       </div>
       <p className='player-list'>Player List</p>
       <SearchBarComponent searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
