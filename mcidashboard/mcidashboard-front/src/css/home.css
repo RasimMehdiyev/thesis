@@ -1,27 +1,16 @@
 .container {
     flex-grow: 1;
-    /* Allow the container to take the remaining space */
     margin-left: 300px;
-    /* Offset by the sidebar width to avoid overlap */
     padding-top: 20px;
-    /* Add padding to avoid overlap with browser menu */
-    /*padding-left: 10px;*/
-    /* Optional: Add left padding for better spacing */
     height: 100vh;
-    /* Full height of the viewport */
     box-sizing: border-box;
-    /* Include padding in the element's total width and height */
-    overflow-y: scroll;
-    /* Ensure content can still scroll */
-    -ms-overflow-style: none;
-    /* For Internet Explorer and Edge */
-    scrollbar-width: none;
-    /* For Firefox */
+    /* overflow-y: scroll; */
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
     margin-top: 80px;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 .container::-webkit-scrollbar {
     display: none;
-    /* For Chrome, Safari, and Webkit-based browsers */
 }

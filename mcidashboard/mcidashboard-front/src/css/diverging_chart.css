@@ -1,0 +1,32 @@
+.chart-container-div-charts {
+    width: 95%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -40px;
+}
+
+.left-label,
+.right-label {
+    display: flex;
+    align-items: center;
+}
+
+.left-label .arrow,
+.right-label .arrow {
+    font-size: 24px;
+}
+
+@media only screen and (max-width: 1528px) {
+    .chart-container-div-charts {
+        width: 80%;
+        height: 400px;
+    }
+}

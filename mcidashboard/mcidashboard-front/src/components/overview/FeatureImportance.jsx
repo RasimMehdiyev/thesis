@@ -17,9 +17,9 @@ const FeatureImportance = () => {
     };
 
     return (
-        <div className="card" style={{width:'48%'}}>
+        <div className="card" id='importance-card'>
             <div className="personal-info-h">
-                <p className="ml-subtitle">Importance of digital biomarkers</p>
+                <p className="ml-subtitle" id="importance-p">Importance of digital biomarkers</p>
                 <img
                     src='/assets/help_icon.svg'
                     alt='Help Icon'

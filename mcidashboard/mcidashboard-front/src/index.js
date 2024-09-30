@@ -12,6 +12,7 @@ import './css/demographic_summary.css'
 import './css/navbar.css'
 import './css/models.css'
 import './css/dropdown_table.css'
+import './css/diverging_chart.css'
 import App from './App';
 
 

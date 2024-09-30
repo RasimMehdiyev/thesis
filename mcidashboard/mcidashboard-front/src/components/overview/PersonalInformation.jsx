@@ -33,9 +33,9 @@ const PersonalInformation = () => {
   };
 
   return (
-    <div className='card' style={{ width: '30%' }}>
+    <div className='card' id="pers-card">
       <div className='personal-info-h' style={{ position: 'relative' }}>
-        <p className='ml-subtitle'>Personal Information</p>
+        <p className='ml-subtitle' id="pers-p">Personal Information</p>
         <img
           src='/assets/help_icon.svg'
           alt='Help Icon'

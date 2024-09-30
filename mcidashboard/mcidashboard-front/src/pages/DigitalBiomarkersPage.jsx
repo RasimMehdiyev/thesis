@@ -35,7 +35,131 @@ const DigitalBiomarkersPage = () => {
         }
     }
     
-
+    const data = [
+        {
+            "id": 1,
+            "biomarkers": [
+                {
+                    "id": 19,
+                    "name": "Game Time",
+                    "unit": "milliseconds",
+                    "type": 1
+                },
+                {
+                    "id": 20,
+                    "name": "Score",
+                    "unit": "points",
+                    "type": 1
+                },
+                {
+                    "id": 21,
+                    "name": "Solved",
+                    "unit": "boolean (true/false)",
+                    "type": 1
+                }
+            ],
+            "name": "Result-based",
+            "description": null
+        },
+        {
+            "id": 2,
+            "biomarkers": [
+                {
+                    "id": 1,
+                    "name": "Total Time Average",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 2,
+                    "name": "Total Time SD",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 3,
+                    "name": "Think Time Average",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 4,
+                    "name": "Think Time SD",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 5,
+                    "name": "Move Time Average",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 6,
+                    "name": "Move Time SD",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 22,
+                    "name": "Total Time Min",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 23,
+                    "name": "Think Time Min",
+                    "unit": "milliseconds",
+                    "type": 2
+                },
+                {
+                    "id": 24,
+                    "name": "Move Time Min",
+                    "unit": "milliseconds",
+                    "type": 2
+                }
+            ],
+            "name": "Time-based",
+            "description": null
+        },
+        {
+            "id": 3,
+            "biomarkers": [
+                {
+                    "id": 7,
+                    "name": "Pile Move",
+                    "unit": "percentage (0% - 100%)",
+                    "type": 3
+                },
+                {
+                    "id": 8,
+                    "name": "King Beta Error",
+                    "unit": "percentage (0% - 100%)",
+                    "type": 3
+                },
+                {
+                    "id": 9,
+                    "name": "Ace Beta Error",
+                    "unit": "percentage (0% - 100%)",
+                    "type": 3
+                },
+                {
+                    "id": 10,
+                    "name": "Beta Error",
+                    "unit": "percentage (0% - 100%)",
+                    "type": 3
+                },
+                {
+                    "id": 11,
+                    "name": "Final Beta Error",
+                    "unit": "boolean (true/false)",
+                    "type": 3
+                }
+            ],
+            "name": "Performance-based",
+            "description": null
+        }
+    ]
 
   return (
     <div className='container' id="biomarker-container">
@@ -48,11 +172,17 @@ const DigitalBiomarkersPage = () => {
             }
         </div>
         <div className='solitaire-overview'>
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
+            <img style={{width: '86%'}} src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_2.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_3.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_4.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_5.png"} alt="" />
+
+            {/* <img style={{width: '86%'}} src={process.env.PUBLIC_URL + "/assets/solitaire_overview_1.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/assets/solitaire_overview_2.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/assets/solitaire_overview_3.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/assets/solitaire_overview_4.png"} alt="" />
+            <img src={process.env.PUBLIC_URL + "/assets/solitaire_overview_5.png"} alt="" /> */}
         </div>
     </div>
   )

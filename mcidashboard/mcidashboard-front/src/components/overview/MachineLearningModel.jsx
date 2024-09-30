@@ -15,9 +15,9 @@ const MachineLearningModel = () => {
     };
 
     return (
-        <div className="card" style={{width:'42%'}}>
+        <div className="card" id='ml-card'>
             <div className="personal-info-h">
-                <p className="ml-subtitle">Machine learning model</p>
+                <p className="ml-subtitle" id="ml-p">Machine learning model</p>
                 <img
                     src='/assets/help_icon.svg'
                     alt='Help Icon'
@@ -52,9 +52,9 @@ const MachineLearningModel = () => {
             </div>
 
             <div className='test-scores'>
-                <p style={{fontWeight: 600, fontSize: 24}}>Solitaire DSS prediction:</p>
-                <p style={{marginTop:-30}}>
-                    The <span style={{ textDecoration: 'underline' }}>most accurate</span> machine learning model predicts that the patient is <span style={{ fontSize:30,color:'#FA5D5D', fontWeight:600 }}>MCI</span> .
+                <p id="prediction-title">Solitaire DSS prediction:</p>
+                <p id="prediction-text">
+                    The <span style={{ textDecoration: 'underline' }}>most accurate</span> machine learning model predicts that the patient is <span id="prediction-result">MCI</span> .
                 </p>
             </div>
 

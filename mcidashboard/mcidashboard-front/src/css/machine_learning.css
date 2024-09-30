@@ -1,9 +1,8 @@
 .machine-learning-container {
     display: grid;
     gap: 20px;
-    grid-template-columns: 1.5fr 1fr; /* Two equal-width columns */
-    grid-template-rows: auto auto; /* Two rows */
-    width: 100%;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: auto auto;
     padding: 20px;
 }
 
@@ -13,49 +12,56 @@
     padding: 20px;
     margin-left: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: Poppins, sans-serif; 
+    font-family: Poppins, sans-serif;
 }
 
-.ml-subtitle{
-    
+.ml-subtitle {
     font-size: 22px;
     font-weight: 600;
 }
 
-
 .demographic-summary {
-    grid-column: 1 / 2; /* Spans 1st column */
-    grid-row: 1 / 2; /* Spans 1st row */
-    width: 95%; 
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    /* width: 96%; */
 }
 
+@media only screen and (max-width: 1528px) {
+    .performance-metrics {
+        /* width: 78%!important; */
+    }
+}
 
 .performance-metrics {
-    grid-column: 2 / 3; /* Spans 2nd column */
-    grid-row: 1 / 3; /* Spans 1st and 2nd row */
+    grid-column: 2 / 3;
+    /* Spans 2nd column */
+    grid-row: 1 / 3;
+    /* Spans 1st and 2nd row */
     margin-left: 20px;
-    margin-right: 60px;
+    margin-right: 50px;
     align-self: start;
+    width: 74%;
 }
-
 
 .models-data-container {
-    grid-column: 1 / 2; /* Spans 1st column */
-    grid-row: 2 / 3; /*Spans 2nd row */
+    grid-column: 1 / 2;
+    /* Spans 1st column */
+    grid-row: 2 / 3;
+    /*Spans 2nd row */
     display: flex;
     gap: 30px;
-    width: 100%; 
+    width: 100%;
     margin-bottom: 20px;
+    /* width: 100%; */
 }
 
-.models, .data-preprocessing {
-    flex: 1; /* Both cards take equal width */
+.models,
+.data-preprocessing {
+    flex: 1;
+    /* Both cards take equal width */
 }
 
-.datapreproc-table{
+.datapreproc-table {
     border-collapse: collapse;
     color: #585858;
-
 }
-
-  

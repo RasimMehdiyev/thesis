@@ -2,39 +2,39 @@
     display: flex;
     flex-direction: column;
     overflow: visible;
-    width: 320px;
+    width: 420px;
     padding: 20px;
     font-family: 'Poppins', sans-serif;
 }
 
 .solitaire-overview {
-    width: 620px;
+    /* width: 620px; */
     overflow: visible;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: end;
     gap: 20px;
     margin-right: 75px;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1920px) {
     .solitaire-overview {
         width: 820px;
     }
     .biomarkers-list {
-        width: 560px;
+        width: 960px;
     }
 }
 
 #biomarker-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     margin-bottom: 50px;
+    gap: 100px;
 }
 
 .solitaire-overview img {
-    width: 100%;
+    width: 80%;
     height: auto;
 }
 

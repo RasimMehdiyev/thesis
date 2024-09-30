@@ -10,15 +10,13 @@ const MachineLearningPage = () => {
 
 
   return (
-    <div className="container">
-        <div className="machine-learning-container">
+    <div className="container machine-learning-container">
             <DemographicSummary/>
             <PerformanceMetrics/>
             <div class="models-data-container">
                 <Models/>
                 <DataPreProcessing/>
             </div>
-        </div>
     </div>
   )
 }

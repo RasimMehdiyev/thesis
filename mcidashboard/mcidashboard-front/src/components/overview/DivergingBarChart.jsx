@@ -8,6 +8,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 
 const DivergingBarChart = ({ features, percentages }) => {
   const chartRef = useRef(null);
+
   const data = {
     labels: features, // Features (e.g., 'Average of Total Moves')
     datasets: [
@@ -93,27 +94,21 @@ const DivergingBarChart = ({ features, percentages }) => {
   };
 
   return (
-    <div style={{ width: '95%', height: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <div className='chart-container-div-charts'>
       {/* Container for arrows and text */}
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center', // Center both texts
-          alignItems: 'center',
-          marginBottom: -40,
-          marginLeft: 250
-        }}
+        className='chart-labels'
       >
         {/* Left arrow and text */}
-        <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-          <span style={{ fontSize: '24px' }}>&larr;</span>
+        <div className='left-label'>
+          <span className='arrow'>&larr;</span>
           <p style={{ marginLeft: '5px', whiteSpace: 'nowrap' }}>Towards healthy</p>
         </div>
 
         {/* Right arrow and text */}
-        <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
+        <div className='right-label'>
           <p style={{ marginRight: '5px', whiteSpace: 'nowrap' }}>Towards MCI</p>
-          <span style={{ fontSize: '24px' }}>&rarr;</span>
+          <span className='arrow'>&rarr;</span>
         </div>
       </div>
 
