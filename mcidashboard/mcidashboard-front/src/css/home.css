@@ -2,13 +2,12 @@
     flex-grow: 1;
     margin-left: 300px;
     padding-top: 20px;
-    height: 100vh;
     box-sizing: border-box;
     /* overflow-y: scroll; */
     /* -ms-overflow-style: none;
     scrollbar-width: none; */
     margin-top: 80px;
-    /* overflow-x: hidden; */
+    padding-bottom: 40px;
 }
 
 .container::-webkit-scrollbar {
