@@ -23,6 +23,7 @@
 .demographic-summary {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    align-self: start;
     /* width: 96%; */
 }
 
@@ -43,6 +44,8 @@
     width: 74%;
 }
 
+
+
 .models-data-container {
     grid-column: 1 / 2;
     /* Spans 1st column */
@@ -58,6 +61,7 @@
 .models,
 .data-preprocessing {
     flex: 1;
+    align-self: end;
     /* Both cards take equal width */
 }
 
