@@ -107,13 +107,13 @@ const DivergingBarChart = ({ features, percentages }) => {
         }}
       >
         {/* Left arrow and text */}
-        <div style={{ display: 'flex', alignItems: 'center', flex: 1, marginLeft: 220}}>
+        <div style={{ display: 'flex', alignItems: 'center', flex: 1, marginLeft: 250}}>
           <span style={{ fontSize: '24px' }}>&larr;</span>
           <p style={{ marginLeft: '5px', whiteSpace: 'nowrap' }}>Towards healthy</p>
         </div>
 
         {/* Right arrow and text */}
-        <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'flex-end' }}>
+        <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'flex-end', marginLeft: 20}}>
           <p style={{ marginRight: '5px', whiteSpace: 'nowrap' }}>Towards MCI</p>
           <span style={{ fontSize: '24px' }}>&rarr;</span>
         </div>
