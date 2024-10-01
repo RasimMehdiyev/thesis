@@ -30,7 +30,7 @@ const MachineLearningModel = () => {
                 <Tooltip
                     content="<strong> Machine Learning model </strong> component presents prediction result, description of dataset, and model accuracy."
                     isVisible={isTooltipVisible}
-                    top={620} 
+                    top={750} 
                     left={1500}
                 />
             </div>

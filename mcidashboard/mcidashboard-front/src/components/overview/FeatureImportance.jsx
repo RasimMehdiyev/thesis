@@ -31,7 +31,7 @@ const FeatureImportance = () => {
                 <Tooltip
                     content="The <strong> importance of digital biomarkers </strong> component presents top digital biomarkers impacting the prediction."
                     isVisible={isTooltipVisible}
-                    top={300} 
+                    top={770} 
                     left={700}
                 />
             </div>
