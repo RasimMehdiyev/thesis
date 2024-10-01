@@ -14,6 +14,7 @@
     z-index: 1000;
     padding: 0 20px;
     box-sizing: border-box;
+    overflow: hidden; /* Ensures that content doesn't overflow the navbar */
 }
 
 .navbar-list {
@@ -24,6 +25,7 @@
     flex-direction: row;
     justify-content: center;
     gap: 60px;
+    flex-wrap: wrap; /* Allows the list items to wrap to the next line */
 }
 
 .navbar-list li {
@@ -40,9 +42,11 @@
     font-weight: 400;
     text-align: center;
     display: inline-block;
-    /* min-width: 235px; */
     position: relative;
     display: inline-block;
+    white-space: nowrap; /* Prevents text from wrapping within the item */
+    text-overflow: ellipsis; /* Adds ellipsis (...) if text overflows */
+    max-width: 200px; /* Adjust to limit the width of each item */
 }
 
 .navbar-list a:after {
