@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 280px;
-    width: calc(100% - 280px);
+    width: calc(100% - 280px); /* Keeps the same positioning */
     background-color: #f8f9fa;
     height: 60px;
     display: flex;
@@ -12,18 +12,20 @@
     z-index: 1000;
     padding: 0 20px;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-x: auto; 
+    white-space: nowrap; 
 }
 
 .navbar-list {
     display: flex;
     list-style-type: none;
+    justify-content: center;
     margin: 0;
     padding: 0;
     flex-direction: row;
-    justify-content: center;
-    gap: 60px;
-    flex-wrap: wrap;
+    gap: 60px; 
+    flex-wrap: nowrap; 
+    min-width: 100%; 
 }
 
 .navbar-list li {
@@ -42,85 +44,9 @@
     display: inline-block;
     position: relative;
     white-space: nowrap; 
-    text-overflow: ellipsis; /* Adds ... if text overflows */
-    max-width: 200px; .navbar {
-        position: fixed;
-        top: 0;
-        left: 280px;
-        width: calc(100% - 280px);
-        background-color: #f8f9fa;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        padding: 0 20px;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-    
-    .navbar-list {
-        display: flex;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        flex-direction: row;
-        justify-content: center;
-        gap: 60px;
-        flex-wrap: wrap;
-    }
-    
-    .navbar-list li {
-        margin-right: 20px;
-    }
-    
-    .navbar-list a {
-        text-decoration: none;
-        color: #333;
-        font-size: 16px;
-        font-family: 'Poppins', sans-serif;
-        padding: 0 15px;
-        border-radius: 5px;
-        font-weight: 400;
-        text-align: center;
-        display: inline-block;
-        position: relative;
-        white-space: nowrap; 
-        text-overflow: ellipsis; /* Adds ... if text overflows */
-        max-width: 200px; /* Adjust to limit the width of each item */
-    }
-    
-    /* Pseudo-element for underline */
-    .navbar-list a:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -5px; 
-        width: 0;
-        height: 2px;
-        background-color: #7B61FF;
-        transition: width 0.3s ease; /* Increased duration for better effect */
-    }
-    
-    .navbar-list a:hover:after {
-        width: 100%; 
-    }
-    
-    .navbar-list a:hover {
-        color: #7D7D7D;
-        font-weight: bold;
-    }
-    
-    .navbar-list a.active:after {
-        width: 100%; /* Ensure the underline is shown when active */
-    }
-    
-    .navbar-list a.active {
-        color: #7D7D7D;
-        font-weight: bold;
-    }
-    
+    text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+    flex-shrink: 0; 
+    max-width: 200px;
 }
 
 /* Pseudo-element for underline */
@@ -128,15 +54,15 @@
     content: '';
     position: absolute;
     left: 0;
-    bottom: -5px; /* Adjusted to bring the underline closer to the text */
+    bottom: -5px;
     width: 0;
     height: 2px;
     background-color: #7B61FF;
-    transition: width 0.3s ease; /* Increased duration for better effect */
+    transition: width 0.3s ease; /* Underline effect */
 }
 
 .navbar-list a:hover:after {
-    width: 100%; 
+    width: 100%;
 }
 
 .navbar-list a:hover {
