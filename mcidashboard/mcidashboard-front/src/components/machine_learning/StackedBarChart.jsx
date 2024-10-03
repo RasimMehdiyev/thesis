@@ -100,7 +100,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding 
   const containerHeight = showLegend ? '110px' : '145px';
 
   return (
-    <div style={{ height: containerHeight, width: '100%' }}> 
+    <div style={{ height: containerHeight, width: '100%', maxWidth: '400px' }}> 
       <Bar data={data} options={options} />
     </div>
   );

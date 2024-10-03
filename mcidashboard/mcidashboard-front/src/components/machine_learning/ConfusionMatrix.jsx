@@ -150,7 +150,7 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
 
   return (
     <div
-      style={{ width: '100%', height: '350px', position: 'relative', marginBottom: 40 }}
+      style={{ width: '100%', height: '350px', maxWidth: '400px', position: 'relative', marginBottom: 40 }}
       onMouseLeave={handleMouseLeave}
     >
       <Bar ref={chartRef} data={data} options={options} />
