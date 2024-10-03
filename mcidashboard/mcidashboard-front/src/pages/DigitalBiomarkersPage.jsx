@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CategorizedBiomarker from '../components/digital_biomarkers/CategorizedBiomarkers';
+import SolitaireGame from '../components/digital_biomarkers/solitaire_components/SolitaireGame';
 const DigitalBiomarkersPage = () => {
 
 //  fetch all digital biomarkers
@@ -40,20 +41,19 @@ const DigitalBiomarkersPage = () => {
   return (
     <div className='container' id="biomarker-container">
         <div class="biomarkers-list">
-            {/* <CategorizedBiomarker biomarker_type={biomarkers}/> */}
             {
                 biomarkers.map(biomarker_type => (
                     <CategorizedBiomarker key={biomarker_type.id} biomarker_type={biomarker_type}/>
                 ))
             }
         </div>
-        <div className='solitaire-overview'>
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
+        <SolitaireGame/> 
+
+            {/* <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_2.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_3.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_4.png"} alt="" />
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_5.png"} alt="" />
-        </div>
+            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_5.png"} alt="" /> */}
     </div>
   )
 }
