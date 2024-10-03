@@ -27,11 +27,6 @@
     align-self: start;
 }
 
-@media only screen and (max-width: 1528px) {
-    .performance-metrics {
-        /* width: 78%!important; */
-    }
-}
 
 .performance-metrics {
     grid-column: 2 / 3;
