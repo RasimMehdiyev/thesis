@@ -62,16 +62,16 @@ const DigitalBiomarkers = () => {
                     <GameHistoryLineChart data={data} labels={labels} />
                 </div>
                 <div style={{}}className="grid-item">
-                    <p style={{fontSize:'1rem'}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
+                    <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
                     <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99} swapColors={true}/>
                 </div>
-                <div className="grid-item test-scores" style={{fontSize: '1rem', fontWeight: 600, marginTop:50}}>
+                <div className="grid-item test-scores" style={{fontSize: 14, fontWeight: 600, marginTop:50}}>
                     <p>Total moves of the last session: <span style={{color:'#FA5D5D'}}>66</span></p>
                     <p className="counterfactuals">If Total Moves <span style={{color:'#21AEEE'}}>reduces to 62</span>, Solitaire DSS would think the player is normally aging.</p>
                 </div>
                 
                 <div className="grid-item">
-                <p style={{fontSize:'1rem'}}>Total Moves of the last session in the histogram of all <strong>Healthy</strong> players.</p>
+                <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>Healthy</strong> players.</p>
                 <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99}/>
                 </div>
             </div>

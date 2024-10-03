@@ -127,7 +127,7 @@
 
 #prediction-title {
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 24px;
 }
 
 #prediction-text {
@@ -191,7 +191,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 14px;
     flex-direction: column;
     justify-content: flex-start;
     text-align: center;
@@ -210,7 +210,7 @@
     border-radius: 20px;
     padding: 0 10px;
     border: 1px solid black;
-    font-size: 0.8rem;
+    font-size: 12px;
     outline: none;
     appearance: none;
     background-color: white;

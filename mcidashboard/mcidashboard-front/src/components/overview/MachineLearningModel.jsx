@@ -59,8 +59,8 @@ const MachineLearningModel = () => {
             </div>
 
             <div className="accuracy">
-                <p style={{fontSize:'1.5rem', fontWeight: 600}}>Highest model accuracy:</p>
-                <p style={{marginTop: -20, fontWeight:600, fontSize:'2rem', color:'#21AEEE'}}>83.3%</p>
+                <p style={{fontSize: 24, fontWeight: 600}}>Highest model accuracy:</p>
+                <p style={{marginTop: -20, fontWeight:600, fontSize:30, color:'#21AEEE'}}>83.3%</p>
                 <a href="/machine-learning/" style={{textDecoration: 'underline', color: '#5A21EB', fontWeight: 600, marginTop:-30}}>More</a>
             </div>
         </div>
