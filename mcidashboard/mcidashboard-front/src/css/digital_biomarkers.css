@@ -23,6 +23,12 @@
     .biomarkers-list {
         width: 360px;
     }
+    
+    .personal-info{
+        width: 1000px;
+    }
+    
+
 }
 
 #biomarker-container {

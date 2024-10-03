@@ -33,61 +33,15 @@
 
 #pers-card {
     width: 30%;
+    min-width: 300px;
 }
 
 #dig-card {
     width: 60%;
 }
 
-@media only screen and (max-width:1529px) {
-    #dig-card {
-        width: 60%;
-    }
-    #pers-card {
-        width: 28%;
-    }
-    #ml-p,
-    #pers-p,
-    #importance-p,
-    #dbm-p {
-        font-size: 21px;
-    }
-    .info h3 {
-        margin-top: 0;
-        margin-bottom: 5px;
-        font-size: 18px;
-    }
-    .label {
-        flex: 0 0 100px;
-        text-align: left;
-        font-size: 15px;
-    }
-    .value {
-        font-size: 15px;
-    }
-    #ml-card {
-        width: 40%!important;
-    }
-    #importance-card {
-        width: 48%!important;
-    }
-    .demographics-list {
-        font-size: 15px;
-    }
-    .test-scores #prediction-title {
-        font-weight: 600;
-        font-size: 22px;
-    }
-    .test-scores #prediction-text {
-        margin-top: -30px;
-        font-size: 15px;
-    }
-    .test-scores #prediction-result {
-        font-size: 22px;
-        color: #FA5D5D;
-        font-weight: 600;
-    }
-}
+
+
 
 #importance-card {
     width: 48%;
@@ -279,3 +233,4 @@
     width: 100%;
     padding: 10px 0;
 }
+

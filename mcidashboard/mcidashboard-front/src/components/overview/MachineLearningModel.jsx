@@ -15,7 +15,7 @@ const MachineLearningModel = () => {
     };
 
     return (
-        <div className="card" id='ml-card'>
+        <div className="card" id='ml-card' style={{minWidth: 500}}>
             <div className="personal-info-h">
                 <p className="ml-subtitle" id="ml-p">Machine learning model</p>
                 <img

@@ -8,8 +8,11 @@
     scrollbar-width: none; */
     margin-top: 80px;
     padding-bottom: 40px;
+    overflow-x: auto;
 }
 
 .container::-webkit-scrollbar {
     display: none;
 }
+
+

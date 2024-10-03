@@ -16,7 +16,7 @@ const FeatureImportance = () => {
     };
 
     return (
-        <div className="card" id='importance-card' style={{ overflow: 'hidden' }}> {/* Ensure no overflow */}
+        <div className="card" id='importance-card' style={{ overflow: 'hidden', minWidth: 700 }}> 
             <div className="personal-info-h" style={{ display: 'flex', alignItems: 'center' }}>
                 <p className="ml-subtitle" id="importance-p">Importance of digital biomarkers</p>
                 <img
