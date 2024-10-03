@@ -7,7 +7,7 @@
     width: 100%;
     border-collapse: collapse;
     margin: 10px 0;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .demographic-table th,
@@ -17,7 +17,7 @@
 }
 
 .demographic-table th {
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .demographic-table thead th {
@@ -29,7 +29,7 @@
 }
 
 .demographic-table .category {
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .demographic-table .numbers {
@@ -64,7 +64,7 @@ tr {
 }
 
 .notes {
-    font-size: 12px;
+    font-size: 0.8rem;
     color: gray;
     margin-top: 10px;
     line-height: 1.4;
@@ -76,7 +76,7 @@ tr {
 
 .dt-subtitle {
     font-weight: 400;
-    font-size: 10px;
+    font-size: 0.8rem;
     color: gray;
     margin-top: -4px;
     display: block;

@@ -36,12 +36,11 @@
     min-width: 300px;
 }
 
-#dig-card {
+#dig-card{
     width: 60%;
+    min-width: 700px;
+    overflow: hidden;
 }
-
-
-
 
 #importance-card {
     width: 48%;
@@ -49,6 +48,7 @@
 
 #ml-card {
     width: 42%;
+    min-width: 400px;
 }
 
 .personal-info-h {
@@ -124,7 +124,7 @@
 
 #prediction-title {
     font-weight: 600;
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 
 #prediction-text {
@@ -188,7 +188,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 1rem;
     flex-direction: column;
     justify-content: flex-start;
     text-align: center;
@@ -207,7 +207,7 @@
     border-radius: 20px;
     padding: 0 10px;
     border: 1px solid black;
-    font-size: 14px;
+    font-size: 0.8rem;
     outline: none;
     appearance: none;
     background-color: white;
