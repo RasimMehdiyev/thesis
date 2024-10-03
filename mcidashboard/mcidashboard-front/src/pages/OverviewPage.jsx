@@ -9,7 +9,7 @@ const OverviewPage = () => {
   const location = useLocation();
 
     const patient = {
-      username: "JohnDoe",
+      username: "John Doe",
       gender: "Male",
       age: 45,
       mci: true,

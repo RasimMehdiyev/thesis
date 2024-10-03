@@ -47,7 +47,6 @@
 }
 
 #ml-card {
-    width: 42%;
     min-width: 500px;
 }
 
@@ -233,4 +232,5 @@
     width: 100%;
     padding: 10px 0;
 }
+
 
