@@ -26,7 +26,7 @@ const PersonalInformation = () => {
 
 
   const patient = {
-    username: 'JohnDoe',
+    username: 'John Doe',
     gender: 'Male',
     age: 45,
     mci: true,

@@ -18,7 +18,7 @@ const FeatureImportance = () => {
     return (
         <div className="card" id='importance-card' style={{ overflow: 'hidden', minWidth: 700 }}> 
             <div className="personal-info-h" style={{ display: 'flex', alignItems: 'center' }}>
-                <p className="ml-subtitle" id="importance-p">Importance of digital biomarkers</p>
+                <p className="ml-subtitle" id="importance-p">Top digital biomarkers impacting the prediction</p>
                 <img
                     src='/assets/help_icon.svg'
                     alt='Help Icon'
