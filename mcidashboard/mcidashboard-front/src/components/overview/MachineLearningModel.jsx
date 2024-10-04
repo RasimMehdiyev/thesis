@@ -42,13 +42,13 @@ const MachineLearningModel = () => {
                 <div className='demographics-list'>
                     <p><strong>46 </strong>participants in total</p>
                     <ul>
-                        <li><strong>23</strong> healthy participants with an average age of <strong>70</strong> </li>
+                        <li><span style={{color: '#21AEEE'}}><strong>23</strong> healthy participants </span>with an average age of <strong>70</strong> </li>
                         <ul>
                             <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
                             Recruited from senior groups and labeled as healthy based on cognitive assessments (MMSE, MoCA).
                             </em>
                         </ul>
-                        <li style={{marginTop: 10}}><strong>23</strong> MCI participants with an average age of <strong>80</strong></li>
+                        <li style={{marginTop: 10}}><strong>23</strong> <span style={{color: '#FA5D5D'}}>MCI participants</span> with an average age of <strong>80</strong></li>
                         <ul>
                             <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
                             Recruited from two leading memory clinics in Belgium where they had already been diagnosed with MCI.
@@ -57,7 +57,7 @@ const MachineLearningModel = () => {
                     </ul>
                 </div>
                 <hr className='horizontal-line'/>
-                <p className="demographics-list"><strong>138</strong> rounds, <strong>9735</strong> moves and <strong>791.7</strong> minutes in total</p>
+                <p className="demographics-list"><strong>138</strong> game rounds, <strong>9735</strong> player moves and <strong>791.7</strong> minutes of gameplay</p>
                 <hr className='horizontal-line'/>
                 <p className="demographics-list"><strong>19</strong> models trained with <strong>26</strong>/61 potential digital biomarkers</p>
             </div>
