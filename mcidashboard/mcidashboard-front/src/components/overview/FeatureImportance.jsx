@@ -1,39 +1,14 @@
-import React, { useState } from 'react';
-import Tooltip from '../Tooltip'; 
+import React from 'react'; 
 import DivergingBarChart from './DivergingBarChart';
 
 const FeatureImportance = () => {
-    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
-    // Show tooltip on mouse enter
-    const showTooltip = () => {
-        setIsTooltipVisible(true);
-    };
-
-    // Hide tooltip on mouse leave
-    const hideTooltip = () => {
-        setIsTooltipVisible(false);
-    };
 
     return (
         <div className="card" id='importance-card' style={{ overflow: 'hidden', minWidth: 700 }}> 
             <div className="personal-info-h" style={{ display: 'flex', alignItems: 'center' }}>
                 <p className="ml-subtitle" id="importance-p">Top digital biomarkers impacting the prediction</p>
-                <img
-                    src='/assets/help_icon.svg'
-                    alt='Help Icon'
-                    className='icon'
-                    onMouseEnter={showTooltip}
-                    onMouseLeave={hideTooltip}
-                    style={{ cursor: 'pointer' }}
-                />
-
-                <Tooltip
-                    content="The <strong> importance of digital biomarkers </strong> component presents top digital biomarkers impacting the prediction."
-                    isVisible={isTooltipVisible}
-                    top={770} 
-                    left={700}
-                />
+                
             </div>
 
             <DivergingBarChart
