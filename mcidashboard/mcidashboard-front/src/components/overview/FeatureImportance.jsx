@@ -15,7 +15,7 @@ const FeatureImportance = () => {
                 features={['Average of Total Moves', 'Score', 'Average of Accuracy', 'Game time', 'Hint', 'Solved', 'Undo', 'Taps']}
                 percentages={[10.1, 7.5, 6.5, 2.7, 2.2, -9.7, -5.4, -5.4]}
             />
-            <a className="accuracy" href="/digital-biomarkers/" style={{textDecoration: 'underline', color: '#5A21EB', fontWeight: 600, marginTop:-10}}>More</a>
+            <a className="accuracy" href="/digital-biomarkers/" style={{textDecoration: 'underline', color: '#5A21EB', fontWeight: 600, marginTop:-10, fontSize: 18}}>More</a>
         </div>
     )
 }

@@ -46,7 +46,7 @@ const PersonalInformation = () => {
         />
 
         <Tooltip
-          content="<strong>Neuropsychological tests </strong> are clinical results and <strong> Self-report information </strong> is based on player’s own weekly report."
+          content="None of this data was used for predictions; the model relies entirely on digital biomarkers."
           isVisible={isTooltipVisible}
         />
       </div>

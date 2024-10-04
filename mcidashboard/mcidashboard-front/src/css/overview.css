@@ -14,6 +14,7 @@
     gap: 20px;
     height: auto;
     align-items: flex-start;
+    font-size: 18px;
 }
 
 .personal-info {
@@ -68,6 +69,8 @@
 .info h3 {
     margin-top: 0;
     margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .demographics-list {
@@ -96,7 +99,8 @@
 }
 
 .label {
-    flex: 0 0 100px;
+
+    width: 120px; 
     text-align: left;
 }
 
@@ -125,6 +129,7 @@
     margin-top: 30px;
     align-self: start;
 }
+
 
 #prediction-title {
     font-weight: 600;
@@ -170,6 +175,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 5px;
+    font-size: 14px;
 }
 
 .dash {
@@ -223,7 +229,7 @@
     border-radius: 20px;
     padding: 0 10px;
     border: 1px solid black;
-    font-size: 12px;
+    font-size: 14px;
     outline: none;
     appearance: none;
     background-color: white;
@@ -247,7 +253,8 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 0;
+    padding-top: 20px;
+    padding-bottom: -20px;
 }
 
 

@@ -1,8 +1,20 @@
-import React from 'react';
+import React,{useState} from 'react';
 import StackedBarChart from './StackedBarChart'; 
+import Tooltip from '../Tooltip'; 
 
 const DemographicSummary= () => {
 
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  // Show tooltip on mouse enter
+  const showTooltip = () => {
+    setIsTooltipVisible(true);
+  };
+
+  // Hide tooltip on mouse leave
+  const hideTooltip = () => {
+    setIsTooltipVisible(false);
+  };
 
     
     const genderSet = [
@@ -57,7 +69,24 @@ const DemographicSummary= () => {
 
 return (
     <div className="card demographic-summary">
+        <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className="ml-subtitle">Demographic summary</p>
+          <img
+            src='/assets/help_icon.svg'
+            alt='Help Icon'
+            className='icon'
+            onMouseEnter={showTooltip}  // Show tooltip on hover
+            onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
+            style={{ cursor: 'pointer', marginTop: 5 }}
+          />
+
+          <Tooltip
+            content="None of this data was used to train the machine learning models, which rely exclusively on digital biomarkers."
+            isVisible={isTooltipVisible}
+            left={350}
+          />
+        </div>
+        
         <table className="demographic-table">
         <thead>
           <tr>

@@ -41,7 +41,7 @@ const DigitalBiomarkers = () => {
                 <Tooltip
                 top={100} 
                 left={1150}
-                content="Digital biomarkers are objective, quantifiable physiological and behavioral measures that are collected and analyzed by means of digital devices. They can be used to monitor and diagnose various health conditions."
+                content="This is the data on which the prediction is based."
                 isVisible={isTooltipVisible}
                 />
                 
@@ -65,7 +65,7 @@ const DigitalBiomarkers = () => {
                     <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
                     <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99} swapColors={true}/>
                 </div>
-                <div className="grid-item test-scores" style={{fontSize: 14, fontWeight: 600, marginTop:50}}>
+                <div className="grid-item test-scores" style={{fontSize: 16, fontWeight: 600, marginTop:50}}>
                     <p>Total moves of the last session: <span style={{color:'#FA5D5D'}}>66</span></p>
                     <p className="counterfactuals">If Total Moves <span style={{color:'#21AEEE'}}>reduces to 62</span>, Solitaire DSS would think the player is normally aging.</p>
                 </div>
