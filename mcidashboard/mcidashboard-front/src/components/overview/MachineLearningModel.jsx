@@ -30,7 +30,7 @@ const MachineLearningModel = () => {
             <p className="ml-subtitle" id="ml-p">Machine learning model</p>
             
             <div className='info'>
-                <div className="personal-info-h">
+                <div className="personal-info-h" style={{ position: 'relative' }}>
                     <h3>Dataset information</h3>
                     <img
                         src='/assets/help_icon.svg'
@@ -44,8 +44,8 @@ const MachineLearningModel = () => {
                     <Tooltip
                         content="The machine learning models used data from <strong>46</strong> participants, which is a good starting point for initial research, though for the best results, similar models typically benefit from data from <strong>hundreds or thousands</strong> of participants."
                         isVisible={isDatasetTooltipVisible}
-                        top={750} 
-                        left={1500}
+                        top={-70} 
+                        left={270}
                     />
                 </div>
                 
@@ -77,7 +77,7 @@ const MachineLearningModel = () => {
             </div>
 
             <div className='test-scores'>
-                <div className="personal-info-h">
+                <div className="personal-info-h" style={{ position: 'relative' }}>
                     <p id="prediction-title">Solitaire DSS prediction:</p>
                     <img
                         src='/assets/help_icon.svg'
@@ -91,8 +91,8 @@ const MachineLearningModel = () => {
                     <Tooltip
                         content="The system distinguishes between healthy individuals and those with MCI but doesn’t assess MCI severity or predict its progression to dementia, limiting its use for prognosis or treatment guidance."
                         isVisible={isPredictionTooltipVisible}
-                        top={1100} 
-                        left={1300}
+                        top={-70} 
+                        left={370}
                     />
                 </div>
                 

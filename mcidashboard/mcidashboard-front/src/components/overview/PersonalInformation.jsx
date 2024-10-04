@@ -46,8 +46,10 @@ const PersonalInformation = () => {
         />
 
         <Tooltip
-          content="None of this data was used for predictions; the model relies entirely on digital biomarkers."
+          content="None of this data was used for predictions as the machine learning models rely entirely on digital biomarkers."
           isVisible={isTooltipVisible}
+          top={60}
+          left={140}
         />
       </div>
 

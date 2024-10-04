@@ -27,7 +27,7 @@ const DigitalBiomarkers = () => {
     
     return (
         <div className="card" id="dig-card">
-            <div className="personal-info-h">
+            <div className="personal-info-h" style={{ position: 'relative' }}>
                 <p className="ml-subtitle" id="dbm-p">Digital Biomarkers</p>
                 <img
                     src='/assets/help_icon.svg'
@@ -39,8 +39,8 @@ const DigitalBiomarkers = () => {
                     />
 
                 <Tooltip
-                top={100} 
-                left={1150}
+                top={10} 
+                left={280}
                 content="This is the data on which the prediction is based."
                 isVisible={isTooltipVisible}
                 />

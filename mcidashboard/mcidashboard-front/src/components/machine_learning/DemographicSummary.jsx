@@ -83,7 +83,8 @@ return (
           <Tooltip
             content="None of this data was used to train the machine learning models, which rely exclusively on digital biomarkers."
             isVisible={isTooltipVisible}
-            left={350}
+            left={370}
+            top={-10}
           />
         </div>
         
