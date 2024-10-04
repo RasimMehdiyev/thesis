@@ -85,7 +85,7 @@ const MachineLearningModel = () => {
                         className='icon'
                         onMouseEnter={showPredictionTooltip}  // Show prediction tooltip on hover
                         onMouseLeave={hidePredictionTooltip}  // Hide prediction tooltip when hover ends
-                        style={{ cursor: 'pointer', marginBottom: 10 }}
+                        style={{ cursor: 'pointer', marginBottom: 15 }}
                     />
 
                     <Tooltip
