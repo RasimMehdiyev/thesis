@@ -30,7 +30,7 @@ const DivergingBarChart = ({ features, percentages }) => {
     indexAxis: 'y', // Horizontal bars
     layout: {
       padding: {
-        left: 30, // Add padding to the left (space before the y-axis labels)
+        right: 30
       },
     },
     scales: {
@@ -85,6 +85,7 @@ const DivergingBarChart = ({ features, percentages }) => {
           size: 12, // Font size for the percentage labels
           weight: '500', // Semi-bold
         },
+        clip: false,
         formatter: (value) => (value !== 0 ? `${value}%` : ''), // Only show non-zero values
       },
     },
@@ -93,25 +94,27 @@ const DivergingBarChart = ({ features, percentages }) => {
   };
 
   return (
-    <div style={{ width: '95%', height: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <div style={{ width: '100%', height: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       {/* Container for arrows and text */}
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center', // Center both texts
+          justifyContent: 'space-between', // Space items evenly to avoid overlapping
           alignItems: 'center',
           marginBottom: -40,
-          marginLeft: 250
+          paddingLeft: '20px',
+          paddingRight: '30px',
+          width: '100%', // Ensure it takes the full width of the container
         }}
       >
         {/* Left arrow and text */}
-        <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', flex: 1, marginLeft: 200}}>
           <span style={{ fontSize: '24px' }}>&larr;</span>
           <p style={{ marginLeft: '5px', whiteSpace: 'nowrap' }}>Towards healthy</p>
         </div>
 
         {/* Right arrow and text */}
-        <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'flex-end', marginLeft: 20, marginRight: 50}}>
           <p style={{ marginRight: '5px', whiteSpace: 'nowrap' }}>Towards MCI</p>
           <span style={{ fontSize: '24px' }}>&rarr;</span>
         </div>

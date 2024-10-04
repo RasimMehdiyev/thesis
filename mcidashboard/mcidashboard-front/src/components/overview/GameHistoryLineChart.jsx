@@ -94,7 +94,7 @@ const GameHistoryLineChart = ({ data, labels }) => {
           </select>
         </div>
       </div>
-      <div style={{ width: '90%', height: '100%' }}>
+      <div style={{ width: '100%', height: '100%', minWidth: 300 }}>
         <Line data={chartData} options={options} />
       </div>
     </>

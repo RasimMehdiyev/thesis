@@ -6,14 +6,14 @@ const Models = () => {
         <table className="models-table">
           <tbody>
             <tr>
-              <td> <p> <strong style={{color: 'black'}}>Best performance models:</strong></p> </td>
+              <td> <p> <strong style={{color: 'black'}}>Best performance models</strong></p> </td>
               <td className="vertical-line-left"></td>
               <td className="centered" style={{ padding: '10px' }}> <p> <strong style={{color: 'black'}}>Accuracy</strong></p> </td>
             </tr>  
             <tr>
               <td>
                 <ul className="no-margin " style={{ paddingRight: '20px' }}> {/* Add padding-right here */}
-                  <li>Nu-Support Vector</li>
+                  <strong><li>Nu-Support Vector</li></strong>
                 </ul>
               </td>
               <td className="vertical-line-left"></td>

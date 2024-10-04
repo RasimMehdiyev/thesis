@@ -7,14 +7,9 @@ import MachineLearningModel from '../components/overview/MachineLearningModel';
 
 const OverviewPage = () => {
   const location = useLocation();
-  /*const patient = location.state?.patient;  // Get the patient data passed from SidebarComponent
-
-  if (!patient) {
-    return <div>No patient selected</div>;  // Fallback if no patient data is available
-  }*/
 
     const patient = {
-      username: "JohnDoe",
+      username: "John Doe",
       gender: "Male",
       age: 45,
       mci: true,

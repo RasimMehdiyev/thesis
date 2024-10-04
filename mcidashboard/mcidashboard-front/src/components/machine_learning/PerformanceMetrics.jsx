@@ -34,16 +34,18 @@ const PerformanceMetrics = () => {
 
 
   return (
-    <div className="card performance-metrics" style={{ position: 'relative'}}>
+    <div className="card performance-metrics" style={{ position: 'relative', alignItems:'center'}}>
       <p className="ml-subtitle" style={{ paddingBottom: '20px' }}>
         Performance metrics
       </p>
 
-      <ConfusionMatrix data={[ [13, 5],  [2, 16], ]} model={"Gradient Boosting classifier"}/>
-      <ConfusionMatrix data={[ [13, 5],  [2, 16], ]} model={"Nu-support Vector classifier"}/>
-      <ConfusionMatrix data={[ [13, 5],  [2, 16], ]} model={"Extra Trees classifier"}/>
-    
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+        <ConfusionMatrix data={[[13, 5], [2, 16]]} model={"Gradient Boosting classifier"} />
+        <ConfusionMatrix data={[[13, 5], [2, 16]]} model={"Nu-support Vector classifier"} />
+        <ConfusionMatrix data={[[13, 5], [2, 16]]} model={"Extra Trees classifier"} />
+      </div>
     </div>
+    
   );
 };
 

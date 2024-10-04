@@ -26,9 +26,9 @@ const DigitalBiomarkers = () => {
 
     
     return (
-        <div className="card" style={{width:'60%'}}>
+        <div className="card" id="dig-card">
             <div className="personal-info-h">
-                <p className="ml-subtitle">Digital Biomarkers</p>
+                <p className="ml-subtitle" id="dbm-p">Digital Biomarkers</p>
                 <img
                     src='/assets/help_icon.svg'
                     alt='Help Icon'

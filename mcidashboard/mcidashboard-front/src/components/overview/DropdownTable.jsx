@@ -29,20 +29,19 @@ const DropdownTable = () => {
   }, []);
 
   const options = [
-    ['Score', 'Beta Error', 'Min Total Time'],
-    ['Accuracy', 'Final Beta Error', 'SD Total Time'],
-    ['Game Time', 'Average Think Time', 'Average Accuracy'],
-    ['Successful Move', 'Min Think Time', 'SD Accuracy'],
-    ['Erroneous Move', 'SD Think Time', 'Min Accuracy'],
-    ['Rank Error', 'Average Move Time', 'Max Accuracy'],
-    ['Suit Error', 'Min Move Time', 'Taps'],
-    ['Pile Move', 'SD Move Time', ''],
-    ['Cards Moved', 'Average Total Time', ''],
+    ['Accuracy', 'Average Accuracy', 'Average Move Time'],
+    ['Average Think Time', 'Average Total Time', 'Beta Error'],
+    ['Cards Moved', 'Erroneous Move', 'Final Beta Error'],
+    ['Game Time', 'Max Accuracy', 'Min Accuracy'],
+    ['Min Move Time', 'Min Think Time', 'Min Total Time'],
+    ['Pile Move', 'Rank Error', 'Score'],
+    ['SD Accuracy', 'SD Move Time', 'SD Think Time'],
+    ['SD Total Time', 'Successful Move', 'Suit Error'],
+    ['Taps', 'Total Moves', ''],
   ];
 
   return (
     <div className="dropdown-table-container" ref={dropdownRef}>
-
       <div className="dropdown-header" onClick={handleToggle}>
         <span>{selectedOption}</span>
         <span className="dropdown-arrow">▼</span>

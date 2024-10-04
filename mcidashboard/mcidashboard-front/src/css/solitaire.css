@@ -1,254 +1,99 @@
-.klondike {
-    background: linear-gradient(180deg, rgb(12, 106, 12), rgb(18, 188, 18));
-    width: 850px;
-    height: 650px;
-}
-
-.klondike__bottom {
+.game-board {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding-top: 10vh;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    justify-content: space-between;
+    /* background gradient green */
+    background: linear-gradient(180deg, rgb(56, 132, 15) 10%, #3CB72E 81%);
+    width: 1020px;
+    height: 750px;
+    border: black 0.5px solid;
 }
 
-.klondike__upper {
+.top-row {
     margin-top: 20px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    width: 99.9%;
+    height: 200px;
+    border: black 0.5px solid;
 }
 
-.klondike__upper__row {
+.bottom-row {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    width: 99.9%;
+    height: 400px;
+    border: black 0.5px solid;
+}
+
+.game-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 99.9%;
+    height: 100px;
+    border: black 0.5px solid;
+}
+
+.card-image {
+    height: 150px;
+    width: 100px;
+}
+
+.card-game {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    border: black 0.5px solid;
+    margin-bottom: -120px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.pile-talon {
+    display: flex;
+    /* justify-content: space-between; */
     flex-direction: row;
+    width: 100%;
+    height: 100%;
 }
 
-.spacer {
-    margin-left: 20px;
+.talon-stack {
+    width: 160px;
+    height: 100%;
 }
 
-.back {
-    cursor: pointer;
-    font-size: 2vw;
-    position: absolute;
-    top: 1vh;
-    left: 2vw;
-    border: none;
-    background: none;
-    color: -internal-light-dark(black, white);
-    font-family: "Dancing Script", cursive;
+.draw-stack .card-game {
+    margin-bottom: -152px;
 }
 
-.card-solit {
-    position: relative;
-    border: 1px solid black;
-    cursor: pointer;
-    width: 7vw;
-    height: 9.8vw;
-    border-radius: 0.3vw;
-}
-
-.card__rank-left {
-    text-align: left;
-    margin-left: 0.2vw;
-}
-
-.card__rank-right {
-    text-align: left;
-    position: relative;
-    transform: rotate(180deg);
-    top: 4.7vw;
-    margin-right: 0.4vw;
-}
-
-.card__suite-left {
-    text-align: left;
-    margin-left: 0.2vw;
-}
-
-.card__suite-right {
-    text-align: left;
-    position: relative;
-    transform: rotate(180deg);
-    top: 4.7vw;
-    margin-right: 0.4vw;
-}
-
-.card__suite {
-    text-align: center;
-}
-
-.card__down {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url("../solitaire-game/card_back.png");
-    text-decoration: transparent;
-    margin-bottom: -8.5vw;
-}
-
-.card__down>.card__content {
-    visibility: hidden;
-}
-
-.card__selected {
-    box-shadow: 10px 10px 12px black !important;
-    border: 2px solid black;
-}
-
-.card__remcards {
-    position: absolute;
-    top: 75vh;
-    left: 90vw;
-}
-
-.card__stack {
-    margin-bottom: -7vw;
-    transition: all 2s smooth;
-}
-
-.card-solit:hover {
-    box-shadow: 4px 4px 10px rgb(247, 210, 0);
-}
-
-.card__highlighted {
-    box-shadow: 5px 5px 10px red !important;
-    border: 2px solid red;
-}
-
-.heart {
-    background: url("../solitaire-game/heart.png") #ffffff;
+.red {
     color: red;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
 }
 
-.spade {
-    background: url("../solitaire-game/spade.png") #ffffff;
+.black {
     color: black;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
 }
 
-.club {
-    background: url("../solitaire-game/club.png") #ffffff;
-    color: black;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
+.card-value {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-items: center;
+    height: 75px;
 }
 
-.diamond {
-    background: url("../solitaire-game/diamond.png") #ffffff;
-    color: red;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
-}
-
-@media screen and (max-width: 1390px) and (min-width: 1200px) {
-    .card__content {
-        font-size: 12px;
-    }
-    .card__selected {
-        border: 2px solid red;
-        box-shadow: none !important;
-    }
-    .card__highlighted {
-        border: 2px solid palevioletred;
-        box-shadow: none !important;
-    }
-}
-
-@media screen and (max-width: 1199px) and (min-width: 781px) {
-    .card__content {
-        font-size: 9px;
-    }
-    .card__selected {
-        border: 2px solid red;
-        box-shadow: none !important;
-    }
-    .card__highlighted {
-        border: 2px solid palevioletred;
-        box-shadow: none !important;
-    }
-}
-
-@media screen and (max-width: 780px) {
-    .card__content {
-        font-size: 7.5px;
-    }
-    .card__selected {
-        border: 2px solid red;
-        box-shadow: none !important;
-    }
-    .card__highlighted {
-        border: 2px solid palevioletred;
-        box-shadow: none !important;
-    }
-}
-
-.cardholder {
-    position: relative;
-    border: 2px solid blue;
-    cursor: pointer;
-    width: 5.2vw;
-    height: 8.5vw;
-    border-radius: 0.3vw;
-    opacity: 0.5;
-    background-color: black;
-}
-
-.cardholder__bg {
-    position: relative;
-    cursor: pointer;
-    width: 7vw;
-    height: 9.8vw;
-    border-radius: 0.3vw;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url("../solitaire-game/card_back.png");
-}
-
-.cardholder__bg:hover {
-    box-shadow: 4px 4px 10px rgb(247, 210, 0);
-}
-
-.cardholder__highlighted {
-    border: 5px solid blue;
-}
-
-.screensizewarn {
-    display: none;
-}
-
-@media screen and (orientation: portrait) {
-    .app__gameplay {
-        display: none;
-    }
-    .home {
-        display: none;
-    }
-    .screensizewarn {
-        display: block;
-    }
-}
-
-.card-enter {
-    opacity: 0.01;
-}
-
-.card-enter.card-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-}
-
-.card-leave {
-    opacity: 1;
-}
-
-.card-leave.card-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
+.card-suit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 75px;
 }
