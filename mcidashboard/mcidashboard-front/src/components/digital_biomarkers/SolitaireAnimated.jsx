@@ -4,57 +4,113 @@ import Stack from './solitaire_components/Stack';
 const SolitaireAnimated = ({ cards }) => {
   const [buildDeck, setBuildDeck] = useState([]);
   const [pileDeck, setPileDeck] = useState([]);
-    const [talon, setTalon] = useState([]);
+  const [talonDeck, setTalonDeck] = useState([]);
+  const [fourSuits, setFourSuits] = useState([[], [], [], []]); // Empty slots for 4 suits
+  const [movingCard, setMovingCard] = useState(null); // Store the moving card
+  const [emptySlotIndex, setEmptySlotIndex] = useState(null); // Store the index of the empty slot after card moves
+  const [moveToLast, setMoveToLast] = useState(true); // Track direction of movement
 
   const splitDeck = (deck) => {
-    const newDeck = [];
+    // Split build cards (first 28 cards go to the build deck)
+    let buildDeck = [];
     let index = 0;
-
-    // Loop to create 7 columns (stacks) incrementing in number of cards per stack
     for (let i = 1; i <= 7; i++) {
-      const stack = deck.slice(index, index + i); // Get the next i cards from the deck
-      stack.forEach((card, idx) => {
-        card.isFaceUp = idx === stack.length - 1; // Only the top card should be face-up
-      });
-      newDeck.push(stack);
-      index += i; // Move the index forward by the size of the stack
+      buildDeck.push(deck.slice(index, index + i));
+      index += i;
     }
-    console.log(newDeck)
-    setBuildDeck(newDeck);
-    //3 cards for talon
-    const indices = [1, 17,18]
-    const talon = deck.slice(indices[0], indices[1]);
-    talon.forEach((card) => (card.isFaceUp = true)); // All talon cards are face-up
 
-    // The remaining cards are the pile deck
-    const pile = deck.slice(index);
-    // const pile = deck.slice(indices[1]);
+    // Talon (next 3 cards)
+    const talon = deck.slice(28, 31);
 
-    pile.forEach((card) => (card.isFaceUp = false)); // All pile cards are face-down
-    setPileDeck(pile);
+    // Pile (remaining cards)
+    const pile = deck.slice(31);
+
+    return { buildDeck, talon, pile };
   };
 
   useEffect(() => {
     if (cards && cards.length === 52) {
-      splitDeck(cards); // Split the deck when cards are available
+      const { buildDeck, talon, pile } = splitDeck(cards);
+      setBuildDeck(buildDeck);
+      setTalonDeck(talon);
+      setPileDeck(pile);
     }
   }, [cards]);
+
+  // Function to move the top card from one column to another (back and forth)
+  const moveCardBackAndForth = () => {
+    setBuildDeck((prevBuildDeck) => {
+      const firstColumn = [...prevBuildDeck[0]]; // Copy the first column
+      const lastColumn = [...prevBuildDeck[6]];  // Copy the last column
+
+      if (moveToLast && firstColumn.length > 0) {
+        // Move from first column to last
+        const cardToMove = firstColumn.pop();
+        setMovingCard(cardToMove);
+        setEmptySlotIndex(0);
+        lastColumn.push(cardToMove);
+      } else if (!moveToLast && lastColumn.length > 0) {
+        // Move back from last column to first
+        const cardToMove = lastColumn.pop();
+        setMovingCard(cardToMove);
+        setEmptySlotIndex(6);
+        firstColumn.push(cardToMove);
+      }
+
+      // Return updated deck
+      return [
+        [...firstColumn],
+        ...prevBuildDeck.slice(1, 6),
+        [...lastColumn],
+      ];
+    });
+
+    // Toggle the direction of movement
+    setMoveToLast((prev) => !prev);
+
+    // After the animation ends, clear the moving card
+    setTimeout(() => {
+      setMovingCard(null);
+      setEmptySlotIndex(null); // Clear the empty slot after the card moves
+    }, 2000); // Adjust the timeout duration for smooth movement
+  };
+
+  useEffect(() => {
+    // Automatically move the card after 2 seconds (to see the transition)
+    const timer = setTimeout(moveCardBackAndForth, 2000);
+    return () => clearTimeout(timer);
+  }, [buildDeck]);
 
   return (
     <div className="game-board">
       <div className="top-row">
+        {/* Left side: pile and talon */}
         <div className="pile-talon">
-                <Stack type="draw" cards={pileDeck}/>
-                <Stack type="talon" cards={talon}/>
+          <Stack type="draw" cards={pileDeck} />
+          <Stack type="talon" cards={talonDeck} />
         </div>
-        <div className="four-suits"></div>
+        
+        {/* Right side: 4 empty slots for 4 suits */}
+        <div className="four-suits">
+          {fourSuits.map((suit, index) => (
+            <Stack key={index} type="four-suit" cards={suit} />
+          ))}
+        </div>
       </div>
+
+      {/* Build decks */}
       <div className="bottom-row">
         {buildDeck.map((stack, index) => (
-          <Stack key={index} type="build" cards={stack}/>
+          <Stack 
+            key={index} 
+            type="build" 
+            cards={stack} 
+            movingCard={movingCard} 
+            emptySlot={emptySlotIndex === index} // Show empty slot in first or last column
+            isLastColumn={index === 6} // Pass true for the last column
+          />
         ))}
       </div>
-      <div className="game-info"></div>
     </div>
   );
 };
