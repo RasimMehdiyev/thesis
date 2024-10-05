@@ -33,8 +33,8 @@ const MachineLearningModel = () => {
                 <div className="personal-info-h" style={{ position: 'relative' }}>
                     <h3>Dataset information</h3>
                     <img
-                        src='/assets/help_icon.svg'
-                        alt='Help Icon'
+                        src='/assets/info_icon.svg'
+                        alt='Info Icon'
                         className='icon'
                         onMouseEnter={showDatasetTooltip}  // Show dataset tooltip on hover
                         onMouseLeave={hideDatasetTooltip}  // Hide dataset tooltip when hover ends
@@ -80,8 +80,8 @@ const MachineLearningModel = () => {
                 <div className="personal-info-h" style={{ position: 'relative' }}>
                     <p id="prediction-title">Solitaire DSS prediction:</p>
                     <img
-                        src='/assets/help_icon.svg'
-                        alt='Help Icon'
+                        src='/assets/info_icon.svg'
+                        alt='Info Icon'
                         className='icon'
                         onMouseEnter={showPredictionTooltip}  // Show prediction tooltip on hover
                         onMouseLeave={hidePredictionTooltip}  // Hide prediction tooltip when hover ends

@@ -72,8 +72,8 @@ return (
         <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className="ml-subtitle">Demographic summary</p>
           <img
-            src='/assets/help_icon.svg'
-            alt='Help Icon'
+            src='/assets/info_icon.svg'
+            alt='Info Icon'
             className='icon'
             onMouseEnter={showTooltip}  // Show tooltip on hover
             onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
