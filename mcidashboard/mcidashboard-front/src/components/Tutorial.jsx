@@ -40,7 +40,17 @@ const tutorialSteps = [
     selector: '#ml-card', // Highlight the feature importance section
   },
   {
-    title: "Step 8: Finished",
+    title: "Step 8: Digital biomarkers",
+    content: "These show dataset information.",
+    selector: '.navbar li:nth-child(2)', // Highlight the feature importance section
+  },
+  {
+    title: "Step 9: Machine Learning",
+    content: "These show dataset information.",
+    selector: '.container', // Highlight the feature importance section
+  },
+  {
+    title: "Step 10: Finished",
     content: "That's it! You're ready to use the app.",
     selector: null, // No highlight for the last step
   },
@@ -67,9 +77,9 @@ const Tutorial = ({ initialStep = 0 }) => {
 
 
   // Function to get the mask styles around a given element
-  const getMaskStyles = (selector) => {
+  const getMaskStyles = (selector, padding = 10) => {
     if (!selector) {
-      // Full-page overlay for Step 1 (or any step without a selector)
+      // Full-page overlay for steps without a specific selector
       return {
         topMask: { top: 0, left: 0, width: '100vw', height: '100vh' },
         leftMask: { display: 'none' },
@@ -77,40 +87,41 @@ const Tutorial = ({ initialStep = 0 }) => {
         bottomMask: { display: 'none' },
       };
     }
-
+  
     const element = document.querySelector(selector);
     if (!element) return {};
+  
     const rect = element.getBoundingClientRect();
-
-    // Calculate positions of the 4 mask elements
+  
+    // Increase the highlighted area by applying the padding
     return {
       topMask: {
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100vw',
-        height: `${rect.top}px`,
+        height: `${rect.top - padding}px`, // Add padding above the element
       },
       leftMask: {
         position: 'fixed',
-        top: `${rect.top}px`,
+        top: `${rect.top - padding}px`,
         left: 0,
-        width: `${rect.left}px`,
-        height: `${rect.height}px`,
+        width: `${rect.left - padding}px`, // Add padding to the left
+        height: `${rect.height + 2 * padding}px`, // Expand height with padding
       },
       rightMask: {
         position: 'fixed',
-        top: `${rect.top}px`,
-        left: `${rect.right}px`,
-        width: `calc(100vw - ${rect.right}px)`,
-        height: `${rect.height}px`,
+        top: `${rect.top - padding}px`,
+        left: `${rect.right + padding}px`, // Add padding to the right
+        width: `calc(100vw - ${rect.right + padding}px)`,
+        height: `${rect.height + 2 * padding}px`, // Expand height with padding
       },
       bottomMask: {
         position: 'fixed',
-        top: `${rect.bottom}px`,
+        top: `${rect.bottom + padding}px`, // Add padding below the element
         left: 0,
         width: '100vw',
-        height: `calc(100vh - ${rect.bottom}px)`,
+        height: `calc(100vh - ${rect.bottom + padding}px)`,
       },
     };
   };
