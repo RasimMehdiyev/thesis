@@ -71,9 +71,7 @@ const DivergingBarChart = ({ features, percentages }) => {
         display: false, // Hide the legend
       },
       tooltip: {
-        callbacks: {
-          label: (tooltipItem) => `${tooltipItem.raw}%`, // Custom tooltip to display percentage
-        },
+        enabled: false,
       },
       datalabels: {
         display: true, // Show the data labels (percentages)

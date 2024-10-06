@@ -115,7 +115,7 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
         text: ['Confusion Matrix', model], // Multi-line title: First line is "Confusion Matrix", second line is the model
         align: 'center', 
         font: {
-          size: 16,
+          size: 14,
           family: 'Poppins', 
           weight: 'normal',
         },
@@ -149,8 +149,8 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
   };
 
   return (
-    <div className='confusion-matrix'
-      style={{ width: '100%', height: '350px', maxWidth: '400px', position: 'relative', marginBottom: 40 }}
+    <div 
+      style={{ width: '80%', height: '300px', minWidth: '250px', maxWidth: '400px', zoom: 1.33, position: 'relative', marginBottom: 40 }}
       onMouseLeave={handleMouseLeave}
     >
       <Bar ref={chartRef} data={data} options={options} />

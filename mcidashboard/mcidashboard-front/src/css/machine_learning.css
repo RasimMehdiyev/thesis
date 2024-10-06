@@ -1,7 +1,7 @@
 .machine-learning-container {
     display: grid;
     gap: 50px;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.75fr 1fr;
     grid-template-rows: auto auto;
     justify-items: center;
     padding: 20px;
@@ -57,6 +57,7 @@
 .data-preprocessing {
     flex: 1;
     align-self: end;
+    font-size: 18px;
     /* Both cards take equal width */
 }
 
@@ -64,3 +65,4 @@
     border-collapse: collapse;
     color: #585858;
 }
+

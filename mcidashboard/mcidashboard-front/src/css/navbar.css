@@ -36,7 +36,7 @@
 .navbar-list a {
     text-decoration: none;
     color: #333;
-    font-size: 16px;
+    font-size: 18px;
     font-family: 'Poppins', sans-serif;
     padding: 0 15px;
     border-radius: 5px;
@@ -72,7 +72,7 @@
 }
 
 .navbar-list a.active:after {
-    width: 100%;
+    width: 115%;
 }
 
 .navbar-list a.active {
