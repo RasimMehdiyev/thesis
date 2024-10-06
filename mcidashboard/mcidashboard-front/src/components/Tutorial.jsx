@@ -190,9 +190,22 @@ const Tutorial = () => {
 
   return (
     <div>
+        <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent but blocks interaction
+          zIndex: 1000, // Ensure this is below the modal but above other content
+          pointerEvents: 'all', // Block interaction with everything
+        }}
+      />
       {/* Overlay for the mask */}
       <>
-        <div className="tutorial-overlay" style={{ ...maskStyles.topMask }} />
+        {currentStep!==1 && (
+        <div className="tutorial-overlay" style={{ ...maskStyles.topMask}}/>)}
         {step.selector && (
           <>
             <div className="tutorial-overlay" style={{ ...maskStyles.leftMask }} />
@@ -209,8 +222,8 @@ const Tutorial = () => {
           style={{
             position: 'fixed',
             top: '50%',
-            left: currentStep === 3 ? '40%' : '30%', // Move the modal to the right during specific steps
-            transform: currentStep === 3 ? 'translate(50%, -50%)' : 'translate(-50%, -50%)',
+            left: (currentStep === 3 || currentStep === 5) ? '40%' : '30%', // Move the modal to the right during specific steps
+            transform: (currentStep === 3|| currentStep === 5) ? 'translate(50%, -50%)' : 'translate(-50%, -50%)',
             zIndex: 1001,
           }}
         >
