@@ -149,7 +149,7 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
   };
 
   return (
-    <div
+    <div className='confusion-matrix'
       style={{ width: '100%', height: '350px', maxWidth: '400px', position: 'relative', marginBottom: 40 }}
       onMouseLeave={handleMouseLeave}
     >

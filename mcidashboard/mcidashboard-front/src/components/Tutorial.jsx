@@ -12,7 +12,7 @@ const tutorialSteps = [
   {
     title: "Step 2: Container Section",
     content: "This is the main container where content is displayed.",
-    selector: '.container', // Highlight the container class
+    selector: '.navbar li:nth-child(1)', // Highlight the container class
   },
   {
     title: "Step 3: Sidebar Navigation",
@@ -45,12 +45,28 @@ const tutorialSteps = [
     selector: '.navbar li:nth-child(2)', // Highlight the feature importance section
   },
   {
-    title: "Step 9: Machine Learning",
+    title: "Step 9: Digital biomarkers",
     content: "These show dataset information.",
     selector: '.container', // Highlight the feature importance section
   },
   {
-    title: "Step 10: Finished",
+    title: "Step 10: Machine learning",
+    content: "These show dataset information.",
+    selector: '.navbar li:nth-child(3)', // Highlight the feature importance section
+  },
+  {
+    title: "Step 11: Machine learning",
+    content: "These show dataset information.",
+    selector: '.machine-learning-container', // Highlight the feature importance section
+  },
+
+  {
+    title: "Step 12: Info icons",
+    content: "These show dataset information.",
+    selector: '.icon', // Highlight the feature importance section
+  },
+  {
+    title: "Step 13: Finished",
     content: "That's it! You're ready to use the app.",
     selector: null, // No highlight for the last step
   },
@@ -77,7 +93,7 @@ const Tutorial = ({ initialStep = 0 }) => {
 
 
   // Function to get the mask styles around a given element
-  const getMaskStyles = (selector, padding = 10) => {
+  const getMaskStyles = (selector, padding = 0) => {
     if (!selector) {
       // Full-page overlay for steps without a specific selector
       return {
@@ -95,36 +111,36 @@ const Tutorial = ({ initialStep = 0 }) => {
   
     // Increase the highlighted area by applying the padding
     return {
-      topMask: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: `${rect.top - padding}px`, // Add padding above the element
-      },
-      leftMask: {
-        position: 'fixed',
-        top: `${rect.top - padding}px`,
-        left: 0,
-        width: `${rect.left - padding}px`, // Add padding to the left
-        height: `${rect.height + 2 * padding}px`, // Expand height with padding
-      },
-      rightMask: {
-        position: 'fixed',
-        top: `${rect.top - padding}px`,
-        left: `${rect.right + padding}px`, // Add padding to the right
-        width: `calc(100vw - ${rect.right + padding}px)`,
-        height: `${rect.height + 2 * padding}px`, // Expand height with padding
-      },
-      bottomMask: {
-        position: 'fixed',
-        top: `${rect.bottom + padding}px`, // Add padding below the element
-        left: 0,
-        width: '100vw',
-        height: `calc(100vh - ${rect.bottom + padding}px)`,
-      },
+        topMask: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: `${rect.top - padding}px`, // Adjust this for the top overlay
+        },
+        leftMask: {
+          position: 'fixed',
+          top: `${rect.top - padding}px`,
+          left: 0,
+          width: `${rect.left - padding}px`,
+          height: `${rect.height + 2 * padding}px`,
+        },
+        rightMask: {
+          position: 'fixed',
+          top: `${rect.top - padding}px`,
+          left: `${rect.right + padding}px`,
+          width: `calc(100vw - ${rect.right + padding}px)`,
+          height: `${rect.height + 2 * padding}px`,
+        },
+        bottomMask: {
+          position: 'fixed',
+          top: `${rect.bottom + padding}px`,
+          left: 0,
+          width: '100vw',
+          height: `calc(100vh - ${rect.bottom + padding}px)`,
+        },
+      };
     };
-  };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
 
@@ -163,24 +179,39 @@ const Tutorial = ({ initialStep = 0 }) => {
     const updateMaskStyles = () => {
       setIsModalVisible(false); // Hide the modal before recalculating mask
   
-      if (step.selector) {
-        const element = document.querySelector(step.selector);
-  
-        // Check if the element is already in view, only scroll if necessary
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
-  
-          if (!isInView) {
-            // Scroll only if the element is out of view
-            scrollToElement(step.selector);
+      if (currentStep === 10) { // Step 11 is index 10 (zero-indexed)
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Reset scroll to top
+        setTimeout(() => {
+          // Ensure mask update happens after scroll is complete
+          if (step.selector) {
+            const element = document.querySelector(step.selector);
+            if (element) {
+              setMaskStyles(getMaskStyles(step.selector));
+              setIsModalVisible(true); // Show modal after scroll and mask update
+            }
           }
-          updateMaskAfterScroll(step.selector); // Update the mask after scrolling
-        }
+        }, 500); // Add a delay to ensure the scroll is complete
       } else {
-        // Full overlay if no selector
-        setMaskStyles(getMaskStyles(step.selector));
-        setTimeout(() => setIsModalVisible(true), 500); // Show modal after delay
+        // Default behavior for all other steps
+        if (step.selector) {
+          const element = document.querySelector(step.selector);
+  
+          // Check if the element is already in view, only scroll if necessary
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  
+            if (!isInView) {
+              // Scroll only if the element is out of view
+              scrollToElement(step.selector);
+            }
+            updateMaskAfterScroll(step.selector); // Update the mask after scrolling
+          }
+        } else {
+          // Full overlay if no selector
+          setMaskStyles(getMaskStyles(step.selector));
+          setTimeout(() => setIsModalVisible(true), 500); // Show modal after delay
+        }
       }
   
       disableScroll(); // Disable scrolling for all steps
@@ -224,6 +255,14 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep === 6) {  // Step 7 is index 6 (zero-indexed)
       navigate('/digital-biomarkers', { state: { tutorialStep: 7 } });
     }
+    if (currentStep === 9) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/machine-learning', { state: { tutorialStep: 10 } });
+      }
+
+      if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/overview', { state: { tutorialStep: 11 } });
+      }
+    
   };
 
   const handlePrev = () => {
@@ -234,6 +273,13 @@ const Tutorial = ({ initialStep = 0 }) => {
     {
         navigate('/overview', { state: { tutorialStep: 6 } });
     }
+    if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/digital-biomarkers', { state: { tutorialStep: 9 } });
+      }
+    if (currentStep === 11) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/machine-learning', { state: { tutorialStep: 10 } });
+    }
+    
   };
 
   return (
@@ -252,8 +298,8 @@ const Tutorial = ({ initialStep = 0 }) => {
       />
       {/* Overlay for the mask */}
       <>
-        {currentStep!==1 && (
-        <div className="tutorial-overlay" style={{ ...maskStyles.topMask}}/>)}
+        
+        <div className="tutorial-overlay" style={{ ...maskStyles.topMask}}/>
         {step.selector && (
           <>
             <div className="tutorial-overlay" style={{ ...maskStyles.leftMask }} />
