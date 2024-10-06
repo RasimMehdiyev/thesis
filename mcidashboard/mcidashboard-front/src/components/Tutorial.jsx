@@ -130,7 +130,13 @@ const Tutorial = ({ initialStep = 0 }) => {
   const scrollToElement = (selector) => {
     const element = document.querySelector(selector);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const rect = element.getBoundingClientRect();
+      const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  
+      // Only scroll if the element is out of view
+      if (!isInView) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   };
 
@@ -142,35 +148,45 @@ const Tutorial = ({ initialStep = 0 }) => {
     }, 400); // Adding a small delay to wait for the scroll animation to complete
   };
 
-  // Recalculate mask styles on window resize and step change
   useEffect(() => {
     const updateMaskStyles = () => {
       setIsModalVisible(false); // Hide the modal before recalculating mask
-
+  
       if (step.selector) {
-        scrollToElement(step.selector); // Scroll to the element
-        updateMaskAfterScroll(step.selector); // Update the mask after scrolling
+        const element = document.querySelector(step.selector);
+  
+        // Check if the element is already in view, only scroll if necessary
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  
+          if (!isInView) {
+            // Scroll only if the element is out of view
+            scrollToElement(step.selector);
+          }
+          updateMaskAfterScroll(step.selector); // Update the mask after scrolling
+        }
       } else {
-        setMaskStyles(getMaskStyles(step.selector)); // Full overlay for step 1
+        // Full overlay if no selector
+        setMaskStyles(getMaskStyles(step.selector));
         setTimeout(() => setIsModalVisible(true), 500); // Show modal after delay
       }
-
+  
       disableScroll(); // Disable scrolling for all steps
     };
-
-    // Initial calculation
-    window.scrollTo(0, 0);
+  
     updateMaskStyles();
-
+  
     // Listen for window resize
     window.addEventListener('resize', updateMaskStyles);
-
+  
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('resize', updateMaskStyles);
       enableScroll(); // Ensure scrolling is enabled when the tutorial ends
     };
   }, [step.selector, currentStep]);
+  
 
   // Calculate the tooltip position whenever the step changes
   useEffect(() => {
