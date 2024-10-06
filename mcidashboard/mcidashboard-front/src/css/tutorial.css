@@ -26,7 +26,8 @@
     font-family: 'Poppins';
     font-size: 14px;
     z-index: 1002;
-    background-color: #fff;
+    color: white;
+    background-color: #5932EA;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -46,8 +47,8 @@
   .tutorial-modal button {
     padding: 10px 20px;
     border: none;
-    background-color: #5200ff;
-    color: white;
+    background-color: white;
+    color: #5932EA;
     font-size: 14px;
     border-radius: 10px;
     cursor: pointer;

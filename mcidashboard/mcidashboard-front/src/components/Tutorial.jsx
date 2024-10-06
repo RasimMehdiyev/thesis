@@ -1,24 +1,34 @@
-import React, { useState, useRef, useEffect } from 'react';  
+import React, { useState, useEffect, useRef } from 'react';  
 import Tooltip from './Tooltip'; // Adjust the path accordingly
 
 const tutorialSteps = [
   {
     title: "Step 1: Welcome",
     content: "Welcome to the <strong>Solitaire Decision Support System!</strong><br>Click 'Next' to start the tutorial.",
-    selector: null, // No highlight for the first step
+    selector: null, // No highlight for the first step, full overlay
   },
   {
-    title: "Step 2: Personal Information",
+    title: "Step 2: Container Section",
+    content: "This is the main container where content is displayed.",
+    selector: '.container', // Highlight the container class
+  },
+  {
+    title: "Step 3: Sidebar Navigation",
+    content: "Here you can find the sidebar to navigate between different pages.",
+    selector: '.sidebar', // Highlight the sidebar class
+  },
+  {
+    title: "Step 4: Personal Information",
     content: "Here you can view your personal information.",
-    selector: '#pers-card', // Highlight this element
+    selector: '#pers-card', // Highlight the personal information section
   },
   {
-    title: "Step 3: Digital Biomarkers",
+    title: "Step 5: Digital Biomarkers",
     content: "These are the digital biomarkers that power our app's features.",
-    selector: '#dig-card', // Highlight this element
+    selector: '#dig-card', // Highlight the digital biomarkers section
   },
   {
-    title: "Step 4: Finished",
+    title: "Step 6: Finished",
     content: "That's it! You're ready to use the app.",
     selector: null, // No highlight for the last step
   },
@@ -35,11 +45,21 @@ const Tutorial = () => {
 
   // Function to get the mask styles around a given element
   const getMaskStyles = (selector) => {
-    if (!selector) return {};
+    if (!selector) {
+      // Full-page overlay for Step 1 (or any step without a selector)
+      return {
+        topMask: { top: 0, left: 0, width: '100vw', height: '100vh' },
+        leftMask: { display: 'none' },
+        rightMask: { display: 'none' },
+        bottomMask: { display: 'none' },
+      };
+    }
+
     const element = document.querySelector(selector);
     if (!element) return {};
     const rect = element.getBoundingClientRect();
 
+    // Calculate positions of the 4 mask elements
     return {
       topMask: {
         position: 'fixed',
@@ -72,7 +92,7 @@ const Tutorial = () => {
     };
   };
 
-  const [maskStyles, setMaskStyles] = useState({});
+  const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
 
   // Function to disable/enable scroll
   const disableScroll = () => {
@@ -86,15 +106,19 @@ const Tutorial = () => {
   // Recalculate mask styles on window resize and step change
   useEffect(() => {
     const updateMaskStyles = () => {
-      if (step.selector) {
-        setMaskStyles(getMaskStyles(step.selector));
-        disableScroll(); // Disable scrolling when a component is highlighted
+      // Recalculate mask position based on the step
+      setMaskStyles(getMaskStyles(step.selector));
+
+      // Control scroll behavior based on the current step
+      if (currentStep > 2) {
+        disableScroll(); // Disable scrolling for steps where it's needed
       } else {
-        enableScroll(); // Enable scrolling when no specific element is highlighted
+        enableScroll(); // Enable scrolling for earlier steps
       }
     };
 
-    // Initial calculation
+    // Initial calculation and reset scroll to the top
+    window.scrollTo(0, 0);
     updateMaskStyles();
 
     // Listen for window resize
@@ -103,9 +127,9 @@ const Tutorial = () => {
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('resize', updateMaskStyles);
-      enableScroll(); // Ensure scrolling is enabled when component is unmounted
+      enableScroll(); // Ensure scrolling is enabled when the tutorial ends
     };
-  }, [step.selector]);
+  }, [step.selector, currentStep]);
 
   // Calculate the tooltip position whenever the step changes
   useEffect(() => {
@@ -114,7 +138,7 @@ const Tutorial = () => {
       if (element) {
         const rect = element.getBoundingClientRect();
         setTooltipPosition({
-          top: rect.top + window.scrollY + rect.height / 2, // Vertically center it
+          top: rect.top + rect.height / 2, // Vertically center it
           left: rect.right + 10, // Place it 10px to the right of the element
         });
         setIsTooltipVisible(true);
@@ -140,15 +164,17 @@ const Tutorial = () => {
 
   return (
     <div>
-      {/* Overlay for the mask - Step 2 */}
-      {step.selector && (
-        <>
-          <div className="tutorial-overlay" style={{ ...maskStyles.topMask }} />
-          <div className="tutorial-overlay" style={{ ...maskStyles.leftMask }} />
-          <div className="tutorial-overlay" style={{ ...maskStyles.rightMask }} />
-          <div className="tutorial-overlay" style={{ ...maskStyles.bottomMask }} />
-        </>
-      )}
+      {/* Overlay for the mask */}
+      <>
+        <div className="tutorial-overlay" style={{ ...maskStyles.topMask }} />
+        {step.selector && (
+          <>
+            <div className="tutorial-overlay" style={{ ...maskStyles.leftMask }} />
+            <div className="tutorial-overlay" style={{ ...maskStyles.rightMask }} />
+            <div className="tutorial-overlay" style={{ ...maskStyles.bottomMask }} />
+          </>
+        )}
+      </>
 
       {/* Conditionally adjust the modal position based on the current step */}
       <div
@@ -156,8 +182,8 @@ const Tutorial = () => {
         style={{
           position: 'fixed',
           top: '50%',
-          left: currentStep === 1 ? '40%' : '30%', // Move the modal to the right during Step 2
-          transform: currentStep === 1 ? 'translate(50%, -50%)' : 'translate(-50%, -50%)',
+          left: currentStep === 3 ? '40%' : '30%', // Move the modal to the right during specific steps
+          transform: currentStep === 3 ? 'translate(50%, -50%)' : 'translate(-50%, -50%)',
           zIndex: 1001,
         }}
       >
