@@ -1,14 +1,13 @@
 import React from 'react';
 import Card from './Card';
 
-const Stack = ({ cards, type, movingCard, emptySlot, isLastColumn }) => {
+const Stack = ({ cards, type, emptySlot, isLastColumn  }) => {
   return (
     <div className={`${type}-stack`}>
       {cards && cards.length > 0 && cards.map((card, index) => {
-        const isMoving = movingCard && movingCard.id === card.id;
 
         if (type === 'build') {
-          // Show only the last card face up except in the last column
+          // Highlight the last card in the first and last build columns
           const isFaceUp = index === cards.length - 1 || (isLastColumn && index === cards.length - 2);
           
           return (
@@ -16,12 +15,14 @@ const Stack = ({ cards, type, movingCard, emptySlot, isLastColumn }) => {
               <Card
                 card={card}
                 isFaceUp={isFaceUp}
-                className={isMoving ? 'moving-card' : ''}
               />
             </div>
           );
         } else if (type === 'talon') {
+          // Highlight the top card of the talon (the last three cards)
           const lastThree = cards.length - 3;
+          console.log(index);
+          
           return (
             <Card 
               key={card.id} 
@@ -46,10 +47,8 @@ const Stack = ({ cards, type, movingCard, emptySlot, isLastColumn }) => {
             />
           );
         }
-        return null; // default case
+        return null; // Default case
       })}
-      {/* Render an empty slot if the top card is being moved */}
-      {emptySlot && <div className="empty-card-slot"></div>}
     </div>
   );
 };

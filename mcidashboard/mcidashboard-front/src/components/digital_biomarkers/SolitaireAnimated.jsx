@@ -6,10 +6,6 @@ const SolitaireAnimated = ({ cards }) => {
   const [pileDeck, setPileDeck] = useState([]);
   const [talonDeck, setTalonDeck] = useState([]);
   const [fourSuits, setFourSuits] = useState([[], [], [], []]); // Empty slots for 4 suits
-  const [movingCard, setMovingCard] = useState(null); // Store the moving card from build
-  const [movingTalonCard, setMovingTalonCard] = useState(null); // Store the moving card from talon
-  const [emptySlotIndex, setEmptySlotIndex] = useState(null); // Store the index of the empty slot after card moves
-  const [movePhase, setMovePhase] = useState('build-to-last'); // Track the current move phase
 
   const splitDeck = (deck) => {
     let buildDeck = [];
@@ -32,102 +28,15 @@ const SolitaireAnimated = ({ cards }) => {
     }
   }, [cards]);
 
-  // Function to move the card based on the current move phase
-  const moveCard = () => {
-    if (movePhase === 'build-to-last') {
-      // Move the card from the first build column to the last column
-      setBuildDeck((prevBuildDeck) => {
-        const firstColumn = [...prevBuildDeck[0]];
-        const lastColumn = [...prevBuildDeck[6]];
-
-        if (firstColumn.length > 0) {
-          const cardToMove = firstColumn.pop();
-          setMovingCard(cardToMove);
-          setEmptySlotIndex(0); // Empty slot in the first column
-          lastColumn.push(cardToMove);
-        }
-
-        return [
-          [...firstColumn],
-          ...prevBuildDeck.slice(1, 6),
-          [...lastColumn],
-        ];
-      });
-
-      // After the move, reset and switch to the next phase
-      setTimeout(() => {
-        setBuildDeck((prevBuildDeck) => {
-          const firstColumn = [...prevBuildDeck[0]];
-          const lastColumn = [...prevBuildDeck[6]];
-
-          const cardToMove = lastColumn.pop();
-          firstColumn.push(cardToMove);
-
-          setMovingCard(null);
-          setEmptySlotIndex(null); // Clear empty slot
-          return [
-            [...firstColumn],
-            ...prevBuildDeck.slice(1, 6),
-            [...lastColumn],
-          ];
-        });
-
-        setMovePhase('talon-to-last');
-      }, 2000);
-    } else if (movePhase === 'talon-to-last') {
-      // Move the top card from the talon pile to the last build column
-      setTalonDeck((prevTalonDeck) => {
-        const talonCopy = [...prevTalonDeck];
-        if (talonCopy.length > 0) {
-          const cardToMove = talonCopy.pop();
-          setMovingTalonCard(cardToMove);
-
-          setBuildDeck((prevBuildDeck) => {
-            const lastColumn = [...prevBuildDeck[6]];
-            lastColumn.push(cardToMove);
-            return [
-              ...prevBuildDeck.slice(0, 6),
-              [...lastColumn],
-            ];
-          });
-
-          // After moving, return the card back to the talon pile
-          setTimeout(() => {
-            setBuildDeck((prevBuildDeck) => {
-              const lastColumn = [...prevBuildDeck[6]];
-              const cardToMove = lastColumn.pop();
-              talonCopy.push(cardToMove);
-              setTalonDeck([...talonCopy]);
-
-              setMovingTalonCard(null); // Clear the moving talon card
-              setMovePhase('build-to-last'); // Switch back to the first phase
-              return [
-                ...prevBuildDeck.slice(0, 6),
-                [...lastColumn],
-              ];
-            });
-          }, 2000);
-        }
-        return talonCopy;
-      });
-    }
-  };
-
-  useEffect(() => {
-    // Start the animation cycle after a delay
-    const timer = setTimeout(moveCard, 2000);
-    return () => clearTimeout(timer);
-  }, [movePhase, buildDeck, talonDeck]);
-
   return (
     <div className="game-board">
       <div className="top-row">
         {/* Left side: pile and talon */}
         <div className="pile-talon">
           <Stack type="draw" cards={pileDeck} />
-          <Stack type="talon" cards={talonDeck} movingCard={movingTalonCard} />
+          <Stack type="talon" cards={talonDeck} highlightTopCard = {true} /> {/* Highlight topmost talon card */}
         </div>
-        
+
         {/* Right side: 4 empty slots for 4 suits */}
         <div className="four-suits">
           {fourSuits.map((suit, index) => (
@@ -139,13 +48,11 @@ const SolitaireAnimated = ({ cards }) => {
       {/* Build decks */}
       <div className="bottom-row">
         {buildDeck.map((stack, index) => (
-          <Stack 
-            key={index} 
-            type="build" 
-            cards={stack} 
-            movingCard={movingCard} 
-            emptySlot={index === emptySlotIndex} // Show empty slot where the card moved from
-            isLastColumn={index === 6} // Pass true for the last column
+          <Stack
+            key={index}
+            type="build"
+            cards={stack}
+            highlightLastCard={index === 0 || index === 6} // Highlight last card in first and last build column
           />
         ))}
       </div>

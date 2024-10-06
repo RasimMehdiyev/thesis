@@ -118,33 +118,43 @@
     background-color: transparent;
 }
 
-.card-moving {
-    position: absolute;
-    transition: transform 0.5s ease;
+.highlight {
+    /* background-color: yellow; */
+    /* shadow */
+    box-shadow: 0 0 20px 10px yellow;
 }
 
-.card-moving-target {
-    transform: translate(300px, 0);
+.highlight-destination {
+    background-color: red;
+    /* shadow */
+    box-shadow: 0 0 20px 10px red;
 }
 
-.build-stack {
+.card-container {
     position: relative;
 }
 
-.moving-card {
+.hover-message {
     position: absolute;
-    transition: transform 10s ease-in-out;
-    transform: translate(500px, 0);
-    /* Adjust this to fit your layout */
+    max-width: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    white-space: nowrap;
+    word-wrap: break-word;
+    opacity: 0;
+    pointer-events: none;
+    /* Ensure message doesn't block hover events */
+    transition: opacity 0.3s ease-in-out;
+    /* fit the text */
+    text-align: center;
 }
 
-
-/* .card-game {
-    width: 100px;
-    height: 140px;
-    position: relative;
-    transition: all 0.5s ease;
-
-
+.card-container:hover .hover-message {
+    opacity: 1;
+    /* Show message on hover */
 }
-*/

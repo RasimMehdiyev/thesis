@@ -9,6 +9,7 @@ const DigitalBiomarkersPage = () => {
     const [biomarkers, setBiomarkers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cards, setCards] = useState([]);
+    const[cards2, setCards2] = useState([]);
 
     useEffect(() => {
         console.log('Component mounted, fetching biomarkers...');
@@ -35,6 +36,14 @@ const DigitalBiomarkersPage = () => {
         // console.log(data);
         setCards(data);
         console.log('Cards state updated:', data);
+
+
+        // now fetcht from deck-2.json
+        const response2 = await fetch('/deck-1.json');
+        const data2 = await response2.json();
+        console.log('Fetched Data:', data2);
+        // console.log(data);
+        setCards2(data2);
 
     }
 
@@ -214,7 +223,11 @@ const DigitalBiomarkersPage = () => {
                 ))
             }
         </div>
+        <div>
             <SolitaireAnimated cards = {cards}/>
+            <SolitaireAnimated cards = {cards2}/>
+        </div>
+
             {/* <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_2.png"} alt="" />
             <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_3.png"} alt="" />
