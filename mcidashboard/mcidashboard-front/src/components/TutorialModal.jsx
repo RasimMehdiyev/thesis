@@ -8,59 +8,29 @@ const TutorialModal = ({
   onNext,
   onPrev,
   onSkip,
-  top,  // Now accepting top position
-  left, // Now accepting left position
+  top,  
+  left, 
 }) => {
   return (
     <div className="tutorial-modal"
       style={{
-        top: top,   // Use the top prop
-        left: left, // Use the left prop
+        top: top,   
+        left: left,
       }}>
     
       <div className="tutorial-modal-h">
-        {/* Step title */}
-        <h2 style={{ marginLeft: 0, fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase' }}>STEP {currentStep+1}/13</h2>
+        <h2 style={{ marginLeft: 0, fontSize: '16px', fontWeight: 'bold'}}>STEP {currentStep+1}/13</h2>
         <div >
-            <p
-            onClick={onSkip}
-            style={{
-                color: '#fff',
-                fontSize: '11px',
-                cursor: 'pointer',
-                textDecoration: 'underline',
-            }}
-            >
-            skip tutorial
-            </p>
+            <p className='skip'onClick={onSkip}> skip tutorial</p>
         </div>
       </div>
 
-      
+      <p style={{ fontSize: '14px', marginTop: '10px' }} dangerouslySetInnerHTML={{ __html: content }}></p>
 
-      {/* Content */}
-      <p
-        style={{ fontSize: '14px', marginTop: '10px' }}
-        dangerouslySetInnerHTML={{ __html: content }}
-      ></p>
 
-      {/* Buttons */}
       <div className= "modal-buttons">
         {currentStep > 0 && (
-          <button
-            onClick={onPrev}
-            style={{
-                justifyContent:"flex-start",
-              backgroundColor: '#fff',
-              color: '#4A00E0',
-              padding: '8px 20px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            Back
-          </button>
+          <button onClick={onPrev}>Back</button>
         )}
         <button onClick={onNext} style={{ marginLeft:'auto'}}>
           {currentStep === totalSteps - 1 ? 'Finish' : 'Next'}

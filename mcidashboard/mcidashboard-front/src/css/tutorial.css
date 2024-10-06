@@ -4,19 +4,19 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.3); /* Darken the background with 60% opacity */
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: 1001;
     backdrop-filter: blur(1px); 
     -webkit-backdrop-filter: blur(1px);
   }
   
-  /* Highlighted element container */
+
   .highlight {
     position: absolute;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     z-index: 1001;
-    transition: all 0.3s ease; /* Smooth transitions */
+    transition: all 0.3s ease; 
   }
   
 .tutorial-modal{
@@ -34,7 +34,6 @@
 
 .tutorial-modal .modal-buttons {
     display: flex;
-     /* Align buttons to the right */
     gap: 10px;
   }
   
@@ -48,12 +47,21 @@
     cursor: pointer;
   }
   
-  .tutorial-modal .modal-buttons button:hover {
+.tutorial-modal .modal-buttons button:hover {
     background-color: #B2A3FE;
-  }
-.tutorial-modal-h{
+}
+
+.tutorial-modal-h {
     display: flex;
     justify-content: space-between;
+    justify-items: center;
+}
+
+.skip { 
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
 }
   
   
