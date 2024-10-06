@@ -293,7 +293,7 @@ const Tutorial = ({ initialStep = 0 }) => {
           height: '100vh',
           backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent but blocks interaction
           zIndex: 1000, // Ensure this is below the modal but above other content
-          pointerEvents: 'all', // Block interaction with everything
+          pointerEvents:(currentStep ===5 || currentStep===11) ? 'auto' : 'none', // Block interaction with everything
         }}
       />
       {/* Overlay for the mask */}
