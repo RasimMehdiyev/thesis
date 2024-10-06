@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-
+import React, { useState, useRef, useEffect } from 'react';  
+import Tooltip from './Tooltip'; // Adjust the path accordingly
 
 const tutorialSteps = [
   {
@@ -15,12 +15,12 @@ const tutorialSteps = [
   {
     title: "Step 3: Digital Biomarkers",
     content: "These are the digital biomarkers that power our app's features.",
-    selector: '#dig-card', 
+    selector: '#dig-card', // Highlight this element
   },
   {
     title: "Step 4: Finished",
     content: "That's it! You're ready to use the app.",
-    selector: null, 
+    selector: null, // No highlight for the last step
   },
 ];
 
@@ -30,9 +30,10 @@ const Tutorial = () => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const step = tutorialSteps[currentStep];
 
-
+  // Reference to the element being highlighted
   const highlightRef = useRef(null);
 
+  // Function to get the mask styles around a given element
   const getMaskStyles = (selector) => {
     if (!selector) return {};
     const element = document.querySelector(selector);
@@ -73,11 +74,23 @@ const Tutorial = () => {
 
   const [maskStyles, setMaskStyles] = useState({});
 
+  // Function to disable/enable scroll
+  const disableScroll = () => {
+    document.body.style.overflow = 'hidden';
+  };
+
+  const enableScroll = () => {
+    document.body.style.overflow = 'auto';
+  };
+
   // Recalculate mask styles on window resize and step change
   useEffect(() => {
     const updateMaskStyles = () => {
       if (step.selector) {
         setMaskStyles(getMaskStyles(step.selector));
+        disableScroll(); // Disable scrolling when a component is highlighted
+      } else {
+        enableScroll(); // Enable scrolling when no specific element is highlighted
       }
     };
 
@@ -90,6 +103,7 @@ const Tutorial = () => {
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('resize', updateMaskStyles);
+      enableScroll(); // Ensure scrolling is enabled when component is unmounted
     };
   }, [step.selector]);
 
@@ -100,8 +114,8 @@ const Tutorial = () => {
       if (element) {
         const rect = element.getBoundingClientRect();
         setTooltipPosition({
-          top: rect.top + window.scrollY + rect.height / 2, 
-          left: rect.right + 10, 
+          top: rect.top + window.scrollY + rect.height / 2, // Vertically center it
+          left: rect.right + 10, // Place it 10px to the right of the element
         });
         setIsTooltipVisible(true);
       }
@@ -110,14 +124,14 @@ const Tutorial = () => {
     }
   }, [currentStep]);
 
-
+  // Next step handler
   const handleNext = () => {
     if (currentStep < tutorialSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
 
-
+  // Previous step handler
   const handlePrev = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
