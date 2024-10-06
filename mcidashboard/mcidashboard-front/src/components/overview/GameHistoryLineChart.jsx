@@ -85,7 +85,7 @@ const GameHistoryLineChart = ({ data, labels }) => {
   return (
     <>
       <div className="line-chart-h">
-        <p style={{ fontSize: 14 }}>Game history</p>
+        <p style={{ fontSize: 16 }}>Game history</p>
         <div className="dropdown-container">
           <select className="game-history-dropdown">
             <option>3 months</option>

@@ -26,7 +26,7 @@ const PersonalInformation = () => {
 
 
   const patient = {
-    username: 'JohnDoe',
+    username: 'John Doe',
     gender: 'Male',
     age: 45,
     mci: true,
@@ -37,8 +37,8 @@ const PersonalInformation = () => {
       <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className='ml-subtitle' id="pers-p">Personal Information</p>
         <img
-          src='/assets/help_icon.svg'
-          alt='Help Icon'
+          src='/assets/info_icon.svg'
+          alt='Info Icon'
           className='icon'
           onMouseEnter={showTooltip}  // Show tooltip on hover
           onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
@@ -46,8 +46,10 @@ const PersonalInformation = () => {
         />
 
         <Tooltip
-          content="<strong>Neuropsychological tests </strong> are clinical results and <strong> Self-report information </strong> is based on player’s own weekly report."
+          content="None of this data was used for predictions as the machine learning models rely entirely on digital biomarkers."
           isVisible={isTooltipVisible}
+          top={60}
+          left={140}
         />
       </div>
 

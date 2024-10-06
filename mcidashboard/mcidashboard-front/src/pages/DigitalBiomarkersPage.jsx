@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Tooltip from '../components/Tooltip'; 
 import CategorizedBiomarker from '../components/digital_biomarkers/CategorizedBiomarkers';
 import SolitaireAnimated from '../components/digital_biomarkers/SolitaireAnimated';
 const DigitalBiomarkersPage = () => {
@@ -14,6 +15,18 @@ const DigitalBiomarkersPage = () => {
         fetchBiomarkers();
         fetchFromJsonFile();
     }, []);  // Empty dependency array ensures it only runs once on mount
+
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+    // Show tooltip on mouse enter
+    const showTooltip = () => {
+      setIsTooltipVisible(true);
+    };
+  
+    // Hide tooltip on mouse leave
+    const hideTooltip = () => {
+      setIsTooltipVisible(false);
+    };
     
     const fetchFromJsonFile = async () =>{
         const response = await fetch('/deck.json');
@@ -175,6 +188,25 @@ const DigitalBiomarkersPage = () => {
 
   return (
     <div className='container' id="biomarker-container">
+        <div className='personal-info-h' style={{ position: 'relative' }}>
+            <p className='ml-subtitle'>Digital biomarkers grouped by category</p>
+          <img
+            src='/assets/info_icon.svg'
+            alt='Info Icon'
+            className='icon'
+            onMouseEnter={showTooltip}  // Show tooltip on hover
+            onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
+            style={{ cursor: 'pointer', marginTop: 5 }}
+          />
+
+          <Tooltip
+            content="Out of the 61 markers, only <strong>26</strong> were used in the machine learning models because some were too similar or not useful. By focusing on the most important ones, the models can make better predictions without being confused by redundant data."
+            isVisible={isTooltipVisible}
+            left={100}
+            top={-20}
+          />
+        </div>
+        
         <div class="biomarkers-list">
             {
                 biomarkers.map(biomarker_type => (
