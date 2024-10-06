@@ -7,6 +7,7 @@
     background: linear-gradient(180deg, rgb(56, 132, 15) 10%, #3CB72E 81%);
     width: 1020px;
     height: 750px;
+    padding: 0 20px 0 20px;
     border: black 0.5px solid;
 }
 
@@ -18,7 +19,7 @@
     /* gap: 0px; */
     width: 99.9%;
     height: 200px;
-    border: black 0.5px solid;
+    /* border: black 0.5px solid; */
 }
 
 .bottom-row {
@@ -28,7 +29,7 @@
     gap: 40px;
     width: 99.9%;
     height: 400px;
-    border: black 0.5px solid;
+    /* border: black 0.5px solid; */
 }
 
 .game-info {
@@ -93,18 +94,19 @@
     margin-top: 9px;
     gap: 30px;
     margin-right: 37px;
+    height: 150px;
+    border-radius: 12px;
 }
 
 .four-suit-stack {
     width: 100px;
-    height: 140px;
     background-color: transparent;
 }
 
 .four-suit-stack,
 .empty-card-slot {
     width: 100px;
-    height: 150px;
+    /* height: 150px; */
     background-color: rgba(0, 0, 0, 0.424);
     border-radius: 8px;
     position: relative;
@@ -125,9 +127,13 @@
 }
 
 .highlight-destination {
-    background-color: red;
     /* shadow */
     box-shadow: 0 0 20px 10px red;
+}
+
+.card-touch {
+    box-shadow: 0 0 2px 15px rgba(0, 0, 0, 0.475);
+    /* margin: 5px; */
 }
 
 .card-container {

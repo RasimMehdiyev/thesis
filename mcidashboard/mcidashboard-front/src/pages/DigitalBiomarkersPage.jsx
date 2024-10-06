@@ -10,6 +10,8 @@ const DigitalBiomarkersPage = () => {
     const [loading, setLoading] = useState(true);
     const [cards, setCards] = useState([]);
     const[cards2, setCards2] = useState([]);
+    const[cards3, setCards3] = useState([]);
+    const [cards4, setCards4] = useState([]);
 
     useEffect(() => {
         console.log('Component mounted, fetching biomarkers...');
@@ -32,18 +34,20 @@ const DigitalBiomarkersPage = () => {
     const fetchFromJsonFile = async () =>{
         const response = await fetch('/deck.json');
         const data = await response.json();
-        console.log('Fetched Data:', data);
-        // console.log(data);
         setCards(data);
-        console.log('Cards state updated:', data);
-
 
         // now fetcht from deck-2.json
         const response2 = await fetch('/deck-1.json');
         const data2 = await response2.json();
-        console.log('Fetched Data:', data2);
-        // console.log(data);
         setCards2(data2);
+
+        const response3 = await fetch('/deck-2.json');
+        const data3 = await response3.json();
+        setCards3(data3);
+                
+        const response4 = await fetch('/deck-3.json');
+        const data4 = await response4.json();;
+        setCards4(data4);
 
     }
 
@@ -223,9 +227,12 @@ const DigitalBiomarkersPage = () => {
                 ))
             }
         </div>
-        <div>
-            <SolitaireAnimated cards = {cards}/>
-            <SolitaireAnimated cards = {cards2}/>
+        <div className='solitaire-animated'>
+            {/* <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {true} card_touch = {false}/> */}
+            <SolitaireAnimated highlight_suit={false} cards = {cards} first_empty = {false} card_touch = {false}/>
+            <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {false} card_touch = {false}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards3} first_empty = {true} card_touch = {false}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards4} first_empty = {false} card_touch = {true}/>
         </div>
 
             {/* <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />

@@ -1,5 +1,5 @@
 [
-    { "id": 2, "value": 2, "suit": "H", "color": "red", "isFaceUp": true, "highlight": true, "destination": false, "message": "This card is the correct option." },
+    { "id": 2, "value": 2, "suit": "H", "color": "red", "isFaceUp": true, "highlight": true, "destination": false, "message": "Touch the grey zone can select the card. Higher accuracy means closer to the geometric center of the grey zone" },
     { "id": 3, "value": 3, "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 4, "value": 4, "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 5, "value": 5, "suit": "H", "color": "red", "isFaceUp": true },
@@ -13,7 +13,7 @@
     { "id": 12, "value": "Q", "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 13, "value": "K", "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 1, "value": "A", "suit": "H", "color": "red", "isFaceUp": true },
-    { "id": 29, "value": 3, "suit": "C", "color": "black", "isFaceUp": true, "highlight": true, "destination": true, "message": "Destination." },
+    { "id": 29, "value": 3, "suit": "C", "color": "black", "isFaceUp": true },
 
     { "id": 16, "value": 3, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 17, "value": 4, "suit": "D", "color": "red", "isFaceUp": true },
@@ -31,7 +31,7 @@
     { "id": 42, "value": 3, "suit": "S", "color": "black", "isFaceUp": true },
     { "id": 28, "value": 2, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 30, "value": 4, "suit": "C", "color": "black", "isFaceUp": true },
-    { "id": 15, "value": 2, "suit": "D", "color": "red", "isFaceUp": true, "highlight": true, "destination": false, "message": "<strong> Pile move </strong> with 2❤ available in the build stack will result in <strong> β Error </strong>." },
+    { "id": 15, "value": 2, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 31, "value": 5, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 32, "value": 6, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 33, "value": 7, "suit": "C", "color": "black", "isFaceUp": true },

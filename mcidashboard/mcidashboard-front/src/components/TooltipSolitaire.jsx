@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Tooltip = ({ content, isVisible, top, left, positionStyle }) => {
+const Tooltip = ({ content, isVisible, top, left, right, positionStyle }) => {
   if (!isVisible) return null; 
 
   const finalPositionStyle = {
     ...positionStyle,
     top: top ? `${top}px` : positionStyle.top, 
     left: left ? `${left}px` : positionStyle.left, 
+    right: right ? `${right}px` : positionStyle.right,
   };
 
   return (
