@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';   
+import { useNavigate, useLocation } from 'react-router-dom';
 import Tooltip from './Tooltip'; // Adjust the path accordingly
+
 
 const tutorialSteps = [
   {
@@ -44,12 +46,25 @@ const tutorialSteps = [
   },
 ];
 
-const Tutorial = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false); // State to manage modal visibility
-  const step = tutorialSteps[currentStep];
+const Tutorial = ({ initialStep = 0 }) => {
+    const [currentStep, setCurrentStep] = useState(initialStep); // Set the initial step from props
+    const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false); // State to manage modal visibility
+    const step = tutorialSteps[currentStep];
+  
+    const navigate = useNavigate();
+  
+    const location = useLocation();
+  
+
+  // Set the current step from location state if available
+  useEffect(() => {
+    if (location.state && location.state.tutorialStep) {
+      setCurrentStep(location.state.tutorialStep);
+    }
+  }, [location.state]);
+
 
   // Function to get the mask styles around a given element
   const getMaskStyles = (selector) => {
@@ -174,17 +189,23 @@ const Tutorial = () => {
     }
   }, [currentStep]);
 
-  // Next step handler
+  
   const handleNext = () => {
     if (currentStep < tutorialSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
+    if (currentStep === 6) {  // Step 7 is index 6 (zero-indexed)
+      navigate('/digital-biomarkers', { state: { tutorialStep: 7 } });
+    }
   };
 
-  // Previous step handler
   const handlePrev = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+    }
+    if(currentStep === 7)
+    {
+        navigate('/overview', { state: { tutorialStep: 6 } });
     }
   };
 
