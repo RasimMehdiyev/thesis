@@ -13,7 +13,8 @@
     { "id": 12, "value": "Q", "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 13, "value": "K", "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 1, "value": "A", "suit": "H", "color": "red", "isFaceUp": true },
-    { "id": 15, "value": 2, "suit": "D", "color": "red", "isFaceUp": true },
+    { "id": 29, "value": 3, "suit": "C", "color": "black", "isFaceUp": true },
+
     { "id": 16, "value": 3, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 17, "value": 4, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 18, "value": 5, "suit": "D", "color": "red", "isFaceUp": true },
@@ -30,7 +31,7 @@
     { "id": 42, "value": 3, "suit": "S", "color": "black", "isFaceUp": true },
     { "id": 28, "value": 2, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 30, "value": 4, "suit": "C", "color": "black", "isFaceUp": true },
-    { "id": 29, "value": 3, "suit": "C", "color": "black", "isFaceUp": true },
+    { "id": 15, "value": 2, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 31, "value": 5, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 32, "value": 6, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 33, "value": 7, "suit": "C", "color": "black", "isFaceUp": true },

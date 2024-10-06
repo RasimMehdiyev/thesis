@@ -12,7 +12,7 @@ const Stack = ({ cards, type, movingCard, emptySlot, isLastColumn }) => {
           const isFaceUp = index === cards.length - 1 || (isLastColumn && index === cards.length - 2);
           
           return (
-            <div key={card.id} className={`stack-slot ${emptySlot && index === cards.length - 1 ? 'empty-slot' : ''}`}>
+            <div key={card.id} className={`stack-slot ${emptySlot && index === cards.length ? 'empty-slot' : ''}`}>
               <Card
                 card={card}
                 isFaceUp={isFaceUp}
