@@ -14,35 +14,39 @@ import Tutorial from './components/Tutorial';
 const App = () => {
   const location = useLocation();
 
+  // Sidebar visibility logic
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
-
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
 
-
+  // Tutorial state
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
-
+  // Handle tutorial logic based on route changes
   useEffect(() => {
     if (location.pathname === '/overview') {
+      // Start tutorial at step 0 for Overview page
       setShowTutorial(true);
       setTutorialStep(0); 
-    }
-    else if (
+    } else if (
       (location.pathname === '/digital-biomarkers' || location.pathname === '/machine-learning') 
-      && location.state?.tutorialStep
+      && location.state?.tutorialStep !== undefined // Ensure tutorialStep is passed in state
     ) {
-      setShowTutorial(true); 
-      setTutorialStep(location.state.tutorialStep); 
+      // Continue tutorial from passed step on other pages
+      setShowTutorial(true);
+      setTutorialStep(location.state.tutorialStep);
+    } else {
+      // If on other pages or no tutorial state is passed, hide tutorial
+      setShowTutorial(false);
     }
-    
   }, [location]);
 
   return (
     <>
       {shouldShowSidebar && <NavbarComponent />}
       {shouldShowSidebar && <SidebarComponent />}
-      
+
+      {/* Conditionally render the tutorial */}
       {showTutorial && <Tutorial initialStep={tutorialStep} />}
 
       <Routes>
@@ -50,12 +54,13 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path='/overview' element={<Overview />} />
-        <Route path='/digital-biomarkers' element={<DigitalBiomarkersPage />} />
-        <Route path='/machine-learning' element={<MachineLearningPage />} />
+        <Route path="/overview" element={<Overview />} />
+        <Route path="/digital-biomarkers" element={<DigitalBiomarkersPage />} />
+        <Route path="/machine-learning" element={<MachineLearningPage />} />
       </Routes>
     </>
   );
 };
 
 export default App;
+

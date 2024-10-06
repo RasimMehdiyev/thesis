@@ -21,42 +21,4 @@
   
 
   
-  /* Modal styling */
-  .tutorial-modal {
-    font-family: 'Poppins';
-    font-size: 14px;
-    z-index: 1002;
-    color: white;
-    background-color: #5932EA;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tutorial-modal h2 {
-    margin-bottom: 10px;
-    font-size: 22px;
-    font-weight: 600;
-    margin-top: 0;
-  }
-  
-  .tutorial-modal p {
-    margin-bottom: 20px;
-  }
-  
-  .tutorial-modal button {
-    padding: 10px 20px;
-    border: none;
-    background-color: white;
-    color: #5932EA;
-    font-size: 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  
-  .tutorial-modal button:hover {
-    background-color: #7b61ff;
-  }
-  
   

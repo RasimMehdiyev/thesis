@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';   
 import { useNavigate, useLocation } from 'react-router-dom';
 import Tooltip from './Tooltip'; // Adjust the path accordingly
-
+import TutorialModal from './TutorialModal';
 
 const tutorialSteps = [
   {
-    title: "Step 1: Welcome",
+    title: "Welcome",
     content: "Welcome to the <strong>Solitaire Decision Support System!</strong><br>Click 'Next' to start the tutorial.",
     selector: null, // No highlight for the first step, full overlay
   },
   {
     title: "Step 2: Container Section",
     content: "This is the main container where content is displayed.",
-    selector: '.navbar li:nth-child(1)', // Highlight the container class
+    selector: '.container', // Highlight the container class
   },
   {
     title: "Step 3: Sidebar Navigation",
@@ -108,6 +108,11 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (!element) return {};
   
     const rect = element.getBoundingClientRect();
+
+    const handleSkip = () => {
+        setIsModalVisible(false); // Hide the modal when skipped
+      };
+
   
     // Increase the highlighted area by applying the padding
     return {
@@ -141,6 +146,10 @@ const Tutorial = ({ initialStep = 0 }) => {
         },
       };
     };
+
+    const handleSkip = () => {
+        setIsModalVisible(false); // Hide the modal when skipped
+      };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
 
@@ -179,7 +188,8 @@ const Tutorial = ({ initialStep = 0 }) => {
     const updateMaskStyles = () => {
       setIsModalVisible(false); // Hide the modal before recalculating mask
   
-      if (currentStep === 10) { // Step 11 is index 10 (zero-indexed)
+      if (currentStep === 10 || currentStep === 8 || currentStep===1) { // Step 11 is index 10 (zero-indexed)
+        enableScroll(); // Enable scrolling for Step 11
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Reset scroll to top
         setTimeout(() => {
           // Ensure mask update happens after scroll is complete
@@ -192,6 +202,8 @@ const Tutorial = ({ initialStep = 0 }) => {
           }
         }, 500); // Add a delay to ensure the scroll is complete
       } else {
+        disableScroll(); // Disable scrolling for all other steps
+  
         // Default behavior for all other steps
         if (step.selector) {
           const element = document.querySelector(step.selector);
@@ -213,8 +225,6 @@ const Tutorial = ({ initialStep = 0 }) => {
           setTimeout(() => setIsModalVisible(true), 500); // Show modal after delay
         }
       }
-  
-      disableScroll(); // Disable scrolling for all steps
     };
   
     updateMaskStyles();
@@ -228,6 +238,7 @@ const Tutorial = ({ initialStep = 0 }) => {
       enableScroll(); // Ensure scrolling is enabled when the tutorial ends
     };
   }, [step.selector, currentStep]);
+  
   
 
   // Calculate the tooltip position whenever the step changes
@@ -246,6 +257,31 @@ const Tutorial = ({ initialStep = 0 }) => {
       setIsTooltipVisible(false);
     }
   }, [currentStep]);
+
+  // Determine the modal's position based on the current step
+  // Determine the modal's position based on the current step
+  const getModalPosition = () => {
+    // Default position: center
+    let top = '50%';
+    let left = '50%';
+
+    // For specific steps, move the modal to different locations
+    if (currentStep === 3) {
+      top = '40%';   // Move the modal a bit higher
+      left = '800px';  // Move the modal more to the right
+    } else if (currentStep === 5) {
+      top = '40%';   // Move the modal lower
+      left = '40%';  // Move the modal more to the left
+    }
+    else if(currentStep===2){
+        top = '40%';   // Move the modal lower
+        left = '30%'; 
+    }
+    // Add any custom positions you want for other steps here
+
+    return { top, left };
+  };
+
 
   
   const handleNext = () => {
@@ -293,7 +329,7 @@ const Tutorial = ({ initialStep = 0 }) => {
           height: '100vh',
           backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent but blocks interaction
           zIndex: 1000, // Ensure this is below the modal but above other content
-          pointerEvents:(currentStep ===5 || currentStep===11) ? 'auto' : 'none', // Block interaction with everything
+          pointerEvents: 'all', // Block interaction with everything
         }}
       />
       {/* Overlay for the mask */}
@@ -311,34 +347,23 @@ const Tutorial = ({ initialStep = 0 }) => {
 
       {/* Conditionally adjust the modal position based on the current step */}
       {isModalVisible && (
-        <div
-          className="tutorial-modal"
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: (currentStep === 3 || currentStep === 5) ? '40%' : '30%', // Move the modal to the right during specific steps
-            transform: (currentStep === 3|| currentStep === 5) ? 'translate(50%, -50%)' : 'translate(-50%, -50%)',
-            zIndex: 1001,
-          }}
-        >
-          <h2>{step.title}</h2>
-          {/* Render HTML content using dangerouslySetInnerHTML */}
-          <p dangerouslySetInnerHTML={{ __html: step.content }}></p>
-          <div>
-            {currentStep > 0 && <button onClick={handlePrev}>Previous</button>}
-            {currentStep < tutorialSteps.length - 1 && <button onClick={handleNext}>Next</button>}
-            {currentStep === tutorialSteps.length - 1 && (
-              <button
-                onClick={() => {
-                  alert('Tutorial Finished!');
-                  enableScroll(); // Re-enable scroll after tutorial finishes
-                }}
-              >
-                Finish
-              </button>
-            )}
+         <div>
+         {isModalVisible && (
+           <TutorialModal
+             stepTitle={step.title}
+             content={step.content}
+             currentStep={currentStep}
+             totalSteps={tutorialSteps.length}
+             onNext={handleNext}
+             onPrev={handlePrev}
+             onSkip={handleSkip}
+             top={getModalPosition().top}   // Pass the top position
+             left={getModalPosition().left} // Pass the left position
+           />
+         )}
+          
           </div>
-        </div>
+        
       )}
     </div>
   );
