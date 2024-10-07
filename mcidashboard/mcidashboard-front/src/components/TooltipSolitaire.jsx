@@ -9,6 +9,7 @@ const Tooltip = ({ content, isVisible, top, left, right, positionStyle }) => {
     left: left ? `${left}px` : positionStyle.left, 
     right: right ? `${right}px` : positionStyle.right,
     maxWidth: positionStyle.maxWidth,
+    minWidth: positionStyle.minWidth,
     width: positionStyle.width,
   };
 
@@ -32,7 +33,7 @@ Tooltip.defaultProps = {
     zIndex: '1000',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     maxWidth: '140px',
-    minWidth: '80px',
+    // minWidth: '80px',
   },
 };
 

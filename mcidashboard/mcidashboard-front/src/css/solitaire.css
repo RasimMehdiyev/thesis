@@ -194,11 +194,11 @@
     }
 }
 
-.game-board-sidebar img {
+.game-board-sidebar .moving-icon {
     animation: float 2s ease-in-out infinite;
     transition: transform 0.3s ease-in-out;
 }
 
-.highlight-icon {
+.moving-icon {
     animation: float 3s ease-in-out infinite;
 }

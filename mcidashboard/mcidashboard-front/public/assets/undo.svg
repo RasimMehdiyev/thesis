@@ -1,26 +1,6 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-    width="40px" height="40px" viewBox="0 0 32 32" enable-background="new 0 0 40 40" xml:space="preserve">
-    
-    Define a thicker green shadow filter
-    <defs>
-        <filter id="thickGreenShadow" x="-50%" y="-50%" width="200%" height="200%">
-            <!-- Blur effect for a softer and thicker shadow -->
-            <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
-            <!-- Use a flood fill to apply a green color to the shadow with increased opacity -->
-            <feFlood flood-color="green" flood-opacity="1" result="color"/>
-            <!-- Combine the blur and flood -->
-            <feComposite in="color" in2="blur" operator="in" result="color"/>
-            <!-- Merge the shadow with the original graphic -->
-            <feMerge>
-                <feMergeNode in="shadow" />
-                <feMergeNode in="SourceGraphic" />
-            </feMerge>
-        </filter>
-    </defs>
-    
-    <!-- Apply the thick green shadow filter to the elements -->
-    <g filter="url(#thickGreenShadow)">
-        <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M5.4,14H21c3.3,0,6,2.7,6,6v7"/>
-        <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="13.5,6 5.5,14 13.5,22 "/>
-    </g>
+    width="40px" height="40px" viewBox="0 0 32 32" enable-background="new 0 0 40 40" xml:space="preserve"
+    style="box-shadow: 0 0 20px 5px green;">
+    <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M5.4,14H21c3.3,0,6,2.7,6,6v7"/>
+    <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="13.5,6 5.5,14 13.5,22 "/>
 </svg>

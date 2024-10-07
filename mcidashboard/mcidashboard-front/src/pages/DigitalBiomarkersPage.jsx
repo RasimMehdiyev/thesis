@@ -12,6 +12,7 @@ const DigitalBiomarkersPage = () => {
     const[cards2, setCards2] = useState([]);
     const[cards3, setCards3] = useState([]);
     const [cards4, setCards4] = useState([]);
+    const [cards5, setCards5] = useState([]);
 
     useEffect(() => {
         console.log('Component mounted, fetching biomarkers...');
@@ -78,6 +79,23 @@ const DigitalBiomarkersPage = () => {
           } catch (fallbackError) {
             console.error("Failed to fetch deck-2.json from both paths", fallbackError);
           }
+
+          try{
+            const response5 = await fetch('/static/deck-icon.json');
+            const data5 = await response5.json();
+            setCards5(data5);
+          }
+            catch (error) {
+                console.error("Error fetching deck-4.json from /static/, trying fallback path", error);
+                try {
+                    const response5 = await fetch('/deck-icon.json');
+                    const data5 = await response5.json();
+                    setCards5(data5);
+                } catch (fallbackError) {
+                    console.error("Failed to fetch deck-4.json from both paths", fallbackError);
+                }
+                }
+
         }
       
         try {
@@ -274,11 +292,11 @@ const DigitalBiomarkersPage = () => {
         </div>
         <div className='solitaire-animated'>
             {/* <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {true} card_touch = {false}/> */}
-            <SolitaireAnimated highlight_suit={false} cards = {cards} first_empty = {false} card_touch = {false} no_card_highlight = {true}/>
-            <SolitaireAnimated highlight_suit={false} cards = {cards} first_empty = {false} card_touch = {false} no_card_highlight = {false}/>
-            <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {false} card_touch = {false} no_card_highlight = {false}/>
-            <SolitaireAnimated highlight_suit={false} cards = {cards3} first_empty = {true} card_touch = {false} no_card_highlight = {false}/>
-            <SolitaireAnimated highlight_suit={false} cards = {cards4} first_empty = {false} card_touch = {true} no_card_highlight = {false}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards5} first_empty = {false} card_touch = {false} no_card_highlight = {true} movingIcons = {true}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards} first_empty = {false} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
+            <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {false} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards3} first_empty = {true} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards4} first_empty = {false} card_touch = {true} no_card_highlight = {false} movingIcons = {false}/>
         </div>
 
             {/* <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
