@@ -60,29 +60,34 @@ const tutorialSteps = [
     selector: '.navbar li:nth-child(2)', // Highlight the feature importance section
   },
   {//11
-    title: "DIG",
-    content: "These show dataset information.",
+    title: "DIGITAL BIOMARKERS DEATAILS TAB",
+    content: "This tab explains the <strong>meaning</strong> of each biomarker, how it is derived from the patient playing <strong>Klondike Solitaire</strong>, its <strong>unit</strong> of measurement, and what <strong>category</strong> it falls into.",
     selector: '.container', // Highlight the feature importance section
   },
   {//12
-    title: "Step 10: Machine learning",
-    content: "These show dataset information.",
+    title: "MACHINE LEARNING DETAILS TAB",
+    content: "If you want more information about the machine learning models developed to make the prediction, switch to the <strong>Machine Learning Details </strong> tab.",
     selector: '.navbar li:nth-child(3)', // Highlight the feature importance section
   },
   {//13
-    title: "Step 11: Machine learning",
-    content: "These show dataset information.",
+    title: "MACHINE LEARNING DETAILS TAB",
+    content: "This tab showcases the <strong>most accurate machine learning models</strong> developed for predicting MCI, along with their <strong>performance metrics</strong>, <strong>key techniques</strong> used in their development, and detailed <strong>demographic information</strong> about the patients whose biomarkers contributed to building these models.",
+    selector: '.machine-learning-container', // Highlight the feature importance section
+  },
+  {//14
+    title: "MACHINE LEARNING DETAILS TAB",
+    content: "Keep in mind that by moving your mouse over the different parts of the charts contained on this page, details will appear about what each color represents in the charts.",
     selector: '.machine-learning-container', // Highlight the feature importance section
   },
 
-  {//14
-    title: "Step 12: Info icons",
-    content: "These show dataset information.",
+  {//15
+    title: "INFO ICONS",
+    content: "Similarly, if you move your mouse over those icons that can be found on all pages, you will see additional information about the section it is next to. <br> <br> Make sure you try them after this tutorial!",
     selector: '.icon', // Highlight the feature importance section
   },
-  {//15
-    title: "Step 13: Finished",
-    content: "That's it! You're ready to use the app.",
+  {//16
+    title: "DONE",
+    content: "That's it! You are back on the <strong>Overview page</strong> and ready to use the web app.",
     selector: null, // No highlight for the last step
   },
 ];
@@ -303,6 +308,10 @@ const Tutorial = ({ initialStep = 0 }) => {
     else if(currentStep===10){
         top = '200px';   // Move the modal lower
     }
+    else if(currentStep===12){
+        top = '200px';   // Move the modal lower
+        left = '900px';
+    }
     // Add any custom positions you want for other steps here
 
     return { top, left };
@@ -318,12 +327,12 @@ const Tutorial = ({ initialStep = 0 }) => {
       navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
     }
     if (currentStep === 12) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/machine-learning', { state: { tutorialStep: 11 } });
-      }
-
-      if (currentStep === 13) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/overview', { state: { tutorialStep: 12 } });
-      }
+        navigate('/machine-learning', { state: { tutorialStep: 13} });
+    }
+    
+    if (currentStep === 15) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/overview', { state: { tutorialStep: 16 } });
+    }
     
   };
 
