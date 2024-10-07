@@ -154,13 +154,12 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
       onMouseLeave={handleMouseLeave}
     >
       <Bar ref={chartRef} data={data} options={options} />
-      {/* Custom X-axis labels */}
+
       <div style={styles.xAxisLabels}>
         <span>Healthy</span>
         <span>MCI</span>
       </div>
 
-      {/* Custom Tooltip */}
       {tooltip.visible && (
         <div
           className="custom-tooltip"
@@ -191,8 +190,8 @@ const styles = {
     justifyContent: 'space-between',
     position: 'absolute',
     bottom: '30px',
-    left: '130px',
-    right: '70px',
+    left: '105px',
+    right: '45px',
     fontSize: '12px',
     fontFamily: 'Helvetica, Arial, sans-serif',
     color: '#666666',
