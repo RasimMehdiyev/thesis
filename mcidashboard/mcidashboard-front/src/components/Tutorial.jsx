@@ -75,7 +75,7 @@ const tutorialSteps = [
     selector: '.machine-learning-container', // Highlight the feature importance section
   },
   {//14
-    title: "MACHINE LEARNING DETAILS TAB",
+    title: "CHARTS",
     content: "Keep in mind that by moving your mouse over the different parts of the charts contained on this page, details will appear about what each color represents in the charts.",
     selector: '.machine-learning-container', // Highlight the feature importance section
   },
@@ -131,6 +131,7 @@ const Tutorial = ({ initialStep = 0 }) => {
 
     const handleSkip = () => {
         setIsModalVisible(false); // Hide the modal when skipped
+        enableScroll(); // Enable scrolling
       };
 
   
@@ -169,6 +170,7 @@ const Tutorial = ({ initialStep = 0 }) => {
 
     const handleSkip = () => {
         setIsModalVisible(false); // Hide the modal when skipped
+        enableScroll();
       };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
@@ -308,6 +310,11 @@ const Tutorial = ({ initialStep = 0 }) => {
     else if(currentStep===10){
         top = '200px';   // Move the modal lower
     }
+
+    else if(currentStep===2){
+        top = '200px';   // Move the modal lower
+        left = '450px'; 
+    }
     else if(currentStep===12){
         top = '200px';   // Move the modal lower
         left = '900px';
@@ -320,20 +327,24 @@ const Tutorial = ({ initialStep = 0 }) => {
 
   
   const handleNext = () => {
-    if (currentStep < tutorialSteps.length - 1) {
+    if (currentStep < tutorialSteps.length-1) {
       setCurrentStep(currentStep + 1);
+
+      if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
+      }
+      if (currentStep === 12) {  // Step 7 is index 6 (zero-indexed)
+          navigate('/machine-learning', { state: { tutorialStep: 13} });
+      }
+      
+      if (currentStep === 15) {  // Step 7 is index 6 (zero-indexed)
+          navigate('/overview', { state: { tutorialStep: 16 } });
+      }
     }
-    if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
-      navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
+    else{
+        setIsModalVisible(false); 
+        enableScroll(); 
     }
-    if (currentStep === 12) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/machine-learning', { state: { tutorialStep: 13} });
-    }
-    
-    if (currentStep === 15) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/overview', { state: { tutorialStep: 16 } });
-    }
-    
   };
 
   const handlePrev = () => {
@@ -355,6 +366,7 @@ const Tutorial = ({ initialStep = 0 }) => {
 
   return (
     <div>
+        {isModalVisible && (
         <div
         style={{
           position: 'fixed',
@@ -366,19 +378,20 @@ const Tutorial = ({ initialStep = 0 }) => {
           zIndex: 1000, // Ensure this is below the modal but above other content
           pointerEvents: 'all', // Block interaction with everything
         }}
-      />
+      />)}
       {/* Overlay for the mask */}
-      <>
-        
-        <div className="tutorial-overlay" style={{ ...maskStyles.topMask}}/>
-        {step.selector && (
-          <>
-            <div className="tutorial-overlay" style={{ ...maskStyles.leftMask }} />
-            <div className="tutorial-overlay" style={{ ...maskStyles.rightMask }} />
-            <div className="tutorial-overlay" style={{ ...maskStyles.bottomMask }} />
-          </>
+      {isModalVisible && (
+        <>
+            <div className="tutorial-overlay" style={{ ...maskStyles.topMask }} />
+            {step.selector && (
+            <>
+                <div className="tutorial-overlay" style={{ ...maskStyles.leftMask }} />
+                <div className="tutorial-overlay" style={{ ...maskStyles.rightMask }} />
+                <div className="tutorial-overlay" style={{ ...maskStyles.bottomMask }} />
+            </>
+            )}
+        </>
         )}
-      </>
 
       {/* Conditionally adjust the modal position based on the current step */}
       {isModalVisible && (
