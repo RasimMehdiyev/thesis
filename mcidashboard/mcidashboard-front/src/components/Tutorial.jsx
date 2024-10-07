@@ -4,83 +4,83 @@ import Tooltip from './Tooltip'; // Adjust the path accordingly
 import TutorialModal from './TutorialModal';
 
 const tutorialSteps = [
-  {
+  {//0
     title: "START OF THE TUTORIAL",
     content: "Welcome to the <strong>Solitaire Decision Support System!</strong><br>Click 'Next' to start the tutorial.",
     selector: null, // No highlight for the first step, full overlay
   },
-  {
+  {//1
     title: "OVERVIEW TAB",
     content: "This tab displays all the information related to a given patient.",
     selector: '.container', // Highlight the container class
   },
-  {
+  {//2
     title: "OVERVIEW TAB",
     content: "You can find it by clicking the Overview tab in the navigation bar at the top of the page.",
     selector: '.navbar li:nth-child(1)', // Highlight the container class
   },
-  {
+  {//3
     title: "SIDEBAR",
     content: "To view a patient's data on the Overview page, simply <strong>click their name </strong> from the list. <br><br>If you can't find them, use the search bar to quickly locate them by <strong> typing their name. </strong>",
     selector: '.sidebar', // Highlight the sidebar class
   },
-  {
+  {//4
     title: "PERSONAL INFORMATION",
     content: "On this section of the <strong> Overview page </strong>, you can view basic information about the patient, their clinical test results for MCI, and their self-reported information on any previous diagnoses of anxiety or depression. ",
     selector: '#pers-card', // Highlight the personal information section
   },
-  {
+  {//5
     title: "DIGITAL BIOMARKERS",
     content: "In this section of the <strong>Overview page</strong>, you can view how the patient has scored on each digital biomarker used for predicting MCI, track the evolution of these scores over time, and compare them to the scores of other patients. ",
     selector: '#dig-card', // Highlight the digital biomarkers section
   },
-  {
+  {//6
     title: "DIGITAL BIOMARKERS",
     content: "To view results for another biomarker, simply <strong>click on this dropdown menu</strong>, select your desired biomarker from the options, and all graphs will update accordingly.",
     selector: '.dropdown-table-container', // Highlight the digital biomarkers section
   },
-  {
+  {//7
     title: "DIGITAL BIOMARKERS",
     content: "Similarly, you can adjust the time range to view the progress of the results for the selected biomarker on the purple line chart using this <strong>dropdown menu</strong> above.",
     selector: '.dropdown-container', // Highlight the digital biomarkers section
   },
-  {
+  {//8
     title: "FEATURE IMPORTANCE",
-    content: "These show the most impactful features and the impact of each.",
+    content: "This shows the influence of the most significant biomarkers either increase or decrease the likelihood of the final prediction.",
     selector: '#importance-card', // Highlight the feature importance section
   },
-  {
-    title: "Step 7: Machine Learning",
-    content: "These show dataset information.",
+  {//9
+    title: "MACHINE LEARNING MODEL",
+    content: "This final section of the <strong>Overview page</strong> displays the type, quantity and origin of the data used to develop machine learning models able to predict MCI. <br><br>Most importantly, it provides the most accurate prediction for a given patient, along with the associated probability. ",
     selector: '#ml-card', // Highlight the feature importance section
   },
-  {
-    title: "Step 8: Digital biomarkers",
-    content: "These show dataset information.",
+  {//10
+    title: "DIGITAL BIOMARKERS DEATAILS TAB",
+    content: "If you want more information about the digital biomarkers used for the prediction, switch to the <strong>Digital Biomarkers Details </strong> tab.",
     selector: '.navbar li:nth-child(2)', // Highlight the feature importance section
   },
-  {
-    title: "Step 9: Digital biomarkers",
+  {//11
+    title: "DIG",
     content: "These show dataset information.",
     selector: '.container', // Highlight the feature importance section
   },
-  {
+  {//12
     title: "Step 10: Machine learning",
     content: "These show dataset information.",
     selector: '.navbar li:nth-child(3)', // Highlight the feature importance section
   },
-  {
+  {//13
     title: "Step 11: Machine learning",
     content: "These show dataset information.",
     selector: '.machine-learning-container', // Highlight the feature importance section
   },
 
-  {
+  {//14
     title: "Step 12: Info icons",
     content: "These show dataset information.",
     selector: '.icon', // Highlight the feature importance section
   },
-  {
+  {//15
     title: "Step 13: Finished",
     content: "That's it! You're ready to use the app.",
     selector: null, // No highlight for the last step
@@ -289,16 +289,19 @@ const Tutorial = ({ initialStep = 0 }) => {
         top = '200px';   // Move the modal lower
         left = '450px'; 
     }
-    else if(currentStep===2){
-        top = '200px';   // Move the modal lower
-        left = '500px'; 
-    }
     else if(currentStep===5 || currentStep===6 || currentStep===7){
         left = '300px';
     }
     else if(currentStep===8)
     {
         left= '1000px';
+    }
+    else if(currentStep===9)
+    {
+        left= '500px';
+    }
+    else if(currentStep===10){
+        top = '200px';   // Move the modal lower
     }
     // Add any custom positions you want for other steps here
 
@@ -311,8 +314,8 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep < tutorialSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
-    if (currentStep === 9) {  // Step 7 is index 6 (zero-indexed)
-      navigate('/digital-biomarkers', { state: { tutorialStep: 8 } });
+    if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
+      navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
     }
     if (currentStep === 12) {  // Step 7 is index 6 (zero-indexed)
         navigate('/machine-learning', { state: { tutorialStep: 11 } });
@@ -328,9 +331,9 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
-    if(currentStep === 8)
+    if(currentStep === 10)
     {
-        navigate('/overview', { state: { tutorialStep: 7 } });
+        navigate('/overview', { state: { tutorialStep: 9 } });
     }
     if (currentStep === 11) {  // Step 7 is index 6 (zero-indexed)
         navigate('/digital-biomarkers', { state: { tutorialStep: 10 } });
