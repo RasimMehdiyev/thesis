@@ -124,11 +124,15 @@
     /* background-color: yellow; */
     /* shadow */
     box-shadow: 0 0 20px 10px yellow;
+    animation: float 2s ease-in-out infinite;
+    transition: transform 0.3s ease-in-out;
 }
 
 .highlight-destination {
     /* shadow */
     box-shadow: 0 0 20px 10px red;
+    animation: float 2s ease-in-out infinite;
+    transition: transform 0.3s ease-in-out;
 }
 
 .card-touch {
@@ -163,4 +167,38 @@
 .card-container:hover .hover-message {
     opacity: 1;
     /* Show message on hover */
+}
+
+.game-board-container {
+    display: flex;
+    flex-direction: row;
+    background-color: #E7E7E7;
+}
+
+.game-board-sidebar {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.game-board-sidebar img {
+    animation: float 2s ease-in-out infinite;
+    transition: transform 0.3s ease-in-out;
+}
+
+.highlight-icon {
+    animation: float 3s ease-in-out infinite;
 }

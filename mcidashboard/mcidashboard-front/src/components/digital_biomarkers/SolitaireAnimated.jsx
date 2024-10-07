@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Stack from './solitaire_components/Stack';
 import Tooltip from '../TooltipSolitaire'; // Import tooltip
-const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch }) => {
+const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_card_highlight }) => {
   const [buildDeck, setBuildDeck] = useState([]);
   const [pileDeck, setPileDeck] = useState([]);
   const [talonDeck, setTalonDeck] = useState([]);
@@ -43,33 +43,39 @@ console.log(highlight_suit);
   }, [cards]);
 
   return (
-    <div className="game-board">
+    <div className='game-board-container'>
+      <div className='game-board-sidebar'>
+        <img src={process.env.PUBLIC_URL + "/assets/search_icon.svg"} alt="" />
+        <img src={process.env.PUBLIC_URL + "/assets/burger-bar.svg"} className="highlight-icon" alt="" />
+        <img src={process.env.PUBLIC_URL + "/assets/undo.svg"} alt="" className='highlight-icon'/>
+      </div>
+      <div className="game-board">
       <div className="top-row">
-        {/* Left side: pile and talon */}
         <div className="pile-talon">
-          <Stack type="draw" cards={pileDeck} />
-          <Stack type="talon" cards={talonDeck} highlightTopCard = {true} /> {/* Highlight topmost talon card */}
+          <Stack type="draw" cards={pileDeck}/>
+          <Stack type="talon" cards={talonDeck} highlightTopCard = {true} no_card_highlight={no_card_highlight} />
         </div>
 
-        {/* Right side: 4 empty slots for 4 suits */}
         <div 
-          className={`four-suits  ${highlightState ?'highlight-destination' : ''}`}
-          onMouseEnter={showTooltip}  // Show tooltip on hover
-          onMouseLeave={hideTooltip} // Hide tooltip when hover ends
+          className={`four-suits`}
+          onMouseEnter={showTooltip} 
+          onMouseLeave={hideTooltip} 
         >
-          {fourSuits.map((suit, index) => (
+          {fourSuits.map((suit, index) =>   (
             <Stack 
             key={index} 
-            type="four-suit" cards={suit}  />
+            type="four-suit" cards={suit} highlight_suit={highlight_suit}  />
           ))}
            { highlight_suit ? (         
             <Tooltip
             
-            content={"The player should put one of the 4 cards into the empty slot to avoid the Ace Beta Error"}
+            content={"Player should put one of the 4 cards into the empty slot to avoid the Ace β error"}
             isVisible={isTooltipVisible}
-            right={550}
+            right={600}
             top={'auto'}
             left={'auto'}
+            width={'350px'}
+            maxWidth={'350px'}
 
           />)
           : 
@@ -77,7 +83,6 @@ console.log(highlight_suit);
         </div>
       </div>
 
-      {/* Build decks */}
       <div className="bottom-row">
         {buildDeck.map((stack, index) => (
           <Stack
@@ -87,11 +92,14 @@ console.log(highlight_suit);
             first_empty={first_empty}
             index={index}
             card_touch={card_touch}
-            highlightLastCard={index === 0 || index === 6} // Highlight last card in first and last build column
+            highlightLastCard={index === 0 || index === 6}
+            no_card_highlight = {no_card_highlight}
           />
         ))}
       </div>
     </div>
+    </div>
+    
   );
 };
 

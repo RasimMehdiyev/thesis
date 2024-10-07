@@ -1,10 +1,10 @@
 import React from 'react';
 import Card from './Card';
 
-const Stack = ({ cards, type, isLastColumn, first_empty, card_touch  }) => {
+const Stack = ({ cards, type, isLastColumn, first_empty, card_touch, no_card_highlight, highlight_suit  }) => {
 
   return (
-    <div className={`${type}-stack`}>
+    <div className={`${type}-stack ${highlight_suit ? "highlight-destination" : ''}` }>
       {cards && cards.length > 0 && cards.map((card, index) => {
 
         if (type === 'build') {
@@ -17,6 +17,7 @@ const Stack = ({ cards, type, isLastColumn, first_empty, card_touch  }) => {
                 isFaceUp={isFaceUp}
                 first_empty={first_empty}
                 card_touch={card_touch}
+                no_card_highlight = {no_card_highlight}
               />
             </div>
           )
@@ -30,6 +31,7 @@ const Stack = ({ cards, type, isLastColumn, first_empty, card_touch  }) => {
               key={card.id} 
               card={card} 
               isFaceUp={index >= lastThree} 
+              no_card_highlight={no_card_highlight}
             />
           );
         } else if (type === 'draw') {
@@ -38,6 +40,7 @@ const Stack = ({ cards, type, isLastColumn, first_empty, card_touch  }) => {
               key={card.id} 
               card={card} 
               isFaceUp={false} 
+
             />
           );
         } else if (type === 'four-suit') {

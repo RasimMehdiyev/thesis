@@ -28,9 +28,9 @@
 #biomarker-container {
     display: flex;
     flex-direction: row;
-    justify-self: center;
+    justify-content: space-between;
     margin-bottom: 50px;
-    gap: 0px;
+    padding: 0 40px;
 }
 
 .solitaire-overview img {

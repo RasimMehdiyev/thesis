@@ -4,7 +4,7 @@ import { useState } from 'react';
 // import tooltip
 import Tooltip from '../../TooltipSolitaire'; 
 
-const Card = ({ card, isFaceUp, first_empty, index, card_touch }) => {
+const Card = ({ card, isFaceUp, first_empty, card_touch, no_card_highlight, highlight_suit }) => {
   const solitaireImages = process.env.PUBLIC_URL + '/assets/solitaire_images/';
   const [isHovered, setIsHovered] = useState(false); // To track hover state
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
@@ -25,13 +25,13 @@ const Card = ({ card, isFaceUp, first_empty, index, card_touch }) => {
       onMouseLeave={() => setIsHovered(false)} // Set hover state to false
     >
       {isFaceUp ? (
-        <div className={`card-game ${card.highlight && !card.destination ? 'highlight': ''} ${card_touch && card.id === 2 ? 'card-touch' : ''} ${card.destination ? 'highlight-destination' : ''} `}>
+        <div className={`card-game ${card.highlight && !card.destination && !no_card_highlight ? 'highlight': ''} ${card_touch && card.id === 2 ? 'card-touch' : ''} ${card.destination && !no_card_highlight ? 'highlight-destination' : ''} `}>
           
           {
           first_empty && card.id === 2 ? 
             <div> 
             <div 
-              className={`card-image four-suit-stack highlight-destination}`}             
+              className={`card-image four-suit-stack highlight-destination`}             
               onMouseEnter={showTooltip}  // Show tooltip on hover
               onMouseLeave={hideTooltip} // Hide tooltip when hover ends
             > 
@@ -59,7 +59,7 @@ const Card = ({ card, isFaceUp, first_empty, index, card_touch }) => {
             
             content={card.message}
             isVisible={isTooltipVisible}
-            left={-150}
+            left={-180}
             top={0}
           />)
           : 
