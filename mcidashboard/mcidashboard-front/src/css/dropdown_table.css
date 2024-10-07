@@ -1,6 +1,6 @@
 .dropdown-table-container {
     position: relative;
-    width: 250px; /* Width of the dropdown button */
+    width: 25%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 16px;
     margin-top: -15px;

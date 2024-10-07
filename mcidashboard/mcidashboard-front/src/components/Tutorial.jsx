@@ -16,48 +16,48 @@ const tutorialSteps = [
   },
   {//2
     title: "OVERVIEW TAB",
-    content: "You can find it by clicking the Overview tab in the navigation bar at the top of the page.",
-    selector: '.navbar li:nth-child(1)', // Highlight the container class
+    content: "You can find it by clicking the <strong>Overview</strong> tab in the navigation bar at the top of the page.",
+    selector: '.navbar', // Highlight the container class
   },
   {//3
     title: "SIDEBAR",
-    content: "To view a patient's data on the Overview page, simply <strong>click their name </strong> from the list. <br><br>If you can't find them, use the search bar to quickly locate them by <strong> typing their name. </strong>",
+    content: "To view a patient's data on the 'Overview' page, simply <strong>click their name </strong> from the list. <br><br>If you can't find them, use the search bar to quickly locate them by <strong> typing their name. </strong>",
     selector: '.sidebar', // Highlight the sidebar class
   },
   {//4
     title: "PERSONAL INFORMATION",
-    content: "On this section of the <strong> Overview page </strong>, you can view basic information about the patient, their clinical test results for MCI, and their self-reported information on any previous diagnoses of anxiety or depression. ",
+    content: "On this section of the 'Overview' page, you can view <strong>basic information</strong> about the patient, their <strong>clinical test results</strong> for MCI, and their <strong>self-reported information</strong> on any previous diagnoses of anxiety or depression. ",
     selector: '#pers-card', // Highlight the personal information section
   },
   {//5
     title: "DIGITAL BIOMARKERS",
-    content: "In this section of the <strong>Overview page</strong>, you can view how the patient has scored on each digital biomarker used for predicting MCI, track the evolution of these scores over time, and compare them to the scores of other patients. ",
+    content: "In this section of the 'Overview page', you can view how the patient has scored on <strong>each digital biomarker</strong> used for predicting MCI, track the <strong>evolution</strong> of these scores over time, and <strong>compare</strong> them to the scores of other patients. ",
     selector: '#dig-card', // Highlight the digital biomarkers section
   },
   {//6
-    title: "DIGITAL BIOMARKERS",
-    content: "To view results for another biomarker, simply <strong>click on this dropdown menu</strong>, select your desired biomarker from the options, and all graphs will update accordingly.",
-    selector: '.dropdown-table-container', // Highlight the digital biomarkers section
+    title: "DROPDOWN MENUS",
+    content: "To view results for <strong>another biomarker</strong>, simply click on this dropdown menu, select your desired biomarker from the options, and all graphs will update accordingly.",
+    selector: '.dropdown-header', // Highlight the digital biomarkers section
   },
   {//7
-    title: "DIGITAL BIOMARKERS",
-    content: "Similarly, you can adjust the time range to view the progress of the results for the selected biomarker on the purple line chart using this <strong>dropdown menu</strong> above.",
+    title: "DROPDOWN MENUS",
+    content: "Similarly, you can adjust the <strong>time frame</strong> to view the progress of the results for the selected biomarker on the purple line chart using the dropdown menu above it.",
     selector: '.dropdown-container', // Highlight the digital biomarkers section
   },
   {//8
     title: "FEATURE IMPORTANCE",
-    content: "This shows the influence of the most significant biomarkers either increase or decrease the likelihood of the final prediction.",
+    content: "This shows how the <strong>most impactful biomarkers</strong> either increase or decrease the likelihood of the final prediction.",
     selector: '#importance-card', // Highlight the feature importance section
   },
   {//9
     title: "MACHINE LEARNING MODEL",
-    content: "This final section of the <strong>Overview page</strong> displays the type, quantity and origin of the data used to develop machine learning models able to predict MCI. <br><br>Most importantly, it provides the most accurate prediction for a given patient, along with the associated probability. ",
+    content: "This final section of the 'Overview page' displays the <strong>type, quantity and origin of the data </strong> used to develop machine learning models able to predict MCI. <br><br>Most importantly, it provides the <strong>most accurate prediction </strong> for a given patient, along with the associated probability. ",
     selector: '#ml-card', // Highlight the feature importance section
   },
   {//10
     title: "DIGITAL BIOMARKERS DEATAILS TAB",
     content: "If you want more information about the digital biomarkers used for the prediction, switch to the <strong>Digital Biomarkers Details </strong> tab.",
-    selector: '.navbar li:nth-child(2)', // Highlight the feature importance section
+    selector: '.navbar', // Highlight the feature importance section
   },
   {//11
     title: "DIGITAL BIOMARKERS DEATAILS TAB",
@@ -67,7 +67,7 @@ const tutorialSteps = [
   {//12
     title: "MACHINE LEARNING DETAILS TAB",
     content: "If you want more information about the machine learning models developed to make the prediction, switch to the <strong>Machine Learning Details </strong> tab.",
-    selector: '.navbar li:nth-child(3)', // Highlight the feature importance section
+    selector: '.navbar', // Highlight the feature importance section
   },
   {//13
     title: "MACHINE LEARNING DETAILS TAB",
@@ -76,13 +76,13 @@ const tutorialSteps = [
   },
   {//14
     title: "CHARTS",
-    content: "Keep in mind that by moving your mouse over the different parts of the charts contained on this page, details will appear about what each color represents in the charts.",
+    content: "Keep in mind that by <strong> moving your mouse over </strong>the different parts of the charts contained on this page, details will appear about what each color represents.",
     selector: '.machine-learning-container', // Highlight the feature importance section
   },
 
   {//15
     title: "INFO ICONS",
-    content: "Similarly, if you move your mouse over those icons that can be found on all pages, you will see additional information about the section it is next to. <br> <br> Make sure you try them after this tutorial!",
+    content: "Similarly, if you <strong>move your mouse over those icons</strong> that can be found on all pages, you will see additional information about the section it is next to. <br> <br> Make sure you try them after this tutorial!",
     selector: '.icon', // Highlight the feature importance section
   },
   {//16
