@@ -15,11 +15,11 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Sidebar visibility logic
+ 
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
 
-  // Tutorial state
+
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
@@ -42,14 +42,14 @@ const App = () => {
   //   }
   // }, [location]);
 
-  // Function to trigger the tutorial when the help icon is clicked
+
   const handleHelpIconClick = () => {
     if (location.pathname !== '/overview') {
-      navigate('/overview', { state: { tutorialStep: 0 } }); // Redirect to Overview page and pass the tutorialStep
+      navigate('/overview', { state: { tutorialStep: 0 } }); 
     }
     
-    setShowTutorial(true);   // Show the tutorial
-    setTutorialStep(0);      // Start from step 0, or set a different initial step if required
+    setShowTutorial(true);   
+    setTutorialStep(0);     
   };
 
   return (
@@ -59,7 +59,7 @@ const App = () => {
       )}
       {shouldShowSidebar && <SidebarComponent />}
 
-      {/* Conditionally render the tutorial */}
+
       {showTutorial && <Tutorial initialStep={tutorialStep} />}
 
       <Routes>
