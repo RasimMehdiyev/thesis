@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Login from './pages/authentication_pages/Login';
@@ -13,6 +13,7 @@ import Tutorial from './components/Tutorial';
 
 const App = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Sidebar visibility logic
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
@@ -43,6 +44,10 @@ const App = () => {
 
   // Function to trigger the tutorial when the help icon is clicked
   const handleHelpIconClick = () => {
+    if (location.pathname !== '/overview') {
+      navigate('/overview', { state: { tutorialStep: 0 } }); // Redirect to Overview page and pass the tutorialStep
+    }
+    
     setShowTutorial(true);   // Show the tutorial
     setTutorialStep(0);      // Start from step 0, or set a different initial step if required
   };
