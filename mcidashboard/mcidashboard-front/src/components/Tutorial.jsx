@@ -5,32 +5,47 @@ import TutorialModal from './TutorialModal';
 
 const tutorialSteps = [
   {
-    title: "Welcome",
+    title: "START OF THE TUTORIAL",
     content: "Welcome to the <strong>Solitaire Decision Support System!</strong><br>Click 'Next' to start the tutorial.",
     selector: null, // No highlight for the first step, full overlay
   },
   {
-    title: "Step 2: Container Section",
-    content: "This is the main container where content is displayed.",
+    title: "OVERVIEW TAB",
+    content: "This tab displays all the information related to a given patient.",
     selector: '.container', // Highlight the container class
   },
   {
-    title: "Step 3: Sidebar Navigation",
-    content: "Here you can find the sidebar to navigate between different pages.",
+    title: "OVERVIEW TAB",
+    content: "You can find it by clicking the Overview tab in the navigation bar at the top of the page.",
+    selector: '.navbar li:nth-child(1)', // Highlight the container class
+  },
+  {
+    title: "SIDEBAR",
+    content: "To view a patient's data on the Overview page, simply <strong>click their name </strong> from the list. <br><br>If you can't find them, use the search bar to quickly locate them by <strong> typing their name. </strong>",
     selector: '.sidebar', // Highlight the sidebar class
   },
   {
-    title: "Step 4: Personal Information",
-    content: "Here you can view your personal information.",
+    title: "PERSONAL INFORMATION",
+    content: "On this section of the <strong> Overview page </strong>, you can view basic information about the patient, their clinical test results for MCI, and their self-reported information on any previous diagnoses of anxiety or depression. ",
     selector: '#pers-card', // Highlight the personal information section
   },
   {
-    title: "Step 5: Digital Biomarkers",
-    content: "These are the digital biomarkers that power our app's features.",
+    title: "DIGITAL BIOMARKERS",
+    content: "In this section of the <strong>Overview page</strong>, you can view how the patient has scored on each digital biomarker used for predicting MCI, track the evolution of these scores over time, and compare them to the scores of other patients. ",
     selector: '#dig-card', // Highlight the digital biomarkers section
   },
   {
-    title: "Step 6: Feature Importance",
+    title: "DIGITAL BIOMARKERS",
+    content: "To view results for another biomarker, simply <strong>click on this dropdown menu</strong>, select your desired biomarker from the options, and all graphs will update accordingly.",
+    selector: '.dropdown-table-container', // Highlight the digital biomarkers section
+  },
+  {
+    title: "DIGITAL BIOMARKERS",
+    content: "Similarly, you can adjust the time range to view the progress of the results for the selected biomarker on the purple line chart using this <strong>dropdown menu</strong> above.",
+    selector: '.dropdown-container', // Highlight the digital biomarkers section
+  },
+  {
+    title: "FEATURE IMPORTANCE",
     content: "These show the most impactful features and the impact of each.",
     selector: '#importance-card', // Highlight the feature importance section
   },
@@ -188,7 +203,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     const updateMaskStyles = () => {
       setIsModalVisible(false); // Hide the modal before recalculating mask
   
-      if (currentStep === 10 || currentStep === 8 || currentStep===1) { // Step 11 is index 10 (zero-indexed)
+      if (currentStep === 13 || currentStep === 11 || currentStep===1) { // Step 11 is index 10 (zero-indexed)
         enableScroll(); // Enable scrolling for Step 11
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Reset scroll to top
         setTimeout(() => {
@@ -266,16 +281,24 @@ const Tutorial = ({ initialStep = 0 }) => {
     let left = '50%';
 
     // For specific steps, move the modal to different locations
-    if (currentStep === 3) {
-      top = '40%';   // Move the modal a bit higher
+    if (currentStep === 4) {
+      top = '200px';   // Move the modal a bit higher
       left = '800px';  // Move the modal more to the right
-    } else if (currentStep === 5) {
-      top = '40%';   // Move the modal lower
-      left = '40%';  // Move the modal more to the left
+    }
+    else if(currentStep===3){
+        top = '200px';   // Move the modal lower
+        left = '450px'; 
     }
     else if(currentStep===2){
-        top = '40%';   // Move the modal lower
-        left = '30%'; 
+        top = '200px';   // Move the modal lower
+        left = '500px'; 
+    }
+    else if(currentStep===5 || currentStep===6 || currentStep===7){
+        left = '300px';
+    }
+    else if(currentStep===8)
+    {
+        left= '1000px';
     }
     // Add any custom positions you want for other steps here
 
@@ -288,15 +311,15 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep < tutorialSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
-    if (currentStep === 6) {  // Step 7 is index 6 (zero-indexed)
-      navigate('/digital-biomarkers', { state: { tutorialStep: 7 } });
-    }
     if (currentStep === 9) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/machine-learning', { state: { tutorialStep: 10 } });
+      navigate('/digital-biomarkers', { state: { tutorialStep: 8 } });
+    }
+    if (currentStep === 12) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/machine-learning', { state: { tutorialStep: 11 } });
       }
 
-      if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/overview', { state: { tutorialStep: 11 } });
+      if (currentStep === 13) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/overview', { state: { tutorialStep: 12 } });
       }
     
   };
@@ -305,15 +328,15 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
-    if(currentStep === 7)
+    if(currentStep === 8)
     {
-        navigate('/overview', { state: { tutorialStep: 6 } });
+        navigate('/overview', { state: { tutorialStep: 7 } });
     }
-    if (currentStep === 10) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/digital-biomarkers', { state: { tutorialStep: 9 } });
-      }
     if (currentStep === 11) {  // Step 7 is index 6 (zero-indexed)
-        navigate('/machine-learning', { state: { tutorialStep: 10 } });
+        navigate('/digital-biomarkers', { state: { tutorialStep: 10 } });
+      }
+    if (currentStep === 12) {  // Step 7 is index 6 (zero-indexed)
+        navigate('/machine-learning', { state: { tutorialStep: 11 } });
     }
     
   };
