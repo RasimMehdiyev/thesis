@@ -10,7 +10,7 @@ const tutorialSteps = [
   },
   {//1
     title: "OVERVIEW TAB",
-    content: "This tab displays all the information related to a given patient.",
+    content: "This tab displays all the information related to a given patient. Feel free to scroll through to see what it contains.",
     selector: '.container', // Highlight the container class
   },
   {//2
@@ -40,7 +40,7 @@ const tutorialSteps = [
   },
   {//7
     title: "DROPDOWN MENUS",
-    content: "Similarly, you can adjust the <strong>time frame</strong> to view the progress of the results for the selected biomarker on the purple line chart using the dropdown menu above it.",
+    content: "Similarly, you can adjust the <strong>time frame</strong> to view the progress of the results for the selected biomarker on the purple line chart using the dropdown menu above it. <br><br> Feel free to give it a try.",
     selector: '.dropdown-container', 
   },
   {//8
@@ -71,17 +71,17 @@ const tutorialSteps = [
   {//13
     title: "MACHINE LEARNING DETAILS TAB",
     content: "This tab showcases the <strong>most accurate machine learning models</strong> developed for predicting MCI, along with their <strong>performance metrics</strong>, <strong>key techniques</strong> used in their development, and detailed <strong>demographic information</strong> about the patients whose biomarkers contributed to building these models.",
-    selector: null, 
+    selector: '.container', 
   },
   {//14
     title: "CHARTS",
-    content: "Keep in mind that by <strong> moving your mouse over </strong>the different parts of the charts contained on this page, details will appear about what each color represents.",
-    selector: '.confusion-matrix', 
+    content: "Keep in mind that by <strong> moving your mouse over </strong>the different parts of the charts contained on this page, details will appear about what each color represents. <br><br> Please try it before proceeding.",
+    selector: '.container', 
   },
 
   {//15
     title: "INFO ICONS",
-    content: "Similarly, if you <strong>move your mouse over those icons</strong> that can be found on all pages, you will see additional information about the section it is next to. <br> <br> Make sure you try them after this tutorial!",
+    content: "Similarly, if you <strong>move your mouse over those icons</strong> that can be found on all pages, you will see additional information about the section it is next to. <br> <br> You can try it now!",
     selector: '.icon', 
   },
   {//16
@@ -206,7 +206,8 @@ const Tutorial = ({ initialStep = 0 }) => {
     const updateMaskStyles = () => {
       setIsModalVisible(false); 
   
-      if (currentStep===1) { 
+      if (currentStep===1 ||currentStep===11 ||currentStep===13 ||currentStep===14 )
+      { 
         enableScroll();
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
         setTimeout(() => {
@@ -266,7 +267,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     let left = '50%';
 
     
-    if(currentStep===2 || currentStep===3){
+    if( currentStep===3 ||currentStep===14){
         top = '200px';  
         left = '450px'; 
     }
@@ -286,7 +287,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     {
         left= '500px';
     }
-    else if(currentStep===10 || currentStep===12){
+    else if(currentStep===10 || currentStep===12 || currentStep===2){
         top = '200px';  
     }
 
@@ -337,7 +338,7 @@ const Tutorial = ({ initialStep = 0 }) => {
 
   return (
     <div>
-        {isModalVisible && (
+        {isModalVisible && currentStep!==6 && currentStep!==7 && currentStep!==14 && currentStep!==15 &&(
         <div
         style={{
           position: 'fixed',
