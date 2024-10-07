@@ -3,35 +3,34 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Lege
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-// Register necessary components in Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title, ChartDataLabels);
 
 const ConfusionMatrix = ({ model, data: actualData }) => {
 
   const [tooltip, setTooltip] = useState({ visible: false, text: '', x: 0, y: 0 });
-  const chartRef = useRef(null); // Ref to track the chart element
+  const chartRef = useRef(null); 
 
-  // Function to get color shade based on the value (higher value = darker color)
+  // Function to get color shade based on the value 
   const getColorShade = (value) => {
     const maxValue = Math.max(...actualData.flat()); // Determine max value in the data
     const intensity = Math.floor((value / maxValue) * 255); // Normalize the value to a scale of 0-255
     return `rgba(123, 97, 255, ${intensity / 255})`; // Adjust opacity based on value
   };
 
-  // Prepare the chart data with the actual values and dynamic color shading
+  
   const data = {
-    labels: ['Healthy', 'MCI'], // Predicted labels (x-axis)
+    labels: ['Healthy', 'MCI'], 
     datasets: [
       {
         label: 'True Healthy',
         data: [1, 1], // Fake data to ensure equal-sized squares
-        backgroundColor: [getColorShade(actualData[0][0]), getColorShade(actualData[0][1])], // Use dynamic shading
+        backgroundColor: [getColorShade(actualData[0][0]), getColorShade(actualData[0][1])], // Dynamic shading
         borderWidth: 1,
       },
       {
         label: 'True MCI',
-        data: [1, 1], // Fake data to ensure equal-sized squares
-        backgroundColor: [getColorShade(actualData[1][0]), getColorShade(actualData[1][1])], // Use dynamic shading
+        data: [1, 1], 
+        backgroundColor: [getColorShade(actualData[1][0]), getColorShade(actualData[1][1])], 
         borderWidth: 1,
       },
     ],
@@ -45,9 +44,9 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
       const datasetIndex = hoveredElement.datasetIndex;
       const index = hoveredElement.index;
 
-      // Generate tooltip message dynamically based on `actualData`
+      // Generate tooltip message dynamically 
       const value = actualData[datasetIndex][index];
-      const isCorrect = (datasetIndex === index); // Diagonal values (correct predictions)
+      const isCorrect = (datasetIndex === index); 
       const label = datasetIndex === 0 ? 'healthy individuals' : 'MCI patients';
       const correctText = isCorrect ? 'correctly' : 'incorrectly';
 
@@ -67,7 +66,7 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
     }
   };
 
-  // Handle mouse leave event
+
   const handleMouseLeave = () => {
     setTooltip({ visible: false, text: '', x: 0, y: 0 });
   };
@@ -108,7 +107,7 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
     },
     plugins: {
       tooltip: {
-        enabled: false, // Disable default tooltips
+        enabled: false, 
       },
       title: {
         display: true,
@@ -137,15 +136,14 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
           family: 'Poppins',
         },
         formatter: (value, context) => {
-          // Custom labels for each square based on actual data values
           return actualData[context.datasetIndex][context.dataIndex];
         },
       },
     },
-    maintainAspectRatio: false, // Disable aspect ratio to adjust chart size
-    categoryPercentage: 1.0, // Ensure the bars take up the entire category space
-    barPercentage: 1.0, // Ensure bars take up the entire available space in each category
-    onHover: handleMouseEnter, // Handle hover event on chart
+    maintainAspectRatio: false, 
+    categoryPercentage: 1.0, 
+    barPercentage: 1.0, 
+    onHover: handleMouseEnter, 
   };
 
   return (
@@ -173,10 +171,10 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
             padding: '10px',
             borderRadius: '15px',
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.15)',
-            zIndex: 10, // Ensure the tooltip stays above other content
-            transform: 'translate(-50%, -100%)', // Adjust position
+            zIndex: 10,
+            transform: 'translate(-50%, -100%)', 
           }}
-          dangerouslySetInnerHTML={{ __html: tooltip.text }} // Renders HTML for bolding
+          dangerouslySetInnerHTML={{ __html: tooltip.text }} 
         ></div>
       )}
     </div>
