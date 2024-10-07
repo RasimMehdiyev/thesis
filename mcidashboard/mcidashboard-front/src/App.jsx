@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Home from './pages/Home';
@@ -22,28 +22,36 @@ const App = () => {
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
-  // Handle tutorial logic based on route changes
-  useEffect(() => {
-    if (location.pathname === '/overview') {
-      // Start tutorial at step 0 for Overview page
-      setShowTutorial(true);
-      setTutorialStep(0); 
-    } else if (
-      (location.pathname === '/digital-biomarkers' || location.pathname === '/machine-learning') 
-      && location.state?.tutorialStep !== undefined // Ensure tutorialStep is passed in state
-    ) {
-      // Continue tutorial from passed step on other pages
-      setShowTutorial(true);
-      setTutorialStep(location.state.tutorialStep);
-    } else {
-      // If on other pages or no tutorial state is passed, hide tutorial
-      setShowTutorial(false);
-    }
-  }, [location]);
+  // Comment out the automatic tutorial logic based on route changes
+  // useEffect(() => {
+  //   if (location.pathname === '/overview') {
+  //     // Start tutorial at step 0 for Overview page
+  //     setShowTutorial(true);
+  //     setTutorialStep(0); 
+  //   } else if (
+  //     (location.pathname === '/digital-biomarkers' || location.pathname === '/machine-learning') 
+  //     && location.state?.tutorialStep !== undefined // Ensure tutorialStep is passed in state
+  //   ) {
+  //     // Continue tutorial from passed step on other pages
+  //     setShowTutorial(true);
+  //     setTutorialStep(location.state.tutorialStep);
+  //   } else {
+  //     // If on other pages or no tutorial state is passed, hide tutorial
+  //     setShowTutorial(false);
+  //   }
+  // }, [location]);
+
+  // Function to trigger the tutorial when the help icon is clicked
+  const handleHelpIconClick = () => {
+    setShowTutorial(true);   // Show the tutorial
+    setTutorialStep(0);      // Start from step 0, or set a different initial step if required
+  };
 
   return (
     <>
-      {shouldShowSidebar && <NavbarComponent />}
+      {shouldShowSidebar && (
+        <NavbarComponent onHelpIconClick={handleHelpIconClick} /> // Pass the click handler to Navbar
+      )}
       {shouldShowSidebar && <SidebarComponent />}
 
       {/* Conditionally render the tutorial */}
@@ -63,4 +71,3 @@ const App = () => {
 };
 
 export default App;
-
