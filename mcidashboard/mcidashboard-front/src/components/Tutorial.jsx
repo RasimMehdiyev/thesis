@@ -54,7 +54,7 @@ const tutorialSteps = [
     selector: '#ml-card', 
   },
   {//10
-    title: "DIGITAL BIOMARKERS DEATAILS TAB",
+    title: "DIGITAL BIOMARKERS DETAILS TAB",
     content: "If you want more information about the digital biomarkers used for the prediction, switch to the <strong>Digital Biomarkers Details </strong> tab.",
     selector: '.navbar',
   },
@@ -300,11 +300,11 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep < tutorialSteps.length-1) {
       setCurrentStep(currentStep + 1);
 
-      if (currentStep === 10) { 
-        navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
+      if (currentStep === 9) { 
+        navigate('/digital-biomarkers', { state: { tutorialStep: 10 } });
       }
-      if (currentStep === 12) { 
-          navigate('/machine-learning', { state: { tutorialStep: 13} });
+      if (currentStep === 11) { 
+          navigate('/machine-learning', { state: { tutorialStep: 12} });
       }
       
       if (currentStep === 15) { 
