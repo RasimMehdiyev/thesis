@@ -102,7 +102,7 @@ const MachineLearningModel = () => {
             </div>
 
             <div className="accuracy">
-                <a href="/machine-learning/" style={{textDecoration: 'underline', color: '#5A21EB', fontWeight: 600, marginTop:-30}}>More</a>
+                <a id="more" href="/machine-learning/" style={{textDecoration: 'underline', color: '#5A21EB', fontWeight: 600, marginTop:-30}}>More</a>
             </div>
         </div>
     );

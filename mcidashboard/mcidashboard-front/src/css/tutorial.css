@@ -1,0 +1,67 @@
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    backdrop-filter: blur(1px); 
+    -webkit-backdrop-filter: blur(1px);
+  }
+  
+
+  .highlight {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    z-index: 1001;
+    transition: all 0.3s ease; 
+  }
+  
+.tutorial-modal{
+    position: fixed;
+    font-family: 'Poppins';
+    padding: 20px;
+    width: 400px;
+    transform:  translate(-50%, -50%);  
+    z-index: 1001;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    background-color: #5932EA;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.tutorial-modal .modal-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .tutorial-modal .modal-buttons button {
+    background-color: #fff;
+    color: #5932EA;
+    padding: 10px 20px;
+    border: none;
+    font-family: 'Poppins';
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+.tutorial-modal .modal-buttons button:hover {
+    background-color: #B2A3FE;
+}
+
+.tutorial-modal-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skip { 
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+  
+  

@@ -26,7 +26,8 @@
     flex-direction: row;
     gap: 60px; 
     flex-wrap: nowrap; 
-    min-width: 100%; 
+    min-width: calc(100% * 0.67); 
+
 }
 
 .navbar-list li {
@@ -36,7 +37,7 @@
 .navbar-list a {
     text-decoration: none;
     color: #333;
-    font-size: 16px;
+    font-size: 18px;
     font-family: 'Poppins', sans-serif;
     padding: 0 15px;
     border-radius: 5px;
@@ -72,10 +73,25 @@
 }
 
 .navbar-list a.active:after {
-    width: 100%;
+    width: 112%;
 }
 
 .navbar-list a.active {
     color: #7D7D7D;
     font-weight: bold;
+}
+
+.help-icon-container {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: center; 
+    height: 100%; 
+}
+
+.help-icon {
+    cursor: pointer;
+    display: block;
+    height: 30px; 
+    width: 30px;
 }

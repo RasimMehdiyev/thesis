@@ -56,7 +56,9 @@ const DigitalBiomarkers = () => {
                     </div>
                 </div>
            </div>
-           <DropdownTable />
+
+            <DropdownTable/>
+      
            <div className="grid-container">
                 <div className="grid-item">
                     <GameHistoryLineChart data={data} labels={labels} />

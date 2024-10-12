@@ -14,6 +14,7 @@ import './css/models.css'
 import './css/dropdown_table.css'
 import './css/solitaire.css'
 import './css/diverging_chart.css'
+import './css/tutorial.css'
 import App from './App';
 
 

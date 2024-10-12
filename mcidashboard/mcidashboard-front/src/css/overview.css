@@ -234,19 +234,19 @@
     appearance: none;
     background-color: white;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='black' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
-    /* New SVG for the downward arrow */
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 12px 8px;
-    /* Size of the arrow */
     width: 115px;
     height: 30px;
     font-family: 'Poppins', sans-serif;
     padding-right: 20px;
-    /* Space between arrow and text */
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
+
+
 
 .line-chart-h {
     display: flex;
@@ -256,5 +256,4 @@
     padding-top: 20px;
     padding-bottom: -20px;
 }
-
 

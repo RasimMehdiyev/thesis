@@ -1,9 +1,8 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-const NavbarComponent = () => {
+const NavbarComponent = ({ onHelpIconClick }) => { // Accept onHelpIconClick as a prop
   const location = useLocation()
-
 
   const currentPath = location.pathname.replace(/\/$/, "")
 
@@ -35,6 +34,16 @@ const NavbarComponent = () => {
           </a>
         </li>
       </ul>
+      <div className='help-icon-container'>
+        <img
+          src='/assets/help_icon.svg'
+          alt='Help Icon'
+          className='help-icon'
+          style={{ cursor: 'pointer' }}
+          title="Start Tutorial"
+          onClick={onHelpIconClick} // Trigger tutorial on click
+        />
+      </div>
     </div>
   )
 }
