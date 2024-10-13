@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBarComponent from './SearchBarComponent';
+import Questionnaire from './Questionnaire';
+
 
 const SidebarComponent = () => {
 
@@ -8,6 +10,7 @@ const SidebarComponent = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isChatboxVisible, setIsChatboxVisible] = useState(false);
   const navigate = useNavigate();
 
   // useEffect
@@ -65,6 +68,12 @@ const SidebarComponent = () => {
     return <div className='sidebar'>Loading...</div>; // Display a loading message or spinner
   }
 
+  
+
+  const toggleChatbox = () => {
+    setIsChatboxVisible(!isChatboxVisible);
+  };
+
   // Render the sidebar component once data is available
   return (
     <div className='sidebar'>
@@ -83,6 +92,16 @@ const SidebarComponent = () => {
           </li>
         ))}
       </ul>
+      <div className="floating-chat-icon">
+            <img 
+              src="/assets/chat_icon.svg" 
+              alt="Chat Icon" 
+              className="chat-icon" 
+              onClick={toggleChatbox}
+            />
+        </div>
+        {isChatboxVisible && <Questionnaire onClose={toggleChatbox}/>
+        }
     </div>
   );
 };

@@ -51,6 +51,7 @@
     padding-top: 20px;
     z-index: 0;
     zoom: 0.67;
+    overflow-y: hidden;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -145,3 +146,18 @@
 .patient-item:hover .chevron-right-icon {
     background: url('../../public/assets/chevron-right-hover.svg') no-repeat center;
 }
+
+.floating-chat-icon {
+    position: absolute; 
+    bottom: 30px; 
+    left: 10px; 
+    cursor: pointer;
+    display: flex; 
+    align-items: center;
+  }
+  
+.floating-chat-icon img {
+    width: 80%; 
+    height: auto;
+}
+ 
