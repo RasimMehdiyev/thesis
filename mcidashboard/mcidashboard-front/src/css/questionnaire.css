@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 80px; 
     left: 10px;
-    width: 300px;
+    width: 350px;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -71,8 +71,9 @@
     border-radius: 10px;
     margin: 5px 0;
     align-self: flex-end;
-    max-width: 80%;
+    max-width: 100%;
     text-align: right;
+    margin-left: 20px;
   }
   
   .system-message {
@@ -81,7 +82,8 @@
     border-radius: 10px;
     margin: 5px 0;
     align-self: flex-start;
-    max-width: 80%;
+    max-width: 100%;
     text-align: left;
+    margin-right: 20px;
   }
   

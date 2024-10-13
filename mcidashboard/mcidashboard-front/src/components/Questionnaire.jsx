@@ -2,39 +2,66 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const Questionnaire = ({ onClose }) => {
   const [message, setMessage] = useState('');
-  const [chatLog, setChatLog] = useState([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track the current question
+  const [chatLog, setChatLog] = useState([]); 
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
   const chatBodyRef = useRef(null);
 
-  // Predefined list of questions from the system
+
   const questions = [
-    "What is your Prolific ID?",
-    "How old are you?",
-    "What is your highest level of education?",
-    "Describe your job in the medical field in your own terms.",
-    "How many years of professional experience do you have in the medical field?"
+    { text: "What is your Prolific ID?", type: 'prolificId' },
+    { text: "How old are you?", type: 'age' },
+    { text: "What is your highest level of education?", type: 'text' },
+    { text: "Describe your job in the medical field in your own terms.", type: 'text' },
+    { text: "How many years of professional experience do you have in the medical field?", type: 'number' }
   ];
 
-  // Reset the chat on reload and send the first question
-  useEffect(() => {
-    // Clear chat log and start with the first question
-    setChatLog([{ sender: 'Researchers', message: questions[0] }]);
-  }, []); // Only run on component mount
+  const ageOptions = [
+    "18-24",
+    "25-34",
+    "35-44",
+    "45-54",
+    "55-64",
+    "65+"
+  ];
 
-  // Handle user message send
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      // Add user message to the chat log
-      const newChatLog = [...chatLog, { sender: 'You', message }];
+  const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
+
+
+  useEffect(() => {
+    sendSystemMessage(questions[0].text); 
+  }, []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
+    setMessage(value);
+  };
+
+
+  const handleSendMessage = (answer = message) => {
+    if (answer.trim()) {
+
+      const currentQuestion = questions[currentQuestionIndex];
+
+      if (currentQuestion.type === 'prolificId' && !isValidProlificID(answer)) {
+        setErrorMessage("Prolific ID must be exactly 24 alphanumeric characters.");
+        return;
+      }
+
+ 
+      setErrorMessage('');
+
+
+      const newChatLog = [...chatLog, { sender: 'You', message: answer }];
       setChatLog(newChatLog);
       setMessage('');
 
-      // Simulate sending the next system question after a brief delay
+
       setTimeout(() => {
         if (currentQuestionIndex < questions.length - 1) {
           const nextIndex = currentQuestionIndex + 1;
-          sendSystemMessage(questions[nextIndex]);
-          setCurrentQuestionIndex(nextIndex); // Update to the next question index
+          sendSystemMessage(questions[nextIndex].text);
+          setCurrentQuestionIndex(nextIndex); 
         } else {
           sendSystemMessage("Thank you for completing the questionnaire!");
         }
@@ -42,24 +69,29 @@ const Questionnaire = ({ onClose }) => {
     }
   };
 
-  // Function to send system (researcher) messages
+
   const sendSystemMessage = (systemMessage) => {
     setChatLog((prevChatLog) => [...prevChatLog, { sender: 'Researchers', message: systemMessage }]);
   };
 
-  // Auto-scroll to the bottom when a new message is added
+
   useEffect(() => {
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
-  }, [chatLog]); // Trigger on chatLog update
+  }, [chatLog]); 
 
-  // Function to handle pressing Enter key to send a message
+  
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault();  // Prevents default behavior of form submission
+      e.preventDefault();  
       handleSendMessage();
     }
+  };
+
+
+  const handleAgeOptionClick = (ageRange) => {
+    handleSendMessage(ageRange); 
   };
 
   return (
@@ -75,22 +107,46 @@ const Questionnaire = ({ onClose }) => {
         ))}
       </div>
       <div className="chatbox-footer">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown}  // Add this line to listen for Enter key press
-          placeholder="Type your answer..."
-        />
-        <button onClick={handleSendMessage}>
-          <img
-            src='/assets/send_arrow.svg'
-            alt='Send'
-            className='send-icon'
-            style={{ cursor: 'pointer' }}
-          />
-        </button>
+
+        {currentQuestionIndex === 1 && (  
+          <div className="age-options">
+            <p>Please select your age range:</p>
+            {ageOptions.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleAgeOptionClick(option)}  
+                className="age-option-button"
+                style={{width: 70, height: 40, borderRadius:0, marginBottom: 10}}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        )}
+        
+
+        {currentQuestionIndex !== 1 && (
+          <>
+            <input
+              maxLength={24} 
+              value={message}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder={'Type your answer...'}
+            />
+            <button onClick={() => handleSendMessage()}>
+              <img
+                src='/assets/send_arrow.svg'
+                alt='Send'
+                className='send-icon'
+                style={{ cursor: 'pointer' }}
+              />
+            </button>
+          </>
+        )}
       </div>
+
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 };
