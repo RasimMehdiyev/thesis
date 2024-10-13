@@ -9,15 +9,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    font-family: 'Poppins';
   }
   
   .chatbox-header {
     padding: 10px;
-    background-color: #6200ea;
+    background-color: black;
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
@@ -35,22 +37,51 @@
     display: flex;
     padding: 10px;
     border-top: 1px solid #ccc;
+    align-content: center;
+    justify-content: center;
   }
   
   .chatbox-footer input {
     flex-grow: 1;
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-color: black;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Poppins';
   }
   
   .chatbox-footer button {
     margin-left: 10px;
     padding: 8px 12px;
-    background-color: #6200ea;
+    background-color: black;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    font-family: 'Poppins';
+  }
+
+  .user-message {
+    background-color: #D3EFFC;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    align-self: flex-end;
+    max-width: 80%;
+    text-align: right;
+  }
+  
+  .system-message {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    align-self: flex-start;
+    max-width: 80%;
+    text-align: left;
   }
   
