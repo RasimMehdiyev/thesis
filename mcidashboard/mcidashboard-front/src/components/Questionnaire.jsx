@@ -68,6 +68,13 @@ const Questionnaire = ({ onClose }) => {
         setErrorMessage('Please enter a valid percentage between 0 and 100.');
       }
     } else if (questionMap[currentQuestionIndex].noSpecialChars) {
+      if(/[^a-zA-Z0-9]/g.test(value))
+        {
+          setErrorMessage('Please enter a valid Prolific ID.');
+        }
+        else{
+          setErrorMessage('');
+        }
       value = value.replace(/[^a-zA-Z0-9]/g, '');
       setMessage(value);
     } else {
@@ -79,10 +86,11 @@ const Questionnaire = ({ onClose }) => {
     if (answer.trim()) {
       const currentQuestion = questionMap[currentQuestionIndex];
 
+      /*
       if (currentSectionIndex === 0 && currentQuestionIndex === 0 && !isValidProlificID(answer)) {
         setErrorMessage("This isn't a valid Prolific ID.");
         return;
-      }
+      }*/
 
       setErrorMessage('');
       setBackButtonDisabled(true);
@@ -262,7 +270,7 @@ const Questionnaire = ({ onClose }) => {
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === 'Enter' && !isSendButtonDisabled) {
                             e.preventDefault();
                             handleSendMessage();
                           }
