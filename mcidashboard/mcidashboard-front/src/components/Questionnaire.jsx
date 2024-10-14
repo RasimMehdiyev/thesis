@@ -7,6 +7,7 @@ const Questionnaire = ({ onClose }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false); 
+  const [isCompleted, setIsCompleted] = useState(false); // New state for completion
   const chatBodyRef = useRef(null);
 
   const questionMap = [
@@ -55,6 +56,7 @@ const Questionnaire = ({ onClose }) => {
           setCurrentQuestionIndex(nextIndex);
         } else {
           sendSystemMessage("Thank you for completing the questionnaire!");
+          setIsCompleted(true); // Mark the questionnaire as completed
         }
         setBackButtonDisabled(false);
       }, 1000);
@@ -75,11 +77,18 @@ const Questionnaire = ({ onClose }) => {
     if (currentQuestionIndex > 0) {
       const prevIndex = currentQuestionIndex - 1;
       const updatedChatLog = [...chatLog];
+
+      // Remove last question and answer from the chat log
       updatedChatLog.splice(updatedChatLog.length - 2, 2);
+
       setChatLog(updatedChatLog);
+
       const previousAnswer = updatedChatLog[(prevIndex * 2) + 1]?.message || '';
       setMessage(previousAnswer);
       setCurrentQuestionIndex(prevIndex);
+      setShowOtherTextField(false);
+      setIsCompleted(false); // Unmark completion when going back
+
       setTimeout(() => {
         if (updatedChatLog.length === 0 || updatedChatLog[updatedChatLog.length - 1]?.message !== questionMap[prevIndex].question) {
           sendSystemMessage(questionMap[prevIndex].question);
@@ -105,9 +114,9 @@ const Questionnaire = ({ onClose }) => {
 
   const handleOptionClick = (option) => {
     if (option === "Other") {
-      setShowOtherTextField(true); 
+      setShowOtherTextField(true);
     } else {
-      handleSendMessage(option); 
+      handleSendMessage(option);
     }
   };
 
@@ -123,7 +132,7 @@ const Questionnaire = ({ onClose }) => {
           </div>
         ))}
       </div>
-      
+
       <div className="chatbox-footer">
         <div className="footer-row">
           <button 
@@ -135,51 +144,54 @@ const Questionnaire = ({ onClose }) => {
           </button>
         </div>
 
-        <div className="input-row">
-          {questionMap[currentQuestionIndex].answers && questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
-            <div className="options">
-              <p>Please select an option:</p>
-              {questionMap[currentQuestionIndex].answers.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  className="option-button"
-                  style={{ width: 'auto', height: 'auto', borderRadius: 10, marginBottom: 10 }}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <>
-              <textarea
-                maxLength={questionMap[currentQuestionIndex].charLimit || 100}
-                value={message}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }
-                }}
-                placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
-                rows={message.length > 50 ? 5 : 1}
-                style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
-              />
-              <button
-                onClick={() => handleSendMessage()}
-                disabled={isSendButtonDisabled()}
-                className="send-button"
-              >
-                <img
-                  src='/assets/send_arrow.svg'
-                  alt='Send'
-                  className='send-icon'
+        {/* If completed, do not show options or input */}
+        {!isCompleted && (
+          <div className="input-row">
+            {questionMap[currentQuestionIndex].answers && questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
+              <div className="options">
+                <p>Please select an option:</p>
+                {questionMap[currentQuestionIndex].answers.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    className="option-button"
+                    style={{ width: 'auto', height: 'auto', borderRadius: 10, marginBottom: 10 }}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <>
+                <textarea
+                  maxLength={questionMap[currentQuestionIndex].charLimit || 100}
+                  value={message}
+                  onChange={handleInputChange}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }
+                  }}
+                  placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
+                  rows={message.length > 50 ? 5 : 1}
+                  style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
                 />
-              </button>
-            </>
-          )}
-        </div>
+                <button
+                  onClick={() => handleSendMessage()}
+                  disabled={isSendButtonDisabled()}
+                  className="send-button"
+                >
+                  <img
+                    src='/assets/send_arrow.svg'
+                    alt='Send'
+                    className='send-icon'
+                  />
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -188,4 +200,7 @@ const Questionnaire = ({ onClose }) => {
 };
 
 export default Questionnaire;
+
+
+
 
