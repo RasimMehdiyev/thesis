@@ -15,8 +15,8 @@ const Questionnaire = ({ onClose }) => {
     { question: "How old are you?", answers: ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"], charLimit: null, noSpecialChars: false },
     { question: "What is your highest level of education?", answers: ["Highschool diploma", "Bachelor’s degree", "Master’s degree", "Doctoral Degree (PhD)", "Medical degree (e.g., MD, DO)", "Other"], charLimit: null, noSpecialChars: false },
     { question: "Describe your job in the medical field in your own terms.", answers: [], charLimit: 100, noSpecialChars: false },
-    { question: "How many years of professional experience do you have in the medical field?", answers: ["None", "1-4 years", "5-14 years", "15+ years"], charLimit: 50, noSpecialChars: false },
-    { question: "Do you want to submit your answers?", answers: ["Yes"], charLimit: 50, noSpecialChars: false }
+    { question: "How many years of professional experience do you have in the medical field?", answers: ["None", "1-4 years", "5-14 years", "15+ years"], charLimit: null, noSpecialChars: false },
+    { question: "Do you want to submit your answers?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
   ];
 
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
@@ -153,7 +153,7 @@ const Questionnaire = ({ onClose }) => {
               {(
                 questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
                   <div>
-                    <p style={{textAlign: 'right'}}>Please select an option:</p>
+                    {currentQuestionIndex!==questionMap.length-1 && (<p style={{textAlign: 'right'}}>Please select an option:</p>)}
                     <div className="options">
                     {questionMap[currentQuestionIndex].answers.map((option, index) => (
                       <button
