@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const DropdownTable = () => {
+const DropdownTable = ({ onOptionSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Total Moves');
+  const [selectedOption, setSelectedOption] = useState('Min Move Time');
   const dropdownRef = useRef(null);
 
   const handleToggle = () => {
@@ -11,10 +11,10 @@ const DropdownTable = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    setIsOpen(false); // Close the dropdown after selecting
+    setIsOpen(false);
+    onOptionSelect(option); // Pass the selected option to the parent component
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

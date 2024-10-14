@@ -197,6 +197,7 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         current_user_biomarker_value = PersonBiomarkers.objects.filter(
             biomarkerID=biomarker_id, gameID=last_game_user
         ).values_list('value', flat=True).first()
+        current_user_biomarker_value = round(current_user_biomarker_value, 2) if isinstance(current_user_biomarker_value, float) else current_user_biomarker_value
 
     if current_user_biomarker_value is None:
         current_user_biomarker_value = 0
@@ -227,8 +228,8 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
     healthy_biomarker_frequency = Counter(healthy_biomarker_values)
 
 
-    mci_biomarker_frequency_list = [{'biomarker_value': value, 'frequency': frequency} for value, frequency in mci_biomarker_frequency.items()]
-    healthy_biomarker_frequency_list = [{'biomarker_value': value, 'frequency': frequency} for value, frequency in healthy_biomarker_frequency.items()]
+    mci_biomarker_frequency_list = [{'biomarker_value': round(value, 2) if isinstance(value, float) else value, 'frequency': frequency} for value, frequency in mci_biomarker_frequency.items()]
+    healthy_biomarker_frequency_list = [{'biomarker_value': round(value, 2) if isinstance(value, float) else value, 'frequency': frequency} for value, frequency in healthy_biomarker_frequency.items()]
 
 
     mci_biomarker_frequency_list = sorted(mci_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
@@ -243,3 +244,22 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         'mci': mci_biomarker_frequency_list,
         'healthy': healthy_biomarker_frequency_list
     }, safe=False)
+
+
+def get_game_history_per_patient(request, pk, biomarkerID):
+    person = Person.objects.get(pk=pk)
+    
+    games = Game.objects.filter(personID=person)
+    
+    biomarker = Biomarker.objects.get(pk=biomarkerID)
+    
+    biomarker_values = PersonBiomarkers.objects.filter(gameID__in=games, biomarkerID=biomarker)
+    
+    biomarker_values_list = list(biomarker_values.values_list('value', flat=True))
+     
+    game_history = {
+        game.timestamp: round(value, 2) if isinstance(value, float) else value
+        for game, value in zip(games, biomarker_values_list)
+    }
+    
+    return JsonResponse(game_history, safe=False)

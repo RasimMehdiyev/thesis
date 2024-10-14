@@ -1,84 +1,191 @@
-import Tooltip from '../Tooltip'; // Import the Tooltip component
-import React, { useState} from 'react';
+import Tooltip from '../Tooltip';
+import React, { useState, useEffect } from 'react';
 import DropdownTable from './DropdownTable'; 
 import GameHistoryLineChart from './GameHistoryLineChart';
 import DataDistributionChart from './DataDistributionChart';
 
-const DigitalBiomarkers = () => {
-    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+const DigitalBiomarkers = ({ patient }) => {
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [selectedMetric, setSelectedMetric] = useState('Min Move Time');
+  const [metricData, setMetricData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [gameHistory, setGameHistory] = useState(null);
 
-    // Show tooltip on mouse enter
-    const showTooltip = () => {
-        setIsTooltipVisible(true);
-    };
+  const showTooltip = () => setIsTooltipVisible(true);
+  const hideTooltip = () => setIsTooltipVisible(false);
 
-    // Hide tooltip on mouse leave
-    const hideTooltip = () => {
-        setIsTooltipVisible(false);
-    };
 
-    const data = [55, 57, 60, 65, 62, 67, 70];
-    const labels = ['13 Jan', '22 Jan', '26 Jan', '2 Feb', '5 Feb']; 
+  /*
+    ['Accuracy', 'Average Accuracy', 'Average Move Time'],
+    ['Average Think Time', 'Average Total Time', 'Beta Error'],
+    ['Cards Moved', 'Erroneous Move', 'Final Beta Error'],
+    ['Game Time', 'Max Accuracy', 'Min Accuracy'],
+    ['Min Move Time', 'Min Think Time', 'Min Total Time'],
+    ['Pile Move', 'Rank Error', 'Score'],
+    ['SD Accuracy', 'SD Move Time', 'SD Think Time'],
+    ['SD Total Time', 'Successful Move', 'Suit Error'],
+    ['Taps', 'Total Moves', ''],
+  */
 
-    const xData=[40, 60, 66, 80, 100, 120];
-    const yData=[50, 62, 66, 75, 70, 68];
-    const threshold = 62;
 
-    
-    return (
-        <div className="card" id="dig-card">
-            <div className="personal-info-h" style={{ position: 'relative' }}>
-                <p className="ml-subtitle" id="dbm-p">Digital Biomarkers</p>
-                <img
-                    src='/assets/info_icon.svg'
-                    alt='Info Icon'
-                    className='icon'
-                    onMouseEnter={showTooltip}  // Show tooltip on hover
-                    onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
-                    style={{ cursor: 'pointer' }}
-                    />
+  const biomarkerNametoId = {
+    'Average Accuracy': 14,
+    'Min Move Time': 24,
+    'Beta Error': 10
+  }
 
-                <Tooltip
-                top={10} 
-                left={280}
-                content="This is the data on which the prediction is based."
-                isVisible={isTooltipVisible}
-                />
-                
-                <div className="graph-legend">
-                    <div className="legend-item">
-                        <span className="dash" style={{backgroundColor: '#FA5D5D'}}></span>
-                        <p><strong>MCI</strong> (cognitively impaired)</p>
-                    </div>
-                    <div className="legend-item">
-                        <span className="dash" style={{backgroundColor: '#21AEEE'}}></span>
-                        <p><strong>Healthy</strong> (normally aging)</p>
-                    </div>
-                </div>
-           </div>
+  useEffect(() => {
+    console.log('selectedMetric:', selectedMetric);
+    var metricId = biomarkerNametoId[selectedMetric];
+    console.log('metricId:', metricId);
+    if (patient && metricId !== undefined) {
+      fetchMetricData(patient.id, metricId);
+      fetchGameHistory(patient.id, metricId);
+    }else{
+        setLoading(false);
+    }
+  }, [patient, selectedMetric]);
 
-            <DropdownTable/>
-      
-           <div className="grid-container">
-                <div className="grid-item">
-                    <GameHistoryLineChart data={data} labels={labels} />
-                </div>
-                <div style={{}}className="grid-item">
-                    <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>MCI</strong> players.</p>
-                    <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99} swapColors={true}/>
-                </div>
-                <div className="grid-item test-scores" style={{fontSize: 16, fontWeight: 600, marginTop:50}}>
-                    <p>Total moves of the last session: <span style={{color:'#FA5D5D'}}>66</span></p>
-                    <p className="counterfactuals">If Total Moves <span style={{color:'#21AEEE'}}>reduces to 62</span>, Solitaire DSS would think the player is normally aging.</p>
-                </div>
-                
-                <div className="grid-item">
-                <p style={{fontSize:14}}>Total Moves of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-                <DataDistributionChart xData={xData} yData={yData} threshold={threshold} xUser={99}/>
-                </div>
-            </div>
-        </div>
-    )
+  const fetchMetricData = async (patientId, metric) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/dashboard/biomarker/histograms/${patientId}/${metric}/`);
+      const data = await response.json();
+      console.log('Fetched Metric Data:', data);
+      setMetricData(data);
+    } catch (error) {
+      console.error('Error fetching metric data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchGameHistory = async (patientId, metric) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/dashboard/game/history/${patientId}/${metric}/`);
+      const data = await response.json();
+      console.log('Fetched Game History:', data);
+      setGameHistory(data);
+    } catch (error) {
+      console.error('Error fetching game history:', error);
+    } finally {
+      setLoading(false);
+    }
 }
+
+const splitDataDistChartData = (metricData) => {
+    const xData = metricData.map(item=>item.biomarker_value);
+    const yData = metricData.map(item=>item.frequency);
+
+
+    const sortedVal = [...xData].sort((a, b) => a - b);
+    const midIndex = Math.floor(sortedVal.length / 2);
+    const median = sortedVal.length % 2 !== 0 ? sortedVal[midIndex] : (sortedVal[midIndex - 1] + sortedVal[midIndex]) / 2;
+    const threshold = median;
+
+    return { xData, yData, threshold };
+};
+
+
+const splitData = (gameHistory) => {
+    const data = [];
+    const labels = [];
+    for (const key in gameHistory) {
+        let date = new Date(parseInt(key));
+        let formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+
+        data.push(gameHistory[key]);
+        labels.push(formattedDate);
+    }
+    const minLimit = Math.floor(Math.min(...data) / 10) * 10;
+    const maxLimit = Math.ceil(Math.max(...data) / 10) * 10 + 20;
+
+    console.log('splitData:', { data, labels, minLimit, maxLimit });
+    return { data, labels, minLimit, maxLimit };
+};
+
+const { 
+    data: gameHistoryData = [], 
+    labels: gameHistoryLabels = [], 
+    minLimit = 0, 
+    maxLimit = 70 
+} = gameHistory ? splitData(gameHistory) : {};
+
+
+
+// Process MCI and healthy data
+const { 
+    xData: xData_mci = [], 
+    yData: yData_mci = [], 
+    threshold: threshold_mci = 0 
+} = metricData?.mci ? splitDataDistChartData(metricData.mci) : {};
+
+const { 
+    xData: xData_healthy = [], 
+    yData: yData_healthy = [], 
+    threshold: threshold_healthy = 0 
+} = metricData?.healthy ? splitDataDistChartData(metricData.healthy) : {};
+
+
+console.log('MCI Data:', { xData_mci, yData_mci, threshold_mci });
+console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy });
+
+  return (
+    <div className="card" id="dig-card">
+      <div className="personal-info-h" style={{ position: 'relative' }}>
+        <p className="ml-subtitle" id="dbm-p">Digital Biomarkers</p>
+        <img
+          src='/assets/info_icon.svg'
+          alt='Info Icon'
+          className='icon'
+          onMouseEnter={showTooltip}
+          onMouseLeave={hideTooltip}
+          style={{ cursor: 'pointer' }}
+        />
+        <Tooltip
+          top={10} 
+          left={280}
+          content="This is the data on which the prediction is based."
+          isVisible={isTooltipVisible}
+        />
+        <div className="graph-legend">
+          <div className="legend-item">
+            <span className="dash" style={{ backgroundColor: '#FA5D5D' }}></span>
+            <p><strong>MCI</strong> (cognitively impaired)</p>
+          </div>
+          <div className="legend-item">
+            <span className="dash" style={{ backgroundColor: '#21AEEE' }}></span>
+            <p><strong>Healthy</strong> (normally aging)</p>
+          </div>
+        </div>
+      </div>
+
+      <DropdownTable onOptionSelect={setSelectedMetric} />
+
+      {loading ? (
+        <p>Loading data...</p>
+      ) : (
+        <div className="grid-container">
+          <div className="grid-item">
+            <GameHistoryLineChart data={gameHistoryData} labels={gameHistoryLabels} minLimit = {minLimit} maxLimit = {maxLimit}/>
+          </div>
+          <div className="grid-item">
+            <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={metricData?.xUser} swapColors={true} />
+          </div>
+          <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
+            <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
+            <p className="counterfactuals">If {selectedMetric} <span style={{ color: '#21AEEE' }}>reduces to {metricData?.counterfactual}</span>, Solitaire DSS would think the player is normally aging.</p>
+          </div>
+          <div className="grid-item">
+            <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold_healthy} xUser={metricData?.xUser} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default DigitalBiomarkers;

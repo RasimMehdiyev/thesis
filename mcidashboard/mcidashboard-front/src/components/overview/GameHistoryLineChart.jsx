@@ -5,7 +5,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, ChartDataLabels);
 
-const GameHistoryLineChart = ({ data, labels }) => {
+const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
+
+  console.log('GameHistoryLineChart:', { data, labels, minLimit, maxLimit });
+
   const chartData = {
     labels: labels, // Use labels passed as prop
     datasets: [
@@ -37,27 +40,28 @@ const GameHistoryLineChart = ({ data, labels }) => {
         },
       },
       y: {
-        min: 40,
-        max: 80, 
+        min: minLimit,
+        max: maxLimit, 
         grid: {
-          display: true, // Display grid lines only at max
-          color: (context) => {
-            if (context.tick.value === 80) {
-              return 'rgba(0, 0, 0, 0.1)'; // Set color for the grid line at the max value
-            }
-            return 'transparent'; // Hide all other grid lines
-          },
-          lineWidth: (context) => {
-            if (context.tick.value === 80) {
-              return 1; // Set thickness of the grid line at max value
-            }
-            return 0; // No line for other ticks
-          },
+            display: true, 
+            color: (context) => {
+                if (context.tick.value === maxLimit) { // Use dynamic maxLimit
+                    return 'rgba(0, 0, 0, 0.1)'; // Set color for the grid line at the max value
+                }
+                return 'rgba(0, 0, 0, 0.05)'; // Show a faint grid for other lines
+            },
+            lineWidth: (context) => {
+                if (context.tick.value === maxLimit) { // Use dynamic maxLimit
+                    return 1; // Set thickness of the grid line at max value
+                }
+                return 0.5; // Use a thinner line for other ticks
+            },
         },
         ticks: {
-          stepSize: 10, 
+            stepSize: 10, 
         },
-      },
+    },
+    
     },
     plugins: {
       tooltip: {

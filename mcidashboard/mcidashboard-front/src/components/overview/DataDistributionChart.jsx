@@ -121,7 +121,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
           display: true, // Show vertical grid lines
           drawBorder: false,
           color: function (context) {
-            const label = context.tick.label;
+            const label = context.tick?.label;
             if (label === threshold) {
               return thresholdColor; // Gray grid line for threshold
             } else if (label === xUser) {
@@ -130,7 +130,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
             return 'rgba(0, 0, 0, 0.1)'; // Default gray grid line for others
           },
           lineWidth: function (context) {
-            const label = context.tick.label;
+            const label = context.tick?.label;
             if (label === threshold) {
               return 3; // Thinner line for the threshold (neutral)
             } else if (label === xUser) {
@@ -141,7 +141,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
         },
         ticks: {
           font: function (context) {
-            const label = context.tick.label;
+            const label = context.tick?.label;
             if (label === threshold || label === xUser) {
               return {
                 weight: 'bold', // Make the threshold and xUser label bold
@@ -154,7 +154,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
             };
           },
           color: function (context) {
-            const label = context.tick.label;
+            const label = context.tick?.label;
             if (label === threshold) {
               return thresholdColor; // Gray color for the threshold label
             } else if (label === xUser) {
@@ -165,27 +165,27 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
         },
       },
       y: {
-        min: 40,
-        max: 80,
+        min: 0,
+        max: 10,
         display: false, // Hide the y-axis labels
         grid: {
           drawBorder: false,
           color: function (context) {
             // Only draw a line at the max value (80)
-            if (context.tick.value === 80) {
+            if (context.tick?.value === 80) {
               return 'rgba(0, 0, 0, 0.1)';
             }
             return null;
           },
           lineWidth: function (context) {
-            return context.tick.value === 80 ? 2 : 0;
+            return context.tick?.value === 80 ? 2 : 0;
           },
         },
       },
     },
     plugins: {
       tooltip: {
-        enabled: false, // Enable tooltips for other datasets
+        enabled: false, // Disable tooltips
       },
       legend: {
         display: false,
@@ -200,6 +200,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
       },
     },
   };
+  
 
   return (
     <div style={{ width: '100%', height: '100%' }}>

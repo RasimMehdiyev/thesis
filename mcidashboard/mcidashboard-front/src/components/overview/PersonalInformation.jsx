@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Tooltip from '../Tooltip'; 
 
-const PersonalInformation = () => {
+const PersonalInformation = ({patient}) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   // Show tooltip on mouse enter
@@ -24,13 +24,6 @@ const PersonalInformation = () => {
     console.log(patient); 
   }
 
-
-  const patient = {
-    username: 'John Doe',
-    gender: 'Male',
-    age: 45,
-    mci: true,
-  };
 
   return (
     <div className='card' id="pers-card">
@@ -59,11 +52,11 @@ const PersonalInformation = () => {
         <ul className='demographics-list'>
             <li className='demographic-item'>
             <span className='label'><strong>Name:</strong></span>
-            <span className='not-bold value'>{patient.username}</span>
+            <span className='not-bold value'>{patient.full_name}</span>
             </li>
             <li className='demographic-item'>
             <span className='label'><strong>Gender:</strong></span>
-            <span className='not-bold value'>{patient.gender}</span>
+            <span className='not-bold value'>{patient.gender === 'Man' ? 'Male' :'Female' }</span>
             </li>
             <li className='demographic-item'>
             <span className='label'><strong>Age:</strong></span>
@@ -80,11 +73,11 @@ const PersonalInformation = () => {
             <ul className='demographics-list'>
                 <li className='demographic-item'>
                 <span className='label'><strong>MMSE:</strong></span>
-                <span className='not-bold value'style={{color: '#FA5D5D'}}>26/30</span>
+                <span className='not-bold value'style={{color: '#FA5D5D'}}>{patient.MMSE}/30</span>
                 </li>
                 <li className='demographic-item'>
                 <span className='label'><strong>MoCA:</strong></span>
-                <span className='not-bold value'style={{color: '#FA5D5D'}}>24/30</span>
+                <span className='not-bold value'style={{color: '#FA5D5D'}}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'N/A'}</span>
                 </li>
             </ul>
         </div>
