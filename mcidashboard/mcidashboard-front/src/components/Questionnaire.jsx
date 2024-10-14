@@ -81,10 +81,10 @@ const Questionnaire = ({ onClose }) => {
       const updatedChatLog = [...chatLog];
 
       if (isCompleted) {
-        updatedChatLog.splice(updatedChatLog.length - 2, 2);  // Remove "Thank you" message and the last answer
+        updatedChatLog.splice(updatedChatLog.length - 2, 2);  
         setIsCompleted(false);
       } else {
-        updatedChatLog.splice(updatedChatLog.length - 2, 2);  // Remove last question and answer
+        updatedChatLog.splice(updatedChatLog.length - 2, 2);  
       }
 
       setChatLog(updatedChatLog);
@@ -101,9 +101,9 @@ const Questionnaire = ({ onClose }) => {
         }
 
         if (questionMap[prevIndex].answers && questionMap[prevIndex].answers.length > 0) {
-          setShowOtherTextField(false);  // Ensure options are displayed instead of text area
+          setShowOtherTextField(false);  
         } else {
-          setShowOtherTextField(true);  // If no options, show the input field
+          setShowOtherTextField(true);  
         }
 
         setMessage(previousAnswer);
@@ -126,7 +126,7 @@ const Questionnaire = ({ onClose }) => {
   return (
     <div className="chatbox">
       <div className="chatbox-header">
-        <h3>Questionnaire {currentQuestionIndex + 1}/{questionMap.length + 1}</h3> {/* Updated total question count */}
+        <h3>Questionnaire {currentQuestionIndex + 1}/{questionMap.length + 1}</h3> 
       </div>
       <div className="chatbox-body" ref={chatBodyRef}>
         {chatLog.map((chat, index) => (
@@ -137,7 +137,7 @@ const Questionnaire = ({ onClose }) => {
       </div>
 
       <div className="chatbox-footer">
-        {!isCompleted && (  // Only display inputs if the questionnaire is not completed
+        {!isCompleted && (  
           <>
             <div className="footer-row">
               <button 
@@ -150,21 +150,21 @@ const Questionnaire = ({ onClose }) => {
             </div>
 
             <div className="input-row">
-              {/* Display options for the current question, or handle the completion step */}
               {(
                 questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
-                  <div className="options">
-                    <p>Please select an option:</p>
+                  <div>
+                    <p style={{textAlign: 'right'}}>Please select an option:</p>
+                    <div className="options">
                     {questionMap[currentQuestionIndex].answers.map((option, index) => (
                       <button
                         key={index}
                         onClick={() => handleOptionClick(option)}
                         className="option-button"
-                        style={{ width: 'auto', height: 'auto', borderRadius: 10, marginBottom: 10 }}
                       >
                         {option}
                       </button>
                     ))}
+                    </div>
                   </div>
                 ) : (
                   <>
