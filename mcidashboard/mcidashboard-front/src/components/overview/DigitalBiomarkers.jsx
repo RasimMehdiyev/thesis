@@ -31,7 +31,26 @@ const DigitalBiomarkers = ({ patient }) => {
   const biomarkerNametoId = {
     'Average Accuracy': 14,
     'Min Move Time': 24,
-    'Beta Error': 10
+    'Beta Error': 10,
+    'Average Move Time': 5,
+    'Cards Moved': 27,
+    'Erroneous Move': 13,
+    'Final Beta Error': 11,
+    'Game Time': 19,
+    'Max Accuracy': 26,
+    'Min Accuracy': 25,
+    'SD Accuracy': 15,
+    'Taps': 16,
+    'SD Total Time': 2,
+    'Successful Move': 12,
+    'Suit Error': 29,
+    'SD Think Time': 4,
+    'Pile Move': 7,
+    'Rank Error': 28,
+    'Score': 20,
+    'Average Total Time': 1,
+    'Average Think Time': 3,
+    'Min Think Time': 23,
   }
 
   useEffect(() => {
@@ -127,6 +146,7 @@ const {
     threshold: threshold_healthy = 0 
 } = metricData?.healthy ? splitDataDistChartData(metricData.healthy) : {};
 
+const xUser = metricData?.xUser || 0;
 
 console.log('MCI Data:', { xData_mci, yData_mci, threshold_mci });
 console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy });
@@ -172,7 +192,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={metricData?.xUser} swapColors={true} />
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={metricData?.current_user.biomarker_value} swapColors={true} />
           </div>
           <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
             <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
@@ -180,7 +200,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold_healthy} xUser={metricData?.xUser} />
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold_healthy} xUser={metricData?.current_user.biomarker_value} />
           </div>
         </div>
       )}

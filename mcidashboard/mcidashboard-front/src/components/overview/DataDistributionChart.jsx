@@ -11,6 +11,10 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
     return y1 + ((y2 - y1) * (x - x1)) / (x2 - x1);
   };
 
+// based on the max value in the yData array + 1
+  const maxLimit = Math.ceil(Math.max(...yData) + 1);
+
+
   // Define the colors based on swapColors prop
   const belowThresholdColor = swapColors ? 'rgba(250, 93, 93, 1)' : 'rgba(33, 174, 238, 1)'; // Red if swapped, else Blue
   const aboveThresholdColor = swapColors ? 'rgba(33, 174, 238, 1)' : 'rgba(250, 93, 93, 1)'; // Blue if swapped, else Red
@@ -166,7 +170,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, swapColors }) =
       },
       y: {
         min: 0,
-        max: 10,
+        max: maxLimit,
         display: false, // Hide the y-axis labels
         grid: {
           drawBorder: false,
