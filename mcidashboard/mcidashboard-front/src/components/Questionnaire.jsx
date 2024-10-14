@@ -2,43 +2,79 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const Questionnaire = ({ onClose }) => {
   const [message, setMessage] = useState('');
-  const [chatLog, setChatLog] = useState([]); 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);  
+  const [chatLog, setChatLog] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0); // Tracks the current section
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
-  const [showOtherTextField, setShowOtherTextField] = useState(false); 
-  const [isCompleted, setIsCompleted] = useState(false); 
+  const [showOtherTextField, setShowOtherTextField] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const chatBodyRef = useRef(null);
 
-  const questionMap = [
-    { question: "What is your Prolific ID?", answers: [], charLimit: 24, noSpecialChars: true },
-    { question: "How old are you?", answers: ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"], charLimit: null, noSpecialChars: false },
-    { question: "What is your highest level of education?", answers: ["Highschool diploma", "Bachelor’s degree", "Master’s degree", "Doctoral Degree (PhD)", "Medical degree (e.g., MD, DO)", "Other"], charLimit: null, noSpecialChars: false },
-    { question: "Describe your job in the medical field in your own terms.", answers: [], charLimit: 100, noSpecialChars: false },
-    { question: "How many years of professional experience do you have in the medical field?", answers: ["None", "1-4 years", "5-14 years", "15+ years"], charLimit: null, noSpecialChars: false },
-    { question: "Do you want to submit your answers?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
+  // Define sections and their corresponding questions
+  const sections = [
+    {
+      sectionTitle: 'The following questions will gather background information to understand how your experience relates to your interaction with the system. ',
+      questions: [
+        { question: "What is your Prolific ID?", answers: [], charLimit: 24, noSpecialChars: true },
+        { question: "How old are you?", answers: ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"], charLimit: null, noSpecialChars: false },
+        { question: "What is your highest level of education?", answers: ["Highschool diploma", "Bachelor’s degree", "Master’s degree", "Doctoral Degree (PhD)", "Medical degree (e.g., MD, DO)", "Other"], charLimit: null, noSpecialChars: false },
+        { question: "Describe your job in the medical field in your own terms.", answers: [], charLimit: 100, noSpecialChars: false },
+        { question: "How many years of professional experience do you have in the medical field?", answers: ["None", "1-4 years", "5-14 years", "15+ years"], charLimit: null, noSpecialChars: false },
+        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false },
+
+      ]
+    },
+    {
+      sectionTitle: (
+        <>
+          Take some time to explore the system (<span style={{textDecoration:"underline"}}>3-5 minutes</span>). Once ready, answer the questions based on your findings. Feel free to skip any questions.
+        </>
+      ),
+      questions: [
+        { question: "Is Jack Smith’s age below or above the average age of MCI patients?  ", answers: ["Below", "Equal", "Above"], charLimit: null, noSpecialChars: false },
+        { question: "What percentage of healthy patients never use tablets?", answers: [], charLimit: 2, noSpecialChars: false },
+        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
+      ]
+    },
+    {
+      sectionTitle: 'You will now be asked to rate your agreement with a series of statements.',
+      questions: [
+        { question: "\"Using this app would allow me to accomplish the related tasks more quickly. \"", answers: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"], charLimit: null, noSpecialChars: false },
+        { question: "\"Using this app would enhance my effectiveness on the tasks related with its usage. \"", answers: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"], charLimit: null, noSpecialChars: false },
+        { question: "\"Are you done with this section and agree for your answers so far to be saved permanently?\"", answers: ["Yes"], charLimit: null, noSpecialChars: false }
+      ]
+    }
   ];
 
+  // Helper to get the current section's questions
+  const currentSection = sections[currentSectionIndex];
+  const questionMap = currentSection.questions;
+
+  // Define the function that checks if a valid Prolific ID is provided
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
 
   useEffect(() => {
+    // Show the initial message for the first section
+    sendSystemMessage(currentSection.sectionTitle);
     sendSystemMessage(questionMap[0].question);
   }, []);
 
   const handleInputChange = (e) => {
     let value = e.target.value;
     if (questionMap[currentQuestionIndex].noSpecialChars) {
-      value = value.replace(/[^a-zA-Z0-9]/g, '');
+      value = value.replace(/[^a-zA-Z0-9]/g, ''); 
     }
-    setMessage(value);
+    setMessage(value); 
   };
 
   const handleSendMessage = (answer = message) => {
     if (answer.trim()) {
       const currentQuestion = questionMap[currentQuestionIndex];
 
-      if (currentQuestionIndex === 0 && !isValidProlificID(answer)) {
-        setErrorMessage("Prolific ID must be exactly 24 alphanumeric characters.");
+      // Validate Prolific ID only on the first question
+      if (currentSectionIndex === 0 && currentQuestionIndex === 0 && !isValidProlificID(answer)) {
+        setErrorMessage("This isn't a valid Prolific ID format. It must be 24 alphanumeric characters.");
         return;
       }
 
@@ -46,18 +82,29 @@ const Questionnaire = ({ onClose }) => {
       setBackButtonDisabled(true);
       setShowOtherTextField(false);
 
-      const newChatLog = [...chatLog, { sender: 'You', message: answer }];
+      const newChatLog = [...chatLog, { sender: 'You', message: answer, questionIndex: currentQuestionIndex }];
       setChatLog(newChatLog);
       setMessage('');
 
       setTimeout(() => {
         if (currentQuestionIndex < questionMap.length - 1) {
+          // Move to the next question in the current section
           const nextIndex = currentQuestionIndex + 1;
           sendSystemMessage(questionMap[nextIndex].question);
           setCurrentQuestionIndex(nextIndex);
-        } else if (!isCompleted) {
-          setIsCompleted(true);
-          sendSystemMessage("Thank you for your participation!");
+        } else if (currentSectionIndex < sections.length - 1) {
+          // Move to the next section
+          const nextSectionIndex = currentSectionIndex + 1;
+          setCurrentSectionIndex(nextSectionIndex);
+          setCurrentQuestionIndex(0);
+          sendSystemMessage(sections[nextSectionIndex].sectionTitle); // Send section instruction
+          sendSystemMessage(sections[nextSectionIndex].questions[0].question); // Send first question of the new section
+        } else {
+          // Completed the last section
+          if (!isCompleted) {
+            setIsCompleted(true);
+            sendSystemMessage("Thank you for your participation!");
+          }
         }
 
         setBackButtonDisabled(false);
@@ -81,10 +128,10 @@ const Questionnaire = ({ onClose }) => {
       const updatedChatLog = [...chatLog];
 
       if (isCompleted) {
-        updatedChatLog.splice(updatedChatLog.length - 2, 2);  
+        updatedChatLog.splice(updatedChatLog.length - 2, 2);
         setIsCompleted(false);
       } else {
-        updatedChatLog.splice(updatedChatLog.length - 2, 2);  
+        updatedChatLog.splice(updatedChatLog.length - 2, 2);
       }
 
       setChatLog(updatedChatLog);
@@ -94,39 +141,46 @@ const Questionnaire = ({ onClose }) => {
 
       setTimeout(() => {
         const previousQuestion = questionMap[prevIndex].question;
-        const previousAnswer = updatedChatLog[(prevIndex * 2) + 1]?.message || '';
+
+        const previousAnswer = updatedChatLog.find(
+          (entry) => entry.sender === 'You' && entry.questionIndex === prevIndex
+        )?.message || '';
 
         if (!updatedChatLog.some((entry) => entry.message === previousQuestion)) {
           sendSystemMessage(previousQuestion);
         }
 
-        if (questionMap[prevIndex].answers && questionMap[prevIndex].answers.length > 0) {
-          setShowOtherTextField(false);  
+        if (questionMap[prevIndex].answers.length === 0) {
+          setMessage(previousAnswer);
+          setShowOtherTextField(true);
         } else {
-          setShowOtherTextField(true);  
+          setShowOtherTextField(false);
         }
-
-        setMessage(previousAnswer);
       }, 500);
     }
   };
 
   const isSendButtonDisabled = () => {
     const currentQuestion = questionMap[currentQuestionIndex];
-    if (currentQuestionIndex === 0) {
+    if (currentSectionIndex === 0 && currentQuestionIndex === 0) {
       return !isValidProlificID(message);
     }
     return message.trim() === '';
   };
 
   const handleOptionClick = (option) => {
-    handleSendMessage(option);
+    if (option === "Other") {
+      setShowOtherTextField(true);
+      setMessage("");
+    } else {
+      handleSendMessage(option);
+    }
   };
 
   return (
     <div className="chatbox">
       <div className="chatbox-header">
-        <h3>Questionnaire {currentQuestionIndex + 1}/{questionMap.length + 1}</h3> 
+        <h3>Section {currentSectionIndex + 1} - Question {currentQuestionIndex + 1}/{questionMap.length}</h3>
       </div>
       <div className="chatbox-body" ref={chatBodyRef}>
         {chatLog.map((chat, index) => (
@@ -137,33 +191,35 @@ const Questionnaire = ({ onClose }) => {
       </div>
 
       <div className="chatbox-footer">
-        {!isCompleted && (  
+        {!isCompleted && (
           <>
             <div className="footer-row">
-              <button 
-                className="back-button" 
-                onClick={handleBack} 
-                disabled={backButtonDisabled || currentQuestionIndex === 0}
-              >
-                ← back to previous question
-              </button>
+              { currentQuestionIndex !== 0 && (
+                <button 
+                  className="back-button"
+                  onClick={handleBack}
+                  disabled={backButtonDisabled}
+                >
+                  ← back to previous question
+                </button>
+              )}
             </div>
 
             <div className="input-row">
               {(
                 questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
                   <div>
-                    {currentQuestionIndex!==questionMap.length-1 && (<p style={{textAlign: 'right'}}>Please select an option:</p>)}
+                    {currentQuestionIndex!==questionMap.length-1 && (<p style={{ textAlign: 'right' }}>Please select an option:</p>)}
                     <div className="options">
-                    {questionMap[currentQuestionIndex].answers.map((option, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleOptionClick(option)}
-                        className="option-button"
-                      >
-                        {option}
-                      </button>
-                    ))}
+                      {questionMap[currentQuestionIndex].answers.map((option, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleOptionClick(option)}
+                          className="option-button"
+                        >
+                          {option}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 ) : (
