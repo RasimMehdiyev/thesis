@@ -270,7 +270,7 @@ const Questionnaire = ({ onClose }) => {
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter' && !isSendButtonDisabled) {
+                          if (e.key === 'Enter' && !isSendButtonDisabled()) {
                             e.preventDefault();
                             handleSendMessage();
                           }
