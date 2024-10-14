@@ -9,30 +9,30 @@ const Questionnaire = ({ onClose }) => {
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [showAnswerOptions, setShowAnswerOptions] = useState(false); // State to control answer visibility
+  const [isQuestionVisible, setIsQuestionVisible] = useState(true); // State to control question visibility
   const chatBodyRef = useRef(null);
-
 
   const sections = [
     {
-      sectionTitle: 'The following questions will gather background information to understand how your experience relates to your interaction with the system. ',
+      sectionTitle: 'The following questions will gather background information to understand how your experience relates to your interaction with the system.',
       questions: [
         { question: "What is your Prolific ID?", answers: [], charLimit: 24, noSpecialChars: true },
         { question: "How old are you?", answers: ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"], charLimit: null, noSpecialChars: false },
         { question: "What is your highest level of education?", answers: ["Highschool diploma", "Bachelor’s degree", "Master’s degree", "Doctoral Degree (PhD)", "Medical degree (e.g., MD, DO)", "Other"], charLimit: null, noSpecialChars: false },
         { question: "Describe your job in the medical field in your own terms.", answers: [], charLimit: 100, noSpecialChars: false },
         { question: "How many years of professional experience do you have in the medical field?", answers: ["None", "1-4 years", "5-14 years", "15+ years"], charLimit: null, noSpecialChars: false },
-        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false },
-
+        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
       ]
     },
     {
       sectionTitle: (
         <>
-          Take some time to explore the system (<span style={{textDecoration:"underline"}}>3-5 minutes</span>). Once ready, answer the questions based on your findings. Feel free to skip any questions.
+          Take some time to explore the system (<span style={{ textDecoration: "underline" }}>3-5 minutes</span>). Once ready, answer the questions based on your findings. Feel free to skip any questions.
         </>
       ),
       questions: [
-        { question: "Is Jack Smith’s age below or above the average age of MCI patients?  ", answers: ["Below", "Equal", "Above"], charLimit: null, noSpecialChars: false },
+        { question: "Is Jack Smith’s age below or above the average age of MCI patients?", answers: ["Below", "Equal", "Above"], charLimit: null, noSpecialChars: false },
         { question: "What percentage of healthy patients never use tablets?", answers: [], charLimit: 2, noSpecialChars: false },
         { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
       ]
@@ -47,10 +47,8 @@ const Questionnaire = ({ onClose }) => {
     }
   ];
 
-
   const currentSection = sections[currentSectionIndex];
   const questionMap = currentSection.questions;
-
 
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
 
@@ -62,21 +60,19 @@ const Questionnaire = ({ onClose }) => {
   const handleInputChange = (e) => {
     let value = e.target.value;
 
-    // Check if the current question is the one asking for a percentage
     if (questionMap[currentQuestionIndex].question.includes("percentage")) {
-        if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 100) {
-            setMessage(value); 
-        } else {
-            setErrorMessage('Please enter a valid percentage between 0 and 100.');
-        }
-        // Remove special characters for certain questions
-    } else if (questionMap[currentQuestionIndex].noSpecialChars) {
-        value = value.replace(/[^a-zA-Z0-9]/g, ''); 
-        setMessage(value); 
-    } else {
+      if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 100) {
         setMessage(value);
+      } else {
+        setErrorMessage('Please enter a valid percentage between 0 and 100.');
+      }
+    } else if (questionMap[currentQuestionIndex].noSpecialChars) {
+      value = value.replace(/[^a-zA-Z0-9]/g, '');
+      setMessage(value);
+    } else {
+      setMessage(value);
     }
-};
+  };
 
   const handleSendMessage = (answer = message) => {
     if (answer.trim()) {
@@ -90,6 +86,8 @@ const Questionnaire = ({ onClose }) => {
       setErrorMessage('');
       setBackButtonDisabled(true);
       setShowOtherTextField(false);
+      setShowAnswerOptions(false); 
+      setIsQuestionVisible(false); 
 
       const newChatLog = [...chatLog, { sender: 'You', message: answer, questionIndex: currentQuestionIndex }];
       setChatLog(newChatLog);
@@ -101,13 +99,30 @@ const Questionnaire = ({ onClose }) => {
           const nextIndex = currentQuestionIndex + 1;
           sendSystemMessage(questionMap[nextIndex].question);
           setCurrentQuestionIndex(nextIndex);
+          setShowAnswerOptions(true);
+          setIsQuestionVisible(true); // Show the question after the delay
         } else if (currentSectionIndex < sections.length - 1) {
-          // Move to the next section
+          // Move to the next section 
           const nextSectionIndex = currentSectionIndex + 1;
           setCurrentSectionIndex(nextSectionIndex);
           setCurrentQuestionIndex(0);
-          sendSystemMessage(sections[nextSectionIndex].sectionTitle); // Send section instruction
-          sendSystemMessage(sections[nextSectionIndex].questions[0].question); // Send first question of the new section
+          sendSystemMessage(sections[nextSectionIndex].sectionTitle);
+
+          if (nextSectionIndex === 1) { // Section 2 starts at index 1
+            setTimeout(() => {
+              sendSystemMessage(sections[nextSectionIndex].questions[0].question);
+
+              // Delay the display of answer options for section 2 after the question appears
+              setTimeout(() => {
+                setShowAnswerOptions(true); 
+                setIsQuestionVisible(true); 
+              }, 2000); // Delay options by 2 seconds
+            }, 3000); // 3000ms = 3 seconds delay for the question
+          } else {
+            sendSystemMessage(sections[nextSectionIndex].questions[0].question);
+            setShowAnswerOptions(true); 
+            setIsQuestionVisible(true); 
+          }
         } else {
           // Completed the last section
           if (!isCompleted) {
@@ -160,8 +175,8 @@ const Questionnaire = ({ onClose }) => {
         }
 
         if (questionMap[prevIndex].answers.length === 0) {
-          //setMessage(previousAnswer);
-          //setShowOtherTextField(true);
+          setMessage(previousAnswer);
+          setShowOtherTextField(true);
         } else {
           setShowOtherTextField(false);
         }
@@ -172,19 +187,17 @@ const Questionnaire = ({ onClose }) => {
   const isSendButtonDisabled = () => {
     const currentQuestion = questionMap[currentQuestionIndex];
 
-    // Validate for Prolific ID on the first question
     if (currentSectionIndex === 0 && currentQuestionIndex === 0) {
-        return !isValidProlificID(message);
+      return !isValidProlificID(message);
     }
 
-    // Validate for percentage input (if this is the percentage question)
     if (currentQuestion.question.includes("percentage")) {
-        const percentage = parseInt(message, 10);
-        return isNaN(percentage) || percentage < 0 || percentage > 100;
+      const percentage = parseInt(message, 10);
+      return isNaN(percentage) || percentage < 0 || percentage > 100;
     }
 
     return message.trim() === '';
-};
+  };
 
   const handleOptionClick = (option) => {
     if (option === "Other") {
@@ -212,8 +225,8 @@ const Questionnaire = ({ onClose }) => {
         {!isCompleted && (
           <>
             <div className="footer-row">
-              { currentQuestionIndex !== 0 && (
-                <button 
+              {currentQuestionIndex !== 0 && (
+                <button
                   className="back-button"
                   onClick={handleBack}
                   disabled={backButtonDisabled}
@@ -223,54 +236,56 @@ const Questionnaire = ({ onClose }) => {
               )}
             </div>
 
-            <div className="input-row">
-              {(
-                questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
-                  <div>
-                    {currentQuestionIndex!==questionMap.length-1 && (<p style={{ textAlign: 'right' }}>Please select an option:</p>)}
-                    <div className="options">
-                      {questionMap[currentQuestionIndex].answers.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleOptionClick(option)}
-                          className="option-button"
-                        >
-                          {option}
-                        </button>
-                      ))}
+            {isQuestionVisible && (
+              <div className="input-row">
+                {(
+                  questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField && showAnswerOptions ? (
+                    <div>
+                      {currentQuestionIndex !== questionMap.length - 1 && (<p style={{ textAlign: 'right' }}>Please select an option:</p>)}
+                      <div className="options">
+                        {questionMap[currentQuestionIndex].answers.map((option, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleOptionClick(option)}
+                            className="option-button"
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <>
-                    <textarea
-                      maxLength={questionMap[currentQuestionIndex].charLimit || 100}
-                      value={message}
-                      onChange={handleInputChange}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          handleSendMessage();
-                        }
-                      }}
-                      placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
-                      rows={message.length > 50 ? 5 : 1}
-                      style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
-                    />
-                    <button
-                      onClick={() => handleSendMessage()}
-                      disabled={isSendButtonDisabled()}
-                      className="send-button"
-                    >
-                      <img
-                        src='/assets/send_arrow.svg'
-                        alt='Send'
-                        className='send-icon'
+                  ) : (
+                    <>
+                      <textarea
+                        maxLength={questionMap[currentQuestionIndex].charLimit || 100}
+                        value={message}
+                        onChange={handleInputChange}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleSendMessage();
+                          }
+                        }}
+                        placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
+                        rows={message.length > 50 ? 5 : 1}
+                        style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
                       />
-                    </button>
-                  </>
-                )
-              )}
-            </div>
+                      <button
+                        onClick={() => handleSendMessage()}
+                        disabled={isSendButtonDisabled()}
+                        className="send-button"
+                      >
+                        <img
+                          src='/assets/send_arrow.svg'
+                          alt='Send'
+                          className='send-icon'
+                        />
+                      </button>
+                    </>
+                  )
+                )}
+              </div>
+            )}
           </>
         )}
       </div>
