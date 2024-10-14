@@ -4,14 +4,14 @@ const Questionnaire = ({ onClose }) => {
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0); // Tracks the current section
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0); 
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const chatBodyRef = useRef(null);
 
-  // Define sections and their corresponding questions
+
   const sections = [
     {
       sectionTitle: 'The following questions will gather background information to understand how your experience relates to your interaction with the system. ',
@@ -47,15 +47,14 @@ const Questionnaire = ({ onClose }) => {
     }
   ];
 
-  // Helper to get the current section's questions
+
   const currentSection = sections[currentSectionIndex];
   const questionMap = currentSection.questions;
 
-  // Define the function that checks if a valid Prolific ID is provided
+
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
 
   useEffect(() => {
-    // Show the initial message for the first section
     sendSystemMessage(currentSection.sectionTitle);
     sendSystemMessage(questionMap[0].question);
   }, []);
@@ -72,7 +71,6 @@ const Questionnaire = ({ onClose }) => {
     if (answer.trim()) {
       const currentQuestion = questionMap[currentQuestionIndex];
 
-      // Validate Prolific ID only on the first question
       if (currentSectionIndex === 0 && currentQuestionIndex === 0 && !isValidProlificID(answer)) {
         setErrorMessage("This isn't a valid Prolific ID format. It must be 24 alphanumeric characters.");
         return;
