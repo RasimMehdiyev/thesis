@@ -63,6 +63,7 @@ const Questionnaire = ({ onClose }) => {
     if (questionMap[currentQuestionIndex].question.includes("percentage")) {
       if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 100) {
         setMessage(value);
+        setErrorMessage('');
       } else {
         setErrorMessage('Please enter a valid percentage between 0 and 100.');
       }
@@ -79,7 +80,7 @@ const Questionnaire = ({ onClose }) => {
       const currentQuestion = questionMap[currentQuestionIndex];
 
       if (currentSectionIndex === 0 && currentQuestionIndex === 0 && !isValidProlificID(answer)) {
-        setErrorMessage("This isn't a valid Prolific ID format. It must be 24 alphanumeric characters.");
+        setErrorMessage("This isn't a valid Prolific ID.");
         return;
       }
 
