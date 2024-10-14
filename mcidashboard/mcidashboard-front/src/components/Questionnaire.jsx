@@ -61,11 +61,22 @@ const Questionnaire = ({ onClose }) => {
 
   const handleInputChange = (e) => {
     let value = e.target.value;
-    if (questionMap[currentQuestionIndex].noSpecialChars) {
-      value = value.replace(/[^a-zA-Z0-9]/g, ''); 
+
+    // Check if the current question is the one asking for a percentage
+    if (questionMap[currentQuestionIndex].question.includes("percentage")) {
+        if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 100) {
+            setMessage(value); 
+        } else {
+            setErrorMessage('Please enter a valid percentage between 0 and 100.');
+        }
+        // Remove special characters for certain questions
+    } else if (questionMap[currentQuestionIndex].noSpecialChars) {
+        value = value.replace(/[^a-zA-Z0-9]/g, ''); 
+        setMessage(value); 
+    } else {
+        setMessage(value);
     }
-    setMessage(value); 
-  };
+};
 
   const handleSendMessage = (answer = message) => {
     if (answer.trim()) {
@@ -149,8 +160,8 @@ const Questionnaire = ({ onClose }) => {
         }
 
         if (questionMap[prevIndex].answers.length === 0) {
-          setMessage(previousAnswer);
-          setShowOtherTextField(true);
+          //setMessage(previousAnswer);
+          //setShowOtherTextField(true);
         } else {
           setShowOtherTextField(false);
         }
@@ -160,11 +171,20 @@ const Questionnaire = ({ onClose }) => {
 
   const isSendButtonDisabled = () => {
     const currentQuestion = questionMap[currentQuestionIndex];
+
+    // Validate for Prolific ID on the first question
     if (currentSectionIndex === 0 && currentQuestionIndex === 0) {
-      return !isValidProlificID(message);
+        return !isValidProlificID(message);
     }
+
+    // Validate for percentage input (if this is the percentage question)
+    if (currentQuestion.question.includes("percentage")) {
+        const percentage = parseInt(message, 10);
+        return isNaN(percentage) || percentage < 0 || percentage > 100;
+    }
+
     return message.trim() === '';
-  };
+};
 
   const handleOptionClick = (option) => {
     if (option === "Other") {
