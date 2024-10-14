@@ -172,6 +172,12 @@ const Questionnaire = ({ onClose }) => {
                 maxLength={questionMap[currentQuestionIndex].charLimit || 100}
                 value={message}
                 onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevents adding a new line
+                    handleSendMessage();
+                  }
+                }}
                 placeholder="Type your answer..."
                 rows={message.length > 50 ? 5 : 1}
                 style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
