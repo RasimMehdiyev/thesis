@@ -7,7 +7,7 @@ const Questionnaire = ({ onClose }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false); 
-  const [isCompleted, setIsCompleted] = useState(false); // New state for completion
+  const [isCompleted, setIsCompleted] = useState(false); 
   const chatBodyRef = useRef(null);
 
   const questionMap = [
@@ -56,7 +56,7 @@ const Questionnaire = ({ onClose }) => {
           setCurrentQuestionIndex(nextIndex);
         } else {
           sendSystemMessage("Thank you for completing the questionnaire!");
-          setIsCompleted(true); // Mark the questionnaire as completed
+          setIsCompleted(true);
         }
         setBackButtonDisabled(false);
       }, 1000);
@@ -78,24 +78,33 @@ const Questionnaire = ({ onClose }) => {
       const prevIndex = currentQuestionIndex - 1;
       const updatedChatLog = [...chatLog];
 
-      // Remove last question and answer from the chat log
-      updatedChatLog.splice(updatedChatLog.length - 2, 2);
+      if (isCompleted) {
+        updatedChatLog.splice(updatedChatLog.length - 2, 2);  // Remove "Thank you" message and the last answer
+        setIsCompleted(false);
+      } else {
+        updatedChatLog.splice(updatedChatLog.length - 2, 2);  // Remove last question and answer
+      }
 
       setChatLog(updatedChatLog);
-
-      const previousAnswer = updatedChatLog[(prevIndex * 2) + 1]?.message || '';
-      setMessage(previousAnswer);
+      setMessage('');
       setCurrentQuestionIndex(prevIndex);
       setShowOtherTextField(false);
-      setIsCompleted(false); // Unmark completion when going back
 
       setTimeout(() => {
-        if (updatedChatLog.length === 0 || updatedChatLog[updatedChatLog.length - 1]?.message !== questionMap[prevIndex].question) {
-          sendSystemMessage(questionMap[prevIndex].question);
-          if (previousAnswer) {
-            sendUserMessage(previousAnswer);
-          }
+        const previousQuestion = questionMap[prevIndex].question;
+        const previousAnswer = updatedChatLog[(prevIndex * 2) + 1]?.message || '';
+
+        if (!updatedChatLog.some((entry) => entry.message === previousQuestion)) {
+          sendSystemMessage(previousQuestion);
         }
+
+        if (questionMap[prevIndex].answers && questionMap[prevIndex].answers.length > 0) {
+          setShowOtherTextField(false);  // Ensure options are displayed instead of text area
+        } else {
+          setShowOtherTextField(true);  // If no options, show the input field
+        }
+
+        setMessage(previousAnswer);
       }, 500);
     }
   };
@@ -144,52 +153,53 @@ const Questionnaire = ({ onClose }) => {
           </button>
         </div>
 
-        {/* If completed, do not show options or input */}
         {!isCompleted && (
           <div className="input-row">
-            {questionMap[currentQuestionIndex].answers && questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField ? (
-              <div className="options">
-                <p>Please select an option:</p>
-                {questionMap[currentQuestionIndex].answers.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleOptionClick(option)}
-                    className="option-button"
-                    style={{ width: 'auto', height: 'auto', borderRadius: 10, marginBottom: 10 }}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <>
-                <textarea
-                  maxLength={questionMap[currentQuestionIndex].charLimit || 100}
-                  value={message}
-                  onChange={handleInputChange}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }
-                  }}
-                  placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
-                  rows={message.length > 50 ? 5 : 1}
-                  style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
-                />
-                <button
-                  onClick={() => handleSendMessage()}
-                  disabled={isSendButtonDisabled()}
-                  className="send-button"
-                >
-                  <img
-                    src='/assets/send_arrow.svg'
-                    alt='Send'
-                    className='send-icon'
+            {questionMap[currentQuestionIndex < questionMap.length ? currentQuestionIndex : questionMap.length - 1].answers && 
+              questionMap[currentQuestionIndex < questionMap.length ? currentQuestionIndex : questionMap.length - 1].answers.length > 0 && 
+              !showOtherTextField ? (
+                <div className="options">
+                  <p>Please select an option:</p>
+                  {questionMap[currentQuestionIndex < questionMap.length ? currentQuestionIndex : questionMap.length - 1].answers.map((option, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleOptionClick(option)}
+                      className="option-button"
+                      style={{ width: 'auto', height: 'auto', borderRadius: 10, marginBottom: 10 }}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <textarea
+                    maxLength={questionMap[currentQuestionIndex < questionMap.length ? currentQuestionIndex : questionMap.length - 1].charLimit || 100}
+                    value={message}
+                    onChange={handleInputChange}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                    placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
+                    rows={message.length > 50 ? 5 : 1}
+                    style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
                   />
-                </button>
-              </>
-            )}
+                  <button
+                    onClick={() => handleSendMessage()}
+                    disabled={isSendButtonDisabled()}
+                    className="send-button"
+                  >
+                    <img
+                      src='/assets/send_arrow.svg'
+                      alt='Send'
+                      className='send-icon'
+                    />
+                  </button>
+                </>
+              )}
           </div>
         )}
       </div>
@@ -200,7 +210,3 @@ const Questionnaire = ({ onClose }) => {
 };
 
 export default Questionnaire;
-
-
-
-
