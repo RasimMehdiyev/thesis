@@ -23,15 +23,10 @@
   padding: 10px;
   background-color: black;
   color: white;
-
-  justify-content: space-between;
-  align-items: center;
   height: 40px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
-
 
 .chatbox-body {
   flex-grow: 1;

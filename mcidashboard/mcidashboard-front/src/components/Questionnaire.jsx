@@ -214,8 +214,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       <div className="chatbox" >
         <div className="chatbox-header">
         <p style={{marginTop: 0}}>
-          <span style={{fontSize: 14}}><strong style={{fontSize: 18}}>QUESTIONNAIRE</strong> <br/>PART <span style={{fontSize: 24}}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION 
-          <span style={{fontSize: 24}}>{currentQuestionIndex + 1}</span>/{questionMap.length}
+          <span style={{fontSize: 14}}><strong style={{fontSize: 18}}>QUESTIONNAIRE</strong> <br/>PART <span style={{fontSize: 24}}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION <span style={{fontSize: 24}}>{currentQuestionIndex + 1}</span>/{questionMap.length}
           </span>
         </p>
         </div>
