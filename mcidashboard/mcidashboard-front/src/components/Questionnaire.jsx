@@ -42,7 +42,15 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       questions: [
         { question: "\"Using this app would allow me to accomplish the related tasks more quickly. \"", answers: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"], charLimit: null, noSpecialChars: false },
         { question: "\"Using this app would enhance my effectiveness on the tasks related with its usage. \"", answers: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"], charLimit: null, noSpecialChars: false },
-        { question: "\"Are you done with this section and agree for your answers so far to be saved permanently?\"", answers: ["Yes"], charLimit: null, noSpecialChars: false }
+        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
+      ]
+    },
+    {
+      sectionTitle: 'In this section, please provide detailed feedback on your experience using the web app. Aim for 30-50 words per question and be specific (e.g., mention tabs, subsections, graphs). You may respond in English, Dutch, French, Greek, Russian, Azerbaijani, or Chinese.',
+      questions: [
+        { question: "Which features of the web application contributed the most to accomplishing your tasks effectively, and what made them particularly helpful? ", answers: [], charLimit: null, noSpecialChars: false },
+        { question: "Which parts of the web application did you find yourself using the most, and what made them easy to access and use? ", answers: [], charLimit: null, noSpecialChars: false },
+        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false }
       ]
     }
   ];
@@ -273,7 +281,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
                   ) : (
                     <>
                       <textarea
-                        maxLength={questionMap[currentQuestionIndex].charLimit || 100}
+                        maxLength={questionMap[currentQuestionIndex].charLimit}
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
