@@ -161,7 +161,7 @@
     height: auto;
 }
 
-  .red-dot {
+.red-dot {
     position: absolute;
     top: 0;
     right: 15px;
@@ -169,5 +169,5 @@
     height: 15px;
     background-color: red;
     border-radius: 50%;
-  }
+}
  

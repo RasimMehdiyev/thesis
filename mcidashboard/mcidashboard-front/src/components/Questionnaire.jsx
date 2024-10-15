@@ -188,13 +188,14 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         if (!updatedChatLog.some((entry) => entry.message === previousQuestion)) {
           sendSystemMessage(previousQuestion);
         }
-
+        
+        /*
         if (questionMap[prevIndex].answers.length === 0) {
-          setMessage(previousAnswer);
-          setShowOtherTextField(true);
+          //setMessage(previousAnswer);
+          //setShowOtherTextField(true);
         } else {
           setShowOtherTextField(false);
-        }
+        }*/
       }, 500);
     }
   };

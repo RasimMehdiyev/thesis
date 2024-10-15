@@ -82,14 +82,15 @@
 }
 
 .help-icon-container {
-    position: absolute;
-    right: 20px;
+    position: fixed;
+    right: 1%;
     display: flex;
     align-items: center; 
     height: 100%; 
 }
 
 .help-icon {
+    margin-left: auto;
     cursor: pointer;
     display: block;
     height: 30px; 
