@@ -20,4 +20,6 @@ urlpatterns = [
     path('biomarkers/list/',get_all_biomarkers_list, name='biomarker-list'),
     path('biomarker/histograms/<int:userID>/<int:biomarker_id>/',biomarker_frequency_histogram, name='biomarker-histograms'),
     path('game/history/<int:pk>/<int:biomarkerID>/', get_game_history_per_patient, name='game-history'),
+    path('machine-learning-data/', ML_data, name='ML-data'),
+
 ]

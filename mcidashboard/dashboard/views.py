@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from collections import Counter
 from .models import * 
 from .serializers import *
-from django.db.models import Count
+from django.db.models import Count, Avg
 from django.db.models import Max
 import matplotlib.pyplot as plt
 from collections import defaultdict
@@ -263,3 +263,44 @@ def get_game_history_per_patient(request, pk, biomarkerID):
     }
     
     return JsonResponse(game_history, safe=False)
+
+import math 
+
+@api_view(['GET'])
+def ML_data(request):
+    # Count total games
+    total_games = Game.objects.count()
+
+    # Count patients by MCI status
+    patients = Person.objects.all()
+    mci_patients = patients.filter(mci=1).count()
+    healthy_patients = patients.filter(mci=0).count()
+
+    # Calculate average age per group, rounding up to the closest integer
+    mci_avg_age = patients.filter(mci=1).aggregate(avg_age=Avg('age'))['avg_age']
+    healthy_avg_age = patients.filter(mci=0).aggregate(avg_age=Avg('age'))['avg_age']
+    # mci_avg_age = math.ceil(mci_avg_age) if mci_avg_age else 0
+    # healthy_avg_age = math.ceil(healthy_avg_age) if healthy_avg_age else 0
+
+    # Count total moves
+    total_moves = Move.objects.count()
+
+    # Calculate total game time, rounding to the second decimal
+    games = Game.objects.all()
+    total_time = sum([game.gametime for game in games]) / 3600
+    total_time = round(total_time, 1)
+
+    # Create a combined response object
+    combined_data = {
+        'total_games': total_games,
+        'patients': {
+            'mci': mci_patients,
+            'healthy': healthy_patients,
+            'mci_avg_age': round(mci_avg_age, 0),
+            'healthy_avg_age': round(healthy_avg_age, 0),
+        },
+        'total_moves': total_moves,
+        'total_game_time': total_time,
+    }
+
+    return JsonResponse(combined_data, safe=False)

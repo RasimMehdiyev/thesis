@@ -1,9 +1,12 @@
 import Tooltip from '../Tooltip'; 
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 const MachineLearningModel = () => {
     const [isDatasetTooltipVisible, setIsDatasetTooltipVisible] = useState(false);
     const [isPredictionTooltipVisible, setIsPredictionTooltipVisible] = useState(false);
+    const [machineLearningData, setMachineLearningData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Show dataset tooltip on mouse enter
     const showDatasetTooltip = () => {
@@ -25,6 +28,33 @@ const MachineLearningModel = () => {
         setIsPredictionTooltipVisible(false);
     };
 
+
+    const fetchMLData = async () => {
+        try {
+            const response = await fetch('/dashboard/machine-learning-data/');
+            const data = await response.json();
+            console.log('Fetched Data:', data);
+            
+            if (data) {
+                setMachineLearningData(data);
+            } else {
+                console.error('No machine learning data found in the response.');
+            }
+        } catch (error) {
+            console.error('Error fetching machine learning data:', error);
+        } finally {
+            setLoading(false); 
+        }
+    }
+
+
+    useEffect(() => {
+        fetchMLData();
+    }, []);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }else{
     return (
         <div className="card" id='ml-card'>
             <p className="ml-subtitle" id="ml-p">Machine learning model</p>
@@ -52,15 +82,15 @@ const MachineLearningModel = () => {
                 <hr className='horizontal-line'/>
 
                 <div className='demographics-list'>
-                    <p><strong>46 </strong>participants in total</p>
+                    <p><strong>{machineLearningData.patients.mci + machineLearningData.patients.healthy} </strong>participants in total</p>
                     <ul>
-                        <li><strong>23</strong> <span style={{color: '#21AEEE'}}>healthy participants </span>with an average age of <strong>70</strong> </li>
+                        <li><strong>{machineLearningData.patients.healthy}</strong> <span style={{color: '#21AEEE'}}>healthy participants </span>with an average age of <strong>{machineLearningData.patients.healthy_avg_age}</strong> </li>
                         <ul>
                             <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
                                 Recruited from senior groups and labeled as healthy based on cognitive assessments (MMSE, MoCA).
                             </em>
                         </ul>
-                        <li style={{marginTop: 10}}><strong>23</strong> <span style={{color: '#FA5D5D'}}>MCI participants</span> with an average age of <strong>80</strong></li>
+                        <li style={{marginTop: 10}}><strong>{machineLearningData.patients.mci}</strong> <span style={{color: '#FA5D5D'}}>MCI participants</span> with an average age of <strong>{machineLearningData.patients.mci_avg_age}</strong></li>
                         <ul>
                             <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
                                 Recruited from two leading memory clinics in Belgium where they had already been diagnosed with MCI.
@@ -71,7 +101,7 @@ const MachineLearningModel = () => {
 
                 <hr className='horizontal-line'/>
 
-                <p className="demographics-list"><strong>138</strong> game rounds, <strong>9735</strong> player moves and <strong>791.7</strong> minutes of gameplay</p>
+                <p className="demographics-list"><strong>{machineLearningData.total_games}</strong> game rounds, <strong>{machineLearningData.total_moves}</strong> player moves and <strong>{machineLearningData.total_game_time}</strong> minutes of gameplay</p>
                 <hr className='horizontal-line'/>
                 <p className="demographics-list"><strong>19</strong> models trained with <strong>26</strong>/61 potential digital biomarkers</p>
             </div>
@@ -106,6 +136,7 @@ const MachineLearningModel = () => {
             </div>
         </div>
     );
+}
 };
 
 export default MachineLearningModel;
