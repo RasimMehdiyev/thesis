@@ -12,9 +12,9 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [showAnswerOptions, setShowAnswerOptions] = useState(false); 
   const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
   const chatBodyRef = useRef(null);
+  /*
   const [scrollPosition, setScrollPosition] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(window.devicePixelRatio);
- 
   const [is2Visible, setIs2Visible] = useState(true);
   const [is1Visible, setIs1Visible] = useState(true);
 
@@ -68,7 +68,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleZoom);
     };
-  }, [scrollPosition, zoomLevel]);
+  }, [scrollPosition, zoomLevel]);*/
 
 
   const sections = [
@@ -292,7 +292,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   return (
     <div>
-     
+      {/*
       {is1Visible &&(<img
         src={"/assets/VC1.svg"}
         alt="VC"
@@ -313,7 +313,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           left: `${calculateLeftPosition(2100)}px`,
           zIndex: 100
         }}
-      />)}
+      />)}*/}
     <div className="chatbox" >
       
       <div className="chatbox-header">
