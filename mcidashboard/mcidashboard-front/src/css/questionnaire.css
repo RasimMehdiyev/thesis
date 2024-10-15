@@ -10,7 +10,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    font-family: 'Poppins';
+    font-family: 'Arial';
     z-index: 5000;
   }
   
@@ -50,7 +50,7 @@
     border-color: black;
     border-radius: 10px;
     font-size: 16px;
-    font-family: 'Poppins';
+    font-family: 'Arial';
   }
   
  
@@ -78,7 +78,7 @@
     padding: 0;
     display: flex;
     align-items: center;
-    font-family: 'Poppins';
+    font-family: 'Arial';
   }
   
   .back-button:disabled {
@@ -97,7 +97,7 @@
     border-radius: 10px;
     border: 1px solid #ccc;
     padding: 10px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 16px;
     margin-right: 10px;
   }
@@ -157,7 +157,7 @@
   margin-bottom: 10px;
   border-radius: 10px;
   color: white;
-  font-family: 'Poppins';
+  font-family: 'Arial';
   font-size: 14px;
   background-color: black;
   border: none;

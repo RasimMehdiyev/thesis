@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Questionnaire = ({ onClose }) => {
+const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -51,6 +51,12 @@ const Questionnaire = ({ onClose }) => {
   const questionMap = currentSection.questions;
 
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
+
+  useEffect(() => {
+    if (isCompleted) {
+      onQuestionnaireComplete(true);
+    }
+  }, [isCompleted, onQuestionnaireComplete]);
 
   useEffect(() => {
     sendSystemMessage(currentSection.sectionTitle);

@@ -11,6 +11,7 @@ const SidebarComponent = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [isChatboxVisible, setIsChatboxVisible] = useState(false);
+  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const navigate = useNavigate();
 
   // useEffect
@@ -68,6 +69,10 @@ const SidebarComponent = () => {
     return <div className='sidebar'>Loading...</div>; // Display a loading message or spinner
   }
 
+  const handleQuestionnaireComplete = (isComplete) => {
+    setIsQuestionnaireComplete(isComplete);
+  };
+
   
 
   const toggleChatbox = () => {
@@ -99,8 +104,9 @@ const SidebarComponent = () => {
               className="chat-icon" 
               onClick={toggleChatbox}
             />
+            {!isQuestionnaireComplete && !isChatboxVisible && <div className="red-dot"></div>} 
         </div>
-        {isChatboxVisible && <Questionnaire onClose={toggleChatbox}/>
+        {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
         }
     </div>
   );

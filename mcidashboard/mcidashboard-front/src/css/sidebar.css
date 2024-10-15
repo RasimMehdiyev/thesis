@@ -160,4 +160,14 @@
     width: 80%; 
     height: auto;
 }
+
+  .red-dot {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+  }
  
