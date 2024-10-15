@@ -34,6 +34,7 @@ const PersonalInformation = () => {
 
   return (
     <div className='card' id="pers-card">
+      
       <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className='ml-subtitle' id="pers-p">Personal Information</p>
         <img

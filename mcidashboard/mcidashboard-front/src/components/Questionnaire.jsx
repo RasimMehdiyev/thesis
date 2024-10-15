@@ -9,9 +9,67 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [showAnswerOptions, setShowAnswerOptions] = useState(false); // State to control answer visibility
-  const [isQuestionVisible, setIsQuestionVisible] = useState(true); // State to control question visibility
+  const [showAnswerOptions, setShowAnswerOptions] = useState(false); 
+  const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
   const chatBodyRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [zoomLevel, setZoomLevel] = useState(window.devicePixelRatio);
+ 
+  const [is2Visible, setIs2Visible] = useState(true);
+  const [is1Visible, setIs1Visible] = useState(true);
+
+
+  const getAdjustedScrollThreshold = (baseThreshold, zoomLevel) => {
+    return baseThreshold * zoomLevel; 
+  };
+
+ 
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+    updateImageSource(position, zoomLevel);
+  };
+
+
+  const handleZoom = () => {
+    const zoom = window.devicePixelRatio;
+    setZoomLevel(zoom);
+    updateImageSource(scrollPosition, zoom);
+  };
+
+  const calculateLeftPosition = (baseLeft) => {
+    const zoomAdjustment = 1 - (zoomLevel - 1) * 0.3;
+    return baseLeft * zoomAdjustment; 
+  };
+
+
+  const updateImageSource = (scrollPosition, zoomLevel) => {
+    const baseThreshold = 300; 
+    const adjustedThreshold = getAdjustedScrollThreshold(baseThreshold, zoomLevel);
+
+    
+    if (scrollPosition > adjustedThreshold && zoomLevel > 1.5) {
+      setIs1Visible(false);  
+      setIs2Visible(false);  
+    } else if (scrollPosition > adjustedThreshold) {
+      setIs1Visible(false);  
+      setIs2Visible(false);  
+    } else {
+      setIs1Visible(true);   
+      setIs2Visible(true);   
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleZoom); 
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleZoom);
+    };
+  }, [scrollPosition, zoomLevel]);
+
 
   const sections = [
     {
@@ -233,7 +291,31 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   };
 
   return (
-    <div className="chatbox">
+    <div>
+     
+      {is1Visible &&(<img
+        src={"/assets/VC1.svg"}
+        alt="VC"
+        style={{ 
+          position: 'fixed',
+          top: '70px',
+          left: `${calculateLeftPosition(950)}px`,
+          zIndex: 100
+        }}
+      />)}
+
+      {is2Visible && (<img
+        src={"/assets/VC2.svg"}
+        alt="VC"
+        style={{ 
+          position: 'fixed',
+          top: '70px',
+          left: `${calculateLeftPosition(2100)}px`,
+          zIndex: 100
+        }}
+      />)}
+    <div className="chatbox" >
+      
       <div className="chatbox-header">
         <h3>Section {currentSectionIndex + 1} - Question {currentQuestionIndex + 1}/{questionMap.length}</h3>
       </div>
@@ -315,6 +397,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       </div>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
+    </div>
     </div>
   );
 };
