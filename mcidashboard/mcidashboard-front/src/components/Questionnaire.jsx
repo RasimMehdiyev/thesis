@@ -213,7 +213,11 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     <div>
       <div className="chatbox" >
         <div className="chatbox-header">
-          <h3>Part {currentSectionIndex + 1} - Question {currentQuestionIndex + 1}/{questionMap.length}</h3>
+        <p style={{marginTop: 0}}>
+          <span style={{fontSize: 14}}><strong style={{fontSize: 18}}>QUESTIONNAIRE</strong> <br/>PART <span style={{fontSize: 24}}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION 
+          <span style={{fontSize: 24}}>{currentQuestionIndex + 1}</span>/{questionMap.length}
+          </span>
+        </p>
         </div>
         <div className="chatbox-body" ref={chatBodyRef}>
           {chatLog.map((chat, index) => (

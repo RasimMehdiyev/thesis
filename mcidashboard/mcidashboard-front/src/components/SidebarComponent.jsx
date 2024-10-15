@@ -102,6 +102,7 @@ const SidebarComponent = () => {
               src="/assets/chat_icon.svg" 
               alt="Chat Icon" 
               className="chat-icon" 
+              title="Start Questionnaire"
               onClick={toggleChatbox}
             />
             {!isQuestionnaireComplete && !isChatboxVisible && <div className="red-dot"></div>} 
