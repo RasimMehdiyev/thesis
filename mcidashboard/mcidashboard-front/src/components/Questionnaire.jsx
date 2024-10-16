@@ -4,13 +4,13 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0); 
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [showAnswerOptions, setShowAnswerOptions] = useState(false);
-  const [isQuestionVisible, setIsQuestionVisible] = useState(true);
+  const [showAnswerOptions, setShowAnswerOptions] = useState(false); 
+  const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
   const chatBodyRef = useRef(null);
 
   const sections = [
@@ -55,70 +55,22 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   ];
 
-
   const currentSection = sections[currentSectionIndex];
   const questionMap = currentSection.questions;
 
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
 
-  // Clear localStorage and reset chat state on page reload
   useEffect(() => {
-    if (performance.navigation.type === 1) { // Detect page reload (not chat close)
-      localStorage.clear(); // Clear saved chat state on page reload
+    if (isCompleted) {
+      onQuestionnaireComplete(true);
     }
+  }, [isCompleted, onQuestionnaireComplete]);
+
+  useEffect(() => {
+    sendSystemMessage(currentSection.sectionTitle);
+    sendSystemMessage(questionMap[0].question);
   }, []);
 
-  // Load saved chat state from localStorage when the component mounts
-  useEffect(() => {
-    const savedChatLog = JSON.parse(localStorage.getItem('chatLog'));
-    const savedMessage = localStorage.getItem('message');
-    const savedCurrentQuestionIndex = Number(localStorage.getItem('currentQuestionIndex'));
-    const savedCurrentSectionIndex = Number(localStorage.getItem('currentSectionIndex'));
-    const savedIsCompleted = JSON.parse(localStorage.getItem('isCompleted'));
-
-    if (savedChatLog && savedChatLog.length > 0) {
-      // Restore chat log and previous state
-      setChatLog(savedChatLog);
-      setCurrentQuestionIndex(savedCurrentQuestionIndex);
-      setCurrentSectionIndex(savedCurrentSectionIndex);
-      setMessage(savedMessage || '');
-      setIsCompleted(savedIsCompleted || false);
-    } else {
-      // Only send initial system message if the chat log is empty (i.e., first time opening the chat)
-      sendSystemMessage(currentSection.sectionTitle);
-      sendSystemMessage(questionMap[0].question);
-    }
-  }, []); // Empty dependency array to run only on first mount (or reload)
-
-  // Save chat state to localStorage whenever it updates
-  useEffect(() => {
-    localStorage.setItem('chatLog', JSON.stringify(chatLog));
-  }, [chatLog]);
-
-  useEffect(() => {
-    localStorage.setItem('message', message);
-  }, [message]);
-
-  useEffect(() => {
-    localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
-  }, [currentQuestionIndex]);
-
-  useEffect(() => {
-    localStorage.setItem('currentSectionIndex', currentSectionIndex);
-  }, [currentSectionIndex]);
-
-  useEffect(() => {
-    localStorage.setItem('isCompleted', JSON.stringify(isCompleted));
-  }, [isCompleted]);
-
-  // This effect ensures the chat window scrolls to the bottom whenever the chat log updates
-  useEffect(() => {
-    if (chatBodyRef.current) {
-      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
-    }
-  }, [chatLog]);
-
-  // Handle input changes
   const handleInputChange = (e) => {
     let value = e.target.value;
 
@@ -130,7 +82,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         setErrorMessage('Please enter a valid percentage between 0 and 100.');
       }
     } else if (questionMap[currentQuestionIndex].noSpecialChars) {
-      if (/[^a-zA-Z0-9]/g.test(value)) {
+      if(/[^a-zA-Z0-9]/g.test(value)) {
         setErrorMessage('Please enter a valid Prolific ID.');
       } else {
         setErrorMessage('');
@@ -142,7 +94,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   };
 
-  // Handle sending messages
   const handleSendMessage = (answer = message, skip = false) => {
     const currentQuestion = questionMap[currentQuestionIndex];
 
@@ -153,7 +104,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
 
     if (answer.trim()) {
-      setErrorMessage('');
+      setErrorMessage(''); 
       setBackButtonDisabled(true);
       setShowOtherTextField(false);
       setShowAnswerOptions(false);
@@ -170,7 +121,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   };
 
-  // Move to the next question
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questionMap.length - 1) {
       const nextIndex = currentQuestionIndex + 1;
@@ -194,12 +144,16 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   };
 
-  // Send a system message
   const sendSystemMessage = (systemMessage) => {
     setChatLog((prevChatLog) => [...prevChatLog, { sender: 'Researchers', message: systemMessage }]);
   };
 
-  // Handle back button logic
+  useEffect(() => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }
+  }, [chatLog]);
+
   const handleBack = () => {
     if (currentQuestionIndex > 0) {
       const prevIndex = currentQuestionIndex - 1;
@@ -231,7 +185,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   };
 
-  // Determine if the send button should be disabled
   const isSendButtonDisabled = () => {
     const currentQuestion = questionMap[currentQuestionIndex];
 
@@ -247,7 +200,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     return message.trim() === '';
   };
 
-  // Handle clicking an option
   const handleOptionClick = (option) => {
     if (option === "Other") {
       setShowOtherTextField(true);
@@ -259,15 +211,12 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   return (
     <div>
-      <div className="chatbox">
+      <div className="chatbox" >
         <div className="chatbox-header">
-          <p style={{ marginTop: 0 }}>
-            <span style={{ fontSize: 14 }}>
-              <strong style={{ fontSize: 18 }}>QUESTIONNAIRE</strong> <br />
-              PART <span style={{ fontSize: 24 }}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION{' '}
-              <span style={{ fontSize: 24 }}>{currentQuestionIndex + 1}</span>/{questionMap.length}
-            </span>
-          </p>
+        <p style={{marginTop: 0}}>
+          <span style={{fontSize: 14}}><strong style={{fontSize: 18}}>QUESTIONNAIRE</strong> <br/>PART <span style={{fontSize: 24}}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION <span style={{fontSize: 24}}>{currentQuestionIndex + 1}</span>/{questionMap.length}
+          </span>
+        </p>
         </div>
         <div className="chatbox-body" ref={chatBodyRef}>
           {chatLog.map((chat, index) => (
@@ -281,64 +230,74 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           {!isCompleted && (
             <>
               <div className="footer-row">
-                <button
-                  className="back-button"
-                  onClick={handleBack}
-                  disabled={backButtonDisabled}
-                  style={{ display: currentQuestionIndex === 0 ? 'none' : 'block' }}
-                >
-                  ← back to previous question
-                </button>
+              <button
+                className="back-button"
+                onClick={handleBack}
+                disabled={backButtonDisabled}
+                style={{ display: currentQuestionIndex === 0 ? 'none' : 'block' }}  
+              >
+                ← back to previous question
+              </button>
                 {questionMap[currentQuestionIndex].skippable && (
-                  <button
-                    onClick={() => handleSendMessage('', true)}
-                    className="skip-button"
-                    style={{ alignItems: currentQuestionIndex === 0 ? 'flex-end' : '' }}
-                  >
-                    skip →
-                  </button>
-                )}
+                          <button
+                            onClick={() => handleSendMessage("", true)} 
+                            className="skip-button"
+                            style={{alignItems: currentQuestionIndex === 0 ? 'flex-end': ''}}
+                          >
+                            skip →
+                          </button>
+                        )}
               </div>
 
               {isQuestionVisible && (
                 <div className="input-row">
-                  {questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField && showAnswerOptions ? (
-                    <div>
-                      {currentQuestionIndex !== questionMap.length - 1 && (
-                        <p style={{ textAlign: 'right' }}>Please select an option:</p>
-                      )}
-                      <div className="options">
-                        {questionMap[currentQuestionIndex].answers.map((option, index) => (
-                          <button key={index} onClick={() => handleOptionClick(option)} className="option-button">
-                            {option}
-                          </button>
-                        ))}
+                  {(
+                    questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField && showAnswerOptions ? (
+                      <div>
+                        {currentQuestionIndex !== questionMap.length - 1 && (<p style={{ textAlign: 'right' }}>Please select an option:</p>)}
+                        <div className="options">
+                          {questionMap[currentQuestionIndex].answers.map((option, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleOptionClick(option)}
+                              className="option-button"
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                        
                       </div>
-                    </div>
-                  ) : (
-                    <>
-                      <textarea
-                        maxLength={questionMap[currentQuestionIndex].charLimit}
-                        value={message}
-                        onChange={handleInputChange}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' && !isSendButtonDisabled()) {
-                            e.preventDefault();
-                            handleSendMessage();
-                          }
-                        }}
-                        placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
-                        rows={message.length > 50 ? 5 : 1}
-                        style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
-                      />
-                      <button
-                        onClick={() => handleSendMessage()}
-                        disabled={isSendButtonDisabled()}
-                        className="send-button"
-                      >
-                        <img src="/assets/send_arrow.svg" alt="Send" className="send-icon" />
-                      </button>
-                    </>
+                    ) : (
+                      <>
+                        <textarea
+                          maxLength={questionMap[currentQuestionIndex].charLimit}
+                          value={message}
+                          onChange={handleInputChange}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !isSendButtonDisabled()) {
+                              e.preventDefault();
+                              handleSendMessage();
+                            }
+                          }}
+                          placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
+                          rows={message.length > 50 ? 5 : 1}
+                          style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
+                        />
+                        <button
+                          onClick={() => handleSendMessage()}
+                          disabled={isSendButtonDisabled()}
+                          className="send-button"
+                        >
+                          <img
+                            src='/assets/send_arrow.svg'
+                            alt='Send'
+                            className='send-icon'
+                          />
+                        </button>
+                        
+                      </>
+                    )
                   )}
                 </div>
               )}
