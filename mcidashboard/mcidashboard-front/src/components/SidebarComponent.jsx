@@ -77,6 +77,7 @@ const SidebarComponent = () => {
 
   const toggleChatbox = () => {
     setIsChatboxVisible(!isChatboxVisible);
+    console.log('Questionnaire Complete?', isQuestionnaireComplete);
   };
 
   // Render the sidebar component once data is available

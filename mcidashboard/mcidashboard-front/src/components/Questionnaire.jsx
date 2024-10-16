@@ -26,11 +26,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       ]
     },
     {
-      sectionTitle: (
-        <>
-          Take some time to explore the system (<span style={{ textDecoration: "underline" }}>3-5 minutes</span>). Once ready, answer the questions based on your findings. Feel free to skip any questions.
-        </>
-      ),
+      sectionTitle:"Take some time to explore the system 3-5 minutes. Once ready, answer the questions based on your findings. Feel free to skip any questions.",
       questions: [
         { question: "Is Jack Smith’s age below or above the average age of MCI patients?", answers: ["Below", "Equal", "Above"], charLimit: null, noSpecialChars: false, skippable: true },
         { question: "What percentage of healthy patients never use tablets?", answers: [], charLimit: 2, noSpecialChars: false, skippable: true },
@@ -126,18 +122,20 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   // Save chat state to localStorage whenever it updates
   useEffect(() => {
-    const serializableChatLog = chatLog.map(entry => ({
-      sender: entry.sender,
-      message: entry.message,
-      questionIndex: entry.questionIndex // Only saving serializable parts
-    }));
-
     try {
+      const serializableChatLog = chatLog.map(entry => ({
+        sender: entry.sender,
+        message: typeof entry.message === 'string' ? entry.message : JSON.stringify(entry.message),
+        questionIndex: entry.questionIndex // Only save necessary data
+      }));
+      
       localStorage.setItem('chatLog', JSON.stringify(serializableChatLog));
     } catch (error) {
       console.error("Error saving to localStorage:", error);
+      console.error("Chat log content:", chatLog);
     }
   }, [chatLog]);
+  
 
   useEffect(() => {
     try {
@@ -265,7 +263,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           sendSystemMessage(sections[nextSectionIndex].questions[0].question); 
           setShowAnswerOptions(true);
           setIsQuestionVisible(true);
-        }, 2000); 
+        }, 5000); 
       } else {
         // No delay for other sections
         setCurrentSectionIndex(nextSectionIndex);
