@@ -4,12 +4,12 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0); 
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);  
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
   const [showOtherTextField, setShowOtherTextField] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [showAnswerOptions, setShowAnswerOptions] = useState(false); 
+  const [showAnswerOptions, setShowAnswerOptions] = useState(false);
   const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
   const chatBodyRef = useRef(null);
 
@@ -55,21 +55,115 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   ];
 
+
+
   const currentSection = sections[currentSectionIndex];
   const questionMap = currentSection.questions;
 
   const isValidProlificID = (input) => /^[a-zA-Z0-9]{24}$/.test(input);
 
+  // Detect page reload and clear localStorage
   useEffect(() => {
-    if (isCompleted) {
-      onQuestionnaireComplete(true);
+    window.onbeforeunload = () => {
+      localStorage.clear(); 
+    };
+  }, []);
+
+  // Load saved chat state from localStorage when the component mounts
+  useEffect(() => {
+    const savedChatLog = JSON.parse(localStorage.getItem('chatLog'));
+    const savedMessage = localStorage.getItem('message');
+    const savedCurrentQuestionIndex = Number(localStorage.getItem('currentQuestionIndex'));
+    const savedCurrentSectionIndex = Number(localStorage.getItem('currentSectionIndex'));  // Load the saved section index
+    const savedIsCompleted = JSON.parse(localStorage.getItem('isCompleted'));
+    const savedShowAnswerOptions = JSON.parse(localStorage.getItem('showAnswerOptions'));
+    const savedIsQuestionVisible = JSON.parse(localStorage.getItem('isQuestionVisible'));
+
+    if (savedChatLog && savedChatLog.length > 0) {
+      // Restore chat log and previous state
+      setChatLog(savedChatLog);
+      setCurrentQuestionIndex(savedCurrentQuestionIndex);
+      setCurrentSectionIndex(savedCurrentSectionIndex);  
+      setMessage(savedMessage || '');
+      setIsCompleted(savedIsCompleted || false);
+      setShowAnswerOptions(savedShowAnswerOptions || false);
+      setIsQuestionVisible(savedIsQuestionVisible || false); 
+    } else {
+      // Send initial system message if chat log is empty
+      sendSystemMessage(currentSection.sectionTitle);
+      sendSystemMessage(questionMap[0].question);
     }
-  }, [isCompleted, onQuestionnaireComplete]);
+  }, []); 
+
+  // Save chat state to localStorage whenever it updates
+  useEffect(() => {
+    const serializableChatLog = chatLog.map(entry => ({
+      sender: entry.sender,
+      message: entry.message,
+      questionIndex: entry.questionIndex // Only saving serializable parts
+    }));
+
+    try {
+      localStorage.setItem('chatLog', JSON.stringify(serializableChatLog));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [chatLog]);
 
   useEffect(() => {
-    sendSystemMessage(currentSection.sectionTitle);
-    sendSystemMessage(questionMap[0].question);
-  }, []);
+    try {
+      localStorage.setItem('message', message);
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [message]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('currentQuestionIndex', currentQuestionIndex); // Persist question index
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [currentQuestionIndex]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('currentSectionIndex', currentSectionIndex); // Persist section index
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [currentSectionIndex]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('isCompleted', JSON.stringify(isCompleted));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [isCompleted]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('showAnswerOptions', JSON.stringify(showAnswerOptions));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [showAnswerOptions]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('isQuestionVisible', JSON.stringify(isQuestionVisible));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [isQuestionVisible]);
+
+  // Scroll chat window to the bottom whenever the chat log updates
+  useEffect(() => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }
+  }, [chatLog]);
 
   const handleInputChange = (e) => {
     let value = e.target.value;
@@ -82,7 +176,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         setErrorMessage('Please enter a valid percentage between 0 and 100.');
       }
     } else if (questionMap[currentQuestionIndex].noSpecialChars) {
-      if(/[^a-zA-Z0-9]/g.test(value)) {
+      if (/[^a-zA-Z0-9]/g.test(value)) {
         setErrorMessage('Please enter a valid Prolific ID.');
       } else {
         setErrorMessage('');
@@ -97,14 +191,13 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const handleSendMessage = (answer = message, skip = false) => {
     const currentQuestion = questionMap[currentQuestionIndex];
 
-    // Allow skipping if the current question is skippable
     if (skip && currentQuestion.skippable) {
       moveToNextQuestion();
       return;
     }
 
     if (answer.trim()) {
-      setErrorMessage(''); 
+      setErrorMessage('');
       setBackButtonDisabled(true);
       setShowOtherTextField(false);
       setShowAnswerOptions(false);
@@ -121,6 +214,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   };
 
+
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questionMap.length - 1) {
       const nextIndex = currentQuestionIndex + 1;
@@ -130,12 +224,28 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       setIsQuestionVisible(true);
     } else if (currentSectionIndex < sections.length - 1) {
       const nextSectionIndex = currentSectionIndex + 1;
-      setCurrentSectionIndex(nextSectionIndex);
-      setCurrentQuestionIndex(0);
-      sendSystemMessage(sections[nextSectionIndex].sectionTitle);
-      sendSystemMessage(sections[nextSectionIndex].questions[0].question);
-      setShowAnswerOptions(true);
-      setIsQuestionVisible(true);
+  
+    
+      if (nextSectionIndex === 1) { 
+        setCurrentSectionIndex(nextSectionIndex);
+        setCurrentQuestionIndex(0);
+        sendSystemMessage(sections[nextSectionIndex].sectionTitle); 
+
+        // 10-second delay before user tasks
+        setTimeout(() => {
+          sendSystemMessage(sections[nextSectionIndex].questions[0].question); 
+          setShowAnswerOptions(true);
+          setIsQuestionVisible(true);
+        }, 10000); 
+      } else {
+        // No delay for other sections
+        setCurrentSectionIndex(nextSectionIndex);
+        setCurrentQuestionIndex(0);
+        sendSystemMessage(sections[nextSectionIndex].sectionTitle);
+        sendSystemMessage(sections[nextSectionIndex].questions[0].question);
+        setShowAnswerOptions(true);
+        setIsQuestionVisible(true);
+      }
     } else {
       if (!isCompleted) {
         setIsCompleted(true);
@@ -143,16 +253,11 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       }
     }
   };
+  
 
   const sendSystemMessage = (systemMessage) => {
     setChatLog((prevChatLog) => [...prevChatLog, { sender: 'Researchers', message: systemMessage }]);
   };
-
-  useEffect(() => {
-    if (chatBodyRef.current) {
-      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
-    }
-  }, [chatLog]);
 
   const handleBack = () => {
     if (currentQuestionIndex > 0) {
@@ -211,12 +316,15 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   return (
     <div>
-      <div className="chatbox" >
+      <div className="chatbox">
         <div className="chatbox-header">
-        <p style={{marginTop: 0}}>
-          <span style={{fontSize: 14}}><strong style={{fontSize: 18}}>QUESTIONNAIRE</strong> <br/>PART <span style={{fontSize: 24}}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION <span style={{fontSize: 24}}>{currentQuestionIndex + 1}</span>/{questionMap.length}
-          </span>
-        </p>
+          <p style={{ marginTop: 0 }}>
+            <span style={{ fontSize: 14 }}>
+              <strong style={{ fontSize: 18 }}>QUESTIONNAIRE</strong> <br />
+              PART <span style={{ fontSize: 24 }}>{currentSectionIndex + 1}</span>/{sections.length} - QUESTION{' '}
+              <span style={{ fontSize: 24 }}>{currentQuestionIndex + 1}</span>/{questionMap.length}
+            </span>
+          </p>
         </div>
         <div className="chatbox-body" ref={chatBodyRef}>
           {chatLog.map((chat, index) => (
@@ -230,74 +338,64 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           {!isCompleted && (
             <>
               <div className="footer-row">
-              <button
-                className="back-button"
-                onClick={handleBack}
-                disabled={backButtonDisabled}
-                style={{ display: currentQuestionIndex === 0 ? 'none' : 'block' }}  
-              >
-                ← back to previous question
-              </button>
-                {questionMap[currentQuestionIndex].skippable && (
-                          <button
-                            onClick={() => handleSendMessage("", true)} 
-                            className="skip-button"
-                            style={{alignItems: currentQuestionIndex === 0 ? 'flex-end': ''}}
-                          >
-                            skip →
-                          </button>
-                        )}
+                <button
+                  className="back-button"
+                  onClick={handleBack}
+                  disabled={backButtonDisabled}
+                  style={{ display: currentQuestionIndex === 0 ? 'none' : 'block' }}
+                >
+                  ← back to previous question
+                </button>
+                {questionMap[currentQuestionIndex].skippable && isQuestionVisible &&(
+                  <button
+                    onClick={() => handleSendMessage('', true)}
+                    className="skip-button"
+                    style={{ alignItems: currentQuestionIndex === 0 ? 'flex-end' : '' }}
+                  >
+                    skip →
+                  </button>
+                )}
               </div>
 
               {isQuestionVisible && (
                 <div className="input-row">
-                  {(
-                    questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField && showAnswerOptions ? (
-                      <div>
-                        {currentQuestionIndex !== questionMap.length - 1 && (<p style={{ textAlign: 'right' }}>Please select an option:</p>)}
-                        <div className="options">
-                          {questionMap[currentQuestionIndex].answers.map((option, index) => (
-                            <button
-                              key={index}
-                              onClick={() => handleOptionClick(option)}
-                              className="option-button"
-                            >
-                              {option}
-                            </button>
-                          ))}
-                        </div>
-                        
+                  {questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField && showAnswerOptions ? (
+                    <div>
+                      {currentQuestionIndex !== questionMap.length - 1 && (
+                        <p style={{ textAlign: 'right' }}>Please select an option:</p>
+                      )}
+                      <div className="options">
+                        {questionMap[currentQuestionIndex].answers.map((option, index) => (
+                          <button key={index} onClick={() => handleOptionClick(option)} className="option-button">
+                            {option}
+                          </button>
+                        ))}
                       </div>
-                    ) : (
-                      <>
-                        <textarea
-                          maxLength={questionMap[currentQuestionIndex].charLimit}
-                          value={message}
-                          onChange={handleInputChange}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !isSendButtonDisabled()) {
-                              e.preventDefault();
-                              handleSendMessage();
-                            }
-                          }}
-                          placeholder={showOtherTextField ? "Please specify..." : "Type your answer..."}
-                          rows={message.length > 50 ? 5 : 1}
-                          style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
-                        />
-                        <button
-                          onClick={() => handleSendMessage()}
-                          disabled={isSendButtonDisabled()}
-                          className="send-button"
-                        >
-                          <img
-                            src='/assets/send_arrow.svg'
-                            alt='Send'
-                            className='send-icon'
-                          />
-                        </button>
-                        
-                      </>
-                    )
+                    </div>
+                  ) : (
+                    <>
+                      <textarea
+                        maxLength={questionMap[currentQuestionIndex].charLimit}
+                        value={message}
+                        onChange={handleInputChange}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !isSendButtonDisabled()) {
+                            e.preventDefault();
+                            handleSendMessage();
+                          }
+                        }}
+                        placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
+                        rows={message.length > 50 ? 5 : 1}
+                        style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
+                      />
+                      <button
+                        onClick={() => handleSendMessage()}
+                        disabled={isSendButtonDisabled()}
+                        className="send-button"
+                      >
+                        <img src="/assets/send_arrow.svg" alt="Send" className="send-icon" />
+                      </button>
+                    </>
                   )}
                 </div>
               )}
