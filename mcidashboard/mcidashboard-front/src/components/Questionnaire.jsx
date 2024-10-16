@@ -69,31 +69,60 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     };
   }, []);
 
-  // Load saved chat state from localStorage when the component mounts
+
   useEffect(() => {
     const savedChatLog = JSON.parse(localStorage.getItem('chatLog'));
     const savedMessage = localStorage.getItem('message');
     const savedCurrentQuestionIndex = Number(localStorage.getItem('currentQuestionIndex'));
-    const savedCurrentSectionIndex = Number(localStorage.getItem('currentSectionIndex'));  // Load the saved section index
+    const savedCurrentSectionIndex = Number(localStorage.getItem('currentSectionIndex'));
     const savedIsCompleted = JSON.parse(localStorage.getItem('isCompleted'));
     const savedShowAnswerOptions = JSON.parse(localStorage.getItem('showAnswerOptions'));
     const savedIsQuestionVisible = JSON.parse(localStorage.getItem('isQuestionVisible'));
-
+  
+    // Check if we have a saved chat log and valid saved indexes
     if (savedChatLog && savedChatLog.length > 0) {
-      // Restore chat log and previous state
+      // Restore chat log and state
       setChatLog(savedChatLog);
-      setCurrentQuestionIndex(savedCurrentQuestionIndex);
-      setCurrentSectionIndex(savedCurrentSectionIndex);  
       setMessage(savedMessage || '');
       setIsCompleted(savedIsCompleted || false);
       setShowAnswerOptions(savedShowAnswerOptions || false);
-      setIsQuestionVisible(savedIsQuestionVisible || false); 
+      setIsQuestionVisible(savedIsQuestionVisible || false);
+  
+      // Validate and restore current section and question indexes
+      const validSectionIndex = !isNaN(savedCurrentSectionIndex) ? savedCurrentSectionIndex : 0;
+      const validQuestionIndex = !isNaN(savedCurrentQuestionIndex) ? savedCurrentQuestionIndex : 0;
+  
+      setCurrentSectionIndex(validSectionIndex);
+      setCurrentQuestionIndex(validQuestionIndex);
+  
+      // Retrieve the current section and question
+      const currentSection = sections[validSectionIndex];
+      const questionMap = currentSection.questions;
+  
+      // Check if section title and question are already in the log
+      const sectionTitleInLog = savedChatLog.some(entry => entry.message === currentSection.sectionTitle);
+      const questionInLog = savedChatLog.some(entry => entry.message === questionMap[validQuestionIndex].question);
+  
+      // Only send section title and question if they are missing in the log
+      if (!sectionTitleInLog) {
+        sendSystemMessage(currentSection.sectionTitle);
+      }
+  
+      if (!questionInLog) {
+        sendSystemMessage(questionMap[validQuestionIndex].question);
+      }
     } else {
-      // Send initial system message if chat log is empty
-      sendSystemMessage(currentSection.sectionTitle);
-      sendSystemMessage(questionMap[0].question);
+      // If no chat log found, start fresh
+      sendSystemMessage(sections[0].sectionTitle);
+      sendSystemMessage(sections[0].questions[0].question);
+      setCurrentSectionIndex(0);
+      setCurrentQuestionIndex(0);
     }
-  }, []); 
+  }, []);
+  
+
+
+
 
   // Save chat state to localStorage whenever it updates
   useEffect(() => {
@@ -120,7 +149,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('currentQuestionIndex', currentQuestionIndex); // Persist question index
+      localStorage.setItem('currentQuestionIndex', currentQuestionIndex); 
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
@@ -128,7 +157,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('currentSectionIndex', currentSectionIndex); // Persist section index
+      localStorage.setItem('currentSectionIndex', currentSectionIndex); 
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
@@ -236,7 +265,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           sendSystemMessage(sections[nextSectionIndex].questions[0].question); 
           setShowAnswerOptions(true);
           setIsQuestionVisible(true);
-        }, 10000); 
+        }, 2000); 
       } else {
         // No delay for other sections
         setCurrentSectionIndex(nextSectionIndex);
