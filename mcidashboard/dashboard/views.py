@@ -279,8 +279,6 @@ def ML_data(request):
     # Calculate average age per group, rounding up to the closest integer
     mci_avg_age = patients.filter(mci=1).aggregate(avg_age=Avg('age'))['avg_age']
     healthy_avg_age = patients.filter(mci=0).aggregate(avg_age=Avg('age'))['avg_age']
-    # mci_avg_age = math.ceil(mci_avg_age) if mci_avg_age else 0
-    # healthy_avg_age = math.ceil(healthy_avg_age) if healthy_avg_age else 0
 
     # Count total moves
     total_moves = Move.objects.count()
