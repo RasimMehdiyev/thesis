@@ -22,11 +22,12 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         { question: "What is your highest level of education?", answers: ["Highschool diploma", "Bachelor’s degree", "Master’s degree", "Doctoral Degree (PhD)", "Medical degree (e.g., MD, DO)", "Other"], charLimit: null, noSpecialChars: false, skippable: false },
         { question: "Describe your job in the medical field in your own terms.", answers: [], charLimit: 100, noSpecialChars: false, skippable: true },
         { question: "How many years of professional experience do you have in the medical field?", answers: ["None", "1-4 years", "5-14 years", "15+ years"], charLimit: null, noSpecialChars: false, skippable: false },
-        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false, skippable: false }
+        { question: "Are you done with this section and agree for your answers so far to be saved permanently?", answers: ["Yes"], charLimit: null, noSpecialChars: false, skippable: false },
+        { question: "Before moving to the next part of this questionnaire, take as much time as you need to explore the web app. We recommend 3-5 minutes. You can safely close and reopen the questionnaire at any time to explore the web app as a whole. None of your answers or progress will be lost by doing so. When you are done exploring, click the button below.", answers: ["Next"], charLimit: null, noSpecialChars: false, skippable: false }
       ]
     },
     {
-      sectionTitle:"Take some time to explore the system 3-5 minutes. Once ready, answer the questions based on your findings. Feel free to skip any questions.",
+      sectionTitle:"Answer the following questions based on the information contained in the web app. Feel free to skip the questions you don't find an answer to.",
       questions: [
         { question: "Is Jack Smith’s age below or above the average age of MCI patients?", answers: ["Below", "Equal", "Above"], charLimit: null, noSpecialChars: false, skippable: true },
         { question: "What percentage of healthy patients never use tablets?", answers: [], charLimit: 2, noSpecialChars: false, skippable: true },
@@ -237,7 +238,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       setTimeout(() => {
         moveToNextQuestion();
         setBackButtonDisabled(false);
-      }, 1000);
+      }, 300);
     }
   };
 
@@ -252,27 +253,13 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     } else if (currentSectionIndex < sections.length - 1) {
       const nextSectionIndex = currentSectionIndex + 1;
   
-    
-      if (nextSectionIndex === 1) { 
-        setCurrentSectionIndex(nextSectionIndex);
-        setCurrentQuestionIndex(0);
-        sendSystemMessage(sections[nextSectionIndex].sectionTitle); 
-
-        // 10-second delay before user tasks
-        setTimeout(() => {
-          sendSystemMessage(sections[nextSectionIndex].questions[0].question); 
-          setShowAnswerOptions(true);
-          setIsQuestionVisible(true);
-        }, 5000); 
-      } else {
-        // No delay for other sections
         setCurrentSectionIndex(nextSectionIndex);
         setCurrentQuestionIndex(0);
         sendSystemMessage(sections[nextSectionIndex].sectionTitle);
         sendSystemMessage(sections[nextSectionIndex].questions[0].question);
         setShowAnswerOptions(true);
         setIsQuestionVisible(true);
-      }
+      
     } else {
       if (!isCompleted) {
         setIsCompleted(true);
@@ -313,7 +300,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         if (!updatedChatLog.some((entry) => entry.message === previousQuestion)) {
           sendSystemMessage(previousQuestion);
         }
-      }, 500);
+      }, 300);
     }
   };
 
@@ -365,14 +352,17 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           {!isCompleted && (
             <>
               <div className="footer-row">
-                <button
-                  className="back-button"
-                  onClick={handleBack}
-                  disabled={backButtonDisabled}
-                  style={{ display: currentQuestionIndex === 0 ? 'none' : 'block' }}
-                >
-                  ← back to previous question
-                </button>
+              <button
+                className="back-button"
+                onClick={handleBack}
+                disabled={backButtonDisabled}
+                style={{ 
+                  display: currentQuestionIndex === 0 || 
+                  (currentSectionIndex === 0 && currentQuestionIndex === sections[0].questions.length - 1) ? 'none' : 'block' 
+                }}
+              >
+                ← back to previous question
+              </button>
                 {questionMap[currentQuestionIndex].skippable && isQuestionVisible &&(
                   <button
                     onClick={() => handleSendMessage('', true)}
@@ -388,7 +378,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
                 <div className="input-row">
                   {questionMap[currentQuestionIndex].answers.length > 0 && !showOtherTextField && showAnswerOptions ? (
                     <div>
-                      {currentQuestionIndex !== questionMap.length - 1 && (
+                      {((currentQuestionIndex !== questionMap.length - 1) && !(currentSectionIndex === 0 && currentQuestionIndex === sections[0].questions.length - 2)) && (
                         <p style={{ textAlign: 'right' }}>Please select an option:</p>
                       )}
                       <div className="options">
@@ -413,7 +403,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
                         }}
                         placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
                         rows={message.length > 50 ? 5 : 1}
-                        style={{ resize: 'none', width: '100%', fontSize: '16px', borderRadius: 10 }}
+                        style={{ resize: 'none', width: '100%', fontSize: '16px'/*, borderRadius: 10*/ }}
                       />
                       <button
                         onClick={() => handleSendMessage()}
