@@ -34,6 +34,9 @@
   padding: 10px;
   overflow-y: auto;
   height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
 }
 
 .chatbox-footer {
@@ -129,11 +132,17 @@ textarea {
 }
 
 .user-message {
-  background-color: #DEF5FF;
-  align-self: flex-end;
-  text-align: right;
-  margin-left: 20px;
+  background-color: #CFFBCE;
+  text-align: right; 
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%; 
+  display: inline-block;
+  word-wrap: break-word; 
+  align-self: flex-end; 
 }
+
+
 
 .system-message {
   background-color: #f1f1f1;
@@ -141,7 +150,7 @@ textarea {
   align-self: flex-start;
   max-width: 100%;
   text-align: left;
-  margin-right: 20px;
+
 }
 
 
