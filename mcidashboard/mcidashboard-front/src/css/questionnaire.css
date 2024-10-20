@@ -50,7 +50,6 @@
   border-color: black;
   /*border-radius: 10px;*/
   font-size: 16px;
-  font-family: 'Arial';
 }
 
 
@@ -80,7 +79,6 @@
   padding: 0;
   display: flex;
   align-items: center;
-  font-family: 'Arial';
   margin-right: auto;
 }
 
@@ -101,7 +99,6 @@ textarea {
   border: 1px solid #ccc;
   padding: 10px;
   font-family: 'Arial', sans-serif;
-  font-size: 16px;
   margin-right: 10px;
   margin-top: 10px;
 }
@@ -123,15 +120,16 @@ textarea {
   cursor: not-allowed;
 }
 
-
-
-.user-message {
-  background-color: #D3EFFC;
+.chat-message{
   padding: 10px;
   border-radius: 10px;
   margin: 5px 0;
-  align-self: flex-end;
   max-width: 100%;
+}
+
+.user-message {
+  background-color: #D3EFFC;
+  align-self: flex-end;
   text-align: right;
   margin-left: 20px;
 }
@@ -139,8 +137,6 @@ textarea {
 .system-message {
   background-color: #f1f1f1;
   padding: 10px;
-  border-radius: 10px;
-  margin: 5px 0;
   align-self: flex-start;
   max-width: 100%;
   text-align: left;
@@ -162,7 +158,6 @@ margin-right: 10px;
 margin-bottom: 10px;
 /*border-radius: 10px;*/
 color: white;
-font-family: 'Arial';
 font-size: 14px;
 background-color: black;
 border: none;
@@ -174,6 +169,23 @@ border: none;
   color: black;
   font-size: 14px;
   cursor: pointer;
-  font-family: 'Arial';
   margin-left: auto;
+}
+
+@media only screen and (min-width: 1050px){
+  .back-button,
+  .skip-button,
+  .option-button {
+    font-size: 16px;
+  }
+
+  .user-message,
+  .system-message{
+    font-size: 18px;
+  }
+
+  textarea
+  {
+    font-size: 18px !important;
+  }
 }
