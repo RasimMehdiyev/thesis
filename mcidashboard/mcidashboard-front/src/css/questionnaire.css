@@ -133,24 +133,12 @@ textarea {
 
 .user-message {
   background-color: #CFFBCE;
-  text-align: right; 
-  padding: 10px;
-  border-radius: 10px;
-  max-width: 80%; 
-  display: inline-block;
-  word-wrap: break-word; 
-  align-self: flex-end; 
 }
-
 
 
 .system-message {
   background-color: #f1f1f1;
-  padding: 10px;
   align-self: flex-start;
-  max-width: 100%;
-  text-align: left;
-
 }
 
 
