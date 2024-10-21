@@ -245,7 +245,7 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         'healthy': healthy_biomarker_frequency_list
     }, safe=False)
 
-
+@api_view(['GET'])
 def get_game_history_per_patient(request, pk, biomarkerID):
     person = Person.objects.get(pk=pk)
     
@@ -264,31 +264,22 @@ def get_game_history_per_patient(request, pk, biomarkerID):
     
     return JsonResponse(game_history, safe=False)
 
-import math 
-
 @api_view(['GET'])
 def ML_data(request):
-    # Count total games
     total_games = Game.objects.count()
 
-    # Count patients by MCI status
     patients = Person.objects.all()
     mci_patients = patients.filter(mci=1).count()
     healthy_patients = patients.filter(mci=0).count()
 
-    # Calculate average age per group, rounding up to the closest integer
     mci_avg_age = patients.filter(mci=1).aggregate(avg_age=Avg('age'))['avg_age']
     healthy_avg_age = patients.filter(mci=0).aggregate(avg_age=Avg('age'))['avg_age']
 
-    # Count total moves
     total_moves = Move.objects.count()
 
-    # Calculate total game time, rounding to the second decimal
     games = Game.objects.all()
-    total_time = sum([game.gametime for game in games]) / 3600
+    total_time = sum([game.gametime for game in games]) / 60000
     total_time = round(total_time, 1)
-
-    # Create a combined response object
     combined_data = {
         'total_games': total_games,
         'patients': {
@@ -302,3 +293,59 @@ def ML_data(request):
     }
 
     return JsonResponse(combined_data, safe=False)
+
+@api_view(['GET'])
+def get_questionnaire_sections(request, pk):
+    questionnaire = Questionnaire.objects.get(pk=pk)
+    sections = questionnaire.questionnairesections_set.all()
+    serializer = QuestionnaireSectionSerializer(sections, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_questions_by_section(request, section_id):
+    section = QuestionnaireSections.objects.get(pk=section_id)
+    questions = section.question_set.all()
+    serializer = QuestionSerializer(questions, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_options(request, question_id):
+    question = Question.objects.get(pk=question_id)
+    if question.q_type == 'MC':
+        options = question.multiplechoiceoption_set.all()
+        serializer = MultipleChoiceOptionSerializer(options, many=True)
+        # take the option field from the serializer and put it in a list
+        option_list = [option['option'] for option in serializer.data]
+        return JsonResponse(option_list, safe=False)
+    elif question.q_type == 'Scale':
+        options = ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree']
+        return JsonResponse(options, safe=False)
+    else:
+        return JsonResponse({'error': 'This is an open ended question!'}, status=400)
+    
+@api_view(['POST'])
+def create_response(request):
+    questionnaire_id = request.data.get('questionnaire')
+    questionnaire = Questionnaire.objects.get(pk=questionnaire_id)
+    prolific_id = request.data.get('prolific_id')
+    response = Response.objects.create(questionnaire=questionnaire, prolific_id=prolific_id)
+    response.save()
+    return JsonResponse({'message': 'Response created successfully'}, status=201)
+
+@api_view(['POST'])
+def add_answer(request, response_id):
+    answers = request.data
+    # example of answers format to be sent in the request body 
+    # [ { "question": 1, "answer": "option1" }, { "question": 2, "answer": "option2" } ]
+    response = Response.objects.get(pk=response_id)
+    for answer in answers:
+        question = Question.objects.get(pk=answer['question'])
+        Answer.objects.create(response=response, question=question, answer=answer['answer'])
+    return JsonResponse({'message': 'Answers added successfully'}, status=201)
+
+@api_view(['GET'])
+def get_answers_by_prolific_id(request, prolific_id):
+    response = Response.objects.get(prolific_id=prolific_id)
+    answers = response.answer_set.all()
+    serializer = AnswerSerializer(answers, many=True)
+    return JsonResponse(serializer.data, safe=False)

@@ -22,4 +22,11 @@ urlpatterns = [
     path('game/history/<int:pk>/<int:biomarkerID>/', get_game_history_per_patient, name='game-history'),
     path('machine-learning-data/', ML_data, name='ML-data'),
 
+    # Questionnaire
+    path('questionnaire/<int:pk>/sections/', get_questionnaire_sections, name='questionnaire-sections'),
+    path('questionnaire/section/<int:section_id>/', get_questions_by_section, name='section-questions'),
+    path('questionnaire/question/<int:question_id>/options/', get_options, name='question-detail'),
+    path('response/create/', create_response, name='response-create'),
+    path('response/<int:response_id>/answer/add/', add_answer, name='answer-create'),
+    path('response/answers/<int:prolific_id>/', get_answers_by_prolific_id, name='answers-by-prolific-id'),
 ]

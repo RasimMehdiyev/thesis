@@ -76,3 +76,45 @@ class PersonBiomarkerAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     ordering = ['personID']
 admin.site.register(PersonBiomarkers, PersonBiomarkerAdmin)
 
+
+class QuestionnaireAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'description')
+    list_filter = ['id']
+    search_fields = ['id']
+    ordering = ['id']
+admin.site.register(Questionnaire, QuestionnaireAdmin)
+
+class QuestionnaireSectionsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'questionnaire', 'title', 'description')
+    list_filter = ['questionnaire']
+    search_fields = ['questionnaire']
+    ordering = ['questionnaire']
+admin.site.register(QuestionnaireSections, QuestionnaireSectionsAdmin)
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'section', 'question', 'q_type', 'required')
+    list_filter = ['section']
+    search_fields = ['section']
+    ordering = ['section']
+admin.site.register(Question, QuestionAdmin)
+
+class MultipleChoiceOptionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'option')
+    list_filter = ['question']
+    search_fields = ['question']
+    ordering = ['question']
+admin.site.register(MultipleChoiceOption, MultipleChoiceOptionAdmin)
+
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'answer')
+    list_filter = ['question']
+    search_fields = ['question']
+    ordering = ['question']
+admin.site.register(Answer, AnswerAdmin)
+
+class ResponseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'questionnaire', 'prolific_id')
+    list_filter = ['questionnaire', 'prolific_id']
+    search_fields = ['questionnaire', 'prolific_id']
+    ordering = ['questionnaire']
+admin.site.register(Response, ResponseAdmin)

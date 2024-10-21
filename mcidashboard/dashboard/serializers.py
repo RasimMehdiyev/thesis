@@ -35,11 +35,42 @@ class BiomarkerTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class BiomarkerStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = BiomarkerStats
         fields = '__all__'
 
 
+class QuestionSerializer(serializers.ModelSerializer):
+    section_title = serializers.CharField(source='section.title', read_only=True)  # Assuming section is a ForeignKey to QuestionnaireSections
+    # if q_type is MC, split options into a list ';'
+    class Meta:
+        model = Question
+        fields = ['id', 'section_title', 'question', 'q_type', 'required']
 
+class QuestionnaireSectionSerializer(serializers.ModelSerializer):
+    question_id = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='question_set')
+    class Meta:
+        model = QuestionnaireSections
+        fields = ['id', 'questionnaire', 'title', 'description', 'question_id']
+
+class MultipleChoiceOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MultipleChoiceOption
+        fields = '__all__'
+
+class QuestionnaireSerializer(serializers.ModelSerializer):
+    sections = QuestionnaireSectionSerializer(many=True, read_only=True, source='questionnairesections_set')
+    class Meta:
+        model = Questionnaire
+        fields = ['id', 'title', 'sections']
+
+class ResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Response
+        fields = '__all__'
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = '__all__'
