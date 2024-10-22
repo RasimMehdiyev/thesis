@@ -92,7 +92,7 @@ class QuestionnaireSectionsAdmin(admin.ModelAdmin):
 admin.site.register(QuestionnaireSections, QuestionnaireSectionsAdmin)
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'section', 'question', 'q_type', 'required')
+    list_display = ('id', 'section', 'question', 'q_type', 'required', 'charLimit', 'noSpecialChars')
     list_filter = ['section']
     search_fields = ['section']
     ordering = ['section']

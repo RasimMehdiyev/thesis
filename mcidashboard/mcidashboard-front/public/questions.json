@@ -27,7 +27,9 @@
                 "question": "What is your Prolific ID?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": 24,
+                "noSpecialChars": true
             },
             {
                 "id": 6,
@@ -42,7 +44,9 @@
                     "45-54",
                     "55-64",
                     "65+"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 7,
@@ -57,7 +61,9 @@
                     "Doctoral Degree (PhD)",
                     "Medical degree (e.g., MD, DO)",
                     "Other (please specify)"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 8,
@@ -65,7 +71,9 @@
                 "question": "Describe your job in the medical field in your own terms.",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 9,
@@ -78,7 +86,9 @@
                     "1-4 years",
                     "5-14 years",
                     "15+ years"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 10,
@@ -92,7 +102,9 @@
                     "Research institution",
                     "Academic institution",
                     "Other (please specify)"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 11,
@@ -100,7 +112,9 @@
                 "question": "In which languages do you primarily practice/study medicine?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 12,
@@ -108,7 +122,9 @@
                 "question": "In which country do you primarily practice/study?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 13,
@@ -122,7 +138,9 @@
                     "Monthly",
                     "Weekly",
                     "Daily"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 14,
@@ -134,7 +152,9 @@
                     "Standardized cognitive tests (MMSE, MoCA, ...)",
                     "Clinical interviews",
                     "Other (please specify)"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 15,
@@ -148,7 +168,9 @@
                     "Neutral",
                     "Not confident at all",
                     "Not very confident"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 16,
@@ -162,7 +184,9 @@
                     "Monthly",
                     "Weekly",
                     "Daily"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 17,
@@ -177,7 +201,9 @@
                     "Neutral",
                     "Not very",
                     "Not at all"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 18,
@@ -191,7 +217,9 @@
                     "Monthly",
                     "Weekly",
                     "Daily"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 19,
@@ -205,7 +233,9 @@
                     "Neutral",
                     "Negative",
                     "Very negative"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             }
         ]
     },
@@ -240,7 +270,9 @@
                     "Above",
                     "Below",
                     "Equal"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 21,
@@ -248,7 +280,9 @@
                 "question": "What percentage of healthy patients never use tablets?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 22,
@@ -256,7 +290,9 @@
                 "question": "What is the number of healthy patients that were incorrectly labeled as MCI for the [model name] classifier model?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 23,
@@ -264,7 +300,9 @@
                 "question": "What is the accuracy and F1 score of the model that is used for final prediction?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 24,
@@ -276,7 +314,9 @@
                     "Yes",
                     "No",
                     "Maybe"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 25,
@@ -284,7 +324,9 @@
                 "question": "What is the unit of the biomarker “Solved” and how many values can that unit take?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 26,
@@ -292,7 +334,9 @@
                 "question": "How many points are added to the score when the patient moves cards from pile to suit stack?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 27,
@@ -300,7 +344,9 @@
                 "question": "What was Amy Walker’s last “Score”?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 28,
@@ -312,7 +358,9 @@
                     "Increase",
                     "Decrease",
                     "Neither"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 29,
@@ -320,7 +368,9 @@
                 "question": "How many biomarkers have a positive impact on the prediction greater than 5%?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 30,
@@ -328,7 +378,9 @@
                 "question": "What is the “Total Moves” threshold that indicates a diagnosis of MCI in a patient?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 31,
@@ -336,7 +388,9 @@
                 "question": "How far above or below this threshold is Brittany Callahan’s most recent “Total Moves”?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 32,
@@ -348,7 +402,9 @@
                     "Lower",
                     "Higher",
                     "Equal"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             }
         ]
     },
@@ -407,7 +463,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 34,
@@ -421,7 +479,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 35,
@@ -435,7 +495,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 36,
@@ -449,7 +511,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 37,
@@ -463,7 +527,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 38,
@@ -477,7 +543,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 39,
@@ -491,7 +559,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 40,
@@ -505,7 +575,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 41,
@@ -519,7 +591,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 42,
@@ -533,7 +607,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 43,
@@ -547,7 +623,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 44,
@@ -561,7 +639,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 45,
@@ -575,7 +655,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 46,
@@ -589,7 +671,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 47,
@@ -603,7 +687,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 48,
@@ -617,7 +703,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 49,
@@ -631,7 +719,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 50,
@@ -645,7 +735,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 51,
@@ -659,7 +751,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 52,
@@ -673,7 +767,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 53,
@@ -687,7 +783,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 54,
@@ -701,7 +799,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 55,
@@ -715,7 +815,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 56,
@@ -729,7 +831,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 57,
@@ -743,7 +847,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 58,
@@ -757,7 +863,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 59,
@@ -771,7 +879,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 60,
@@ -785,7 +895,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 61,
@@ -799,7 +911,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 62,
@@ -813,7 +927,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 63,
@@ -827,7 +943,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 64,
@@ -841,7 +959,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 65,
@@ -855,7 +975,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 66,
@@ -869,7 +991,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 67,
@@ -883,7 +1007,9 @@
                     "Neutral",
                     "Disagree",
                     "Strongly Disagree"
-                ]
+                ],
+                "charLimit": null,
+                "noSpecialChars": false
             }
         ]
     },
@@ -908,7 +1034,9 @@
                 "question": "Which features of the web application contributed the most to accomplishing your \r\ntasks effectively, and what made them particularly helpful?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 69,
@@ -916,7 +1044,9 @@
                 "question": "Which parts of the web application did you find yourself using the most, and what \r\nmade them easy to access and use?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 70,
@@ -924,7 +1054,9 @@
                 "question": "Did you encounter any elements of the web application that were challenging to navigate or interact with? Please describe what made them difficult to use.",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 71,
@@ -932,7 +1064,9 @@
                 "question": "Did you come across any features or sections of the web application that were hard to interpret or understand? If so, what specifically made them confusing?",
                 "q_type": "OE",
                 "required": false,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 72,
@@ -940,7 +1074,9 @@
                 "question": "How well did the web application align with what you needed to accomplish your tasks, and in what ways did it support or hinder your work?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 73,
@@ -948,7 +1084,9 @@
                 "question": "How did the information and tools provided by the web application influence your confidence in making decisions related to MCI diagnosis?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             },
             {
                 "id": 74,
@@ -956,7 +1094,9 @@
                 "question": "Are there any additional features or changes you would recommend to enhance the web application’s ability to meet your needs?",
                 "q_type": "OE",
                 "required": true,
-                "answers": []
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false
             }
         ]
     }

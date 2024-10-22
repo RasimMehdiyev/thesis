@@ -131,6 +131,8 @@ class Question(models.Model):
     question = models.TextField()
     q_type = models.CharField(max_length=2, choices=QUESTION_TYPES)
     required = models.BooleanField(default=True)
+    charLimit = models.IntegerField(blank=True, null=True)
+    noSpecialChars = models.BooleanField(default=False)
 
     def __str__(self):
         return self.section.title + ' | ' + self.question[:20]

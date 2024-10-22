@@ -125,29 +125,28 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [chatLog]);
-
+  
   const handleInputChange = (e) => {
     let value = e.target.value;
-
-    if (questionMap[currentQuestionIndex]?.question.includes("percentage")) {
-      if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 100) {
-        setMessage(value);
-        setErrorMessage('');
-      } else {
-        setErrorMessage('Please enter a valid percentage between 0 and 100.');
-      }
-    } else if (questionMap[currentQuestionIndex]?.noSpecialChars) {
-      if (/[^a-zA-Z0-9]/g.test(value)) {
-        setErrorMessage('Please enter a valid Prolific ID.');
-      } else {
-        setErrorMessage('');
-      }
-      value = value.replace(/[^a-zA-Z0-9]/g, '');
-      setMessage(value);
-    } else {
-      setMessage(value);
+    const currentQuestion = questionMap[currentQuestionIndex];
+  
+    // Apply the noSpecialChars rule
+    if (currentQuestion?.noSpecialChars) {
+      value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
+      setErrorMessage(/[^a-zA-Z0-9]/g.test(value) ? 'Please enter a valid value without special characters.' : '');
     }
+  
+    // Apply charLimit if it exists
+    if (currentQuestion?.charLimit && value.length > currentQuestion.charLimit) {
+      value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
+      setErrorMessage(`Maximum character limit is ${currentQuestion.charLimit}.`);
+    } else {
+      setErrorMessage(''); // Clear any previous error if the length is within the limit
+    }
+  
+    setMessage(value); // Update the message with the valid value
   };
+  
 
   const handleSendMessage = (answer = message, skip = false) => {
     const currentQuestion = questionMap[currentQuestionIndex];
