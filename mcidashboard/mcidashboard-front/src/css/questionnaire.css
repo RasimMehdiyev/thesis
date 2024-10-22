@@ -6,7 +6,6 @@
   width: 18%;
   min-width: 250px;
   max-width: 1000px;
-  height: 50%;
   max-height: 1000px;
   min-height: 200px;
   background-color: white;
@@ -33,10 +32,11 @@
   flex-grow: 1;
   padding: 10px;
   overflow-y: auto;
-  height: 200px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: flex-end; 
+  max-height: 60%;
 }
 
 .chatbox-footer {
@@ -45,6 +45,10 @@
   border-top: 1px solid #ccc;
   align-content: center;
   justify-content: center;
+  flex-shrink: 0; 
+  height: auto; 
+  min-height: auto; 
+  box-sizing: border-box;
 }
 
 .chatbox-footer input {
@@ -94,6 +98,7 @@
 .input-row {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
   width: 100%;
 }
 
@@ -170,7 +175,7 @@ border: none;
   margin-left: auto;
 }
 
-@media only screen and (min-width: 1050px){
+@media only screen and (min-width: 1500px){
   .back-button,
   .skip-button,
   .option-button {
