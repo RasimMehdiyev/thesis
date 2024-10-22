@@ -9,12 +9,12 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
     padding: 0 20px;
     box-sizing: border-box;
     overflow-x: auto; 
     white-space: nowrap; 
     zoom: 0.67;
+    z-index: 10;
 }
 
 .navbar-list {
@@ -82,14 +82,15 @@
 }
 
 .help-icon-container {
-    position: absolute;
-    right: 20px;
+    position: fixed;
+    right: 1%;
     display: flex;
     align-items: center; 
     height: 100%; 
 }
 
 .help-icon {
+    margin-left: auto;
     cursor: pointer;
     display: block;
     height: 30px; 

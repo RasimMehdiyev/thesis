@@ -40,24 +40,41 @@ class BiomarkerStatsSerializer(serializers.ModelSerializer):
         model = BiomarkerStats
         fields = '__all__'
 
-
-class QuestionSerializer(serializers.ModelSerializer):
-    section_title = serializers.CharField(source='section.title', read_only=True)  # Assuming section is a ForeignKey to QuestionnaireSections
-    # if q_type is MC, split options into a list ';'
-    class Meta:
-        model = Question
-        fields = ['id', 'section_title', 'question', 'q_type', 'required']
-
-class QuestionnaireSectionSerializer(serializers.ModelSerializer):
-    question_id = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='question_set')
-    class Meta:
-        model = QuestionnaireSections
-        fields = ['id', 'questionnaire', 'title', 'description', 'question_id']
-
 class MultipleChoiceOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = MultipleChoiceOption
         fields = '__all__'
+
+from rest_framework import serializers
+
+class QuestionSerializer(serializers.ModelSerializer):
+    section_title = serializers.CharField(source='section.title', read_only=True)  # Assuming section is a ForeignKey to QuestionnaireSections
+    answers = serializers.SerializerMethodField()  # Add a field for answers
+    
+    class Meta:
+        model = Question
+        fields = ['id', 'section_title', 'question', 'q_type', 'required', 'answers']  # Include answers in the fields
+
+    def get_answers(self, obj):
+        """Dynamically fetch answers based on the question type"""
+        if obj.q_type == 'MC':
+            options = obj.multiplechoiceoption_set.all()
+            return [option.option for option in options]
+        elif obj.q_type == 'SC':
+            # Hardcode answers for Scale questions
+            return ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree']
+        else:
+            # Return empty list for Open Ended (OE) questions
+            return []
+
+
+class QuestionnaireSectionSerializer(serializers.ModelSerializer):
+    question_id = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='question_set')
+    questions = QuestionSerializer(many=True, read_only=True, source='question_set')
+    class Meta:
+        model = QuestionnaireSections
+        fields = ['id', 'questionnaire', 'title', 'description', 'question_id', 'questions']
+
 
 class QuestionnaireSerializer(serializers.ModelSerializer):
     sections = QuestionnaireSectionSerializer(many=True, read_only=True, source='questionnairesections_set')

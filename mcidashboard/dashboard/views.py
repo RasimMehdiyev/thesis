@@ -296,10 +296,14 @@ def ML_data(request):
 
 @api_view(['GET'])
 def get_questionnaire_sections(request, pk):
-    questionnaire = Questionnaire.objects.get(pk=pk)
-    sections = questionnaire.questionnairesections_set.all()
-    serializer = QuestionnaireSectionSerializer(sections, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    try:
+        questionnaire = Questionnaire.objects.get(pk=pk)
+        sections = questionnaire.questionnairesections_set.all()
+        serializer = QuestionnaireSectionSerializer(sections, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    except Questionnaire.DoesNotExist:
+        return JsonResponse({'error': 'Questionnaire not found'}, status=404)
+
 
 @api_view(['GET'])
 def get_questions_by_section(request, section_id):

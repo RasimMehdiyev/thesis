@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBarComponent from './SearchBarComponent';
+import Questionnaire from './Questionnaire';
+
 
 const SidebarComponent = () => {
 
@@ -8,6 +10,8 @@ const SidebarComponent = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isChatboxVisible, setIsChatboxVisible] = useState(false);
+  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const navigate = useNavigate();
   const [selectedPatientId, setSelectedPatientId] = useState(null);
 
@@ -70,6 +74,18 @@ const SidebarComponent = () => {
     return <div className='sidebar'>Loading...</div>;
   }
 
+  const handleQuestionnaireComplete = (isComplete) => {
+    setIsQuestionnaireComplete(isComplete);
+  };
+
+  
+
+  const toggleChatbox = () => {
+    setIsChatboxVisible(!isChatboxVisible);
+    console.log('Questionnaire Complete?', isQuestionnaireComplete);
+  };
+
+  // Render the sidebar component once data is available
   return (
     <div className='sidebar'>
       <div className='logo'>
@@ -79,17 +95,25 @@ const SidebarComponent = () => {
       <p className='player-list'>Player List</p>
       <SearchBarComponent searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
       <ul className='patients'>
-  {filteredPatients.map((patient) => (
-    <li
-      onClick={() => getPatient(patient.id)}
-      className={`patient-item ${selectedPatientId === patient.id ? 'selected-patient' : ''}`}
-      key={patient.id}
-    >
-      <p>{patient.full_name}</p>
-      <div className='chevron-right-icon'></div>
-    </li>
-  ))}
-</ul>
+        {filteredPatients.map((patient) => (
+          <li onClick={() => getPatient(patient.id)} className={`patient-item ${selectedPatientId === patient.id ? 'selected-patient' : ''}`} key={patient.id}>
+            <p>{patient.full_name}</p>
+            <div className='chevron-right-icon'></div>
+          </li>
+        ))}
+      </ul>
+      <div className="floating-chat-icon">
+            <img 
+              src="/assets/chat_icon_2.svg" 
+              alt="Chat Icon" 
+              className="chat-icon" 
+              title="Start Questionnaire"
+              onClick={toggleChatbox}
+            />
+            {!isQuestionnaireComplete && !isChatboxVisible && <div className="red-dot"></div>} 
+        </div>
+        {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
+        }
     </div>
   );
 };

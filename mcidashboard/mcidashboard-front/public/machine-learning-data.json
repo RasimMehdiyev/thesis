@@ -1,0 +1,11 @@
+{
+    "total_games": 138,
+    "patients": {
+        "mci": 23,
+        "healthy": 23,
+        "mci_avg_age": 82,
+        "healthy_avg_age": 70
+    },
+    "total_moves": 15124,
+    "total_game_time": 791.6
+}

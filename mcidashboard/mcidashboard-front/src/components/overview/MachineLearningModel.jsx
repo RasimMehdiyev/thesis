@@ -31,7 +31,7 @@ const MachineLearningModel = () => {
 
     const fetchMLData = async () => {
         try {
-            const response = await fetch('/dashboard/machine-learning-data/');
+            const response = await fetch('/machine-learning-data.json');
             const data = await response.json();
             console.log('Fetched Data:', data);
             

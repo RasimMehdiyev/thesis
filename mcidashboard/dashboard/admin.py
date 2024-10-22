@@ -85,7 +85,7 @@ class QuestionnaireAdmin(admin.ModelAdmin):
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 
 class QuestionnaireSectionsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'questionnaire', 'title', 'description')
+    list_display = ('id', 'questionnaire', 'title', 'title_desc','description')
     list_filter = ['questionnaire']
     search_fields = ['questionnaire']
     ordering = ['questionnaire']
