@@ -1,5 +1,6 @@
 [{
         "id": 1,
+        "title_desc": "The following questions will gather background information to understand how your experience relates to your interaction with the system.",
         "questionnaire": 6,
         "title": "DEMOGRAPHIC QUESTIONS",
         "description": "Please provide your personal background information to help us understand how your professional experience and background might relate to your interaction with the system. This data will be kept completely anonymous and will not be tied to your identity.",
@@ -210,6 +211,7 @@
     },
     {
         "id": 2,
+        "title_desc": "Answer the following questions based on the information contained in the web app. Feel free to skip the questions you don't find an answer to.",
         "questionnaire": 6,
         "title": "EXPLORATION TASKS",
         "description": "Before answering any more questions, please take as much time as you need to familiarize yourself with the system. We recommend spending 3-5 minutes exploring.  Once you're comfortable, proceed to answer each question based on what you find and understand from the information presented within the web application. The questions are designed to guide you to explore the system further and discover more features. Feel free to skip questions if you do not find an answer. As you complete the tasks, please put yourself in the position of a healthcare professional monitoring the progression of a patient's MCI diagnosis.",
@@ -352,6 +354,7 @@
     },
     {
         "id": 3,
+        "title_desc": "You will now be asked to rate your agreement with a series of statements.",
         "questionnaire": 6,
         "title": "SCALE RATED QUESTIONS",
         "description": "You will now be asked to rate your agreement with a series of statements.",
@@ -886,6 +889,7 @@
     },
     {
         "id": 6,
+        "title_desc": "In this section, please provide detailed feedback on your experience using the web app. Aim for 30-50 words per question and be specific (e.g., mention tabs, subsections, graphs). You may respond in English, Dutch, French, Greek, Russian, Azerbaijani, or Chinese.",
         "questionnaire": 6,
         "title": "OPEN QUESTIONS",
         "description": "In this section, you are invited to provide more detailed feedback about your experience using the web application. Please aim for around 30-50 words per question to help us gather comprehensive insights and be as specific as possible when referring to parts of the web application (mention the tab, the title of the subsection, the type of graph, etc.). You may respond in the following languages if preferred: English, Dutch, French, Greek, Russian, Azerbaijani or Chinese. Your insights will help improve the system and further the research.",

@@ -73,7 +73,7 @@ class QuestionnaireSectionSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True, source='question_set')
     class Meta:
         model = QuestionnaireSections
-        fields = ['id', 'questionnaire', 'title', 'description', 'question_id', 'questions']
+        fields = ['id', 'title_desc','questionnaire', 'title', 'description', 'question_id', 'questions', ]
 
 
 class QuestionnaireSerializer(serializers.ModelSerializer):

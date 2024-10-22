@@ -31,34 +31,57 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     fetchSections(); // Fetch sections when the component mounts
   }, []);
 
+  useEffect(() => {
+    console.log('fetchedSections:', fetchedSections);
+  }, [fetchedSections]);
+
   // Get the current section and question
   const currentSection = fetchedSections[currentSectionIndex] || {};
   const questionMap = currentSection?.questions || [];
 
+  // Restore saved state on load
   useEffect(() => {
-    if (questionMap.length > 0) {
-      // Check if the current section title is already in the chatLog
-      const sectionTitleInLog = chatLog.some(
-        (entry) => entry.sender === 'Researchers' && entry.message === currentSection.title
-      );
-      
-      // Only send the section title if it hasn't already been sent
-      if (!sectionTitleInLog) {
-        sendSystemMessage(currentSection.title);
+    const savedChatLog = JSON.parse(localStorage.getItem('chatLog'));
+    const savedMessage = localStorage.getItem('message');
+    const savedCurrentQuestionIndex = Number(localStorage.getItem('currentQuestionIndex'));
+    const savedCurrentSectionIndex = Number(localStorage.getItem('currentSectionIndex'));
+    const savedIsCompleted = JSON.parse(localStorage.getItem('isCompleted'));
+    const savedShowAnswerOptions = JSON.parse(localStorage.getItem('showAnswerOptions'));
+    const savedIsQuestionVisible = JSON.parse(localStorage.getItem('isQuestionVisible'));
+
+    // If saved chat log exists, restore the state
+    if (savedChatLog && savedChatLog.length > 0) {
+      setChatLog(savedChatLog);
+      setMessage(savedMessage || '');
+      setIsCompleted(savedIsCompleted || false);
+      setShowAnswerOptions(savedShowAnswerOptions || false);
+      setIsQuestionVisible(savedIsQuestionVisible || false);
+
+      // Restore section and question index
+      const validSectionIndex = !isNaN(savedCurrentSectionIndex) ? savedCurrentSectionIndex : 0;
+      const validQuestionIndex = !isNaN(savedCurrentQuestionIndex) ? savedCurrentQuestionIndex : 0;
+
+      setCurrentSectionIndex(validSectionIndex);
+      setCurrentQuestionIndex(validQuestionIndex);
+
+      // Check if section title and question are already in the log
+      const sectionTitleInLog = savedChatLog.some(entry => entry.message === currentSection.title_desc);
+      const questionInLog = savedChatLog.some(entry => entry.message === questionMap[validQuestionIndex]?.question);
+
+      // Send section title and question if missing in the log
+      if (!sectionTitleInLog && currentSection.title_desc) {
+        sendSystemMessage(currentSection.title_desc);
       }
-  
-      // Check if the current question is already in the chatLog
-      const questionInLog = chatLog.some(
-        (entry) => entry.sender === 'Researchers' && entry.message === questionMap[currentQuestionIndex].question
-      );
-  
-      // Only send the question if it hasn't already been sent
-      if (!questionInLog) {
-        sendSystemMessage(questionMap[currentQuestionIndex].question);
+
+      if (!questionInLog && questionMap[validQuestionIndex]?.question) {
+        sendSystemMessage(questionMap[validQuestionIndex].question);
       }
+    } else if (questionMap.length > 0 && currentSection.title_desc) {
+      // If no saved state, show the first section title and question
+      sendSystemMessage(currentSection.title_desc);
+      sendSystemMessage(questionMap[0].question);
     }
-  }, [currentSectionIndex, currentQuestionIndex, fetchedSections]);
-  
+  }, [fetchedSections]);
 
   // Detect page reload and clear localStorage
   useEffect(() => {
@@ -67,7 +90,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     };
   }, []);
 
-  // Save chat state to localStorage
+  // Save chat state to localStorage whenever it updates
   useEffect(() => {
     localStorage.setItem('chatLog', JSON.stringify(chatLog));
   }, [chatLog]);
@@ -106,14 +129,14 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const handleInputChange = (e) => {
     let value = e.target.value;
 
-    if (questionMap[currentQuestionIndex].question.includes("percentage")) {
+    if (questionMap[currentQuestionIndex]?.question.includes("percentage")) {
       if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 100) {
         setMessage(value);
         setErrorMessage('');
       } else {
         setErrorMessage('Please enter a valid percentage between 0 and 100.');
       }
-    } else if (questionMap[currentQuestionIndex].noSpecialChars) {
+    } else if (questionMap[currentQuestionIndex]?.noSpecialChars) {
       if (/[^a-zA-Z0-9]/g.test(value)) {
         setErrorMessage('Please enter a valid Prolific ID.');
       } else {
@@ -129,7 +152,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const handleSendMessage = (answer = message, skip = false) => {
     const currentQuestion = questionMap[currentQuestionIndex];
 
-    if (skip && !currentQuestion.required) {
+    if (skip && !currentQuestion?.required) {
       moveToNextQuestion();
       return;
     }
@@ -155,7 +178,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questionMap.length - 1) {
       const nextIndex = currentQuestionIndex + 1;
-      sendSystemMessage(questionMap[nextIndex].question);
+      sendSystemMessage(questionMap[nextIndex]?.question);
       setCurrentQuestionIndex(nextIndex);
       setShowAnswerOptions(true);
       setIsQuestionVisible(true);
@@ -163,8 +186,8 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       const nextSectionIndex = currentSectionIndex + 1;
       setCurrentSectionIndex(nextSectionIndex);
       setCurrentQuestionIndex(0);
-      sendSystemMessage(fetchedSections[nextSectionIndex].title);
-      sendSystemMessage(fetchedSections[nextSectionIndex].questions[0].question);
+      sendSystemMessage(fetchedSections[nextSectionIndex]?.title_desc);
+      sendSystemMessage(fetchedSections[nextSectionIndex]?.questions[0]?.question);
       setShowAnswerOptions(true);
       setIsQuestionVisible(true);
     } else {
@@ -197,7 +220,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       setShowOtherTextField(false);
 
       setTimeout(() => {
-        const previousQuestion = questionMap[prevIndex].question;
+        const previousQuestion = questionMap[prevIndex]?.question;
 
         const previousAnswer = updatedChatLog.find(
           (entry) => entry.sender === 'You' && entry.questionIndex === prevIndex
@@ -217,7 +240,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       return !/^[a-zA-Z0-9]{24}$/.test(message); // Prolific ID validation
     }
 
-    if (currentQuestion.question.includes("percentage")) {
+    if (currentQuestion?.question.includes("percentage")) {
       const percentage = parseInt(message, 10);
       return isNaN(percentage) || percentage < 0 || percentage > 100;
     }
