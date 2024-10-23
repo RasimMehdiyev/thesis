@@ -4,10 +4,10 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);  
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
-  const [showOtherTextField, setShowOtherTextField] = useState(false);
+  const [showOtherTextField, setShowOtherTextField] = useState(false);  // For 'Other' option text input
   const [isCompleted, setIsCompleted] = useState(false);
   const [showAnswerOptions, setShowAnswerOptions] = useState(false);
   const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
@@ -16,8 +16,8 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   // Fetch the questionnaire data
   const fetchSections = async () => {
-    let url  = '/questions.json';
-    
+    let url = '/questions.json';
+
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -119,22 +119,27 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   }, [chatLog]);
 
+  // Handle input changes and apply validation
   const handleInputChange = (e) => {
     let value = e.target.value;
     const currentQuestion = questionMap[currentQuestionIndex];
 
+    // Clear previous errors
+    setErrorMessage('');
+
     // Apply the noSpecialChars rule
     if (currentQuestion?.noSpecialChars) {
-      value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
-      setErrorMessage(/[^a-zA-Z0-9]/g.test(value) ? 'Please enter a valid value without special characters.' : '');
+      const containsSpecialChars = /[^a-zA-Z0-9]/g.test(value);
+      if (containsSpecialChars) {
+        setErrorMessage('Special characters are not allowed.');
+        value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
+      }
     }
 
     // Apply charLimit if it exists
     if (currentQuestion?.charLimit && value.length > currentQuestion.charLimit) {
+      setErrorMessage(`Character limit exceeded. Max ${currentQuestion.charLimit} characters allowed.`);
       value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
-      setErrorMessage(`Maximum character limit is ${currentQuestion.charLimit}.`);
-    } else {
-      setErrorMessage(''); // Clear any previous error if the length is within the limit
     }
 
     setMessage(value); // Update the message with the valid value
@@ -240,11 +245,12 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   };
 
   const handleOptionClick = (option) => {
-    if (option === "Other") {
+    if (option === "Other" || option === "Other (please specify)") {
       setShowOtherTextField(true);
-      setMessage("");
+      setMessage(""); // Clear any previous message for a fresh custom input
     } else {
-      handleSendMessage(option);
+      setShowOtherTextField(false); // Hide the text area if another option is selected
+      handleSendMessage(option); // Send the selected option as the answer
     }
   };
 
@@ -306,6 +312,30 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
                         ))}
                       </div>
                     </div>
+                  ) : showOtherTextField ? (
+                    <>
+                      <textarea
+                        maxLength={questionMap[currentQuestionIndex]?.charLimit || undefined}
+                        value={message}
+                        onChange={handleInputChange}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !isSendButtonDisabled()) {
+                            e.preventDefault();
+                            handleSendMessage();
+                          }
+                        }}
+                        placeholder="Please specify..."
+                        rows={message.length > 50 ? 5 : 1}
+                        style={{ resize: 'none', width: '100%', fontSize: '16px' }}
+                      />
+                      <button
+                        onClick={() => handleSendMessage()}
+                        disabled={isSendButtonDisabled()}
+                        className="send-button"
+                      >
+                        <img src="/assets/send_arrow.svg" alt="Send" className="send-icon" />
+                      </button>
+                    </>
                   ) : (
                     <>
                       <textarea
@@ -333,11 +363,11 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
                   )}
                 </div>
               )}
+              {/* Show error messages */}
+              {errorMessage && <div style={{marginTop: '3px'}} className="error-message">{errorMessage}</div>}
             </>
           )}
         </div>
-
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
     </div>
   );
