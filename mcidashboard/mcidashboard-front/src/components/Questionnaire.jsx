@@ -83,13 +83,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   }, [fetchedSections]);
 
-  // Detect page reload and clear localStorage
-  useEffect(() => {
-    window.onbeforeunload = () => {
-      localStorage.clear();
-    };
-  }, []);
-
   // Save chat state to localStorage whenever it updates
   useEffect(() => {
     localStorage.setItem('chatLog', JSON.stringify(chatLog));
@@ -125,17 +118,17 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [chatLog]);
-  
+
   const handleInputChange = (e) => {
     let value = e.target.value;
     const currentQuestion = questionMap[currentQuestionIndex];
-  
+
     // Apply the noSpecialChars rule
     if (currentQuestion?.noSpecialChars) {
       value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
       setErrorMessage(/[^a-zA-Z0-9]/g.test(value) ? 'Please enter a valid value without special characters.' : '');
     }
-  
+
     // Apply charLimit if it exists
     if (currentQuestion?.charLimit && value.length > currentQuestion.charLimit) {
       value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
@@ -143,10 +136,9 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     } else {
       setErrorMessage(''); // Clear any previous error if the length is within the limit
     }
-  
+
     setMessage(value); // Update the message with the valid value
   };
-  
 
   const handleSendMessage = (answer = message, skip = false) => {
     const currentQuestion = questionMap[currentQuestionIndex];
