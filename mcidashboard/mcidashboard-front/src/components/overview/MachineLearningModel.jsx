@@ -8,44 +8,63 @@ const MachineLearningModel = () => {
     const [machineLearningData, setMachineLearningData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Show dataset tooltip on mouse enter
     const showDatasetTooltip = () => {
         setIsDatasetTooltipVisible(true);
     };
 
-    // Hide dataset tooltip on mouse leave
     const hideDatasetTooltip = () => {
         setIsDatasetTooltipVisible(false);
     };
 
-    // Show prediction tooltip on mouse enter
     const showPredictionTooltip = () => {
         setIsPredictionTooltipVisible(true);
     };
 
-    // Hide prediction tooltip on mouse leave
     const hidePredictionTooltip = () => {
         setIsPredictionTooltipVisible(false);
     };
 
-
     const fetchMLData = async () => {
+        let apiUrl = '/dashboard/machine-learning-data/';
+        let fallbackUrl = '/machine-learning-data.json';
+    
         try {
-            const response = await fetch('/machine-learning-data.json');
+ 
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch from API: ${response.statusText}`);
+            }
+    
             const data = await response.json();
-            console.log('Fetched Data:', data);
-            
+            console.log('Fetched Data from API:', data);
+    
             if (data) {
                 setMachineLearningData(data);
             } else {
-                console.error('No machine learning data found in the response.');
+                console.error('No machine learning data found in the API response.');
             }
         } catch (error) {
-            console.error('Error fetching machine learning data:', error);
+            console.error('Error fetching from API:', error);
+            
+            try {
+                const fallbackResponse = await fetch(fallbackUrl);
+                const fallbackData = await fallbackResponse.json();
+                console.log('Fetched Data from fallback JSON:', fallbackData);
+    
+                if (fallbackData) {
+                    setMachineLearningData(fallbackData);
+                } else {
+                    console.error('No machine learning data found in the fallback JSON.');
+                }
+            } catch (fallbackError) {
+                console.error('Error fetching machine learning data from fallback JSON:', fallbackError);
+            }
         } finally {
             setLoading(false); 
         }
-    }
+    };
+    
 
 
     useEffect(() => {

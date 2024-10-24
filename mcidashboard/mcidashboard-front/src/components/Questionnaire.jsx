@@ -14,21 +14,36 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [fetchedSections, setFetchedSections] = useState([]);
   const chatBodyRef = useRef(null);
 
-  // Fetch the questionnaire data
-  const fetchSections = async () => {
-    let url = '/questions.json';
+// Fetch the questionnaire data with fallback
+const fetchSections = async () => {
+  let apiUrl = '/dashboard/questionnaire/6/sections/';
+  let fallbackUrl = '/questions.json';
 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setFetchedSections(data); // Store the full fetched data structure
-    } catch (error) {
-      console.error('Error fetching sections:', error);
+  try {
+    const response = await fetch(apiUrl);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch from API: ${response.statusText}`);
     }
-  };
+
+    const data = await response.json();
+    setFetchedSections(data); 
+  } catch (error) {
+    console.error('Error fetching from API:', error);
+    
+    try {
+      const fallbackResponse = await fetch(fallbackUrl);
+      const fallbackData = await fallbackResponse.json();
+      setFetchedSections(fallbackData);
+    } catch (fallbackError) {
+      console.error('Error fetching from fallback JSON:', fallbackError);
+    }
+  }
+};
+
 
   useEffect(() => {
-    fetchSections(); // Fetch sections when the component mounts
+    fetchSections(); 
   }, []);
 
   useEffect(() => {

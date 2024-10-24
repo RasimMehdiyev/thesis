@@ -264,6 +264,8 @@ def get_game_history_per_patient(request, pk, biomarkerID):
     
     return JsonResponse(game_history, safe=False)
 
+from django.db.models import Count, Avg, StdDev
+
 @api_view(['GET'])
 def ML_data(request):
     total_games = Game.objects.count()
@@ -277,16 +279,137 @@ def ML_data(request):
 
     total_moves = Move.objects.count()
 
+    meanSD_MMSE_score_healthy = Person.objects.filter(mci=0).aggregate(
+        avg_MMSE=Avg('MMSE'), sd_MMSE=StdDev('MMSE'))
+    meanSD_MMSE_score_mci = Person.objects.filter(mci=1).aggregate(
+        avg_MMSE=Avg('MMSE'), sd_MMSE=StdDev('MMSE'))
+
+    meanSD_MoCA_score_healthy = Person.objects.filter(mci=0).aggregate(
+        avg_MoCA=Avg('MoCA'), sd_MoCA=StdDev('MoCA'))
+    meanSD_MoCA_score_mci = Person.objects.filter(mci=1).aggregate(
+        avg_MoCA=Avg('MoCA'), sd_MoCA=StdDev('MoCA'))
+
+    meanSD_age_healthy = Person.objects.filter(mci=0).aggregate(
+        avg_age=Avg('age'), sd_age=StdDev('age'))
+    meanSD_age_mci = Person.objects.filter(mci=1).aggregate(
+        avg_age=Avg('age'), sd_age=StdDev('age'))
+
+    # percentage of male and female mci
+    male_mci = Person.objects.filter(mci=1).filter(gender="Man").count() / mci_patients
+    female_mci = 100 - 100 * male_mci
+
+    # percentage of male and female healthy
+    male_healthy = Person.objects.filter(mci=0).filter(gender='Man').count() / healthy_patients
+    female_healthy = 100 - 100 * male_healthy
+
+    # Education and proficiency mappings
+    education_labels = {
+        '1': 'ISCED 1/2',
+        '2': 'ISCED 3/4',
+        '3': 'ISCED 5/6'
+    }
+
+    tablet_and_cardgame_proficiency = {
+        '1': 'Daily',
+        '2': 'Weekly',
+        '3': 'Monthly',
+        '4': 'Yearly or less',
+        '5': 'Never'
+    }
+
+    # Fetch and calculate tablet and card game proficiency levels
+    tablet_level_mci = Person.objects.filter(mci=1).values('tabletlevel').annotate(count=Count('tabletlevel'))
+    tablet_level_healthy = Person.objects.filter(mci=0).values('tabletlevel').annotate(count=Count('tabletlevel'))
+    cardgame_level_mci = Person.objects.filter(mci=1).values('playlevel').annotate(count=Count('playlevel'))
+    cardgame_level_healthy = Person.objects.filter(mci=0).values('playlevel').annotate(count=Count('playlevel'))
+
+    # Ensure that all levels are present and sorted according to the proficiency mappings
+    def calculate_percentage(data, total, labels):
+        result = []
+        for key, label in labels.items():
+            found = next((item for item in data if item.get('tabletlevel') == key or item.get('playlevel') == key), None)
+            count = found['count'] if found else 0
+            percentage = round((count / total) * 100, 2) if total > 0 else 0
+            result.append({'label': label, 'data': percentage})
+        return result
+
+    tablet_level_mci_percentage = calculate_percentage(tablet_level_mci, mci_patients, tablet_and_cardgame_proficiency)
+    tablet_level_healthy_percentage = calculate_percentage(tablet_level_healthy, healthy_patients, tablet_and_cardgame_proficiency)
+    cardgame_level_mci_percentage = calculate_percentage(cardgame_level_mci, mci_patients, tablet_and_cardgame_proficiency)
+    cardgame_level_healthy_percentage = calculate_percentage(cardgame_level_healthy, healthy_patients, tablet_and_cardgame_proficiency)
+
+    # Education levels
+    education_level_mci = Person.objects.filter(mci=1).values('education_level').annotate(count=Count('education_level'))
+    education_level_healthy = Person.objects.filter(mci=0).values('education_level').annotate(count=Count('education_level'))
+
+    # Ensure that all education levels are present and sorted
+    def calculate_education_percentage(data, total, labels):
+        result = []
+        for key, label in labels.items():
+            found = next((item for item in data if item['education_level'] == key), None)
+            count = found['count'] if found else 0
+            percentage = round((count / total) * 100, 2) if total > 0 else 0
+            result.append({'label': label, 'data': percentage})
+        return result
+
+    education_level_mci_percentage = calculate_education_percentage(education_level_mci, mci_patients, education_labels)
+    education_level_healthy_percentage = calculate_education_percentage(education_level_healthy, healthy_patients, education_labels)
+
+    # Gender percentages
+    gender_mci_percentage = [
+        {'label': 'Male', 'data': round(male_mci * 100, 2)},
+        {'label': 'Female', 'data': round(female_mci, 2)}
+    ]
+    gender_healthy_percentage = [
+        {'label': 'Male', 'data': round(male_healthy * 100, 2)},
+        {'label': 'Female', 'data': round(female_healthy, 2)}
+    ]
+
+    # Total time
     games = Game.objects.all()
     total_time = sum([game.gametime for game in games]) / 60000
     total_time = round(total_time, 1)
+
+    # Combine data
     combined_data = {
         'total_games': total_games,
         'patients': {
             'mci': mci_patients,
             'healthy': healthy_patients,
-            'mci_avg_age': round(mci_avg_age, 0),
-            'healthy_avg_age': round(healthy_avg_age, 0),
+            'mci_avg_age': round(mci_avg_age, 0) if mci_avg_age else None,
+            'healthy_avg_age': round(healthy_avg_age, 0) if healthy_avg_age else None,
+            'meanSD_MMSE_score_healthy': {
+                'mean': round(meanSD_MMSE_score_healthy['avg_MMSE'], 2) if meanSD_MMSE_score_healthy['avg_MMSE'] is not None else None,
+                'sd': round(meanSD_MMSE_score_healthy['sd_MMSE'], 2) if meanSD_MMSE_score_healthy['sd_MMSE'] is not None else None
+            },
+            'meanSD_MMSE_score_mci': {
+                'mean': round(meanSD_MMSE_score_mci['avg_MMSE'], 2) if meanSD_MMSE_score_mci['avg_MMSE'] is not None else None,
+                'sd': round(meanSD_MMSE_score_mci['sd_MMSE'], 2) if meanSD_MMSE_score_mci['sd_MMSE'] is not None else None
+            },
+            'meanSD_MoCA_score_healthy': {
+                'mean': round(meanSD_MoCA_score_healthy['avg_MoCA'], 2) if meanSD_MoCA_score_healthy['avg_MoCA'] is not None else None,
+                'sd': round(meanSD_MoCA_score_healthy['sd_MoCA'], 2) if meanSD_MoCA_score_healthy['sd_MoCA'] is not None else None
+            },
+            'meanSD_MoCA_score_mci': {
+                'mean': round(meanSD_MoCA_score_mci['avg_MoCA'], 2) if meanSD_MoCA_score_mci['avg_MoCA'] is not None else None,
+                'sd': round(meanSD_MoCA_score_mci['sd_MoCA'], 2) if meanSD_MoCA_score_mci['sd_MoCA'] is not None else None
+            },
+            'meanSD_age_healthy': {
+                'mean': round(meanSD_age_healthy['avg_age'], 2) if meanSD_age_healthy['avg_age'] is not None else None,
+                'sd': round(meanSD_age_healthy['sd_age'], 2) if meanSD_age_healthy['sd_age'] is not None else None
+            },
+            'meanSD_age_mci': {
+                'mean': round(meanSD_age_mci['avg_age'], 2) if meanSD_age_mci['avg_age'] is not None else None,
+                'sd': round(meanSD_age_mci['sd_age'], 2) if meanSD_age_mci['sd_age'] is not None else None
+            },
+            'education_level_mci': education_level_mci_percentage,
+            'education_level_healthy': education_level_healthy_percentage,
+            'gender_mci': gender_mci_percentage,
+            'gender_healthy': gender_healthy_percentage,
+            'tablet_level_mci': tablet_level_mci_percentage,
+            'tablet_level_healthy': tablet_level_healthy_percentage,
+            'cardgame_level_mci': cardgame_level_mci_percentage,
+            'cardgame_level_healthy': cardgame_level_healthy_percentage
         },
         'total_moves': total_moves,
         'total_game_time': total_time,

@@ -24,7 +24,7 @@ class PersonBiomarkerResource(resources.ModelResource):
 
 class PersonAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     resource_class = PersonResource
-    list_display = ('full_name', 'id', 'username','patient_code' , 'password', 'mci', 'age','gender')
+    list_display = ('full_name', 'id', 'username','patient_code' , 'password', 'mci', 'age','gender', 'education_level', 'tabletlevel', 'playlevel', 'MMSE', 'MoCA')
     list_filter = ['username', 'mci']
     search_fields = ['username', 'mci']
     ordering = ['username']

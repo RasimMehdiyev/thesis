@@ -13,7 +13,7 @@ const MachineLearningPage = () => {
     <div className="container machine-learning-container">
             <DemographicSummary/>
             <PerformanceMetrics/>
-            <div class="models-data-container">
+            <div className="models-data-container">
                 <Models/>
                 <DataPreProcessing/>
             </div>

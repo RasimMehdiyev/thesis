@@ -44,6 +44,30 @@ class Move(models.Model):
 
 
 class Person(models.Model):
+
+    EDUCATION_LEVELS = (
+        ('1' , 'ISCED 1/2'),
+        ('2' , 'ISCED 3/4'),
+        ('3' , 'ISCED 5/6'),
+    )
+
+    TABLET_PROFICIENCY = (
+    ('1', 'Dagelijks'),
+    ('2', 'Wekelijks'),
+    ('3', 'Maandelijks'),
+    ('4', 'Jaarlijks'),
+    ('5', 'Nooit'),
+    )
+
+    CARDGAME_PROFICIENCY = (
+    ('1', 'Dagelijks'),
+    ('2', 'Wekelijks'),
+    ('3', 'Maandelijks'),
+    ('4', 'Jaarlijks'),
+    ('5', 'Nooit'),
+    )
+
+
     id = models.BigAutoField(primary_key=True)
     full_name = models.CharField(max_length=64, blank=True, null=True)
     username = models.CharField(max_length=45)
@@ -51,11 +75,12 @@ class Person(models.Model):
     mci = models.IntegerField(db_column='MCI')  # Field name made lowercase.
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
-    playlevel = models.IntegerField(db_column='playLevel')  # Field name made lowercase.
-    tabletlevel = models.IntegerField(db_column='tabletLevel')  # Field name made lowercase.
+    playlevel = models.CharField(db_column='playLevel', max_length=1, choices=CARDGAME_PROFICIENCY)  # Field name made lowercase.
+    tabletlevel = models.CharField(db_column='tabletLevel', max_length=1, choices=TABLET_PROFICIENCY)  # Field name made lowercase.
     patient_code = models.CharField(max_length=45, blank=True, null=True)
     MMSE = models.IntegerField( blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
     MoCA = models.FloatField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
+    education_level = models.CharField(max_length=1, choices=EDUCATION_LEVELS, blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -163,6 +188,4 @@ class Answer(models.Model):
 
     def __str__(self):
         return f'Answer to {self.question}'
-
-
-# class MLDetails(models.Model):
+    
