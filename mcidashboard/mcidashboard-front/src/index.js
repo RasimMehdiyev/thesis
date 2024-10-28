@@ -15,6 +15,7 @@ import './css/dropdown_table.css'
 import './css/solitaire.css'
 import './css/diverging_chart.css'
 import './css/tutorial.css'
+import './css/icf.css'
 import './css/questionnaire.css'
 import App from './App';
 

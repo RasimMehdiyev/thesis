@@ -84,14 +84,14 @@ class QuestionnaireAdmin(admin.ModelAdmin):
     ordering = ['id']
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 
-class QuestionnaireSectionsAdmin(admin.ModelAdmin):
+class QuestionnaireSectionsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id', 'questionnaire', 'title', 'title_desc','description')
     list_filter = ['questionnaire']
     search_fields = ['questionnaire']
     ordering = ['questionnaire']
 admin.site.register(QuestionnaireSections, QuestionnaireSectionsAdmin)
 
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id', 'section', 'question', 'q_type', 'required', 'charLimit', 'noSpecialChars')
     list_filter = ['section']
     search_fields = ['section']
@@ -106,7 +106,7 @@ class MultipleChoiceOptionAdmin(admin.ModelAdmin):
 admin.site.register(MultipleChoiceOption, MultipleChoiceOptionAdmin)
 
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question', 'answer')
+    list_display = ('id','response' ,'question', 'answer')
     list_filter = ['question']
     search_fields = ['question']
     ordering = ['question']
@@ -118,3 +118,10 @@ class ResponseAdmin(admin.ModelAdmin):
     search_fields = ['questionnaire', 'prolific_id']
     ordering = ['questionnaire']
 admin.site.register(Response, ResponseAdmin)
+
+class MLModelDataAdmin(admin.ModelAdmin):
+    list_display = ('id', 'model_name', 'model_F1_score')
+    list_filter = ['model_F1_score', 'model_name']
+    search_fields = ['model_F1_score', 'model_name']
+    ordering = ['model_F1_score']
+admin.site.register(MLModelData, MLModelDataAdmin)

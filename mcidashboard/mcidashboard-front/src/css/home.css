@@ -9,13 +9,18 @@
     margin-top: 80px;
     padding-bottom: 40px;
     overflow-x: auto;
-    transform-origin: 0 0; 
+    transform-origin: 0 0;
+    zoom: 0.67;
+}
+
+.home-container {
+    margin-top: 80px;
+    padding-bottom: 40px;
+    overflow-x: auto;
+    transform-origin: 0 0;
     zoom: 0.67;
 }
 
 .container::-webkit-scrollbar {
     display: none;
 }
-
-
-

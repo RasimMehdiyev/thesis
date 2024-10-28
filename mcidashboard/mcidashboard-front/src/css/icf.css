@@ -1,0 +1,133 @@
+    .icf-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0px 60px;
+        font-family: 'Popins', sans-serif;
+        text-align: justify;
+    }
+    
+    .icf-container h2 {
+        font-size: 28px;
+        color: #000;
+        text-align: center;
+    }
+    
+    .title-research {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #000;
+    }
+    
+    .icf-container h3 {
+        font-size: 20px;
+        font-weight: 400;
+        margin-top: 30px;
+    }
+    
+    .informed-consent,
+    .icf-container p {
+        font-size: 20px;
+        color: #000;
+    }
+    
+    .icf-container ul {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+    }
+    
+    .icf-container li {
+        font-size: 18px;
+        color: #000;
+        list-style-type: none;
+        margin-left: 70px;
+        font-size: 20px;
+    }
+    
+    .contact-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        font-family: 'Popins', sans-serif;
+        gap: 20px;
+        text-align: justify;
+        margin-top: 20px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 40px;
+    }
+    
+    .duration-exp {
+        border-bottom: 1px solid #000;
+        padding-bottom: 20px;
+    }
+    
+    #contact-title {
+        padding-bottom: 10px;
+    }
+    
+    #contact-title,
+    #contact-name {
+        margin: 0px;
+    }
+    
+    form div label {
+        padding-left: 20px;
+    }
+    
+    form div label li {
+        list-style-type: circle!important;
+    }
+    
+    .informed-consent {
+        margin-top: 40px;
+        text-align: justify;
+    }
+    
+    .informed-consent p {
+        margin-left: 40px;
+    }
+    
+    .informed-consent div {
+        margin-top: 10px;
+    }
+    
+    .email-input {
+        margin: 20px 0px;
+        height: 35px;
+        font-size: 20px;
+        /* border-radius: 10px; */
+        border: 0.5px solid #000;
+        background-color: rgb(255, 255, 255);
+        padding-left: 15px;
+        margin-left: 40px;
+    }
+    
+    .email-error {
+        margin: 30px 0;
+    }
+    
+    .button-container {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .submit-form {
+        margin-top: 20px;
+        align-items: center;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    .disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+    
+    .submit-text {
+        font-weight: 700;
+        padding-top: 60px;
+    }

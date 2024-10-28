@@ -178,7 +178,7 @@ class Response(models.Model):
     prolific_id = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
-        return self.questionnaire.title + ' | ' + self.prolific_id
+        return self.prolific_id
     
 class Answer(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -189,3 +189,14 @@ class Answer(models.Model):
     def __str__(self):
         return f'Answer to {self.question}'
     
+
+class MLModelData(models.Model):
+    model_name = models.CharField(max_length=45)
+    model_F1_score = models.FloatField()
+    true_positive = models.IntegerField()
+    false_positive = models.IntegerField()
+    true_negative = models.IntegerField()
+    false_negative = models.IntegerField()
+
+    def __str__(self):
+        return self.model_name

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Home from './pages/Home';
 import Login from './pages/authentication_pages/Login';
@@ -23,25 +24,6 @@ const App = () => {
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
-  // Comment out the automatic tutorial logic based on route changes
-  // useEffect(() => {
-  //   if (location.pathname === '/overview') {
-  //     // Start tutorial at step 0 for Overview page
-  //     setShowTutorial(true);
-  //     setTutorialStep(0); 
-  //   } else if (
-  //     (location.pathname === '/digital-biomarkers' || location.pathname === '/machine-learning') 
-  //     && location.state?.tutorialStep !== undefined // Ensure tutorialStep is passed in state
-  //   ) {
-  //     // Continue tutorial from passed step on other pages
-  //     setShowTutorial(true);
-  //     setTutorialStep(location.state.tutorialStep);
-  //   } else {
-  //     // If on other pages or no tutorial state is passed, hide tutorial
-  //     setShowTutorial(false);
-  //   }
-  // }, [location]);
-
 
   const handleHelpIconClick = () => {
     if (location.pathname !== '/overview') {
@@ -52,15 +34,33 @@ const App = () => {
     setTutorialStep(0);     
   };
 
+  // Check if the current path is the home page
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
+
+  useEffect(() => {
+    const isICFConfirmed = localStorage.getItem('ICFConfirmed') === 'true';
+
+    // Redirect to /overview if the user has already confirmed ICF and tries to access the home page
+    if (isICFConfirmed && isHomePage) {
+      navigate('/overview');
+    }
+
+    // Redirect to home if ICFConfirmed is not true and the user tries to access other pages
+    if (!isICFConfirmed && !isHomePage) {
+      navigate('/home');
+    }
+  }, [navigate, isHomePage]);
+  
   return (
     <>
-      {shouldShowSidebar && (
-        <NavbarComponent onHelpIconClick={handleHelpIconClick} /> // Pass the click handler to Navbar
+      {/* Conditionally render Navbar, Sidebar, and Tutorial only if not on home page */}
+      {!isHomePage && (
+        <>
+          <NavbarComponent onHelpIconClick={() => setShowTutorial(true)} />
+          <SidebarComponent />
+          {showTutorial && <Tutorial initialStep={tutorialStep} />}
+        </>
       )}
-      {shouldShowSidebar && <SidebarComponent />}
-
-
-      {showTutorial && <Tutorial initialStep={tutorialStep} />}
 
       <Routes>
         <Route path="/" element={<Home />} />

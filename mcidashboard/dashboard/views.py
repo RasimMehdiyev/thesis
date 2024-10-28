@@ -449,25 +449,69 @@ def get_options(request, question_id):
         return JsonResponse(options, safe=False)
     else:
         return JsonResponse({'error': 'This is an open ended question!'}, status=400)
-    
+
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 @api_view(['POST'])
 def create_response(request):
-    questionnaire_id = request.data.get('questionnaire')
-    questionnaire = Questionnaire.objects.get(pk=questionnaire_id)
-    prolific_id = request.data.get('prolific_id')
-    response = Response.objects.create(questionnaire=questionnaire, prolific_id=prolific_id)
-    response.save()
-    return JsonResponse({'message': 'Response created successfully'}, status=201)
+    if request.method == 'POST':
+        try:
+            prolific_id = request.data.get('prolific_id')
+            questionnaire_id = request.data.get('questionnaire')
 
+            # Validate that required data is provided
+            if not prolific_id or not questionnaire_id:
+                return JsonResponse(
+                    {'error': 'prolific_id and questionnaire are required fields.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Check if a response with the same prolific_id already exists
+            if Response.objects.filter(prolific_id=prolific_id).exists():
+                response = Response.objects.get(prolific_id=prolific_id)
+                print(response.id)
+                return JsonResponse({'response_id': response.id}, status=status.HTTP_200_OK)
+            
+            # Retrieve the questionnaire, handle if it doesn't exist
+            try:
+                questionnaire = Questionnaire.objects.get(pk=questionnaire_id)
+            except Questionnaire.DoesNotExist:
+                return JsonResponse(
+                    {'error': f'Questionnaire with id {questionnaire_id} does not exist.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            # Create a new response
+            response = Response.objects.create(questionnaire=questionnaire, prolific_id=prolific_id)
+            response.save()
+            
+            return JsonResponse({'response_id': response.id}, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            # Catch-all for unexpected errors
+            return JsonResponse(
+                {'error': f'An unexpected error occurred: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+@csrf_exempt
 @api_view(['POST'])
 def add_answer(request, response_id):
-    answers = request.data
+    answers = request.data.get('sectionsToSubmit')
     # example of answers format to be sent in the request body 
     # [ { "question": 1, "answer": "option1" }, { "question": 2, "answer": "option2" } ]
+    print(answers)
     response = Response.objects.get(pk=response_id)
     for answer in answers:
         question = Question.objects.get(pk=answer['question'])
-        Answer.objects.create(response=response, question=question, answer=answer['answer'])
+
+        # check if answer already exists by checking the question id from the response, if yes just update the answer
+        if Answer.objects.filter(response=response, question=question).exists():
+            answer_instance = Answer.objects.get(response=response, question=question)
+            answer_instance.answer = answer['answer']
+            answer_instance.save()
+        else:
+            Answer.objects.create(response=response, question=question, answer=answer['answer'])
     return JsonResponse({'message': 'Answers added successfully'}, status=201)
 
 @api_view(['GET'])

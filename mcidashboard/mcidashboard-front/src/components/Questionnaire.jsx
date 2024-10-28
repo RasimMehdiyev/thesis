@@ -14,32 +14,128 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [fetchedSections, setFetchedSections] = useState([]);
   const chatBodyRef = useRef(null);
 
-// Fetch the questionnaire data with fallback
-const fetchSections = async () => {
-  let apiUrl = '/dashboard/questionnaire/6/sections/';
-  let fallbackUrl = '/questions.json';
+  const fetchSections = async () => {
+    let apiUrl = '/dashboard/questionnaire/6/sections/';
+    let fallbackUrl = '/questions.json';
 
-  try {
-    const response = await fetch(apiUrl);
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch from API: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    setFetchedSections(data); 
-  } catch (error) {
-    console.error('Error fetching from API:', error);
-    
     try {
-      const fallbackResponse = await fetch(fallbackUrl);
-      const fallbackData = await fallbackResponse.json();
-      setFetchedSections(fallbackData);
-    } catch (fallbackError) {
-      console.error('Error fetching from fallback JSON:', fallbackError);
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch from API: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setFetchedSections(data); 
+    } catch (error) {
+      console.error('Error fetching from API:', error);
+      
+      try {
+        const fallbackResponse = await fetch(fallbackUrl);
+        const fallbackData = await fallbackResponse.json();
+        setFetchedSections(fallbackData);
+      } catch (fallbackError) {
+        console.error('Error fetching from fallback JSON:', fallbackError);
+      }
     }
+  };
+
+
+  function getCookie(name){
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== ''){
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++){
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')){
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
   }
-};
+
+  const csrftoken = getCookie('csrftoken');
+
+  const submitSection = async (id) => {
+    const targetQuestionIds = [15, 29, 65, 73];
+    console.log("Submitting section with ID:", id);
+    const questionnaire_id = 6;
+    let prolific_id = '';
+    let response_id = null;
+    let sectionsToSubmit = [];
+  
+    const responses = JSON.parse(localStorage.getItem('chatLog')) || [];
+  
+    responses.forEach(r => {
+      if (r.sender === 'You' && r.question_id === 0) {
+        prolific_id = r.message;
+      }
+    });
+  
+    let responseBody = {
+      prolific_id: prolific_id,
+      questionnaire: questionnaire_id,
+    };
+  
+    try {
+      const response = await fetch('/dashboard/response/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify(responseBody),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to submit response: ${response.statusText}`);
+      }
+  
+      const responseData = await response.json();
+      console.log("Response created successfully with response_id:", responseData.response_id);
+      response_id = responseData.response_id;
+    } catch (error) {
+      console.error('Error creating response:', error);
+      return; // Stop execution if response creation fails
+    }
+  
+    // Step 2: Populate sectionsToSubmit with each question answer, now that we have response_id
+    responses.forEach(r => {
+      if (r.sender === 'You' && r.question_id !== 0) {
+        sectionsToSubmit.push({ response: response_id, question: r.question_id, answer: r.message });
+      }
+    });
+  
+    console.log("Sections to submit:", sectionsToSubmit);
+  
+    // Step 3: Check if the current question ID matches the target IDs
+    if (targetQuestionIds.includes(id)) {
+      const apiUrl = `/dashboard/response/${response_id}/answer/add/`;
+  
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,  // Include CSRF token
+          },
+          body: JSON.stringify({ sectionsToSubmit }),
+          credentials: 'include'  // Ensure cookies are included with the request
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Failed to submit section: ${response.statusText}`);
+        }
+  
+        console.log("Section submitted successfully.");
+      } catch (error) {
+        console.error('Error submitting section:', error);
+      }
+    }
+  };
+  
 
 
   useEffect(() => {
@@ -175,7 +271,7 @@ const fetchSections = async () => {
       setShowAnswerOptions(false);
       setIsQuestionVisible(false);
 
-      const newChatLog = [...chatLog, { sender: 'You', message: answer, questionIndex: currentQuestionIndex }];
+      const newChatLog = [...chatLog, { sender: 'You', message: answer, questionIndex: currentQuestionIndex, question_id: currentQuestion.id }];
       setChatLog(newChatLog);
       setMessage('');
 
@@ -201,6 +297,7 @@ const fetchSections = async () => {
       sendSystemMessage(fetchedSections[nextSectionIndex]?.questions[0]?.question);
       setShowAnswerOptions(true);
       setIsQuestionVisible(true);
+      submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
     } else {
       if (!isCompleted) {
         setIsCompleted(true);
