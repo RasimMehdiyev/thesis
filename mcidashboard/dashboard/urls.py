@@ -29,4 +29,8 @@ urlpatterns = [
     path('response/create/', create_response, name='response-create'),
     path('response/<int:response_id>/answer/add/', add_answer, name='answer-create'),
     path('response/answers/<int:prolific_id>/', get_answers_by_prolific_id, name='answers-by-prolific-id'),
+
+    # ML Model
+    path('feature-importance/',get_shap_contributions, name='feature-importance'),
+    path('top-3-models/',get_top_3_models, name='top-3-models'),
 ]

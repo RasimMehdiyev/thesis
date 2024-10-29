@@ -13,9 +13,11 @@ from .models import *
 from .serializers import *
 from django.db.models import Count, Avg
 from django.db.models import Max
-import matplotlib.pyplot as plt
-from collections import defaultdict
 from collections import Counter
+import os
+import pandas as pd
+from django.conf import settings
+
 
 # Create your views here.
 def index(request):
@@ -520,3 +522,70 @@ def get_answers_by_prolific_id(request, prolific_id):
     answers = response.answer_set.all()
     serializer = AnswerSerializer(answers, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_shap_contributions(request):
+    csv_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'data', 'average_shap_contributions.csv')
+    
+    if not os.path.exists(csv_path):
+        return JsonResponse({'error': 'CSV file not found'}, status=404)
+
+    shap_contributions_df = pd.read_csv(csv_path)
+    
+    shap_contributions_json = shap_contributions_df.to_dict(orient='records')
+    
+    return JsonResponse(shap_contributions_json, safe=False)
+
+
+@api_view(['GET'])
+def get_top_3_models(request):
+    # Define file paths
+    scores_file = os.path.join(settings.BASE_DIR, 'staticfiles', 'data', 'max_compare_model_scores.csv')
+    confusion_file = os.path.join(settings.BASE_DIR, 'staticfiles', 'data', 'confusion_matrices.csv')
+
+    # Load scores and confusion matrices
+    try:
+        scores_df = pd.read_csv(scores_file)
+        confusion_df = pd.read_csv(confusion_file)
+    except FileNotFoundError:
+        return JsonResponse({'error': 'One or more data files not found.'}, status=404)
+    
+    total_no_models = scores_df.shape[0] - 1
+    print(total_no_models)
+
+    # Sort by Max Score in descending order and extract top 3 models
+    top_3_models = scores_df.sort_values(by='Max Score', ascending=False).head(3)
+    
+    # Extract confusion matrix information for the top 3 models
+    top_3_model_names = top_3_models['Model'].tolist()
+    top_3_confusions = confusion_df[confusion_df['Model'].isin(top_3_model_names)]
+    
+    # Prepare data for JSON response
+    response_data = {
+        'top_models': [],
+        'total_models': total_no_models
+    }
+    
+    for _, row in top_3_models.iterrows():
+        model_name = row['Model']
+        max_score = row['Max Score']
+        
+        # Get confusion matrix for this model and rename the columns
+        confusion_data = top_3_confusions[top_3_confusions['Model'] == model_name].to_dict(orient='records')
+        if confusion_data:
+            # Rename confusion matrix keys
+            confusion_data[0] = {
+                'TP': confusion_data[0].get('True Positive'),
+                'FP': confusion_data[0].get('False Positive'),
+                'TN': confusion_data[0].get('True Negative'),
+                'FN': confusion_data[0].get('False Negative')
+            }
+        
+        response_data['top_models'].append({
+            'model_name': model_name,
+            'max_score': max_score,
+            'c_matrix': confusion_data[0] if confusion_data else None,
+        })
+    
+    return JsonResponse(response_data, safe=False)
+

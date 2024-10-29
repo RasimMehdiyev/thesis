@@ -302,6 +302,8 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       if (!isCompleted) {
         setIsCompleted(true);
         sendSystemMessage("Thank you for your participation!");
+        submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
+
       }
     }
   };
