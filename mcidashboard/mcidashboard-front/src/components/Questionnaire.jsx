@@ -230,7 +230,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     }
   }, [chatLog]);
 
-  // Handle input changes and apply validation
   const handleInputChange = (e) => {
     let value = e.target.value;
     const currentQuestion = questionMap[currentQuestionIndex];
@@ -238,34 +237,37 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     // Clear previous errors
     setErrorMessage('');
 
-    // Apply the noSpecialChars rule
-    if (currentQuestion?.noSpecialChars) {
-      const containsSpecialChars = /[^a-zA-Z0-9]/g.test(value);
-      if (containsSpecialChars) {
-        setErrorMessage('Special characters are not allowed.');
-        value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
-      }
-    }
-
     // Apply charLimit if it exists
     if (currentQuestion?.charLimit && value.length > currentQuestion.charLimit) {
-      setErrorMessage(`Character limit exceeded. Max ${currentQuestion.charLimit} characters allowed.`);
-      value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
+        setErrorMessage(`Character limit exceeded. Max ${currentQuestion.charLimit} characters allowed.`);
+        value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
+    } else if (currentQuestion?.noSpecialChars) {
+        // Apply the noSpecialChars rule after charLimit check
+        const containsSpecialChars = /[^a-zA-Z0-9]/g.test(value);    
+        const enterChar = /[\n\r]/g.test(value);    
+        if (containsSpecialChars && !enterChar) {
+            setErrorMessage('Special characters are not allowed.');
+            value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
+        }
+        else if(enterChar){
+          value = value.replace(/[\n\r]/g, ''); // Remove special characters
+        }
     }
-
     setMessage(value); // Update the message with the valid value
-  };
+};
 
-  const handleSendMessage = (answer = message, skip = false) => {
-    const currentQuestion = questionMap[currentQuestionIndex];
+const handleSendMessage = (answer = message, skip = false) => {
+  const currentQuestion = questionMap[currentQuestionIndex];
 
-    if (skip && !currentQuestion?.required) {
+
+  setErrorMessage('');
+
+  if (skip && !currentQuestion?.required) {
       moveToNextQuestion();
       return;
-    }
+  }
 
-    if (answer.trim()) {
-      setErrorMessage('');
+  if (answer.trim()) {
       setBackButtonDisabled(true);
       setShowOtherTextField(false);
       setShowAnswerOptions(false);
@@ -276,11 +278,12 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       setMessage('');
 
       setTimeout(() => {
-        moveToNextQuestion();
-        setBackButtonDisabled(false);
+          moveToNextQuestion();
+          setBackButtonDisabled(false);
       }, 300);
-    }
-  };
+  }
+};
+
 
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questionMap.length - 1) {
@@ -457,10 +460,16 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
+                          console.log("Key pressed:", e.key);
                           if (e.key === 'Enter' && !isSendButtonDisabled()) {
                             e.preventDefault();
                             handleSendMessage();
                           }
+                          else if(message.length < questionMap[currentQuestionIndex]?.charLimit && e.key === 'Enter' && currentSectionIndex === 0 && currentQuestionIndex === 0){
+                            e.preventDefault();
+                            setErrorMessage(`Prolific ID should be 24 characters long.`);
+                          }
+
                         }}
                         placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
                         rows={message.length > 50 ? 5 : 1}
