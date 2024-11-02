@@ -60,7 +60,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
   const submitSection = async (id) => {
     const targetQuestionIds = [15, 29, 65, 73];
-    console.log("Submitting section with ID:", id);
+    console.log("Submitting section with question ID:", id);
     const questionnaire_id = 6;
     let prolific_id = '';
     let response_id = null;
@@ -273,7 +273,7 @@ const handleSendMessage = (answer = message, skip = false) => {
       setShowAnswerOptions(false);
       setIsQuestionVisible(false);
 
-      const newChatLog = [...chatLog, { sender: 'You', message: answer, questionIndex: currentQuestionIndex, question_id: currentQuestion.id }];
+      const newChatLog = [...chatLog, { sender: 'You', message: answer, questionIndex: currentQuestionIndex, question_id: currentQuestion.id, sectionIndex: currentSectionIndex }];
       setChatLog(newChatLog);
       setMessage('');
 
@@ -316,14 +316,18 @@ const handleSendMessage = (answer = message, skip = false) => {
   };
 
   const handleBack = () => {
-    if (currentQuestionIndex > 0) {
+
+    console.log("Current question index:", currentQuestionIndex);
+    console.log("Current section index:", currentSectionIndex);
+
+    if (currentQuestionIndex > 0 && currentSectionIndex > 0) {
       const prevIndex = currentQuestionIndex - 1;
 
 
       const updatedChatLog = [...chatLog];
 
       const previousAnswer = updatedChatLog.find(
-        (entry) => entry.sender === 'You' && entry.questionIndex === prevIndex
+        (entry) => entry.sender === 'You' && entry.questionIndex === prevIndex && entry.sectionIndex === currentSectionIndex
       )?.message || '';
       
 

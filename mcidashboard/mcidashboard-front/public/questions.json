@@ -1,5 +1,5 @@
 [{
-        "id": 1,
+        "id": 0,
         "title_desc": "The following questions will gather background information to understand how your experience relates to your interaction with the system.",
         "questionnaire": 6,
         "title": "DEMOGRAPHIC QUESTIONS",
@@ -252,7 +252,7 @@
         ]
     },
     {
-        "id": 2,
+        "id": 1,
         "title_desc": "Answer the following questions based on the information contained in the web app. Feel free to skip the questions you don't find an answer to.",
         "questionnaire": 6,
         "title": "EXPLORATION TASKS",
@@ -434,7 +434,7 @@
         ]
     },
     {
-        "id": 3,
+        "id": 2,
         "title_desc": "You will now be asked to rate your agreement with a series of statements.",
         "questionnaire": 6,
         "title": "SCALE RATED QUESTIONS",
@@ -1052,7 +1052,7 @@
         ]
     },
     {
-        "id": 6,
+        "id": 3,
         "title_desc": "In this section, please provide detailed feedback on your experience using the web app. Aim for 30-50 words per question and be specific (e.g., mention tabs, subsections, graphs). You may respond in English, Dutch, French, Greek, Russian, Azerbaijani, or Chinese.",
         "questionnaire": 6,
         "title": "OPEN QUESTIONS",
