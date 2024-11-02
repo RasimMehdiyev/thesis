@@ -78,6 +78,13 @@ const Home = () => {
                     <li>Andreas Vesaliusstraat 13/2600 - 3000 Leuven</li>
                 </ul>
                 <ul>
+                    <li id='contact-title'><strong>Researchers</strong></li>
+                    <li id='contact-name'>Penelope Rekkas</li>
+                    <li><a href="">penelope.rekkas@student.kuleuven.be  </a></li>
+                    <li>Electronics and ICT Engineering, Campus Groep T Leuven </li>
+                    <li>Andreas Vesaliusstraat 13 - 3000 Leuven</li>
+                </ul> 
+                <ul>
                     <li id='contact-title'><strong>Co-supervisor</strong></li>
                     <li id='contact-name'>Yu Chen</li>
                     <li><a href="">yu.chen@kuleuven.be</a></li>
@@ -86,18 +93,12 @@ const Home = () => {
                     <li>Andreas Vesaliusstraat 13 - 3000 Leuven</li>
                 </ul> 
                 <ul>
-                    <li id='contact-title'><strong>Researchers</strong></li>
-                    <li id='contact-name'>Penelope Rekkas</li>
-                    <li><a href="">penelope.rekkas@student.kuleuven.be  </a></li>
-                    <li>Electronics and ICT Engineering, Campus Groep T Leuven </li>
-                    <li>Andreas Vesaliusstraat 13 - 3000 Leuven</li>
-                </ul> 
-                <ul>
                     <li style={{paddingTop: '35px'}} id='contact-name'>Rasim Mehdiyev</li>
                     <li><a href="">rasim.mehdiyev@student.kuleuven.be  </a></li>
                     <li>Electronics and ICT Engineering, Campus Groep T Leuven </li>
                     <li>Andreas Vesaliusstraat 13 - 3000 Leuven</li>
                 </ul>
+
             </div>    
             <div className="goal-methodology">
                 <h3>Goal and methodology of the research:</h3>
@@ -258,8 +259,8 @@ const Home = () => {
                         <input type="checkbox" id="ethics-approval" name="ethics-approval" onChange={e=>setIsEthicsApprovalChecked(e.target.checked)}/>
                         <label htmlFor="ethics-approval">
                             This study has been reviewed and approved by the Social and Societal Ethics Committee (SMEC) of KU Leuven 
-                            (fill in approval number; please use this number in any communication regarding the research). 
-                            In case of complaints or other concerns with regard to the ethical aspects of this research I can contact SMEC: smec@kuleuven.be
+                            (<strong>G-2024-8397</strong>; please use this number in any communication regarding the research). 
+                            In case of complaints or other concerns with regard to the ethical aspects of this research I can contact SMEC: <strong>smec@kuleuven.be</strong>
                         </label>
                     </div>
                     <div>

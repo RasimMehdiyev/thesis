@@ -24,3 +24,8 @@
 .container::-webkit-scrollbar {
     display: none;
 }
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+}
