@@ -1,0 +1,151 @@
+[{
+        "Feature": "moveTimeMoveSD",
+        "Average SHAP Value": 0.0023163645413587,
+        "Contribution (%)": "+9.1%"
+    },
+    {
+        "Feature": "moveTimeMoveMax",
+        "Average SHAP Value": 0.0016180073002601,
+        "Contribution (%)": "+6.4%"
+    },
+    {
+        "Feature": "accuracyAvg",
+        "Average SHAP Value": 0.001515252965077,
+        "Contribution (%)": "+6.0%"
+    },
+    {
+        "Feature": "suitErrorPercentage",
+        "Average SHAP Value": 0.0008520732078879,
+        "Contribution (%)": "+3.3%"
+    },
+    {
+        "Feature": "accuracySD",
+        "Average SHAP Value": 0.0006378668724418,
+        "Contribution (%)": "+2.5%"
+    },
+    {
+        "Feature": "erroneousMovesPercentage",
+        "Average SHAP Value": 0.0006089237441947,
+        "Contribution (%)": "+2.4%"
+    },
+    {
+        "Feature": "taps",
+        "Average SHAP Value": 0.0005917694369157,
+        "Contribution (%)": "+2.3%"
+    },
+    {
+        "Feature": "betaErrorPercentage",
+        "Average SHAP Value": 0.0004629304512101,
+        "Contribution (%)": "+1.8%"
+    },
+    {
+        "Feature": "numberOfCardsMovedAvg",
+        "Average SHAP Value": 0.0004498102621178,
+        "Contribution (%)": "+1.8%"
+    },
+    {
+        "Feature": "accuracyMin",
+        "Average SHAP Value": 0.0002030932515561,
+        "Contribution (%)": "+0.8%"
+    },
+    {
+        "Feature": "totalTimeMoveMin",
+        "Average SHAP Value": 0.000183299389966,
+        "Contribution (%)": "+0.7%"
+    },
+    {
+        "Feature": "moveTimeMoveMin",
+        "Average SHAP Value": 0.0001771962736493,
+        "Contribution (%)": "+0.7%"
+    },
+    {
+        "Feature": "thinkTimeMoveSD",
+        "Average SHAP Value": 0.0001204987496097,
+        "Contribution (%)": "+0.5%"
+    },
+    {
+        "Feature": "succesfulMovesPercentage",
+        "Average SHAP Value": 0.00008503833303079539,
+        "Contribution (%)": "+0.3%"
+    },
+    {
+        "Feature": "accuracyMax",
+        "Average SHAP Value": 0.00005617834389495408,
+        "Contribution (%)": "+0.2%"
+    },
+    {
+        "Feature": "totalMoves",
+        "Average SHAP Value": 0.000010052632135895185,
+        "Contribution (%)": "+0.0%"
+    },
+    {
+        "Feature": "numberOfCardsMovedSD",
+        "Average SHAP Value": 0.0000015299650229969562,
+        "Contribution (%)": "+0.0%"
+    },
+    {
+        "Feature": "finalBetaError",
+        "Average SHAP Value": 0,
+        "Contribution (%)": "-0.0%"
+    },
+    {
+        "Feature": "isSolved",
+        "Average SHAP Value": 0,
+        "Contribution (%)": "-0.0%"
+    },
+    {
+        "Feature": "moveTimeMoveAvg",
+        "Average SHAP Value": -0.00005733814027454222,
+        "Contribution (%)": "-0.2%"
+    },
+    {
+        "Feature": "rankErrorPercentage",
+        "Average SHAP Value": -0.0002851927296941,
+        "Contribution (%)": "-1.1%"
+    },
+    {
+        "Feature": "pileMovesPercentage",
+        "Average SHAP Value": -0.0006622284836853,
+        "Contribution (%)": "-2.6%"
+    },
+    {
+        "Feature": "totalTimeMoveMax",
+        "Average SHAP Value": -0.0009255400528682,
+        "Contribution (%)": "-3.6%"
+    },
+    {
+        "Feature": "totalTimeMoveSD",
+        "Average SHAP Value": -0.0011122195299932,
+        "Contribution (%)": "-4.4%"
+    },
+    {
+        "Feature": "totalTimeMoveAvg",
+        "Average SHAP Value": -0.001143111775408,
+        "Contribution (%)": "-4.5%"
+    },
+    {
+        "Feature": "thinkTimeMoveAvg",
+        "Average SHAP Value": -0.0013474336095611,
+        "Contribution (%)": "-5.3%"
+    },
+    {
+        "Feature": "thinkTimeMoveMax",
+        "Average SHAP Value": -0.0013823190872271,
+        "Contribution (%)": "-5.4%"
+    },
+    {
+        "Feature": "thinkTimeMoveMin",
+        "Average SHAP Value": -0.0021356415930669,
+        "Contribution (%)": "-8.4%"
+    },
+    {
+        "Feature": "score",
+        "Average SHAP Value": -0.0023569353863222,
+        "Contribution (%)": "-9.3%"
+    },
+    {
+        "Feature": "gameTime",
+        "Average SHAP Value": -0.0041581954370065,
+        "Contribution (%)": "-16.3%"
+    }
+]

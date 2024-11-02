@@ -36,8 +36,8 @@ const DivergingBarChart = ({ features, percentages }) => {
     scales: {
       x: {
         beginAtZero: true,
-        min: -12, // Adjust the minimum value on the x-axis
-        max: 12,  // Adjust the maximum value on the x-axis
+        min: -20, // Adjust the minimum value on the x-axis
+        max: 20,  // Adjust the maximum value on the x-axis
         grid: {
           display: true, // Enable vertical grid lines
           color: 'rgba(0, 0, 0, 0.1)', // Light gray color for vertical grid lines
