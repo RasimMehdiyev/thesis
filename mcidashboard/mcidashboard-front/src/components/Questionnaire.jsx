@@ -320,7 +320,7 @@ const handleSendMessage = (answer = message, skip = false) => {
     console.log("Current question index:", currentQuestionIndex);
     console.log("Current section index:", currentSectionIndex);
 
-    if (currentQuestionIndex > 0 && currentSectionIndex > 0) {
+    if (currentQuestionIndex > 0 && currentSectionIndex >= 0) {
       const prevIndex = currentQuestionIndex - 1;
 
 
@@ -411,8 +411,7 @@ const handleSendMessage = (answer = message, skip = false) => {
                   onClick={handleBack}
                   disabled={backButtonDisabled}
                   style={{ 
-                    display: currentQuestionIndex === 0 || 
-                    (currentSectionIndex === 0 && currentQuestionIndex === questionMap.length - 1) ? 'none' : 'block' 
+                    display: currentQuestionIndex === 0  ? 'none' : 'block' 
                   }}
                 >
                   ← back to previous question
