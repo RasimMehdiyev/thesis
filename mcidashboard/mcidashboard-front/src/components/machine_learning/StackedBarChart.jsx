@@ -41,7 +41,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding 
         position: 'top', 
         labels: {
           boxWidth: 15, 
-          padding: 15, 
+          padding: 5, 
         },
       },
       datalabels: {
