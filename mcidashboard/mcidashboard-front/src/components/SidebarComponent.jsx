@@ -74,8 +74,8 @@ const SidebarComponent = () => {
     return <div className='sidebar'>Loading...</div>;
   }
 
-  const handleQuestionnaireComplete = (isComplete) => {
-    setIsQuestionnaireComplete(isComplete);
+  const handleQuestionnaireComplete = async (isComplete) => {
+    await setIsQuestionnaireComplete(isComplete);
   };
 
   

@@ -258,9 +258,14 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
 const handleSendMessage = (answer = message, skip = false) => {
   const currentQuestion = questionMap[currentQuestionIndex];
-
-
   setErrorMessage('');
+
+  const messageWords = message.split(' ').filter((word) => word.trim() !== '');
+
+  if (currentSectionIndex === 3 &&  messageWords.length < 20 && currentQuestionIndex < questionMap.length - 1) {
+    setErrorMessage(`Please provide a detailed answer. Minimum 20 words required.`);
+    return;
+  }
 
   if (skip && !currentQuestion?.required) {
       moveToNextQuestion();
@@ -282,8 +287,8 @@ const handleSendMessage = (answer = message, skip = false) => {
           setBackButtonDisabled(false);
       }, 300);
   }
-};
 
+};
 
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questionMap.length - 1) {
@@ -304,9 +309,9 @@ const handleSendMessage = (answer = message, skip = false) => {
     } else {
       if (!isCompleted) {
         setIsCompleted(true);
+        onQuestionnaireComplete(true);
         sendSystemMessage("Thank you for your participation!");
         submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
-
       }
     }
   };
@@ -370,6 +375,15 @@ const handleSendMessage = (answer = message, skip = false) => {
     }
 
     return message.trim() === '';
+  };
+
+  const section4CharLimit = (message) => {
+    console.log("Message length:", message.length);
+    if (message.length < 50) {
+      setErrorMessage(`Please provide a detailed answer. Minimum 20 characters required.`);
+      return false;
+    }
+    return true;
   };
 
   const handleOptionClick = (option) => {
@@ -477,6 +491,9 @@ const handleSendMessage = (answer = message, skip = false) => {
                     <>
                       <textarea
                         maxLength={questionMap[currentQuestionIndex]?.charLimit || undefined}
+                        minLength={
+                          currentSectionIndex === 3 ? 20 : 0
+                        }
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
@@ -489,7 +506,6 @@ const handleSendMessage = (answer = message, skip = false) => {
                             e.preventDefault();
                             setErrorMessage(`Prolific ID should be 24 characters long.`);
                           }
-
                         }}
                         placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
                         rows={message.length > 50 ? 5 : 1}
