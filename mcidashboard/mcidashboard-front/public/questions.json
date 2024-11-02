@@ -61,7 +61,7 @@
                     "Master’s degree",
                     "Doctoral Degree (PhD)",
                     "Medical degree (e.g., MD, DO)",
-                    "Other (please specify)"
+                    "Other"
                 ],
                 "charLimit": null,
                 "noSpecialChars": false
@@ -102,7 +102,7 @@
                     "Private practice",
                     "Research institution",
                     "Academic institution",
-                    "Other (please specify)"
+                    "Other"
                 ],
                 "charLimit": null,
                 "noSpecialChars": false
@@ -152,7 +152,7 @@
                 "answers": [
                     "Standardized cognitive tests (MMSE, MoCA, ...)",
                     "Clinical interviews",
-                    "Other (please specify)"
+                    "Other"
                 ],
                 "charLimit": null,
                 "noSpecialChars": false

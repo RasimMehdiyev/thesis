@@ -318,7 +318,14 @@ const handleSendMessage = (answer = message, skip = false) => {
   const handleBack = () => {
     if (currentQuestionIndex > 0) {
       const prevIndex = currentQuestionIndex - 1;
+
+
       const updatedChatLog = [...chatLog];
+
+      const previousAnswer = updatedChatLog.find(
+        (entry) => entry.sender === 'You' && entry.questionIndex === prevIndex
+      )?.message || '';
+      
 
       if (isCompleted) {
         updatedChatLog.splice(updatedChatLog.length - 2, 2);
@@ -333,15 +340,15 @@ const handleSendMessage = (answer = message, skip = false) => {
       setShowOtherTextField(false);
 
       setTimeout(() => {
-        const previousQuestion = questionMap[prevIndex]?.question;
+        const previousQuestion = questionMap[prevIndex].question;
 
-        const previousAnswer = updatedChatLog.find(
-          (entry) => entry.sender === 'You' && entry.questionIndex === prevIndex
-        )?.message || '';
+        setMessage(previousAnswer);
+
 
         if (!updatedChatLog.some((entry) => entry.message === previousQuestion)) {
           sendSystemMessage(previousQuestion);
         }
+
       }, 300);
     }
   };
