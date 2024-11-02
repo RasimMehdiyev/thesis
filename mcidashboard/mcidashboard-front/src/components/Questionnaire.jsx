@@ -396,11 +396,21 @@ const handleSendMessage = (answer = message, skip = false) => {
         </div>
         <div className="chatbox-body" ref={chatBodyRef}>
           {chatLog.map((chat, index) => (
-            <div key={index} className={`chat-message ${chat.sender === 'You' ? 'user-message' : 'system-message'}`}>
+            <div 
+              key={index} 
+              className={`chat-message ${chat.sender === 'You' ? 'user-message' : 'system-message'}`}
+              style={{
+                wordWrap: 'break-word',
+                wordBreak: 'break-word',
+                whiteSpace: 'pre-wrap',
+                maxWidth: '100%',
+              }}
+            >
               <strong>{chat.sender}:</strong> {chat.message}
             </div>
           ))}
         </div>
+
 
         <div className="chatbox-footer">
           {!isCompleted && (
