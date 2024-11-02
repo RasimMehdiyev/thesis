@@ -68,7 +68,7 @@ const DigitalBiomarkers = ({ patient }) => {
   const fetchMetricData = async (patientId, metric) => {
     setLoading(true);
     try {
-      const response = await fetch(`/dashboard/biomarker/histograms/${patientId}/${metric}/`);
+      const response = await fetch('metrics1000.json');//const response = await fetch(`/dashboard/biomarker/histograms/${patientId}/${metric}/`);
       const data = await response.json();
       console.log('Fetched Metric Data:', data);
       setMetricData(data);
