@@ -64,6 +64,15 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   const nearEndEdge = xUserIndex >= xDataWithThreshold.length - edgeThreshold;
 
 
+  // also, if the xUser is not in xDataWithThreshold, then add a point in xDataWithThreshold that is xUser and a point in yDataWithThreshold that is 0
+  if (!xDataWithThreshold.includes(xUser)) {
+    xDataWithThreshold.push(xUser);
+    yDataWithThreshold.push(0);
+  }
+
+  // in xDataWithThreshold, add a point in the beginning and at then that is 1 less than first value and 1 more than last value respectively, similarly add a point in yDataWithThreshold that is 0 at the beginning and 0 at the end
+  xDataWithThreshold = [Math.round(xDataWithThreshold[0] - 1, 0), ...xDataWithThreshold, xDataWithThreshold[xDataWithThreshold.length - 1] + 1];
+  yDataWithThreshold = [0, ...yDataWithThreshold, 0];
 
   const data = {
     labels: xDataWithThreshold,

@@ -263,6 +263,12 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         'healthy': healthy_biomarker_frequency_list
     }
 
+    # if the user is mci, then add the current user's biomarker value in the healthy group with frequency 0 and if teh bioamrker value is not present in the healthy group
+    if user.mci and current_user_biomarker_value not in [item['biomarker_value'] for item in healthy_biomarker_frequency_list]:
+        data['healthy'].append({'biomarker_value': current_user_biomarker_value, 'frequency': 0})
+    elif not user.mci and current_user_biomarker_value not in [item['biomarker_value'] for item in mci_biomarker_frequency_list]:
+        data['mci'].append({'biomarker_value': current_user_biomarker_value, 'frequency': 0})
+
     # Calculate threshold (assuming threshold_calc is defined elsewhere)
     threshold = threshold_calc(data)
 
