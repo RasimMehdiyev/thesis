@@ -89,7 +89,25 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
           display: true
         },
         ticks: {
-          display: true
+          display: true,
+          color: function(context) {
+            if (context.tick.value === xDataWithThreshold.indexOf(xUser)) {
+                return xUser > threshold ? aboveThresholdColor : belowThresholdColor;
+            }
+            return '#666';
+          },
+          
+          font: function(context) {
+            if (context.tick.value === xDataWithThreshold.indexOf(threshold) || context.tick.value === xDataWithThreshold.indexOf(xUser)) {
+              return {
+                weight: 'bold',
+                size: 12
+              };
+            }
+            return {
+              size: 12
+            };
+          }
         }
       },
       y: {
