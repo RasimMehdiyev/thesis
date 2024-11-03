@@ -15,10 +15,15 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   const belowThresholdColor = swapColors ? 'rgba(250, 93, 93, 1)' : 'rgba(33, 174, 238, 1)';
   const aboveThresholdColor = swapColors ? 'rgba(33, 174, 238, 1)' : 'rgba(250, 93, 93, 1)';
 
+  
   let xDataWithThreshold = [...xData];
   if (!xData.includes(xUser)) {
     xDataWithThreshold.push(xUser);
   }
+  /*
+  if (!xDataWithThreshold.includes(threshold)) {
+    xDataWithThreshold.push(threshold);
+  }*/
   xDataWithThreshold.sort((a, b) => a - b);
 
   let yDataWithThreshold = [...yData];
