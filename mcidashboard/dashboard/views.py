@@ -182,6 +182,8 @@ def get_all_biomarkers(request):
     serializer = BiomarkerTypeSerializer(biomarkers, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+from .biomarker_calculations import *
+
 @api_view(['GET'])
 def biomarker_frequency_histogram(request, userID, biomarker_id):
 
@@ -237,6 +239,12 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
     mci_biomarker_frequency_list = sorted(mci_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
     healthy_biomarker_frequency_list = sorted(healthy_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
 
+    data = {
+        'mci': mci_biomarker_frequency_list,
+        'healthy': healthy_biomarker_frequency_list
+    }
+
+    threshold = threshold_calc(data)
 
     return JsonResponse({
         'current_user': {
@@ -244,7 +252,8 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
             'mci': user.mci
         },
         'mci': mci_biomarker_frequency_list,
-        'healthy': healthy_biomarker_frequency_list
+        'healthy': healthy_biomarker_frequency_list,
+        'threshold': threshold
     }, safe=False)
 
 @api_view(['GET'])

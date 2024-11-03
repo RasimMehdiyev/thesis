@@ -262,8 +262,8 @@ const handleSendMessage = (answer = message, skip = false) => {
 
   const messageWords = message.split(' ').filter((word) => word.trim() !== '');
 
-  if (currentSectionIndex === 3 &&  messageWords.length < 20 && currentQuestionIndex < questionMap.length - 1) {
-    setErrorMessage(`Please provide a detailed answer. Minimum 20 words required.`);
+  if (!skip && currentQuestion?.required && currentSectionIndex === 3 &&  messageWords.length < 10 && currentQuestionIndex < questionMap.length - 1) {
+    setErrorMessage(`Please provide a detailed answer. Minimum 10 words required.`);
     return;
   }
 
@@ -309,7 +309,7 @@ const handleSendMessage = (answer = message, skip = false) => {
     } else {
       if (!isCompleted) {
         setIsCompleted(true);
-        onQuestionnaireComplete(true);
+        onQuestionnaireComplete();
         sendSystemMessage("Thank you for your participation!");
         submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
       }

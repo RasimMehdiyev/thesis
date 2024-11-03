@@ -1,5 +1,5 @@
 [{
-        "id": 0,
+        "id": 1,
         "title_desc": "The following questions will gather background information to understand how your experience relates to your interaction with the system.",
         "questionnaire": 6,
         "title": "DEMOGRAPHIC QUESTIONS",
@@ -176,7 +176,7 @@
             {
                 "id": 11,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "How often do you use web-based applications or tools as part of your job?",
+                "question": "How often do you use web-based applications or tools as part of your job? \r\n(e.g., Trello, Asana, Slack, Teams, Google Docs, Office 365, Medscape, PubMed, Cerner, etc.)",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
@@ -192,7 +192,7 @@
             {
                 "id": 12,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "How confident do you feel using machine learning or AI (Artificial Intelligence)\r\npowered decision support systems in your daily life?",
+                "question": "How confident do you feel using machine learning or AI (Artificial Intelligence)\r\npowered decision support systems in your daily life?\r\n(e.g., Google Maps, Waze, Mint, Wealthfront, Fitbit, Ada, Amazon, etc.)",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
@@ -208,7 +208,7 @@
             {
                 "id": 13,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "How often do you use AI in medical practice?",
+                "question": "How often do you use AI in medical practice?\r\n(e.g., Aidoc, IBM Watson Health, Nuance’s Dragon Medical One, Babylon Health, etc.)",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
@@ -252,7 +252,7 @@
         ]
     },
     {
-        "id": 1,
+        "id": 2,
         "title_desc": "Answer the following questions based on the information contained in the web app. Feel free to skip the questions you don't find an answer to.",
         "questionnaire": 6,
         "title": "EXPLORATION TASKS",
@@ -310,7 +310,7 @@
             {
                 "id": 19,
                 "section_title": "EXPLORATION TASKS",
-                "question": "What is the accuracy and F1 score of the model that is used for final prediction?",
+                "question": "What is the accuracy of the model that is used for final prediction?",
                 "q_type": "OE",
                 "required": false,
                 "answers": [],
@@ -434,7 +434,7 @@
         ]
     },
     {
-        "id": 2,
+        "id": 3,
         "title_desc": "You will now be asked to rate your agreement with a series of statements.",
         "questionnaire": 6,
         "title": "SCALE RATED QUESTIONS",
@@ -1052,7 +1052,7 @@
         ]
     },
     {
-        "id": 3,
+        "id": 6,
         "title_desc": "In this section, please provide detailed feedback on your experience using the web app. Aim for 30-50 words per question and be specific (e.g., mention tabs, subsections, graphs). You may respond in English, Dutch, French, Greek, Russian, Azerbaijani, or Chinese.",
         "questionnaire": 6,
         "title": "OPEN QUESTIONS",

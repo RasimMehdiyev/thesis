@@ -74,15 +74,18 @@ const SidebarComponent = () => {
     return <div className='sidebar'>Loading...</div>;
   }
 
-  const handleQuestionnaireComplete = async (isComplete) => {
-    await setIsQuestionnaireComplete(isComplete);
+  const handleQuestionnaireComplete = () => {
+    const isCompleteLocalSt = localStorage.getItem('isCompleted');
+    if (isCompleteLocalSt === 'true') {
+      console.log('Questionnaire already completed. Setting isQuestionnaireComplete to true');
+      setIsQuestionnaireComplete(isCompleteLocalSt);
+    }
   };
 
-  
 
   const toggleChatbox = () => {
     setIsChatboxVisible(!isChatboxVisible);
-    console.log('Questionnaire Complete?', isQuestionnaireComplete);
+    // console.log('Questionnaire Complete?', isQuestionnaireComplete);
   };
 
   // Render the sidebar component once data is available
@@ -110,7 +113,7 @@ const SidebarComponent = () => {
               title="Start Questionnaire"
               onClick={toggleChatbox}
             />
-            {!isQuestionnaireComplete && !isChatboxVisible && <div className="red-dot"></div>} 
+            {!localStorage.getItem('isCompleted') && !isChatboxVisible && <div className="red-dot"></div>} 
         </div>
         {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
         }
