@@ -10,6 +10,7 @@ const DigitalBiomarkers = ({ patient }) => {
   const [metricData, setMetricData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [gameHistory, setGameHistory] = useState(null);
+  const [threshold, setThreshold] = useState(0);
 
   const showTooltip = () => setIsTooltipVisible(true);
   const hideTooltip = () => setIsTooltipVisible(false);
@@ -68,10 +69,14 @@ const DigitalBiomarkers = ({ patient }) => {
   const fetchMetricData = async (patientId, metric) => {
     setLoading(true);
     try {
-      const response = await fetch(`/dashboard/biomarker/histograms/${patientId}/${metric}/`);
+      // const response = await fetch('/metrics1000.json');
+      // const response = await fetch(`localhost:8000/dashboard/biomarker/histograms/${patientId}/${metric}/`);
+      const response = await fetch(`http://localhost:8000/dashboard/biomarker/histograms/484/27/`);
       const data = await response.json();
       console.log('Fetched Metric Data:', data);
       setMetricData(data);
+      console.log('Threshold:', data.threshold);
+      setThreshold(data.threshold);
     } catch (error) {
       console.error('Error fetching metric data:', error);
     } finally {
@@ -93,16 +98,13 @@ const DigitalBiomarkers = ({ patient }) => {
     }
 }
 
-const splitDataDistChartData = (metricData) => {
-    const xData = metricData.map(item=>item.biomarker_value);
-    const yData = metricData.map(item=>item.frequency);
-
+const splitDataDistChartData = (metricData_loc) => {
+    const xData = metricData_loc.map(item=>item.biomarker_value);
+    const yData = metricData_loc.map(item=>item.frequency);
 
     const sortedVal = [...xData].sort((a, b) => a - b);
     const midIndex = Math.floor(sortedVal.length / 2);
-    const median = sortedVal.length % 2 !== 0 ? sortedVal[midIndex] : (sortedVal[midIndex - 1] + sortedVal[midIndex]) / 2;
-    const threshold = median;
-
+    // const median = sortedVal.length % 2 !== 0 ? sortedVal[midIndex] : (sortedVal[midIndex - 1] + sortedVal[midIndex]) / 2;
     return { xData, yData, threshold };
 };
 
@@ -137,19 +139,20 @@ const {
 const { 
     xData: xData_mci = [], 
     yData: yData_mci = [], 
-    threshold: threshold_mci = 0 
 } = metricData?.mci ? splitDataDistChartData(metricData.mci) : {};
 
 const { 
     xData: xData_healthy = [], 
     yData: yData_healthy = [], 
-    threshold: threshold_healthy = 0 
 } = metricData?.healthy ? splitDataDistChartData(metricData.healthy) : {};
+
 
 const xUser = metricData?.xUser || 0;
 
-console.log('MCI Data:', { xData_mci, yData_mci, threshold_mci });
-console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy });
+console.log('MCI Data:', { xData_mci, yData_mci, threshold });
+console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
+
+
 
   return (
     <div className="card" id="dig-card">
@@ -188,11 +191,12 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
       ) : (
         <div className="grid-container">
           <div className="grid-item">
+            
             <GameHistoryLineChart data={gameHistoryData} labels={gameHistoryLabels} minLimit = {minLimit} maxLimit = {maxLimit}/>
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={metricData?.current_user.biomarker_value} swapColors={true} />
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={true} xUserLabel={patient.full_name}/>
           </div>
           <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
             <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
@@ -200,7 +204,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold_healthy} xUser={metricData?.current_user.biomarker_value} />
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name}/>
           </div>
         </div>
       )}

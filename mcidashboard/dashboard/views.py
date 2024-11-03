@@ -182,21 +182,46 @@ def get_all_biomarkers(request):
     serializer = BiomarkerTypeSerializer(biomarkers, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+from collections import defaultdict
+
+# Function to aggregate frequencies based on rounded values
+def aggregate_frequency(biomarker_values, decimal_places=2):
+    frequency_dict = defaultdict(int)
+    for value, frequency in Counter(biomarker_values).items():
+        rounded_value = round(value, decimal_places)
+        frequency_dict[rounded_value] += frequency
+    return [{'biomarker_value': rounded_value, 'frequency': frequency} for rounded_value, frequency in sorted(frequency_dict.items())]
+
+
 from .biomarker_calculations import *
+
+from collections import Counter, defaultdict
+from django.http import JsonResponse
+from django.db.models import Max
+from rest_framework.decorators import api_view
+from .models import Person, Game, PersonBiomarkers
+
+# Helper function to aggregate frequencies based on rounded values
+def aggregate_frequency(biomarker_values, decimal_places=2):
+    frequency_dict = defaultdict(int)
+    for value, frequency in Counter(biomarker_values).items():
+        rounded_value = round(value, decimal_places)
+        frequency_dict[rounded_value] += frequency
+    # Convert the frequency dictionary to a sorted list of dictionaries
+    return [{'biomarker_value': rounded_value, 'frequency': frequency} for rounded_value, frequency in sorted(frequency_dict.items())]
 
 @api_view(['GET'])
 def biomarker_frequency_histogram(request, userID, biomarker_id):
-
     try:
         user = Person.objects.get(id=userID)
     except Person.DoesNotExist:
         return JsonResponse({'error': 'User not found'}, status=404)
 
-
+    # Get the latest game for the user
     last_game_user = Game.objects.filter(personID=user).order_by('-timestamp').first()
 
+    # Get the current user's biomarker value for the last game
     current_user_biomarker_value = None
-
     if last_game_user:
         current_user_biomarker_value = PersonBiomarkers.objects.filter(
             biomarkerID=biomarker_id, gameID=last_game_user
@@ -206,55 +231,52 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
     if current_user_biomarker_value is None:
         current_user_biomarker_value = 0
 
+    # Query for healthy users and their last games
     healthy_users = Person.objects.filter(mci=0)
     healthy_last_games_subquery = Game.objects.filter(personID__in=healthy_users).values('personID').annotate(
         last_game_timestamp=Max('timestamp')
     ).values_list('personID', 'last_game_timestamp')
-
     healthy_last_games = Game.objects.filter(personID__in=healthy_users).filter(
         timestamp__in=[t[1] for t in healthy_last_games_subquery]
     )
 
+    # Query for MCI users and their last games
     mci_users = Person.objects.filter(mci=1)
     mci_last_games_subquery = Game.objects.filter(personID__in=mci_users).values('personID').annotate(
         last_game_timestamp=Max('timestamp')
     ).values_list('personID', 'last_game_timestamp')
-
     mci_last_games = Game.objects.filter(personID__in=mci_users).filter(
         timestamp__in=[t[1] for t in mci_last_games_subquery]
     )
 
-
+    # Get biomarker values for MCI and healthy groups
     mci_biomarker_values = PersonBiomarkers.objects.filter(biomarkerID=biomarker_id, gameID__in=mci_last_games).values_list('value', flat=True)
     healthy_biomarker_values = PersonBiomarkers.objects.filter(biomarkerID=biomarker_id, gameID__in=healthy_last_games).values_list('value', flat=True)
 
-    mci_biomarker_frequency = Counter(mci_biomarker_values)
-    healthy_biomarker_frequency = Counter(healthy_biomarker_values)
+    # Aggregate frequencies with rounding to avoid duplicates
+    mci_biomarker_frequency_list = aggregate_frequency(mci_biomarker_values, decimal_places=2)
+    healthy_biomarker_frequency_list = aggregate_frequency(healthy_biomarker_values, decimal_places=2)
 
-
-    mci_biomarker_frequency_list = [{'biomarker_value': round(value, 2) if isinstance(value, float) else value, 'frequency': frequency} for value, frequency in mci_biomarker_frequency.items()]
-    healthy_biomarker_frequency_list = [{'biomarker_value': round(value, 2) if isinstance(value, float) else value, 'frequency': frequency} for value, frequency in healthy_biomarker_frequency.items()]
-
-
-    mci_biomarker_frequency_list = sorted(mci_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
-    healthy_biomarker_frequency_list = sorted(healthy_biomarker_frequency_list, key=lambda x: x['biomarker_value'])
-
+    # Prepare data for response
     data = {
         'mci': mci_biomarker_frequency_list,
         'healthy': healthy_biomarker_frequency_list
     }
 
+    # Calculate threshold (assuming threshold_calc is defined elsewhere)
     threshold = threshold_calc(data)
 
+    # Return JSON response
     return JsonResponse({
         'current_user': {
             'biomarker_value': current_user_biomarker_value,
-            'mci': user.mci
+            'mci': user.mci,
         },
         'mci': mci_biomarker_frequency_list,
         'healthy': healthy_biomarker_frequency_list,
         'threshold': threshold
     }, safe=False)
+
 
 @api_view(['GET'])
 def get_game_history_per_patient(request, pk, biomarkerID):

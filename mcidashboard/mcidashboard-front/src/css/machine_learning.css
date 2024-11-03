@@ -5,6 +5,7 @@
     grid-template-rows: auto auto;
     justify-items: center;
     padding: 20px;
+    margin-right: 30px;
 }
 
 .card {

@@ -13,6 +13,9 @@ def threshold_calc(data):
     '''
     mci_data = data['mci']
     healthy_data = data['healthy']
+
+    print(mci_data)
+    print(healthy_data)
     # Expand data based on frequencies
     mci_expanded = expand_data(mci_data)
     healthy_expanded = expand_data(healthy_data)
