@@ -16,43 +16,35 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   const aboveThresholdColor = swapColors ? 'rgba(33, 174, 238, 1)' : 'rgba(250, 93, 93, 1)';
 
   
-  let xDataWithThreshold = [...xData];
   
-  if (!xData.includes(xUser)) {
-    xDataWithThreshold.push(xUser);
-  }
     
-  /*
-  if (!xDataWithThreshold.includes(threshold)) {
-    xDataWithThreshold.push(threshold);
-  }*/
-    
+  
+  let xDataWithThreshold = [...new Set([...xData, xUser, threshold])];  // Ensures unique values only
   xDataWithThreshold.sort((a, b) => a - b);
-
   let yDataWithThreshold = [...yData];
-
-  if (!xDataWithThreshold.includes(threshold)) {
-    const thresholdIndex = xDataWithThreshold.findIndex(x => x > threshold);
-    xDataWithThreshold.splice(thresholdIndex, 0, threshold);
-    const interpolatedYThreshold = interpolate(
-      xDataWithThreshold[thresholdIndex - 1], yDataWithThreshold[thresholdIndex - 1],
-      xDataWithThreshold[thresholdIndex], yDataWithThreshold[thresholdIndex - 1],
-      threshold
-    );
-    yDataWithThreshold.splice(thresholdIndex, 0, interpolatedYThreshold);
-  }
-
-  // Ensure xUser is interpolated if necessary
+  const insertAndInterpolate = (value, xData, yData) => {
+    if (!xData.includes(value)) {
+      const index = xData.findIndex(x => x > value);
+      const prevIndex = index - 1;
+      if (index === -1 || prevIndex < 0) {  // Edge cases for very first or last position
+        yData.splice(index, 0, 0);  // Assuming a y value of 0 or another logical default
+      } else {
+        const interpolatedY = interpolate(
+          xData[prevIndex], yData[prevIndex],
+          xData[index], yData[index],
+          value
+        );
+        yData.splice(index, 0, interpolatedY);
+      }
+      xData.splice(index, 0, value);
+    }
+  };
   
-  if (!xData.includes(xUser)) {
-    const indexBefore = xDataWithThreshold.findIndex(x => x > xUser) - 1;
-    const x1 = xDataWithThreshold[indexBefore];
-    const y1 = yData[indexBefore];
-    const x2 = xDataWithThreshold[indexBefore + 1];
-    const y2 = yData[indexBefore + 1];
-    const interpolatedY = interpolate(x1, y1, x2, y2, xUser);
-    yDataWithThreshold.splice(indexBefore + 1, 0, interpolatedY);
-  }
+  insertAndInterpolate(threshold, xDataWithThreshold, yDataWithThreshold);
+  insertAndInterpolate(xUser, xDataWithThreshold, yDataWithThreshold);
+  
+
+  
 
   const xUserIndex = xDataWithThreshold.indexOf(xUser);
   const edgeThreshold = 1; // Indices from the edges considered as near the edge
@@ -108,7 +100,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
         grid: {
           display: true
         },
-        ticks: {
+        ticks: {   
           display: true,
           color: function(context) {
             if (context.tick.value === xDataWithThreshold.indexOf(xUser)) {

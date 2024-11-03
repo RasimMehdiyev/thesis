@@ -69,7 +69,7 @@ const DigitalBiomarkers = ({ patient }) => {
   const fetchMetricData = async (patientId, metric) => {
     setLoading(true);
     try {
-      const response = await fetch('metrics1000.json');//const response = await fetch(`/dashboard/biomarker/histograms/${patientId}/${metric}/`);
+      const response = await fetch('metrics2.json');//const response = await fetch(`/dashboard/biomarker/histograms/${patientId}/${metric}/`);
       const data = await response.json();
       console.log('Fetched Metric Data:', data);
       setMetricData(data);
@@ -194,7 +194,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={true} xUserLabel={patient.full_name}/>
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={1.3} xUser={1.79} xUserLabel={patient.full_name}/>
           </div>
           <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
             <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
@@ -202,7 +202,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name}/>
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={1.3} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name}/>
           </div>
         </div>
       )}
