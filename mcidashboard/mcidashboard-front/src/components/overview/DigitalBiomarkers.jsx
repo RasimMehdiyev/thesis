@@ -151,6 +151,8 @@ const xUser = metricData?.xUser || 0;
 console.log('MCI Data:', { xData_mci, yData_mci, threshold_mci });
 console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy });
 
+
+
   return (
     <div className="card" id="dig-card">
       <div className="personal-info-h" style={{ position: 'relative' }}>
@@ -188,11 +190,12 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
       ) : (
         <div className="grid-container">
           <div className="grid-item">
+            
             <GameHistoryLineChart data={gameHistoryData} labels={gameHistoryLabels} minLimit = {minLimit} maxLimit = {maxLimit}/>
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={metricData?.current_user.biomarker_value} swapColors={true} />
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={299} swapColors={true} xUserLabel="John Doe"/>
           </div>
           <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
             <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
