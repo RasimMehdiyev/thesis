@@ -35,7 +35,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   }
 
   const xUserIndex = xDataWithThreshold.indexOf(xUser);
-  const edgeThreshold = 3; // Indices from the edges considered as "near the edge"
+  const edgeThreshold = 1; // Indices from the edges considered as near the edge
   const nearStartEdge = xUserIndex <= edgeThreshold;
   const nearEndEdge = xUserIndex >= xDataWithThreshold.length - edgeThreshold;
 
@@ -63,8 +63,8 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
     maintainAspectRatio: false,
     layout: {
       padding: {
-        left: nearStartEdge ? 50 : 10, // Increase left padding if xUser is near the start
-        right: nearEndEdge ? 50 : 10, // Increase right padding if xUser is near the end
+        left: nearStartEdge || nearEndEdge? 50 : 10, // Increase left padding if xUser is near the start
+        right: nearEndEdge || nearStartEdge ? 50 : 10, // Increase right padding if xUser is near the end
         top: 10,
         bottom: 10
       }
