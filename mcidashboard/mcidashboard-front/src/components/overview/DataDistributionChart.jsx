@@ -45,10 +45,12 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
       label: 'Data Points',
       data: yDataWithThreshold,
       borderColor: belowThresholdColor,
-      backgroundColor: belowThresholdColor.replace('1)', '0.2)'),
+      backgroundColor: ctx => ctx.p1DataIndex < xDataWithThreshold.indexOf(threshold) ? belowThresholdColor.replace('1)', '0.2)') : aboveThresholdColor.replace('1)', '0.2)'),
       fill: true,
       tension: 0.4,
-      pointRadius: xDataWithThreshold.map(x => x === xUser ? 6 : 0), // Highlight the xUser point
+      pointRadius: xDataWithThreshold.map(x => x === xUser ? 6 : 0), // Show a point only for xUser
+      pointBorderColor: xDataWithThreshold.map((x, index) => x === xUser ? (xUser > threshold ? aboveThresholdColor : belowThresholdColor) : 'rgba(0, 0, 0, 0)'), 
+      pointBackgroundColor: xDataWithThreshold.map((x, index) => x === xUser ? (xUser > threshold ? aboveThresholdColor.replace('1)', '0.2)') : belowThresholdColor.replace('1)', '0.2)')) : 'rgba(0, 0, 0, 0)'), 
       segment: {
         borderColor: ctx => ctx.p1DataIndex < xDataWithThreshold.indexOf(threshold) ? belowThresholdColor : aboveThresholdColor,
         backgroundColor: ctx => ctx.p1DataIndex < xDataWithThreshold.indexOf(threshold) ? belowThresholdColor.replace('1)', '0.2)') : aboveThresholdColor.replace('1)', '0.2)')
