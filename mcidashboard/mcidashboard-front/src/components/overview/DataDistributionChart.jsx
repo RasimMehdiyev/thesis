@@ -17,18 +17,33 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
 
   
   let xDataWithThreshold = [...xData];
+  
   if (!xData.includes(xUser)) {
     xDataWithThreshold.push(xUser);
   }
+    
   /*
   if (!xDataWithThreshold.includes(threshold)) {
     xDataWithThreshold.push(threshold);
   }*/
+    
   xDataWithThreshold.sort((a, b) => a - b);
 
   let yDataWithThreshold = [...yData];
 
+  if (!xDataWithThreshold.includes(threshold)) {
+    const thresholdIndex = xDataWithThreshold.findIndex(x => x > threshold);
+    xDataWithThreshold.splice(thresholdIndex, 0, threshold);
+    const interpolatedYThreshold = interpolate(
+      xDataWithThreshold[thresholdIndex - 1], yDataWithThreshold[thresholdIndex - 1],
+      xDataWithThreshold[thresholdIndex], yDataWithThreshold[thresholdIndex - 1],
+      threshold
+    );
+    yDataWithThreshold.splice(thresholdIndex, 0, interpolatedYThreshold);
+  }
+
   // Ensure xUser is interpolated if necessary
+  
   if (!xData.includes(xUser)) {
     const indexBefore = xDataWithThreshold.findIndex(x => x > xUser) - 1;
     const x1 = xDataWithThreshold[indexBefore];
