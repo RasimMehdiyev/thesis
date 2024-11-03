@@ -34,6 +34,10 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
     yDataWithThreshold.splice(indexBefore + 1, 0, interpolatedY);
   }
 
+  const xUserIndex = xDataWithThreshold.indexOf(xUser);
+  const edgeThreshold = 3; // Define how many data points at the start/end are considered "edges"
+  const isEdge = xUserIndex <= edgeThreshold || xUserIndex >= xDataWithThreshold.length - edgeThreshold;
+
   const data = {
     labels: xDataWithThreshold,
     datasets: [{
@@ -84,20 +88,20 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
       datalabels: {
         color: '#444',
         anchor: 'end',
-        align: 'top',
-        overflow: 10,
+        align: 'end',
+        rotation: isEdge ? 270 : 0, // Rotate label if xUser is at the edges
         font: {
           weight: 'bold',  // Set the label font to bold
           size: 12  // Optionally set the font size
         },
         formatter: (value, ctx) => {
-          if (ctx.dataIndex === xDataWithThreshold.indexOf(xUser)) {
+          if (ctx.dataIndex === xUserIndex) {
             return xUserLabel; // Display custom xUserLabel
           }
           return null;
         },
         display: function(context) {
-          return context.dataIndex === xDataWithThreshold.indexOf(xUser); // Display label only for xUser
+          return context.dataIndex === xUserIndex; // Display label only for xUser
         }
       }
     }

@@ -195,7 +195,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={299} swapColors={true} xUserLabel="John Doe"/>
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold_mci} xUser={233} swapColors={true} xUserLabel="John Doe"/>
           </div>
           <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
             <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
@@ -203,7 +203,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold_healthy }
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold_healthy} xUser={metricData?.current_user.biomarker_value} />
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold_healthy} xUser={metricData?.current_user.biomarker_value} xUserLabel="John Doe"/>
           </div>
         </div>
       )}
