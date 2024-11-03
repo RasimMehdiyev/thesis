@@ -35,8 +35,9 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   }
 
   const xUserIndex = xDataWithThreshold.indexOf(xUser);
-  const edgeThreshold = 3; // Define how many data points at the start/end are considered "edges"
-  const isEdge = xUserIndex <= edgeThreshold || xUserIndex >= xDataWithThreshold.length - edgeThreshold;
+  const edgeThreshold = 3; // Indices from the edges considered as "near the edge"
+  const nearStartEdge = xUserIndex <= edgeThreshold;
+  const nearEndEdge = xUserIndex >= xDataWithThreshold.length - edgeThreshold;
 
   const data = {
     labels: xDataWithThreshold,
@@ -58,6 +59,14 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: nearStartEdge ? 50 : 10, // Increase left padding if xUser is near the start
+        right: nearEndEdge ? 50 : 10, // Increase right padding if xUser is near the end
+        top: 10,
+        bottom: 10
+      }
+    },
     scales: {
       x: {
         grid: {
@@ -87,12 +96,11 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
       },
       datalabels: {
         color: '#444',
-        anchor: 'end',
-        align: 'end',
-        rotation: isEdge ? 270 : 0, // Rotate label if xUser is at the edges
+        anchor: 'end', 
+        align: 'end', 
         font: {
-          weight: 'bold',  // Set the label font to bold
-          size: 12  // Optionally set the font size
+          weight: 'bold',
+          size: 12
         },
         formatter: (value, ctx) => {
           if (ctx.dataIndex === xUserIndex) {
@@ -106,10 +114,10 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
       }
     }
   };
-
+  
   return <div style={{ width: '100%', height: '100%' }}>
     <Line data={data} options={options} />
   </div>;
 };
-
+  
 export default DataDistributionChart;
