@@ -440,7 +440,8 @@ const handleSendMessage = (answer = message, skip = false) => {
       const nextSectionIndex = currentSectionIndex + 1;
       setCurrentSectionIndex(nextSectionIndex);
       setCurrentQuestionIndex(0);
-      sendSystemMessage(fetchedSections[nextSectionIndex]?.title_desc);
+      if (fetchedSections[nextSectionIndex]?.title_desc.length > 0) 
+        sendSystemMessage(fetchedSections[nextSectionIndex]?.title_desc);
       sendSystemMessage(fetchedSections[nextSectionIndex]?.questions[0]?.question);
       setShowAnswerOptions(true);
       setIsQuestionVisible(true);
@@ -461,15 +462,10 @@ const handleSendMessage = (answer = message, skip = false) => {
 
   const handleBack = () => {
 
-    console.log("Current question index:", currentQuestionIndex);
-    console.log("Current section index:", currentSectionIndex);
-
     if (currentQuestionIndex > 0 && currentSectionIndex >= 0) {
       let prevIndex = currentQuestionIndex - 1;
-      console.log("Previous question index:", prevIndex);
-      console.log("Logical skip in handleBack:", logicalSkip);
+
       if (logicalSkip && prevIndex === 9) {
-        console.log("Logical Skip is true");
         prevIndex = prevIndex - 1;
       }
 

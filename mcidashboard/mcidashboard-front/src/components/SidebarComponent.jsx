@@ -77,7 +77,6 @@ const SidebarComponent = () => {
   const handleQuestionnaireComplete = () => {
     const isCompleteLocalSt = localStorage.getItem('isCompleted');
     if (isCompleteLocalSt === 'true') {
-      console.log('Questionnaire already completed. Setting isQuestionnaireComplete to true');
       setIsQuestionnaireComplete(isCompleteLocalSt);
     }
   };
