@@ -71,7 +71,7 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
   }
 
   // in xDataWithThreshold, add a point in the beginning and at then that is 1 less than first value and 1 more than last value respectively, similarly add a point in yDataWithThreshold that is 0 at the beginning and 0 at the end
-  xDataWithThreshold = [Math.round(xDataWithThreshold[0] - 1, 0), ...xDataWithThreshold, xDataWithThreshold[xDataWithThreshold.length - 1] + 1];
+  xDataWithThreshold = [Math.round(xDataWithThreshold[0] - 1,0), ...xDataWithThreshold, xDataWithThreshold[xDataWithThreshold.length - 1] + 1];
   yDataWithThreshold = [0, ...yDataWithThreshold, 0];
 
   const data = {

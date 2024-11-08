@@ -53,7 +53,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Question
-        fields = ['id', 'section_title', 'question', 'q_type', 'required', 'answers', 'charLimit', 'noSpecialChars']  # Include answers in the fields
+        fields = ['id', 'section_title', 'question', 'q_type', 'required', 'answers', 'charLimit', 'noSpecialChars', 'order']  # Include answers in the fields
 
     def get_answers(self, obj):
         """Dynamically fetch answers based on the question type"""

@@ -94,11 +94,17 @@ class BiomarkerType(models.Model):
         return self.name
 
 class Biomarker(models.Model):
+    GOOD_BAD = (
+        ('G', 'Good'),
+        ('B', 'Bad'),
+    )
+
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=45)
     type = models.ForeignKey(BiomarkerType, on_delete=models.CASCADE)
     unit = models.CharField(max_length=45, null=True, blank=True)
     description = models.TextField(blank=True, null=True)
+    low = models.CharField(max_length=2, choices=GOOD_BAD, default='G')
     def __str__(self):
         return self.name
 
@@ -158,9 +164,16 @@ class Question(models.Model):
     required = models.BooleanField(default=True)
     charLimit = models.IntegerField(blank=True, null=True)
     noSpecialChars = models.BooleanField(default=False)
+    order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.section.title + ' | ' + self.question[:20]
+
+    # order by order field
+    class Meta:
+       ordering = ['order']
+    #  
+
     
 class MultipleChoiceOption(models.Model):
     id = models.BigAutoField(primary_key=True)

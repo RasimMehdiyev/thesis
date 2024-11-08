@@ -92,7 +92,7 @@ class QuestionnaireSectionsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 admin.site.register(QuestionnaireSections, QuestionnaireSectionsAdmin)
 
 class QuestionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('id', 'section', 'question', 'q_type', 'required', 'charLimit', 'noSpecialChars')
+    list_display = ('id', 'section', 'question', 'q_type', 'required', 'charLimit', 'noSpecialChars', 'order')
     list_filter = ['section']
     search_fields = ['section']
     ordering = ['section']

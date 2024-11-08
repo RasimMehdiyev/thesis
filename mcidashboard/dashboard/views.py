@@ -260,7 +260,12 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
     # Prepare data for response
     data = {
         'mci': mci_biomarker_frequency_list,
-        'healthy': healthy_biomarker_frequency_list
+        'healthy': healthy_biomarker_frequency_list,
+            'current_user': {
+            'biomarker_value': current_user_biomarker_value,
+            'mci': user.mci,
+        },
+        'isLowGood': Biomarker.objects.get(pk=biomarker_id).low == 'G'  
     }
 
     # if the user is mci, then add the current user's biomarker value in the healthy group with frequency 0 and if teh bioamrker value is not present in the healthy group
@@ -271,7 +276,9 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
 
     # Calculate threshold (assuming threshold_calc is defined elsewhere)
     threshold = threshold_calc(data)
-
+    isLowGood = Biomarker.objects.get(pk=biomarker_id).low == 'G'
+    # plot_biomarker_bar_chart(data, threshold)
+    # plot_biomarker_line_chart(data, threshold)
     # Return JSON response
     return JsonResponse({
         'current_user': {
@@ -280,7 +287,8 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         },
         'mci': mci_biomarker_frequency_list,
         'healthy': healthy_biomarker_frequency_list,
-        'threshold': threshold
+        'threshold': threshold,
+        'isLowGood': isLowGood
     }, safe=False)
 
 

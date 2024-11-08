@@ -10,7 +10,7 @@ const SidebarComponent = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isChatboxVisible, setIsChatboxVisible] = useState(false);
+  const [isChatboxVisible, setIsChatboxVisible] = useState(true);
   const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const navigate = useNavigate();
   const [selectedPatientId, setSelectedPatientId] = useState(null);
@@ -85,7 +85,8 @@ const SidebarComponent = () => {
 
   const toggleChatbox = () => {
     setIsChatboxVisible(!isChatboxVisible);
-    // console.log('Questionnaire Complete?', isQuestionnaireComplete);
+    console.log('Chatbox Visible?', !isChatboxVisible);
+    console.log('Questionnaire Complete?', isQuestionnaireComplete);
   };
 
   // Render the sidebar component once data is available
@@ -113,7 +114,9 @@ const SidebarComponent = () => {
               title="Start Questionnaire"
               onClick={toggleChatbox}
             />
-            {!localStorage.getItem('isCompleted') && !isChatboxVisible && <div className="red-dot"></div>} 
+            {/* {!localStorage.getItem('isCompleted') && !isChatboxVisible && <div className="red-dot"></div>} 
+             */}
+            {!isChatboxVisible && localStorage.getItem('isCompleted') === 'false' ? <div className="red-dot"></div> : null}
         </div>
         {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
         }

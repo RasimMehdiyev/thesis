@@ -30,7 +30,8 @@
                 "required": true,
                 "answers": [],
                 "charLimit": 24,
-                "noSpecialChars": true
+                "noSpecialChars": true,
+                "order": 0
             },
             {
                 "id": 1,
@@ -47,7 +48,8 @@
                     "65+"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 1
             },
             {
                 "id": 2,
@@ -64,7 +66,8 @@
                     "Other"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 2
             },
             {
                 "id": 3,
@@ -74,7 +77,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 3
             },
             {
                 "id": 4,
@@ -89,7 +93,8 @@
                     "15+ years"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 4
             },
             {
                 "id": 5,
@@ -105,7 +110,8 @@
                     "Other"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 5
             },
             {
                 "id": 6,
@@ -115,7 +121,8 @@
                 "required": true,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 6
             },
             {
                 "id": 7,
@@ -125,7 +132,8 @@
                 "required": true,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 7
             },
             {
                 "id": 8,
@@ -141,7 +149,8 @@
                     "Daily"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 8
             },
             {
                 "id": 9,
@@ -155,7 +164,8 @@
                     "Other"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 9
             },
             {
                 "id": 10,
@@ -171,12 +181,13 @@
                     "Not confident at all"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 10
             },
             {
                 "id": 11,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "How often do you use web-based applications or tools as part of your job? \r\n(e.g., Trello, Asana, Slack, Teams, Google Docs, Office 365, Medscape, PubMed, Cerner, etc.)",
+                "question": "How often do you use web-based applications or tools as part of your job? (e.g., Trello, Asana, Slack, Teams, Google Docs, Office 365, Medscape, PubMed, Cerner, etc.)",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
@@ -187,12 +198,13 @@
                     "Daily"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 11
             },
             {
                 "id": 12,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "How confident do you feel using machine learning or AI (Artificial Intelligence)\r\npowered decision support systems in your daily life?\r\n(e.g., Google Maps, Waze, Mint, Wealthfront, Fitbit, Ada, Amazon, etc.)",
+                "question": "How confident do you feel using machine learning or AI (Artificial Intelligence) powered decision support systems in your daily life? (e.g., Google Maps, Waze, Mint, Wealthfront, Fitbit, Ada, Amazon, etc.)",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
@@ -203,12 +215,13 @@
                     "Not at all"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 12
             },
             {
                 "id": 13,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "How often do you use AI in medical practice?\r\n(e.g., Aidoc, IBM Watson Health, Nuance’s Dragon Medical One, Babylon Health, etc.)",
+                "question": "How often do you use AI in medical practice? (e.g., Aidoc, IBM Watson Health, Nuance’s Dragon Medical One, Babylon Health, etc.)",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
@@ -219,7 +232,8 @@
                     "Daily"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 13
             },
             {
                 "id": 14,
@@ -235,35 +249,40 @@
                     "Very negative"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 14
             },
             {
                 "id": 15,
                 "section_title": "DEMOGRAPHIC QUESTIONS",
-                "question": "Do you want to submit current section?",
+                "question": "Do you want to submit the current section? If not, go back to previous questions to edit your answers.",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
                     "Yes"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 15
             }
         ]
     },
     {
         "id": 2,
-        "title_desc": "Answer the following questions based on the information contained in the web app. Feel free to skip the questions you don't find an answer to.",
+        "title_desc": "",
         "questionnaire": 6,
         "title": "EXPLORATION TASKS",
         "description": "Before answering any more questions, please take as much time as you need to familiarize yourself with the system. We recommend spending 3-5 minutes exploring.  Once you're comfortable, proceed to answer each question based on what you find and understand from the information presented within the web application. The questions are designed to guide you to explore the system further and discover more features. Feel free to skip questions if you do not find an answer. As you complete the tasks, please put yourself in the position of a healthcare professional monitoring the progression of a patient's MCI diagnosis.",
         "question_id": [
+            77,
+            76,
             16,
             17,
             18,
             19,
             20,
             21,
+            75,
             22,
             23,
             24,
@@ -274,6 +293,30 @@
             29
         ],
         "questions": [{
+                "id": 77,
+                "section_title": "EXPLORATION TASKS",
+                "question": "Before moving to the next part of this questionnaire, take as much time as you need to explore the web app. We recommend 3-5 minutes. You can safely close and reopen the questionnaire at any time to explore the web app as a whole. None of your answers or progress will be lost by doing so. When you are done exploring, click the button below.",
+                "q_type": "MC",
+                "required": true,
+                "answers": [
+                    "Next"
+                ],
+                "charLimit": null,
+                "noSpecialChars": false,
+                "order": 15
+            },
+            {
+                "id": 76,
+                "section_title": "EXPLORATION TASKS",
+                "question": "Answer the following questions based on the information contained in the web app. Feel free to skip the questions you don't find an answer to.",
+                "q_type": "MC",
+                "required": true,
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": false,
+                "order": 16
+            },
+            {
                 "id": 16,
                 "section_title": "EXPLORATION TASKS",
                 "question": "Is Tracey Montes’s age below or above the average age of MCI patients?",
@@ -285,7 +328,8 @@
                     "Equal"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 17
             },
             {
                 "id": 17,
@@ -294,18 +338,20 @@
                 "q_type": "OE",
                 "required": false,
                 "answers": [],
-                "charLimit": null,
-                "noSpecialChars": false
+                "charLimit": 5,
+                "noSpecialChars": false,
+                "order": 18
             },
             {
                 "id": 18,
                 "section_title": "EXPLORATION TASKS",
-                "question": "What is the number of healthy patients that were incorrectly labeled as MCI for the [model name] classifier model?",
+                "question": "What is the number of healthy patients that were incorrectly labeled as MCI for the Nu-Support Vector Classifier model?",
                 "q_type": "OE",
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": true,
+                "order": 19
             },
             {
                 "id": 19,
@@ -314,8 +360,9 @@
                 "q_type": "OE",
                 "required": false,
                 "answers": [],
-                "charLimit": null,
-                "noSpecialChars": false
+                "charLimit": 5,
+                "noSpecialChars": false,
+                "order": 20
             },
             {
                 "id": 20,
@@ -329,17 +376,30 @@
                     "Maybe"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 21
             },
             {
                 "id": 21,
                 "section_title": "EXPLORATION TASKS",
-                "question": "What is the unit of the biomarker “Solved” and how many values can that unit take?",
+                "question": "What is the unit of the biomarker “Solved”?",
                 "q_type": "OE",
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 22
+            },
+            {
+                "id": 75,
+                "section_title": "EXPLORATION TASKS",
+                "question": "How many values can that unit take?",
+                "q_type": "OE",
+                "required": false,
+                "answers": [],
+                "charLimit": null,
+                "noSpecialChars": true,
+                "order": 23
             },
             {
                 "id": 22,
@@ -349,7 +409,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 24
             },
             {
                 "id": 23,
@@ -359,7 +420,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 25
             },
             {
                 "id": 24,
@@ -373,7 +435,8 @@
                     "Neither"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 26
             },
             {
                 "id": 25,
@@ -383,7 +446,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 27
             },
             {
                 "id": 26,
@@ -393,7 +457,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 28
             },
             {
                 "id": 27,
@@ -403,7 +468,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 29
             },
             {
                 "id": 28,
@@ -417,19 +483,21 @@
                     "Equal"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 30
             },
             {
                 "id": 29,
                 "section_title": "EXPLORATION TASKS",
-                "question": "Do you want to submit current section?",
+                "question": "Do you want to submit the current section? If not, go back to previous questions to edit your answers.",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
                     "Yes"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 31
             }
         ]
     },
@@ -491,7 +559,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 32
             },
             {
                 "id": 31,
@@ -507,7 +576,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 33
             },
             {
                 "id": 32,
@@ -523,7 +593,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 34
             },
             {
                 "id": 33,
@@ -539,7 +610,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 35
             },
             {
                 "id": 34,
@@ -555,7 +627,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 36
             },
             {
                 "id": 35,
@@ -571,7 +644,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 37
             },
             {
                 "id": 36,
@@ -587,7 +661,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 38
             },
             {
                 "id": 37,
@@ -603,7 +678,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 39
             },
             {
                 "id": 38,
@@ -619,7 +695,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 40
             },
             {
                 "id": 39,
@@ -635,7 +712,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 41
             },
             {
                 "id": 40,
@@ -651,7 +729,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 42
             },
             {
                 "id": 41,
@@ -667,7 +746,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 43
             },
             {
                 "id": 42,
@@ -683,7 +763,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 44
             },
             {
                 "id": 43,
@@ -699,7 +780,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 45
             },
             {
                 "id": 44,
@@ -715,12 +797,13 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 46
             },
             {
                 "id": 45,
                 "section_title": "SCALE RATED QUESTIONS",
-                "question": "The web application has improved my understanding of how the machine learning \r\nmodel works.",
+                "question": "The web application has improved my understanding of how the machine learning model works.",
                 "q_type": "SC",
                 "required": true,
                 "answers": [
@@ -731,7 +814,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 47
             },
             {
                 "id": 46,
@@ -747,7 +831,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 48
             },
             {
                 "id": 47,
@@ -763,7 +848,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 49
             },
             {
                 "id": 48,
@@ -779,7 +865,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 50
             },
             {
                 "id": 49,
@@ -795,12 +882,13 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 51
             },
             {
                 "id": 50,
                 "section_title": "SCALE RATED QUESTIONS",
-                "question": "The information presented in the web application was understandable within the \r\nrequirements of my role.",
+                "question": "The information presented in the web application was understandable within the requirements of my role.",
                 "q_type": "SC",
                 "required": true,
                 "answers": [
@@ -811,12 +899,13 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 52
             },
             {
                 "id": 51,
                 "section_title": "SCALE RATED QUESTIONS",
-                "question": "The information presented in the web application showed me that the machine \r\nlearning model performs well.",
+                "question": "The information presented in the web application showed me that the machine learning model performs well.",
                 "q_type": "SC",
                 "required": true,
                 "answers": [
@@ -827,12 +916,13 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 53
             },
             {
                 "id": 52,
                 "section_title": "SCALE RATED QUESTIONS",
-                "question": "The web application helped to complete the intended task using the machine \r\nlearning model.",
+                "question": "The web application helped to complete the intended task using the machine learning model.",
                 "q_type": "SC",
                 "required": true,
                 "answers": [
@@ -843,7 +933,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 54
             },
             {
                 "id": 53,
@@ -859,7 +950,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 55
             },
             {
                 "id": 54,
@@ -875,7 +967,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 56
             },
             {
                 "id": 55,
@@ -891,7 +984,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 57
             },
             {
                 "id": 56,
@@ -907,7 +1001,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 58
             },
             {
                 "id": 57,
@@ -923,7 +1018,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 59
             },
             {
                 "id": 58,
@@ -939,7 +1035,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 60
             },
             {
                 "id": 59,
@@ -955,7 +1052,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 61
             },
             {
                 "id": 60,
@@ -971,7 +1069,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 62
             },
             {
                 "id": 61,
@@ -987,7 +1086,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 63
             },
             {
                 "id": 62,
@@ -1003,7 +1103,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 64
             },
             {
                 "id": 63,
@@ -1019,7 +1120,8 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 65
             },
             {
                 "id": 64,
@@ -1035,19 +1137,21 @@
                     "Strongly Disagree"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 66
             },
             {
                 "id": 65,
                 "section_title": "SCALE RATED QUESTIONS",
-                "question": "Do you want to submit current section?",
+                "question": "Do you want to submit the current section? If not, go back to previous questions to edit your answers.",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
                     "Yes"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 67
             }
         ]
     },
@@ -1075,7 +1179,8 @@
                 "required": true,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 68
             },
             {
                 "id": 67,
@@ -1085,7 +1190,8 @@
                 "required": true,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 69
             },
             {
                 "id": 68,
@@ -1095,7 +1201,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 70
             },
             {
                 "id": 69,
@@ -1105,7 +1212,8 @@
                 "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 71
             },
             {
                 "id": 70,
@@ -1115,7 +1223,8 @@
                 "required": true,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 72
             },
             {
                 "id": 71,
@@ -1125,29 +1234,32 @@
                 "required": true,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 73
             },
             {
                 "id": 72,
                 "section_title": "OPEN QUESTIONS",
                 "question": "Are there any additional features or changes you would recommend to enhance the web application’s ability to meet your needs?",
                 "q_type": "OE",
-                "required": true,
+                "required": false,
                 "answers": [],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 74
             },
             {
                 "id": 73,
                 "section_title": "OPEN QUESTIONS",
-                "question": "Do you want to submit current section?",
+                "question": "Do you want to submit the current section? If not, go back to previous questions to edit your answers.",
                 "q_type": "MC",
                 "required": true,
                 "answers": [
                     "Yes"
                 ],
                 "charLimit": null,
-                "noSpecialChars": false
+                "noSpecialChars": false,
+                "order": 75
             }
         ]
     }

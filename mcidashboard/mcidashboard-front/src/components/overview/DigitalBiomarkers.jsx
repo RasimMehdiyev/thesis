@@ -11,6 +11,7 @@ const DigitalBiomarkers = ({ patient }) => {
   const [loading, setLoading] = useState(true);
   const [gameHistory, setGameHistory] = useState(null);
   const [threshold, setThreshold] = useState(0);
+  const [isLowGood, setIsLowGood] = useState(true);
 
   const showTooltip = () => setIsTooltipVisible(true);
   const hideTooltip = () => setIsTooltipVisible(false);
@@ -71,12 +72,13 @@ const DigitalBiomarkers = ({ patient }) => {
     try {
       // const response = await fetch('/metrics1000.json');
       // const response = await fetch(`localhost:8000/dashboard/biomarker/histograms/${patientId}/${metric}/`);
-      const response = await fetch(`http://localhost:8000/dashboard/biomarker/histograms/484/27/`);
+      const response = await fetch(`http://localhost:8000/dashboard/biomarker/histograms/484/6/`);
       const data = await response.json();
       console.log('Fetched Metric Data:', data);
       setMetricData(data);
       console.log('Threshold:', data.threshold);
       setThreshold(data.threshold);
+      setIsLowGood(data.isLowGood);
     } catch (error) {
       console.error('Error fetching metric data:', error);
     } finally {
@@ -196,7 +198,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={true} xUserLabel={patient.full_name}/>
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={isLowGood} xUserLabel={patient.full_name}/>
           </div>
           <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
             <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
@@ -204,7 +206,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name}/>
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name} swapColors={isLowGood}/>
           </div>
         </div>
       )}
