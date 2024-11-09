@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Tooltip from '../Tooltip'; 
 
+
 const PersonalInformation = ({patient}) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [MCI, setMCI] = useState('');
+
+  useEffect(() => {
+    if (patient.mci === 0) {
+      setMCI('Healthy');
+    }
+    else {
+      setMCI('MCI');
+    }
+  }, [patient.mci]);
+
 
   // Show tooltip on mouse enter
   const showTooltip = () => {
@@ -23,6 +35,7 @@ const PersonalInformation = ({patient}) => {
   function printPatientInfo() {
     console.log(patient); 
   }
+
 
 
   return (
@@ -74,11 +87,17 @@ const PersonalInformation = ({patient}) => {
             <ul className='demographics-list'>
                 <li className='demographic-item'>
                 <span className='label'><strong>MMSE:</strong></span>
-                <span className='not-bold value'style={{color: '#FA5D5D'}}>{patient.MMSE}/30</span>
+                <span className='not-bold value'
+                            style={{
+                                color: MCI === 'MCI' ? '#FA5D5D' : '#21AEEE',
+                            }}>{patient.MMSE}/30</span>
                 </li>
                 <li className='demographic-item'>
                 <span className='label'><strong>MoCA:</strong></span>
-                <span className='not-bold value'style={{color: '#FA5D5D'}}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'N/A'}</span>
+                <span className='not-bold value'
+                            style={{
+                                color: MCI === 'MCI' ? '#FA5D5D' : '#21AEEE',
+                            }}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'N/A'}</span>
                 </li>
             </ul>
         </div>

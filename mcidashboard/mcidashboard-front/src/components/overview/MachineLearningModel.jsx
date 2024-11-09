@@ -2,11 +2,12 @@ import Tooltip from '../Tooltip';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 
-const MachineLearningModel = () => {
+const MachineLearningModel = ({patient}) => {
     const [isDatasetTooltipVisible, setIsDatasetTooltipVisible] = useState(false);
     const [isPredictionTooltipVisible, setIsPredictionTooltipVisible] = useState(false);
     const [machineLearningData, setMachineLearningData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [MCI, setMCI] = useState('');
 
     const showDatasetTooltip = () => {
         setIsDatasetTooltipVisible(true);
@@ -24,52 +25,74 @@ const MachineLearningModel = () => {
         setIsPredictionTooltipVisible(false);
     };
 
-    const fetchMLData = async () => {
-        let apiUrl = '/dashboard/machine-learning-data/';
-        let fallbackUrl = '/machine-learning-data.json';
-    
-        try {
- 
-            const response = await fetch(apiUrl);
 
-            if (!response.ok) {
-                throw new Error(`Failed to fetch from API: ${response.statusText}`);
+    const getLatestMci = (mciData) => {
+        const keys = Object.keys(mciData);
+        const latestKey = keys[keys.length - 1];
+        return mciData[latestKey] === 1 ? 'MCI' : 'Healthy';
+    };
+
+    const fetchAllData = async (id) => {
+        setLoading(true);
+
+        const machineLearningApiUrl = '/dashboard/machine-learning-data/';
+        const mciApiUrl = `/dashboard/game/history/${id}/30/`;
+        const fallbackUrl = '/machine-learning-data.json';
+
+        try {
+            // Fetch machine learning data
+            const [mlResponse, mciResponse] = await Promise.all([
+                fetch(machineLearningApiUrl),
+                fetch(mciApiUrl)
+            ]);
+
+            if (!mlResponse.ok) {
+                throw new Error(`Failed to fetch ML data: ${mlResponse.statusText}`);
             }
-    
-            const data = await response.json();
-            console.log('Fetched Data from API:', data);
-    
-            if (data) {
-                setMachineLearningData(data);
-            } else {
-                console.error('No machine learning data found in the API response.');
+
+            if (!mciResponse.ok) {
+                throw new Error(`Failed to fetch MCI data: ${mciResponse.statusText}`);
+            }
+
+            const mlData = await mlResponse.json();
+            const mciData = await mciResponse.json();
+
+            console.log('Fetched ML Data:', mlData);
+            console.log('Fetched MCI Data:', mciData);
+
+            if (mlData) {
+                setMachineLearningData(mlData);
+            }
+
+            if (mciData) {
+                console.log('MCI OR NOT:', getLatestMci);
+                setMCI(getLatestMci(mciData));
             }
         } catch (error) {
-            console.error('Error fetching from API:', error);
-            
+            console.error('Error fetching data from API:', error);
+
             try {
+                // Fallback in case both fail
                 const fallbackResponse = await fetch(fallbackUrl);
                 const fallbackData = await fallbackResponse.json();
                 console.log('Fetched Data from fallback JSON:', fallbackData);
-    
+
                 if (fallbackData) {
                     setMachineLearningData(fallbackData);
-                } else {
-                    console.error('No machine learning data found in the fallback JSON.');
+                    setMCI(fallbackData[2] || 'Unknown');
                 }
             } catch (fallbackError) {
-                console.error('Error fetching machine learning data from fallback JSON:', fallbackError);
+                console.error('Error fetching fallback data:', fallbackError);
             }
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
-    
-
 
     useEffect(() => {
-        fetchMLData();
-    }, []);
+        fetchAllData(patient.id);
+    }, [patient.id]);
+
 
     if (loading) {
         return <p>Loading...</p>;
@@ -100,24 +123,25 @@ const MachineLearningModel = () => {
                 
                 <hr className='horizontal-line'/>
 
-                <div className='demographics-list'>
-                    <p><strong>{machineLearningData.patients.mci + machineLearningData.patients.healthy} </strong>participants in total</p>
-                    <ul>
-                        <li><strong>{machineLearningData.patients.healthy}</strong> <span style={{color: '#21AEEE'}}>healthy participants </span>with an average age of <strong>{machineLearningData.patients.healthy_avg_age}</strong> </li>
+                {machineLearningData && machineLearningData.patients && (
+                    <div className='demographics-list'>
+                        <p><strong>{machineLearningData.patients.mci + machineLearningData.patients.healthy} </strong>participants in total</p>
                         <ul>
-                            <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
-                                Recruited from senior groups and labeled as healthy based on cognitive assessments (MMSE, MoCA).
-                            </em>
+                            <li><strong>{machineLearningData.patients.healthy}</strong> <span style={{color: '#21AEEE'}}>healthy participants </span>with an average age of <strong>{machineLearningData.patients.healthy_avg_age}</strong> </li>
+                            <ul>
+                                <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
+                                    Recruited from senior groups and labeled as healthy based on cognitive assessments (MMSE, MoCA).
+                                </em>
+                            </ul>
+                            <li style={{marginTop: 10}}><strong>{machineLearningData.patients.mci}</strong> <span style={{color: '#FA5D5D'}}>MCI participants</span> with an average age of <strong>{machineLearningData.patients.mci_avg_age}</strong></li>
+                            <ul>
+                                <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
+                                    Recruited from two leading memory clinics in Belgium where they had already been diagnosed with MCI.
+                                </em>
+                            </ul>
                         </ul>
-                        <li style={{marginTop: 10}}><strong>{machineLearningData.patients.mci}</strong> <span style={{color: '#FA5D5D'}}>MCI participants</span> with an average age of <strong>{machineLearningData.patients.mci_avg_age}</strong></li>
-                        <ul>
-                            <em style={{listStyleType: "disc", marginTop: 0, fontSize: 16}}>
-                                Recruited from two leading memory clinics in Belgium where they had already been diagnosed with MCI.
-                            </em>
-                        </ul>
-                    </ul>
-                </div>
-
+                    </div>
+                )}
                 <hr className='horizontal-line'/>
 
                 <p className="demographics-list"><strong>{machineLearningData.total_games}</strong> game rounds, <strong>{machineLearningData.total_moves}</strong> player moves and <strong>{machineLearningData.total_game_time}</strong> minutes of gameplay</p>
@@ -146,7 +170,17 @@ const MachineLearningModel = () => {
                 </div>
                 
                 <p id="prediction-text">
-                    The <span style={{ textDecoration: 'underline' }}>most accurate</span> machine learning model predicts that the patient is <span id="prediction-result">MCI</span> with a probability of <span id="confidence">83.3%</span>.
+                    The <span style={{ textDecoration: 'underline' }}>most accurate</span> machine learning model predicts that the patient is {' '} 
+                    <span
+                            id={MCI === 'MCI' ? 'prediction-result-mci' : 'prediction-result-healthy'}
+                            style={{
+                                color: MCI === 'MCI' ? '#FA5D5D' : '#21AEEE',
+                            }}
+                        >
+                            {MCI}
+                        </span>
+                    {' '} 
+                    with a probability of <span id="confidence">83.3%</span>.
                 </p>
             </div>
 

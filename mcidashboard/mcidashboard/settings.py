@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'mcidashboard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'local_solitaire',
+        'NAME': 'dummy_solitaire',
         'USER': 'root',
         'PASSWORD': 'rasimrasim14',
         'HOST': '127.0.0.1',

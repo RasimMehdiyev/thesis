@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Load the CSV files
-ml_data = pd.read_csv("../Users/rasim/Downloads/MLData030720.csv")
-game_table = pd.read_csv("../Users/rasim/Downloads/Game-2024-09-25.csv")
+ml_data = pd.read_csv("C:\\Users\\rasim\\OneDrive - KU Leuven\\KU Leuven-LAPTOP-U7MALKQJ\\Thesis\\Dev Folder\\dummy_data_pre\\Copy of Fictional_input_output_ground_truth.xlsx")
+game_table = pd.read_csv("C:\\Users\\rasim\\Downloads\\Game-2024-11-09.xlsx")
 restructured_biomarkers  = pd.read_csv("../Users/rasim/downloads/restructured_person_game_biomarkers_v2.csv")
 
 # Extract gameTime from column '19' in the MLData file

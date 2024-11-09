@@ -54,7 +54,7 @@ class BiomarkerTypeAdmin(admin.ModelAdmin):
 admin.site.register(BiomarkerType, BiomarkerTypeAdmin)
 
 class BiomarkerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'type', 'unit')
+    list_display = ('id', 'name', 'type', 'unit', 'display')
     list_filter = ['name']
     search_fields = ['name']
     ordering = ['name']

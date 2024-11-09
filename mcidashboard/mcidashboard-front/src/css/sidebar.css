@@ -168,8 +168,10 @@
 }
 
 .floating-chat-icon img {
-    width: 80%;
+    width: 3.5%;
     height: auto;
+    padding-bottom: 50px;
+    position: fixed;
 }
 
 .red-dot {

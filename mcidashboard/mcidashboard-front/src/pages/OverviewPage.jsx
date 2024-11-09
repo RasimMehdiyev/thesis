@@ -26,7 +26,7 @@ const OverviewPage = () => {
       </div>
       <div className="overview-row2">
         <FeatureImportance className="feature-importance"  />
-        <MachineLearningModel className="ML-model"/>
+        <MachineLearningModel className="ML-model" patient = {patient}/>
       </div>
     </div>
   );
