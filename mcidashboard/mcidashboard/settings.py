@@ -100,12 +100,13 @@ WSGI_APPLICATION = 'mcidashboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dummy_solitaire',
-        'USER': 'root',
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'drsolitaire_global',
+        'USER': 'drsolitaire',
         'PASSWORD': 'rasimrasim14',
-        'HOST': '127.0.0.1',
+        'HOST': 'drsolitaire.czma6mqkyvol.eu-north-1.rds.amazonaws.com',
         'PORT': '3306',
+	'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" ,"use_pure": True},
     }
 }
 
