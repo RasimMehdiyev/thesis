@@ -545,8 +545,7 @@ def create_response(request):
 @api_view(['POST'])
 def add_answer(request, response_id):
     answers = request.data.get('sectionsToSubmit')
-    # example of answers format to be sent in the request body 
-    # [ { "question": 1, "answer": "option1" }, { "question": 2, "answer": "option2" } ]
+
     print(answers)
     response = Response.objects.get(pk=response_id)
     for answer in answers:
@@ -568,8 +567,46 @@ def get_answers_by_prolific_id(request, prolific_id):
     serializer = AnswerSerializer(answers, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+
+
 @api_view(['GET'])
 def get_shap_contributions(request):
+
+    names_dict = {
+            "moveTimeMoveSD":"SD Move Time",
+            "moveTimeMoveMax":"Max Move Time",
+            "moveTimeMoveMin":"Min Move Time",
+            "accuracyAvg":"Average Accuracy",
+            "accuracySD":"SD Accuracy",
+            "suitErrorPecentage":"Suit Error",
+            "rankErrorPercentage":"Rank Error",
+            "erroneousMovesPercentage":"Erroneous Moves",
+            "taps":"Taps",
+            "betaErrorPercentage":"Beta Error",
+            "numberOfCardsMovedAvg":"Average Cards Moved",
+            "accuracyMin":"Min Accuracy",
+            "totalTimeMoveMin":"Min Total Time",
+            "thinkTimeMoveSD":"SD Think Time",
+            "succesfulMovesPercentage":"Successful Moves",
+            "totalMoves":"Total Moves",
+            "accuracyMax":"Max Accuracy",
+            "numberOfCardsMovedSD":"SD Cards Moved",
+            "finalBetaError":"Final Beta Error",
+            "isSolved":"Is Solved",
+            "moveTimeMoveAvg":"Average Move Time",
+            "pileMovesPercentage":"Pile Moves",
+            "totalTimeMoveMax":"Max Total Time",
+            "totalTimeMoveSD":"SD Total Time",
+            "totalTimeMoveAvg":"Average Total Time",
+            "thinkTimeMoveMax":"Max Think Time",
+            "thinkTimeMoveMin":"Min Think Time",
+            "thinkTimeMoveAvg":"Average Think Time",
+            "score":"Score",
+            "gameTime":"Game Time",
+            "suitErrorPercentage":"Suit Error",
+        }
+
+
     csv_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'data', 'average_shap_contributions.csv')
     
     if not os.path.exists(csv_path):
@@ -578,6 +615,10 @@ def get_shap_contributions(request):
     shap_contributions_df = pd.read_csv(csv_path)
     
     shap_contributions_json = shap_contributions_df.to_dict(orient='records')
+
+    for item in shap_contributions_json:
+        item['Feature'] = names_dict[item['Feature']]
+        item['Contribution (%)'] = f"{item['Contribution (%)']}%"
     
     return JsonResponse(shap_contributions_json, safe=False)
 

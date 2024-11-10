@@ -230,7 +230,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
               {selectedMetric} of the last session:{" "}
               <span
                 style={{
-                  color: (metricData?.current_user.biomarker_value < threshold) && (isLowGood) ? "#21AEEE" : "#FA5D5D",
+                  color: ((metricData?.current_user.biomarker_value < threshold && isLowGood) || (metricData?.current_user.biomarker_value > threshold && !isLowGood)) ? "#21AEEE" : "#FA5D5D",
                 }}
               >
                 {metricData?.current_user.biomarker_value}

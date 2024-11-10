@@ -107,8 +107,20 @@ DATABASES = {
         'HOST': 'drsolitaire.czma6mqkyvol.eu-north-1.rds.amazonaws.com',
         'PORT': '3306',
 	'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" ,"use_pure": True},
-    }
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dummy_solitaire',
+#         'USER': 'root',
+#         'PASSWORD': 'rasimrasim14',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     },
+# }
+
 
 
 

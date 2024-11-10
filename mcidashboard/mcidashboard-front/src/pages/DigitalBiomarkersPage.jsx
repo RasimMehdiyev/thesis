@@ -15,7 +15,6 @@ const DigitalBiomarkersPage = () => {
     const [cards5, setCards5] = useState([]);
 
     useEffect(() => {
-        console.log('Component mounted, fetching biomarkers...');
         fetchBiomarkers();
         fetchFromJsonFile();
     }, []);  // Empty dependency array ensures it only runs once on mount
@@ -79,25 +78,23 @@ const DigitalBiomarkersPage = () => {
           } catch (fallbackError) {
             console.error("Failed to fetch deck-2.json from both paths", fallbackError);
           }
-
-          try{
-            const response5 = await fetch('/static/deck-icon.json');
-            const data5 = await response5.json();
-            setCards5(data5);
-          }
-            catch (error) {
-                console.error("Error fetching deck-4.json from /static/, trying fallback path", error);
-                try {
-                    const response5 = await fetch('/deck-icon.json');
-                    const data5 = await response5.json();
-                    setCards5(data5);
-                } catch (fallbackError) {
-                    console.error("Failed to fetch deck-4.json from both paths", fallbackError);
-                }
-                }
-
         }
       
+        try{
+          const response5 = await fetch('/static/deck-icon.json');
+          const data5 = await response5.json();
+          setCards5(data5);
+        }
+          catch (error) {
+              console.error("Error fetching deck-4.json from /static/, trying fallback path", error);
+              try {
+                  const response5 = await fetch('/deck-icon.json');
+                  const data5 = await response5.json();
+                  setCards5(data5);
+              } catch (fallbackError) {
+                  console.error("Failed to fetch deck-4.json from both paths", fallbackError);
+              }
+              }
         try {
           const response4 = await fetch('/static/deck-3.json');
           const data4 = await response4.json();
@@ -269,7 +266,7 @@ const DigitalBiomarkersPage = () => {
             <div className='personal-info-h' style={{ position: 'relative' }}>
                 <p className='ml-subtitle'>Digital biomarkers grouped by category</p>
             <img
-                src='/assets/info_icon.svg'
+                src='/static/assets/info_icon.svg'
                 alt='Info Icon'
                 className='icon'
                 onMouseEnter={showTooltip}  // Show tooltip on hover
@@ -291,19 +288,12 @@ const DigitalBiomarkersPage = () => {
             }
         </div>
         <div className='solitaire-animated'>
-            {/* <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {true} card_touch = {false}/> */}
             <SolitaireAnimated highlight_suit={false} cards = {cards5} first_empty = {false} card_touch = {false} no_card_highlight = {true} movingIcons = {true}/>
             <SolitaireAnimated highlight_suit={false} cards = {cards} first_empty = {false} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
             <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {false} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
             <SolitaireAnimated highlight_suit={false} cards = {cards3} first_empty = {true} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
             <SolitaireAnimated highlight_suit={false} cards = {cards4} first_empty = {false} card_touch = {true} no_card_highlight = {false} movingIcons = {false}/>
         </div>
-
-            {/* <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_1.png"} alt="" />
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_2.png"} alt="" />
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_3.png"} alt="" />
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_4.png"} alt="" />
-            <img src={process.env.PUBLIC_URL + "/static/assets/solitaire_overview_5.png"} alt="" /> */}
     </div>
   )
 }

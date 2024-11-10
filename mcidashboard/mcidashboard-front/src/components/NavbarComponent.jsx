@@ -36,7 +36,7 @@ const NavbarComponent = ({ onHelpIconClick }) => { // Accept onHelpIconClick as 
       </ul>
       <div className='help-icon-container'>
         <img
-          src='/assets/help_icon.svg'
+          src='/static/assets/help_icon.svg'
           alt='Help Icon'
           className='help-icon'
           style={{ cursor: 'pointer' }}

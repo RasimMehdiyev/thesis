@@ -11,9 +11,7 @@
     { "id": 39, "value": "K", "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 11, "value": "J", "suit": "H", "color": "red", "isFaceUp": true },
     { "id": 12, "value": "Q", "suit": "H", "color": "red", "isFaceUp": true },
-
     { "id": 29, "value": 3, "suit": "C", "color": "black", "isFaceUp": true, "highlight": true, "destination": true },
-
     { "id": 16, "value": 3, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 17, "value": 4, "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 18, "value": 5, "suit": "D", "color": "red", "isFaceUp": true },
@@ -26,7 +24,6 @@
     { "id": 25, "value": "Q", "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 26, "value": "K", "suit": "D", "color": "red", "isFaceUp": true },
     { "id": 14, "value": "A", "suit": "D", "color": "red", "isFaceUp": true },
-
     { "id": 42, "value": 3, "suit": "S", "color": "black", "isFaceUp": true },
     { "id": 28, "value": 2, "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 30, "value": 4, "suit": "C", "color": "black", "isFaceUp": true },
@@ -41,12 +38,8 @@
     { "id": 36, "value": "T", "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 37, "value": "J", "suit": "C", "color": "black", "isFaceUp": true },
     { "id": 38, "value": "Q", "suit": "C", "color": "black", "isFaceUp": true },
-
     { "id": 27, "value": "A", "suit": "C", "color": "black", "isFaceUp": true },
-
-
     { "id": 41, "value": 2, "suit": "S", "color": "black", "isFaceUp": true },
-
     { "id": 43, "value": 4, "suit": "S", "color": "black", "isFaceUp": true },
     { "id": 44, "value": 5, "suit": "S", "color": "black", "isFaceUp": true },
     { "id": 45, "value": 6, "suit": "S", "color": "black", "isFaceUp": true },

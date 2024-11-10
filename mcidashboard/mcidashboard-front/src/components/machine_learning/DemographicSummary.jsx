@@ -121,7 +121,7 @@ return (
         <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className="ml-subtitle">Demographic summary</p>
           <img
-            src='/assets/info_icon.svg'
+            src='/static/assets/info_icon.svg'
             alt='Info Icon'
             className='icon'
             onMouseEnter={showTooltip}  // Show tooltip on hover

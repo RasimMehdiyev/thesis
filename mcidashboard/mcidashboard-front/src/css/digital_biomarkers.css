@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     overflow: visible;
-    /* width: 520px; */
     padding: 20px;
     font-family: 'Poppins', sans-serif;
 }
@@ -21,7 +20,7 @@
         width: 720px;
     }
     .biomarkers-list {
-        width: 360px;
+        width: 440px;
     }
 }
 
@@ -52,11 +51,11 @@
 
 .biomarkers li {
     padding: 5px 0;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .biomarkers li b {
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .biomarker-item {
@@ -64,7 +63,7 @@
 }
 
 .biomarker-desc {
-    font-size: 12px;
+    font-size: 16px;
     color: #666;
 }
 

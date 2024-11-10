@@ -22,6 +22,10 @@
     /* border: black 0.5px solid; */
 }
 
+.border-none-class {
+    border: none!important;
+}
+
 .bottom-row {
     display: flex;
     flex-wrap: wrap;
@@ -121,8 +125,6 @@
 }
 
 .highlight {
-    /* background-color: yellow; */
-    /* shadow */
     box-shadow: 0 0 20px 10px yellow;
     animation: float 2s ease-in-out infinite;
     transition: transform 0.3s ease-in-out;

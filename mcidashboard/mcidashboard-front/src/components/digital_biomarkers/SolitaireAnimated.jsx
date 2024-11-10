@@ -33,7 +33,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
       setPileDeck(pile);
       setHighlightState(highlight_suit);
     }
-  }, [cards]);
+  }, [cards ]);
 
   return (
     <div className='game-board-container'>
@@ -41,7 +41,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
         <div className='game-board-sidebar'>
           <span className="moving-icon">
             <img
-              src={process.env.PUBLIC_URL + "/assets/search_icon.svg"}
+              src={process.env.PUBLIC_URL + "/static/assets/search_icon.svg"}
               alt=""
               onMouseEnter={() => setSearchTooltipVisible(true)}
               onMouseLeave={() => setSearchTooltipVisible(false)}
@@ -56,7 +56,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
           </span>
           <span className="moving-icon">
             <img
-              src={process.env.PUBLIC_URL + "/assets/burger-bar.svg"}
+              src={process.env.PUBLIC_URL + "/static/assets/burger-bar.svg"}
               className="moving-icon"
               alt=""
               onMouseEnter={() => setMenuTooltipVisible(true)}
@@ -73,7 +73,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
           </span>
           <span className="moving-icon">
             <img
-              src={process.env.PUBLIC_URL + "/assets/undo.svg"}
+              src={process.env.PUBLIC_URL + "/static/assets/undo.svg"}
               alt=""
               className='moving-icon'
               onMouseEnter={() => setUndoTooltipVisible(true)}
@@ -91,9 +91,9 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
         </div>
       ) : (
         <div className='game-board-sidebar'>
-          <img src={process.env.PUBLIC_URL + "/assets/search_icon.svg"} alt="" />
-          <img src={process.env.PUBLIC_URL + "/assets/burger-bar.svg"} alt="" />
-          <img src={process.env.PUBLIC_URL + "/assets/undo.svg"} alt="" />
+          <img src={process.env.PUBLIC_URL + "/static/assets/search_icon.svg"} alt="" />
+          <img src={process.env.PUBLIC_URL + "/static/assets/burger-bar.svg"} alt="" />
+          <img src={process.env.PUBLIC_URL + "/static/assets/undo.svg"} alt="" />
         </div>
       )}
 

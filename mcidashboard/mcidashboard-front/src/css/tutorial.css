@@ -6,25 +6,24 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1001;
-    backdrop-filter: blur(1px); 
+    backdrop-filter: blur(1px);
     -webkit-backdrop-filter: blur(1px);
-  }
-  
+}
 
-  .highlight {
-    position: absolute;
+.highlight {
+    /* position: absolute; */
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
-    z-index: 1001;
-    transition: all 0.3s ease; 
-  }
-  
-.tutorial-modal{
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.tutorial-modal {
     position: fixed;
     font-family: 'Poppins';
     padding: 20px;
     width: 400px;
-    transform:  translate(-50%, -50%);  
+    transform: translate(-50%, -50%);
     z-index: 1001;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     background-color: #5932EA;
@@ -35,9 +34,9 @@
 .tutorial-modal .modal-buttons {
     display: flex;
     gap: 10px;
-  }
-  
-  .tutorial-modal .modal-buttons button {
+}
+
+.tutorial-modal .modal-buttons button {
     background-color: #fff;
     color: #5932EA;
     padding: 10px 20px;
@@ -45,8 +44,8 @@
     font-family: 'Poppins';
     border-radius: 8px;
     cursor: pointer;
-  }
-  
+}
+
 .tutorial-modal .modal-buttons button:hover {
     background-color: #B2A3FE;
 }
@@ -57,11 +56,9 @@
     align-items: center;
 }
 
-.skip { 
+.skip {
     color: #fff;
     font-size: 12px;
     cursor: pointer;
     text-decoration: underline;
 }
-  
-  
