@@ -107,7 +107,7 @@ const SidebarComponent = () => {
       </ul>
       <div className="floating-chat-icon">
             <img 
-              src="/assets/chat_icon_2.svg" 
+              src="/static/assets/chat_icon_2.svg" 
               alt="Chat Icon" 
               className="chat-icon" 
               title="Start Questionnaire"

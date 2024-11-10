@@ -610,7 +610,7 @@ const handleSendMessage = (answer = message, skip = false) => {
                         disabled={isSendButtonDisabled()}
                         className="send-button"
                       >
-                        <img src="/assets/send_arrow.svg" alt="Send" className="send-icon" />
+                        <img src="/static/assets/send_arrow.svg" alt="Send" className="send-icon" />
                       </button>
                     </>
                   ) : (
@@ -648,7 +648,7 @@ const handleSendMessage = (answer = message, skip = false) => {
                         disabled={isSendButtonDisabled()}
                         className="send-button"
                       >
-                        <img src="/assets/send_arrow.svg" alt="Send" className="send-icon" />
+                        <img src="/static/assets/send_arrow.svg" alt="Send" className="send-icon" />
                       </button>
                     </>
                   )}

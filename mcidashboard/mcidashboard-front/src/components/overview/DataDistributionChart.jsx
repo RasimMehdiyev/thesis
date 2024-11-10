@@ -30,8 +30,8 @@ const DataDistributionChart = ({ xData, yData, threshold, xUser, xUserLabel, swa
     
   xDataWithThreshold.sort((a, b) => a - b);
 
-  console.log('xDataWithThreshold:', xDataWithThreshold);
-  console.log('yData:', yData);
+  // console.log('xDataWithThreshold:', xDataWithThreshold);
+  // console.log('yData:', yData);
 
   let yDataWithThreshold = [...yData];
 

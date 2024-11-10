@@ -11,26 +11,13 @@ const DigitalBiomarkers = ({ patient }) => {
   const [loading, setLoading] = useState(true);
   const [gameHistory, setGameHistory] = useState(null);
   const [threshold, setThreshold] = useState(0);
-  const [isLowGood, setIsLowGood] = useState(true);
+  const [isLowGood, setIsLowGood] = useState();
 
   const showTooltip = () => setIsTooltipVisible(true);
   const hideTooltip = () => setIsTooltipVisible(false);
 
 
-  /*
-    ['Accuracy', 'Average Accuracy', 'Average Move Time'],
-    ['Average Think Time', 'Average Total Time', 'Beta Error'],
-    ['Cards Moved', 'Erroneous Move', 'Final Beta Error'],
-    ['Game Time', 'Max Accuracy', 'Min Accuracy'],
-    ['Min Move Time', 'Min Think Time', 'Min Total Time'],
-    ['Pile Move', 'Rank Error', 'Score'],
-    ['SD Accuracy', 'SD Move Time', 'SD Think Time'],
-    ['SD Total Time', 'Successful Move', 'Suit Error'],
-    ['Taps', 'Total Moves', ''],
-  */
-
-
-  const biomarkerNametoId = {
+ const biomarkerNametoId = {
     'Average Accuracy': 14,
     'Min Move Time': 24,
     'Beta Error': 10,
@@ -65,7 +52,41 @@ const DigitalBiomarkers = ({ patient }) => {
     }else{
         setLoading(false);
     }
-  }, [patient, selectedMetric]);
+  }, [patient, selectedMetric]);  
+
+
+  const getMessage = () => {
+    const biomarkerValue = metricData?.current_user.biomarker_value;
+    const action = isLowGood && biomarkerValue > threshold ? "reduces" : "increases";
+
+    
+    if (biomarkerValue > threshold && isLowGood) {
+      return(
+        <>
+          If {selectedMetric} <span style={{color: "#21AEEE"}}>reduces to {threshold}</span>, Solitaire DSS would think the player is normally aging.
+        </>
+      )}
+    else if (biomarkerValue < threshold && isLowGood) {
+      return(
+        <>
+          If {selectedMetric} <span style={{color: "#FA5D5D"}}>increases to {threshold}</span>, Solitaire DSS would think the player is cognitively impaired.
+        </>
+      )}
+    else if (biomarkerValue > threshold && !isLowGood) {
+      return(
+        <>
+          If {selectedMetric} <span style={{color: "#FA5D5D"}}>reduces to {threshold}</span>, Solitaire DSS would think the player is cognitively impaired.
+        </>
+      )}
+    else if (biomarkerValue < threshold && !isLowGood) {
+      return(
+        <>
+          If {selectedMetric} <span style={{color: "#21AEEE"}}>increases to {threshold}</span>, Solitaire DSS would think the player is normally aging.
+        </>
+      )}   
+  };
+  
+
 
   const fetchMetricData = async (patientId, metric) => {
     setLoading(true);
@@ -78,6 +99,7 @@ const DigitalBiomarkers = ({ patient }) => {
       setMetricData(data);
       console.log('Threshold:', data.threshold);
       setThreshold(data.threshold);
+      console.log('Is low good?:', data.isLowGood);
       setIsLowGood(data.isLowGood);
     } catch (error) {
       console.error('Error fetching metric data:', error);
@@ -161,7 +183,7 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
       <div className="personal-info-h" style={{ position: 'relative' }}>
         <p className="ml-subtitle" id="dbm-p">Digital Biomarkers</p>
         <img
-          src='/assets/info_icon.svg'
+          src='/static/assets/info_icon.svg'
           alt='Info Icon'
           className='icon'
           onMouseEnter={showTooltip}
@@ -198,15 +220,27 @@ console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
-            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={isLowGood} xUserLabel={patient.full_name}/>
+            <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={!isLowGood} xUserLabel={patient.full_name}/>
           </div>
-          <div className="grid-item test-scores" style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
-            <p>{selectedMetric} of the last session: <span style={{ color: '#FA5D5D' }}>{metricData?.current_user.biomarker_value}</span></p>
-            <p className="counterfactuals">If {selectedMetric} <span style={{ color: '#21AEEE' }}>reduces to {metricData?.counterfactual}</span>, Solitaire DSS would think the player is normally aging.</p>
+          <div
+            className="grid-item test-scores"
+            style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}
+          >
+            <p>
+              {selectedMetric} of the last session:{" "}
+              <span
+                style={{
+                  color: (metricData?.current_user.biomarker_value < threshold) && (isLowGood) ? "#21AEEE" : "#FA5D5D",
+                }}
+              >
+                {metricData?.current_user.biomarker_value}
+              </span>
+            </p>
+            <p className="counterfactuals">{getMessage()}</p>
           </div>
           <div className="grid-item">
             <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
-            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name} swapColors={isLowGood}/>
+            <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name} swapColors={!isLowGood}/>
           </div>
         </div>
       )}

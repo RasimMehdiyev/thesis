@@ -44,7 +44,7 @@ const PersonalInformation = ({patient}) => {
       <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className='ml-subtitle' id="pers-p">Personal Information</p>
         <img
-          src='/assets/info_icon.svg'
+          src='/static/assets/info_icon.svg'
           alt='Info Icon'
           className='icon'
           onMouseEnter={showTooltip}  // Show tooltip on hover

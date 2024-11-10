@@ -7,7 +7,7 @@ ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip,
 
 const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
 
-  console.log('GameHistoryLineChart:', { data, labels, minLimit, maxLimit });
+  // console.log('GameHistoryLineChart:', { data, labels, minLimit, maxLimit });
 
   const chartData = {
     labels: labels, // Use labels passed as prop

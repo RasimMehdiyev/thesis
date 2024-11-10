@@ -168,9 +168,9 @@
 }
 
 .floating-chat-icon img {
-    width: 3.5%;
+    width: 65px;
     height: auto;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
     position: fixed;
 }
 
