@@ -596,24 +596,54 @@ def create_response(request):
                 {'error': f'An unexpected error occurred: {str(e)}'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
+
+from .save_on_server import *
 
 @csrf_exempt
 @api_view(['POST'])
 def add_answer(request, response_id):
     answers = request.data.get('sectionsToSubmit')
 
-    print(answers)
     response = Response.objects.get(pk=response_id)
+    response_data = {
+            "response_id": response.id,
+            "answers": []
+    }
+
     for answer in answers:
         question = Question.objects.get(pk=answer['question'])
 
-        # check if answer already exists by checking the question id from the response, if yes just update the answer
         if Answer.objects.filter(response=response, question=question).exists():
             answer_instance = Answer.objects.get(response=response, question=question)
             answer_instance.answer = answer['answer']
             answer_instance.save()
+            # print("Answer instance:", answer_instance)
+            response_data['answers'].append({
+                'question': question.id,
+                'question_text': question.question,
+                'answer': answer_instance.answer
+            })
         else:
-            Answer.objects.create(response=response, question=question, answer=answer['answer'])
+            answer_instance = Answer.objects.create(response=response, question=question, answer=answer['answer'])
+            response_data['answers'].append({
+                'question': question.id,
+                'question_text': question.question,
+                'answer': answer_instance.answer
+            })
+
+    filename = f'{response.id}_response.json'
+    local_path = save_response_locally(response_data, filename)
+
+    remote_user = 'graceage'
+    remote_host = 'lamp-shell.icts.kuleuven.be'
+    remote_path = '/www/homes/graceage/dr_solitaire/' + filename
+        
+    transfer_success = transfer_file_to_server(local_path ,remote_path, remote_user, remote_host, 'eesie6so2Eas')
+
+    if transfer_success:
+        os.remove(local_path)
+
     return JsonResponse({'message': 'Answers added successfully'}, status=201)
 
 @api_view(['GET'])
@@ -622,8 +652,6 @@ def get_answers_by_prolific_id(request, prolific_id):
     answers = response.answer_set.all()
     serializer = AnswerSerializer(answers, many=True)
     return JsonResponse(serializer.data, safe=False)
-
-
 
 @api_view(['GET'])
 def get_shap_contributions(request):

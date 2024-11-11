@@ -67,9 +67,12 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     let sectionsToSubmit = [];
   
     const responses = JSON.parse(localStorage.getItem('chatLog')) || [];
-  
+
+    console.log("Responses:", responses);
+
     responses.forEach(r => {
-      if (r.sender === 'You' && r.question_id === 0) {
+      console.log("r.message", r.message);
+      if (r.sender === 'You' && r.order === 0) {
         prolific_id = r.message;
       }
     });
