@@ -288,7 +288,7 @@ const DigitalBiomarkersPage = () => {
             }
         </div>
         <div className='solitaire-animated'>
-            <SolitaireAnimated highlight_suit={false} cards = {cards5} first_empty = {false} card_touch = {false} no_card_highlight = {true} movingIcons = {true}/>
+            <SolitaireAnimated highlight_suit={false} cards = {cards5} first_empty = {false} card_touch = {false} no_card_highlight = {true} movingIcons = {true} thefirstPage={true}/>
             <SolitaireAnimated highlight_suit={false} cards = {cards} first_empty = {false} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
             <SolitaireAnimated highlight_suit={true} cards = {cards2} first_empty = {false} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>
             <SolitaireAnimated highlight_suit={false} cards = {cards3} first_empty = {true} card_touch = {false} no_card_highlight = {false} movingIcons = {false}/>

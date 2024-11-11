@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Stack from './solitaire_components/Stack';
 import Tooltip from '../TooltipSolitaire'; // Import tooltip
 
-const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_card_highlight, movingIcons }) => {
+const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_card_highlight, movingIcons, thefirstPage }) => {
   const [buildDeck, setBuildDeck] = useState([]);
   const [pileDeck, setPileDeck] = useState([]);
   const [talonDeck, setTalonDeck] = useState([]);
@@ -12,6 +12,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
   const [menuTooltipVisible, setMenuTooltipVisible] = useState(false);
   const [undoTooltipVisible, setUndoTooltipVisible] = useState(false);
   const [suitTooltipVisible, setSuitTooltipVisible] = useState(false); // Added state for the four suits tooltip
+  const firstPage = thefirstPage;
 
   const splitDeck = (deck) => {
     let buildDeck = [];
@@ -99,8 +100,20 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
 
       <div className="game-board">
         <div className="top-row">
-          <div className="pile-talon">
-            <Stack type="draw" cards={pileDeck} />
+          <div className="pile-talon" style={thefirstPage ? { padding: "5px",border:"2px solid white", borderRadius: '0px' } : {padding: "5px"}}
+          >
+            {thefirstPage === true?
+              <div style={{position:"absolute",zIndex:'5',paddingTop: '50px', fontSize:'32px',color:'white',fontWeight: '700',fontFamily:'Poppins',display:'flex',flexDirection:"row",justifyContent:'flex-start'}}>
+                <div style={{marginLeft:'20px'}}>
+                  PILE
+                </div>
+                <div style={{marginLeft:'80px',color:'black'}}>
+                  TALON
+                </div>
+              </div>
+              :null
+            }
+            <Stack type="draw" cards={pileDeck} thefirstPage={thefirstPage}/>
             <Stack type="talon" cards={talonDeck} highlightTopCard={true} no_card_highlight={no_card_highlight} />
           </div>
 
@@ -108,7 +121,12 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
             className={`four-suits`}
             onMouseEnter={() => setSuitTooltipVisible(true)} // Added hover handlers for four suits tooltip
             onMouseLeave={() => setSuitTooltipVisible(false)}
+            style={thefirstPage ? { padding: "5px", border: "2px solid white", borderRadius: '0px'} : {padding: "5px"}}
           >
+            {thefirstPage === true?
+              <div style={{position:"absolute",zIndex:'5',paddingLeft: '129px',paddingTop: '50px', fontSize:'32px',color:'white',fontWeight: '700',fontFamily:'Poppins'}}>4 SUIT STACKS</div>
+              :null
+            }
             {fourSuits.map((suit, index) => (
               <Stack
                 key={index}
@@ -131,7 +149,11 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
           </div>
         </div>
 
-        <div className="bottom-row">
+        <div className="bottom-row" style={thefirstPage ? { padding: "5px", border: "2px solid white", borderRadius: '0px'} : {padding: "5px"}}>
+            {thefirstPage === true?
+              <div style={{position:"absolute",zIndex:'5',paddingLeft: '15px',paddingTop: '250px', fontSize:'32px',color:'white',fontWeight: '700',fontFamily:'Poppins'}}>7 BUILD STACKS</div>
+              :null
+            }
           {buildDeck.map((stack, index) => (
             <Stack
               key={index}
@@ -144,6 +166,10 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
               no_card_highlight={no_card_highlight}
             />
           ))}
+        </div>
+        <div className='score-time'>
+          <div>Score: 1000</div>
+          <div>Time: 00:15</div>
         </div>
       </div>
     </div>

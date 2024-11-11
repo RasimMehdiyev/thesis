@@ -178,9 +178,65 @@ def get_all_biomarkers_list(request):
 
 @api_view(['GET'])
 def get_all_biomarkers(request):
-    biomarkers = BiomarkerType.objects.all()
-    serializer = BiomarkerTypeSerializer(biomarkers, many=True)
-    return JsonResponse(serializer.data, safe=False)
+
+    biomarkers_to_skip = ['Accuracy Min', 'Accuracy Max','Accuracy SD', 'Total Time Min', 'Total Time Max' ,'Total Time SD', 'Total Moves SD', 'Total Moves Min', 'Total Moves Max', 'Think Time Min', 'Think Time Max', 'Think Time SD', 'Move Time Min', 'Move Time SD', 'Move Time Max']
+
+    biomarkers = Biomarker.objects.all()
+    unified_data = []
+
+    for bio in biomarkers:
+        if bio.name in biomarkers_to_skip:
+            continue
+        # if bio.name contains 'Average', drop the word 'Average':
+        elif 'Average' in bio.name:
+            bio.name = bio.name.replace('Average', '')
+            unified_data.append({
+                'id': bio.id,
+                'name': bio.name,
+                'unit': bio.unit,
+                'low': bio.low,
+                'description': bio.description,
+                "display": bio.display,
+                "type": bio.type.id
+            })
+        else:
+            unified_data.append({
+                'id': bio.id,
+                'name': bio.name,
+                'unit': bio.unit,
+                'low': bio.low,
+                "display": bio.display,
+                "type": bio.type.id,
+                'description': bio.description,
+            })    
+
+    '''
+    {
+    "id": bio.type.id,
+    "biomarkers": [{}]
+    },
+    ...
+    '''
+    organized_data = []
+    for bio in unified_data:
+        if bio['type'] not in [item['id'] for item in organized_data]:
+            # get the name of the biomarker type
+            biomarker_type = BiomarkerType.objects.get(pk=bio['type'])
+            name = biomarker_type.name
+            organized_data.append({
+                "id": bio['type'],
+                "name": name,
+                "biomarkers": [bio]
+            })
+        else:
+            for item in organized_data:
+                if item['id'] == bio['type']:
+                    item['biomarkers'].append(bio)
+                    break
+    
+    
+    return JsonResponse(organized_data, safe=False)
+
 
 from collections import defaultdict
 

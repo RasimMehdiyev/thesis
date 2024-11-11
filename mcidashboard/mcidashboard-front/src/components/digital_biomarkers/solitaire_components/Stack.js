@@ -5,10 +5,11 @@ const Stack = ({ cards, type, isLastColumn, first_empty, card_touch, no_card_hig
 
   return (
     <div className={`${type}-stack ${highlight_suit ? "highlight-destination" : ''}` }>
+      
+            
       {cards && cards.length > 0 && cards.map((card, index) => {
 
         if (type === 'build') {
-          // Highlight the last card in the first and last build columns
           const isFaceUp = index === cards.length - 1 || (isLastColumn && index === cards.length - 2);
           return (
             <div key={card.id} className={`stack-slot`}>
@@ -22,7 +23,6 @@ const Stack = ({ cards, type, isLastColumn, first_empty, card_touch, no_card_hig
             </div>
           )
         } else if (type === 'talon') {
-          // Highlight the top card of the talon (the last three cards)
           const lastThree = cards.length - 3;
           console.log(index);
           
@@ -52,7 +52,7 @@ const Stack = ({ cards, type, isLastColumn, first_empty, card_touch, no_card_hig
             />
           );
         }
-        return null; // Default case
+        return null; 
       })}
     </div>
   );
