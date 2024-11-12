@@ -243,7 +243,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     setErrorMessage('');
     let isValid = true;
 
-    if (value === '') {
+    if (value === '' && currentQuestion?.required) {
       setErrorMessage('');
       isValid = false;
     }
@@ -252,6 +252,13 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     if (e.key === 'Backspace' && value === '') {
       setErrorMessage('Please provide an answer.');
       isValid = false;
+    }
+
+    const messageWords = value.split(' ').filter((word) => word.trim() !== '');
+    console.log("Required?", currentQuestion?.required);
+    if (currentQuestion?.required && currentSectionIndex === 3 &&  messageWords.length < 10 && currentQuestionIndex < questionMap.length - 1) {
+      isValid = false;
+      setErrorMessage(`Please provide a detailed answer. Minimum 10 words required.`);
     }
 
     let words = currentQuestion.question.split(' ').filter((word) => word.trim() !== '');
@@ -264,9 +271,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       }
     }
     
-    //if section 1 or section 2, and question is required, min char 
 
-    // Apply charLimit if it exists
     if (currentQuestion?.charLimit && value.length > currentQuestion.charLimit) {
         setErrorMessage(`Character limit exceeded. Max ${currentQuestion.charLimit} characters allowed.`);
         value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
@@ -361,7 +366,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           console.log("Current section index is:", currentSectionIndex);
           if (currentQuestionIndex !== 0 && value.length < 10){
             console.log("Current question index is:", currentQuestionIndex);
-            setErrorMessage(`Please provide a detailed answer. Minimum 10 words required.`);
+            setErrorMessage(`Please provide a detailed answer. Minimum 10 characters required.`);
             isValid = false;
           }
         }
@@ -388,6 +393,7 @@ const handleSendMessage = (answer = message, skip = false) => {
 
   if (!skip && currentQuestion?.required && currentSectionIndex === 3 &&  messageWords.length < 10 && currentQuestionIndex < questionMap.length - 1) {
     setErrorMessage(`Please provide a detailed answer. Minimum 10 words required.`);
+
     return;
   }
 
@@ -425,11 +431,8 @@ const handleSendMessage = (answer = message, skip = false) => {
         {
           nextIndex = nextIndex + 1
         };
-      console.log("Next question index:", questionMap[nextIndex]?.id);
-      console.log("Question Map"  , questionMap);
 
       if (questionMap[nextIndex]?.id === 76) {
-        console.log("this question is title_desc");
         sendSystemMessage(fetchedSections[currentSectionIndex].questions[nextIndex].question);
         nextIndex = nextIndex + 1;
       }
@@ -472,7 +475,6 @@ const handleSendMessage = (answer = message, skip = false) => {
         prevIndex = prevIndex - 1;
       }
 
-
       const updatedChatLog = [...chatLog];
 
       const previousAnswer = updatedChatLog.find(
@@ -496,7 +498,7 @@ const handleSendMessage = (answer = message, skip = false) => {
         const previousQuestion = questionMap[prevIndex].question;
 
         setMessage(previousAnswer);
-
+        setIsInputValid(true);
 
         if (!updatedChatLog.some((entry) => entry.message === previousQuestion)) {
           sendSystemMessage(previousQuestion);
@@ -516,11 +518,11 @@ const handleSendMessage = (answer = message, skip = false) => {
       setShowOtherTextField(true);
       setMessage(""); 
       setShowOtherTextField(false);
-      handleSendMessage(option); // Send the selected option as the answer
+      handleSendMessage(option); 
     }
     else {
-      setShowOtherTextField(false); // Hide the text area if another option is selected
-      handleSendMessage(option); // Send the selected option as the answer
+      setShowOtherTextField(false);
+      handleSendMessage(option); 
 
     }
   };
@@ -620,9 +622,6 @@ const handleSendMessage = (answer = message, skip = false) => {
                     <>
                       <textarea
                         maxLength={questionMap[currentQuestionIndex]?.charLimit || undefined}
-                        minLength={
-                          currentSectionIndex === 3 ? 20 : 0
-                        }
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
