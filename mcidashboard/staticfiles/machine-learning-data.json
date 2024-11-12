@@ -1,0 +1,163 @@
+{
+    "total_games": 138,
+    "patients": {
+        "mci": 23,
+        "healthy": 23,
+        "mci_avg_age": 82,
+        "healthy_avg_age": 70,
+        "meanSD_MMSE_score_healthy": {
+            "mean": 29.61,
+            "sd": 0.64
+        },
+        "meanSD_MMSE_score_mci": {
+            "mean": 26.32,
+            "sd": 1.61
+        },
+        "meanSD_MoCA_score_healthy": {
+            "mean": 28.09,
+            "sd": 1.25
+        },
+        "meanSD_MoCA_score_mci": {
+            "mean": null,
+            "sd": null
+        },
+        "meanSD_age_healthy": {
+            "mean": 70.43,
+            "sd": 5.32
+        },
+        "meanSD_age_mci": {
+            "mean": 81.57,
+            "sd": 5.05
+        },
+        "education_level_mci": [{
+                "label": "ISCED 1/2",
+                "data": 17.39
+            },
+            {
+                "label": "ISCED 3/4",
+                "data": 56.52
+            },
+            {
+                "label": "ISCED 5/6",
+                "data": 26.09
+            }
+        ],
+        "education_level_healthy": [{
+                "label": "ISCED 1/2",
+                "data": 21.74
+            },
+            {
+                "label": "ISCED 3/4",
+                "data": 30.43
+            },
+            {
+                "label": "ISCED 5/6",
+                "data": 47.83
+            }
+        ],
+        "gender_mci": [{
+                "label": "Male",
+                "data": 47.83
+            },
+            {
+                "label": "Female",
+                "data": 52.17
+            }
+        ],
+        "gender_healthy": [{
+                "label": "Male",
+                "data": 47.83
+            },
+            {
+                "label": "Female",
+                "data": 52.17
+            }
+        ],
+        "tablet_level_mci": [{
+                "label": "Daily",
+                "data": 13.04
+            },
+            {
+                "label": "Weekly",
+                "data": 8.7
+            },
+            {
+                "label": "Monthly",
+                "data": 8.7
+            },
+            {
+                "label": "Yearly or less",
+                "data": 4.35
+            },
+            {
+                "label": "Never",
+                "data": 65.22
+            }
+        ],
+        "tablet_level_healthy": [{
+                "label": "Daily",
+                "data": 56.52
+            },
+            {
+                "label": "Weekly",
+                "data": 4.35
+            },
+            {
+                "label": "Monthly",
+                "data": 0
+            },
+            {
+                "label": "Yearly or less",
+                "data": 8.7
+            },
+            {
+                "label": "Never",
+                "data": 30.43
+            }
+        ],
+        "cardgame_level_mci": [{
+                "label": "Daily",
+                "data": 30.43
+            },
+            {
+                "label": "Weekly",
+                "data": 34.78
+            },
+            {
+                "label": "Monthly",
+                "data": 8.7
+            },
+            {
+                "label": "Yearly or less",
+                "data": 26.09
+            },
+            {
+                "label": "Never",
+                "data": 0
+            }
+        ],
+        "cardgame_level_healthy": [{
+                "label": "Daily",
+                "data": 13.04
+            },
+            {
+                "label": "Weekly",
+                "data": 21.74
+            },
+            {
+                "label": "Monthly",
+                "data": 17.39
+            },
+            {
+                "label": "Yearly or less",
+                "data": 47.83
+            },
+            {
+                "label": "Never",
+                "data": 0
+            }
+        ]
+    },
+    "total_moves": 15124,
+    "total_game_time": 791.6
+}

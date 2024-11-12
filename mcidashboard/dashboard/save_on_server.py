@@ -8,7 +8,7 @@ import paramiko
 def save_response_locally(response_data, file_name):
     try:
         # Get system temp directory
-        temp_dir = "C:/dr_solitaire/mcidashboard/dashboard/tmp/"
+        temp_dir = "/home/ec2-user/drsolitaire/mcidashboard/dashboard/tmp/"
         print(f"Temp directory: {temp_dir}")
         # Create a temporary file
         local_path = os.path.join(temp_dir, file_name)
