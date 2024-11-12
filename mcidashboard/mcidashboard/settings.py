@@ -18,18 +18,6 @@ WHITE_LIST = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://ec2-16-171-150-227.eu-north-1.compute.amazonaws.com:8080",
-]
-
-# To allow all headers
-CORS_ALLOW_HEADERS = [
-    "content-type",
-    "x-csrftoken",
-    "authorization",
-]
-
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Trusted origins for CSRF (replace with actual allowed origins in production)
 CSRF_TRUSTED_ORIGINS = [
@@ -121,26 +109,28 @@ WSGI_APPLICATION = 'mcidashboard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': 'drsolitaire_global',
         'USER': 'drsolitaire',
         'PASSWORD': 'rasimrasim14',
         'HOST': 'drsolitaire.czma6mqkyvol.eu-north-1.rds.amazonaws.com',
         'PORT': '3306',
-        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
+	'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" ,"use_pure": True},
     },
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'dummy_solitaire',
-    #     'USER': 'root',
-    #     'PASSWORD': 'rasimrasim14',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306',
-    # },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dummy_solitaire',
+#         'USER': 'root',
+#         'PASSWORD': 'rasimrasim14',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     },
+# }
 
 
 
