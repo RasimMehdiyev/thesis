@@ -14,6 +14,7 @@ from .serializers import *
 from django.db.models import Count, Avg
 from django.db.models import Max
 from collections import Counter
+from .save_on_server import *
 import os
 import pandas as pd
 from django.conf import settings
@@ -598,8 +599,6 @@ def create_response(request):
             )
         
 
-from .save_on_server import *
-
 @csrf_exempt
 @api_view(['POST'])
 def add_answer(request, response_id):
@@ -759,3 +758,18 @@ def get_top_3_models(request):
     
     return JsonResponse(response_data, safe=False)
 
+@csrf_exempt
+@api_view(['POST'])
+def submit_email(request):
+    email = request.data.get('email') + '|'
+    print(len(email))
+    if len(email) == 1:
+        return JsonResponse({'message': 'No information will be provided'}, status=201)
+    
+    remote_user = 'graceage'
+    remote_host = 'lamp-shell.icts.kuleuven.be'
+    remote_path = '/www/homes/graceage/dr_solitaire/' + 'email.txt'
+
+    append_to_the_file_on_server(email, remote_path, remote_user, remote_host, 'eesie6so2Eas')
+
+    return JsonResponse({'message': 'Email submitted successfully'}, status=201)

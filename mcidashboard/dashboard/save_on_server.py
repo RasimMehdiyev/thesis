@@ -62,6 +62,36 @@ def transfer_file_to_server(local_path, remote_path, remote_user, remote_host, p
     except Exception as e:
         print(f"Error transferring file: {e}")
         return False
+    
+def append_to_the_file_on_server(data, remote_path, remote_user, remote_host, password):
+    print(data)
+    try:
+        # Create an SSH client
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Connect to the remote server
+        ssh.connect(hostname=remote_host, username=remote_user, password=password)
+
+        # Open an SFTP session
+        sftp = ssh.open_sftp()
+
+        # Open the remote file if exists, create it otherwise
+        if sftp.file(remote_path):
+            remote_file = sftp.file(remote_path, "a")
+        else:
+            remote_file = sftp.file(remote_path, "w")
+
+        # Append the data to the file
+        remote_file.write(data)
+
+        # Close the file and the connections
+        remote_file.close()
+        sftp.close()
+        ssh.close()
+        return True
+    except Exception as e:
+        print(f"Error appending to the file: {e}")
 
 
 # remote_user = 'graceage'

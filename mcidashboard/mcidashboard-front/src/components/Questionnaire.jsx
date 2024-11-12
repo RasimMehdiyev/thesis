@@ -101,19 +101,17 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       response_id = responseData.response_id;
     } catch (error) {
       console.error('Error creating response:', error);
-      return; // Stop execution if response creation fails
+      return; 
     }
   
-    // Step 2: Populate sectionsToSubmit with each question answer, now that we have response_id
     responses.forEach(r => {
       if (r.sender === 'You' && r.question_id !== 0) {
         sectionsToSubmit.push({ response: response_id, question: r.question_id, answer: r.message });
       }
     });
   
-    console.log("Sections to submit:", sectionsToSubmit);
+    // console.log("Sections to submit:", sectionsToSubmit);
   
-    // Step 3: Check if the current question ID matches the target IDs
     if (targetQuestionIds.includes(id)) {
       const apiUrl = `/dashboard/response/${response_id}/answer/add/`;
   

@@ -40,7 +40,7 @@
         font-size: 18px;
         color: #000;
         list-style-type: none;
-        margin-left: 70px;
+        margin-left: 55px;
         font-size: 20px;
     }
     
@@ -91,10 +91,8 @@
     }
     
     .email-input {
-        margin: 20px 0px;
         height: 35px;
         font-size: 20px;
-        /* border-radius: 10px; */
         border: 0.5px solid #000;
         background-color: rgb(255, 255, 255);
         padding-left: 15px;
@@ -102,7 +100,7 @@
     }
     
     .email-error {
-        margin: 30px 0;
+        margin-left: 20px;
     }
     
     .button-container {
@@ -131,3 +129,12 @@
         font-weight: 700;
         padding-top: 60px;
     }
+    
+    .icf-items-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: start;
+    }
+    
+    .icf-items-div input {}

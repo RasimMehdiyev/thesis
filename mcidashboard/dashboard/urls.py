@@ -33,4 +33,8 @@ urlpatterns = [
     # ML Model
     path('feature-importance/',get_shap_contributions, name='feature-importance'),
     path('top-3-models/',get_top_3_models, name='top-3-models'),
+
+    # ICF email
+    path('submit_email/',submit_email, name='send-email'),
+    
 ]

@@ -49,10 +49,47 @@ const Home = () => {
         console.log('All checked:', allChecked);
     }, [allChecked]);
 
-    const submitForm = () =>{
-        console.log('Form submitted');
-        // set that ICFConfirmed to true in localstorage
+
+
+    function getCookie(name){
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== ''){
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++){
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')){
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    
+    const csrftoken = getCookie('csrftoken');
+
+    const submitForm = async () =>{
         localStorage.setItem('ICFConfirmed', true);
+        let apiURL = '/dashboard/submit_email/';    
+
+        try {
+            const response = await fetch(apiURL, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            });
+
+            if (response.ok) {
+                console.log('Email submitted successfully');
+            } else {
+                console.log('Failed to submit email');
+            }
+        } catch (error) {
+            console.log('Failed to submit email');
+        } 
     }
 
   return (
@@ -71,7 +108,7 @@ const Home = () => {
             <div className="contact-details">
                 <ul>
                     <li id='contact-title'><strong>Supervisor</strong></li>
-                    <li id='contact-name'>Vero Vanded Abeele</li>
+                    <li id='contact-name'>Vero Vanden Abeele</li>
                     <li><a href="">vero.vandenabeele@kuleuven.be</a></li>
                     <li><a href="">+32 16 30 11 05</a></li>
                     <li>Mens-Machine Interactie (HCI), Campus Groep T Leuven</li>
@@ -123,11 +160,11 @@ const Home = () => {
             </div>
             <div className="informed-consent">
                 <form>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="understand-expectations" name="understand-expectations" onChange={e=>setIsUnderstandExpectationsChecked(e.target.checked)}/>
                         <label htmlFor="understand-expectations">I understand what is expected of me during this research.</label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="participate-trials" name="participate-trials" onChange={e=>setIsParticipateTrialsChecked(e.target.checked)}/>
                         <label htmlFor="participate-trials">I know that I will participate in the following trials or tests:
                             <ul>
@@ -140,23 +177,22 @@ const Home = () => {
                             </ul>
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="risks-discomforts" name="risks-discomforts" onChange={e=>setIsRisksDiscomfortsChecked(e.target.checked)}/>
                         <label htmlFor="risks-discomforts">I know that my participation may be associated to risks or discomforts: 
-                            <p>The potential risks include mental fatigue or cognitive overload and possible frustration if the web application is challenging to use.</p>
+                            The potential risks include mental fatigue or cognitive overload and possible frustration if the web application is challenging to use.
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="benefits" name="benefits" onChange={e=>setIsBenefitsChecked(e.target.checked)}/>
                         <label htmlFor="benefits">I or others can benefit from this research in the following ways:
-                            <p>As a participant, I can benefit from contributing to the development of a tool that improves 
+                            As a participant, I can benefit from contributing to the development of a tool that improves 
                             the diagnosing process of MCI using machine learning and XAI, helping healthcare 
                             professionals diagnose MCI earlier and more accurately, which can lead to better patient 
-                            outcomes. 
-                            </p>                        
+                            outcomes.                
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="reward-compensation" name="reward-compensation" onChange={e=>setIsRewardCompensationChecked(e.target.checked)}/>
                         <label htmlFor="reward-compensation">I know that there will be a reward or compensation for my participation in the research: <strong>£7.5</strong>
                             <p>
@@ -169,7 +205,7 @@ const Home = () => {
                             </p>
                         </label>
                         </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="voluntary-participation" name="voluntary-participation" onChange={e=>setIsVoluntaryParticipationChecked(e.target.checked)}/>
                         <label htmlFor="voluntary-participation">I understand that my participation to this study is voluntary. 
                             I have the right to stop participating at any time. 
@@ -177,7 +213,7 @@ const Home = () => {
                             any negative repercussions for me. However, I understand that if I choose to withdraw before completing the study, I will not receive the reward as none of my data will be retained.
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="recordings" name="recordings" onChange={e=>setIsRecordingsChecked(e.target.checked)}/>
                         <label htmlFor="recordings">I know that recordings of me will be made in this study: 
                             <p>
@@ -200,7 +236,7 @@ const Home = () => {
                             </p>       
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="sensitive-topics" name="sensitive-topics" onChange={e=>setIsSensitiveTopicsChecked(e.target.checked)}/>
                         <label htmlFor="sensitive-topics">
                             I know that this research may involve topics or questions that are of a sensitive or personal nature: 
@@ -209,7 +245,7 @@ const Home = () => {
                             </p>
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="gdpr" name="gdpr" onChange={e=>setIsGdprChecked(e.target.checked)}/>
                         <label htmlFor="gdpr">
                             My personal data will be processed in line with the General Data Protection Regulation (GDPR). 
@@ -221,7 +257,7 @@ const Home = () => {
                             </p>
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input
                             type="checkbox"
                             id="results-contact"
@@ -230,21 +266,22 @@ const Home = () => {
                         />
                         <label htmlFor="results-contact">
                             I would like to be informed about the results of this research. The researchers may contact me for this purpose using the following e-mail address.
+                            {isResultsContactChecked && (
+                                <div style={{display:'flex', flexDirection:"row", textAlign:'center', alignItems:"center" }}>
+                                    <input 
+                                        className='email-input' 
+                                        type="text" 
+                                        placeholder="Enter your email" 
+                                        value={email} 
+                                        onChange={handleEmailChange} 
+                                    />
+                                    {emailError && <span className='email-error' style={{ color: 'red' }}>{emailError}</span>}
+                                </div>
+                            )}
                         </label>
-                        {isResultsContactChecked && (
-                        <div style={{display:'flex', flexDirection:"row", textAlign:'center', }}>
-                            <input 
-                                className='email-input' 
-                                type="text" 
-                                placeholder="Enter your email" 
-                                value={email} 
-                                onChange={handleEmailChange} 
-                            />
-                            {emailError && <p className='email-error' style={{ color: 'red' }}>{emailError}</p>}
+  
                         </div>
-                    )}
-                        </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="questions-contact" name="questions-contact" onChange={e=>setIsQuestionsContact(e.target.checked)} />
                         <label htmlFor="questions-contact">
                             In case of further questions about the research I know that I can contact: 
@@ -255,15 +292,15 @@ const Home = () => {
                             </p>
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="ethics-approval" name="ethics-approval" onChange={e=>setIsEthicsApprovalChecked(e.target.checked)}/>
                         <label htmlFor="ethics-approval">
                             This study has been reviewed and approved by the Social and Societal Ethics Committee (SMEC) of KU Leuven 
-                            (<strong>G-2024-8397</strong>; please use this number in any communication regarding the research). 
+                            (application number: <i> G-2024-8397</i>). 
                             In case of complaints or other concerns with regard to the ethical aspects of this research I can contact SMEC: <strong>smec@kuleuven.be</strong>
                         </label>
                     </div>
-                    <div>
+                    <div className='icf-items-div'>
                         <input type="checkbox" id="discomfort-contact" name="discomfort-contact" onChange={e=>setIsDiscomfortContactChecked(e.target.checked)}/>
                         <label htmlFor="discomfort-contact">
                             I know that I can contact the individuals/organizations below if I would experience any discomfort or difficulties as a result 
@@ -275,18 +312,19 @@ const Home = () => {
                             </p>
                         </label>
                     </div>
-                    <div  className='submit-text'>
-                        <u>
+                    <div className='submit-text'>
+                        
                         By clicking on this button you confirm that you have read and understood the information in this document and you have received an 
                         answer to all your questions regarding this research. You give your consent to participate.
-                        </u>
+                        
                     </div>
-                    <div className='button-container'>
-                        <button onClick={submitForm} type="submit" className={allChecked ? 'submit-form' : 'submit-form disabled'} disabled={!allChecked}>
-                            Submit
-                        </button>
-                    </div>
+
                 </form>
+                <div className='button-container'>
+                    <button onClick={submitForm} className={allChecked ? 'submit-form' : 'submit-form disabled'} disabled={!allChecked}>
+                       Submit
+                    </button>
+                </div>
             </div>
         </div>
       </div>
