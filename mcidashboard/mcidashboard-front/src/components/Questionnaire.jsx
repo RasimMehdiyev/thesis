@@ -656,7 +656,6 @@ const handleSendMessage = (answer = message, skip = false) => {
                   )}
                 </div>
               )}
-              {/* Show error messages */}
               {errorMessage && <div style={{marginTop: '3px'}} className="error-message">{errorMessage}</div>}
             </>
           )}
