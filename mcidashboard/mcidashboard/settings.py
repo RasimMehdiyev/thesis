@@ -18,6 +18,18 @@ WHITE_LIST = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://ec2-16-171-150-227.eu-north-1.compute.amazonaws.com:8080",
+]
+
+# To allow all headers
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "x-csrftoken",
+    "authorization",
+]
+
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
