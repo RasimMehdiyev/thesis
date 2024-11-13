@@ -152,7 +152,7 @@ const Home = () => {
                     the system’s usability, usefulness, understandability, and trustworthiness through a combination of 
                     validated questionnaires, an adapted questionnaire for the XAI context based on other validated 
                     tools, and open questions for explicit feedback. For participants willing to provide audio feedback, a 
-                    think-aloud protocol will be employed during task completion, where they will be asked to verbalize 
+                    think-aloud protocol will be employed throughout the experiment, where they will be asked to verbalize 
                     their thoughts while interacting with the web application in a recorded call with the researchers. If 
                     participants prefer not to participate in the think-aloud protocol, they can complete the tasks 
                     independently, while their screen and mouse activity on the web application will be recorded 
@@ -161,7 +161,7 @@ const Home = () => {
                 </p>
             </div>     
             <div className='duration-exp'>
-                <h3>Duration of the experiment: <strong>35-40 minutes</strong></h3>
+                <h3>Duration of the experiment: <strong>45-60 minutes</strong></h3>
             </div>
             <div className="informed-consent">
                 <form>
@@ -173,28 +173,31 @@ const Home = () => {
                         <input type="checkbox" id="participate-trials" name="participate-trials" onChange={e=>setIsParticipateTrialsChecked(e.target.checked)}/>
                         <label htmlFor="participate-trials">I know that I will participate in the following trials or tests:
                             <ul>
-                                <li><strong>Demographic questions</strong> (e.g., age range, education, professional background)</li>
-                                <li><strong>Exploration tasks</strong> to locate and interpret information on the web application and report the correct answers. Optional <strong>think-aloud protocol</strong> during.</li>
-                                <li><strong>AI Technology Acceptance Model</strong></li>
-                                <li><strong>XAI Experience Quality Scale</strong></li>
-                                <li><strong>Recommended Trust Scale for XAI</strong></li>
-                                <li><strong>Open-ended questions to provide explicit feedback</strong></li>
+                                <li>Demographic questions (e.g., age range, education, professional background)</li>
+                                <li>Exploration tasks to locate and interpret information on the web application and report the correct answers. Optional think-aloud protocol during.</li>
+                                <li>AI Technology Acceptance Model</li>
+                                <li>XAI Experience Quality Scale</li>
+                                <li>Recommended Trust Scale for XAI</li>
+                                <li>Open-ended questions to provide explicit feedback</li>
                             </ul>
                         </label>
                     </div>
                     <div className='icf-items-div'>
                         <input type="checkbox" id="risks-discomforts" name="risks-discomforts" onChange={e=>setIsRisksDiscomfortsChecked(e.target.checked)}/>
                         <label htmlFor="risks-discomforts">I know that my participation may be associated to risks or discomforts: 
-                            The potential risks include mental fatigue or cognitive overload and possible frustration if the web application is challenging to use.
+                            <p>The potential risks include mental fatigue or cognitive overload and possible frustration if the web application is challenging to use.</p> 
                         </label>
                     </div>
                     <div className='icf-items-div'>
                         <input type="checkbox" id="benefits" name="benefits" onChange={e=>setIsBenefitsChecked(e.target.checked)}/>
-                        <label htmlFor="benefits">I or others can benefit from this research in the following ways:
-                            As a participant, I can benefit from contributing to the development of a tool that improves 
-                            the diagnosing process of MCI using machine learning and XAI, helping healthcare 
-                            professionals diagnose MCI earlier and more accurately, which can lead to better patient 
-                            outcomes.                
+                        <label htmlFor="benefits">
+                                I or others can benefit from this research in the following ways:
+                            <p>
+                                As a participant, I can benefit from contributing to the development of a tool that improves 
+                                the diagnosing process of MCI using machine learning and XAI, helping healthcare 
+                                professionals diagnose MCI earlier and more accurately, which can lead to better patient 
+                                outcomes.
+                            </p>                
                         </label>
                     </div>
                     <div className='icf-items-div'>
@@ -206,7 +209,7 @@ const Home = () => {
                             </p>
                             <p>
                                 If I engage in the optional think-aloud protocol with the assistance of the researchers, 
-                                I will be awarded a bonus of <strong>£3</strong>.
+                                I will be awarded a <strong>bonus of £3</strong>.
                             </p>
                         </label>
                         </div>
@@ -229,7 +232,7 @@ const Home = () => {
                             messages. 
                             </p>
                             <p>
-                            As an optional addition, you may choose to engage in a think-aloud protocol, which involves 
+                            As an optional addition, you may choose to engage in a <strong>think-aloud protocol</strong>, which involves 
                             scheduling a call with the researchers. During the call, you will be asked to share your screen 
                             and microphone to verbalize your thoughts while navigating the web application. In that 
                             scenario, the call will be recorded and stored in OneDrive linked to a KU Leuven account. 
@@ -258,7 +261,7 @@ const Home = () => {
                                 Only the data that are strictly necessary to achieve the research objectives will be processed. My data will be kept confidential at all times throughout the study and the researchers will take measures to protect my privacy. 
                                 For example, my personal data will be pseudonymized, meaning that my data can no longer be linked to me without the use of additional information that is only accessible to the researchers. 
                                 I understand that my pseudonymized data may be reused for other scientific research and possibly for teaching or academic lectures. More information about the processing of 
-                                my personal data can be found in the attached information letter.
+                                my personal data can be found in the <a href="https://bit.ly/solitairedss-informationletter">information letter.</a>.
                             </p>
                         </label>
                     </div>
@@ -292,7 +295,7 @@ const Home = () => {
                             In case of further questions about the research I know that I can contact: 
                             <p>
                                 Rasim Mehdiyev (<a href="">rasim.mehdiyev@student.kuleuven.be</a>) or 
-                                <br />
+                               
                                 Penelope Rekkas (<a href="">penelope.rekkas@student.kuleuven.be</a>)
                             </p>
                         </label>
@@ -301,8 +304,8 @@ const Home = () => {
                         <input type="checkbox" id="ethics-approval" name="ethics-approval" onChange={e=>setIsEthicsApprovalChecked(e.target.checked)}/>
                         <label htmlFor="ethics-approval">
                             This study has been reviewed and approved by the Social and Societal Ethics Committee (SMEC) of KU Leuven 
-                            (application number: <i> G-2024-8397</i>). 
-                            In case of complaints or other concerns with regard to the ethical aspects of this research I can contact SMEC: <strong>smec@kuleuven.be</strong>
+                            (approval number: <i> G-2024-8397</i>). 
+                            In case of complaints or other concerns with regard to the ethical aspects of this research I can contact SMEC: <a href=''>smec@kuleuven.be</a>
                         </label>
                     </div>
                     <div className='icf-items-div'>
@@ -312,15 +315,15 @@ const Home = () => {
                             of some of the subjects that were the topic of this research: 
                             <p>
                                 Rasim Mehdiyev (<a href="">rasim.mehdiyev@student.kuleuven.be</a>) or 
-                                <br />
+                               
                                 Penelope Rekkas (<a href="">penelope.rekkas@student.kuleuven.be</a>)
                             </p>
                         </label>
                     </div>
                     <div className='submit-text'>
                         
-                        By clicking on this button you confirm that you have read and understood the information in this document and you have received an 
-                        answer to all your questions regarding this research. You give your consent to participate.
+                        By clicking on this button I confirm that I have read and understood the information in this document and I have received an 
+                        answer to all your questions regarding this research. I give my consent to participate.
                         
                     </div>
 
