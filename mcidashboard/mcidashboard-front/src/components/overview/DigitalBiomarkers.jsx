@@ -17,7 +17,7 @@ const DigitalBiomarkers = ({ patient }) => {
   const hideTooltip = () => setIsTooltipVisible(false);
 
 
- const biomarkerNametoId = {
+  const biomarkerNametoId = {
     'Average Accuracy': 14,
     'Min Move Time': 24,
     'Beta Error': 10,
@@ -40,6 +40,10 @@ const DigitalBiomarkers = ({ patient }) => {
     'Average Total Time': 1,
     'Average Think Time': 3,
     'Min Think Time': 23,
+    'Solved': 21,
+    'Min Total Time': 22,
+    'SD Move Time': 6,
+    'Total Moves': 31
   }
 
   useEffect(() => {
@@ -149,7 +153,7 @@ const splitData = (gameHistory) => {
         labels.push(formattedDate);
     }
     let minLimit = Math.floor(Math.min(...data) / 10) * 10;
-    let maxLimit = Math.ceil(Math.max(...data)) + Math.abs(minLimit/2.5) + 5;
+    let maxLimit = Math.ceil(Math.max(...data)) + Math.abs(minLimit/1.5) + 12;
 
     if (maxLimit === 0 && minLimit === 0) {
         maxLimit = 1;
@@ -168,8 +172,6 @@ const {
 } = gameHistory ? splitData(gameHistory) : {};
 
 
-
-// Process MCI and healthy data
 const { 
     xData: xData_mci = [], 
     yData: yData_mci = [], 

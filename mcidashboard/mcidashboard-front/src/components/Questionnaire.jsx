@@ -297,62 +297,59 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
             const isNumericAndDot = /^\d*\.?\d*$/.test(value);
             if (!isNumericAndDot) {
                 setErrorMessage('Please enter a valid numeric value.');
-                value = value.replace(/[^0-9.]/g, ''); // Remove any non-numeric characters
+                value = value.replace(/[^0-9.]/g, ''); 
                 const dotIndex = value.indexOf('.');
                 if (dotIndex !== -1) {
-                    value = value.slice(0, dotIndex + 1) + value.slice(dotIndex + 1).replace(/\./g, ''); // Remove extra dots
+                    value = value.slice(0, dotIndex + 1) + value.slice(dotIndex + 1).replace(/\./g, ''); 
                 }
                 if (value.length === 0) isValid = false;
             }
         
-            // Check if the value represents a valid percentage (0 to 100)
             const percentage = parseFloat(value);
-
             if (isNaN(percentage) || percentage < 0 || percentage > 100) {
                 setErrorMessage('Please enter a valid accuracy percentage between 0 and 100.');
-                // No leading zero unless it's part of "0.x" decimal input
+                
                 if (value.length === 2 && value[0] === '0' && value[1] !== '.') {
                     value = '';
                     isValid = false;
                 }
-                
-                // Prevent further input if the value would exceed 100
+              
                 if (percentage > 100) {
                     isValid = true;
                     if (value.startsWith('100')) {
-                        value = '100'; // Set value to "100" if it would exceed 100
+                        value = '100';
                     } else {
-                        value = value.slice(0, 2); // Truncate to prevent exceeding range
+                        value = value.slice(0, 2);
                     }
                 } else {
-                    // Allow only numeric input and a single decimal point
+
                     value = value.replace(/[^0-9.]/g, '');
                 }
             
                 if (value.length === 0) isValid = false;
             
             } else {
-                // Handle leading zero in a two-digit input without a decimal
+
                 if (value.length === 2 && value[0] === '0' && value[1] !== '.') {
                     setErrorMessage('Please enter a valid accuracy percentage between 0 and 100.');
                     value = '';
                     isValid = false;
                 } else if (percentage === 100 && value.includes('.')) {
-                    // If the value is 100, remove any decimal points
+
                     setErrorMessage('100 should be entered as a whole number without decimals.');
-                    value = "100"; // Set value to "100" without any decimals
+                    value = "100"; 
                     isValid = true;
                 } else if (value.length > 5) {
-                    // Restrict length to 5 characters for percentages below 100
+
                     setErrorMessage('No more than 2 digits after the decimal point.');
-                    value = value.slice(0, 5); // Truncate to 5 characters
+                    value = value.slice(0, 5); 
                     isValid = true;
                 } else {
                     isValid = true;
                 }
             }
             
-            setMessage(value); // Update the message with the valid value
+            setMessage(value);
             
               
         
@@ -360,20 +357,20 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
             const isNumeric = /^\d+$/.test(value);
             if (!isNumeric) {
                 setErrorMessage('Please enter an integer value.');
-                value = value.replace(/[^0-9]/g, ''); // Remove any non-numeric characters
+                value = value.replace(/[^0-9]/g, ''); 
                 if (value.length === 0) isValid = false;
             }
         }
         }else if (currentSectionIndex === 0){
           console.log("Current section index is:", currentSectionIndex);
-          if (currentQuestionIndex !== 0 && value.length < 10){
+          if (currentQuestionIndex !== 0 && value.length < 4){
             console.log("Current question index is:", currentQuestionIndex);
-            setErrorMessage(`Please provide a detailed answer. Minimum 10 characters required.`);
+            setErrorMessage(`Please provide a detailed answer. Minimum 4 characters required.`);
             isValid = false;
           }
         }
-    setMessage(value); // Update the message with the valid value
-    setIsInputValid(isValid); // Update the validity state
+    setMessage(value); 
+    setIsInputValid(isValid); 
 };
 
 
@@ -606,7 +603,7 @@ const handleOptionClick = (option) => {
                           }
                         }}
                         placeholder="Please specify..."
-                        // rows={message.length > 50 ? 2 : 1}
+                        rows='1'
                         style={{ resize: 'none', width: '100%', fontSize: '16px' }}
                       />
                       <button
@@ -641,7 +638,7 @@ const handleOptionClick = (option) => {
                           }
                         }}
                         placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
-                        // rows={message.length > 50 ? 2 : 1}
+                        rows='1'
                         style={{ resize: 'none', width: '100%', fontSize: '16px' }}
                       />
                       <button
