@@ -29,7 +29,7 @@ const MachineLearningModel = ({ patient }) => {
     const getLatestMci = (mciData) => {
         const keys = Object.keys(mciData);
         const latestKey = keys[keys.length - 1];
-        return mciData[latestKey] === 1 ? 'MCI' : 'Healthy';
+        return mciData[latestKey] === 1 ? 'MCI' : 'healthy';
     };
 
     const fetchJSON = async (url) => {
