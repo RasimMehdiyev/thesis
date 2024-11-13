@@ -76,25 +76,28 @@ const Home = () => {
         localStorage.setItem('ICFConfirmed', true);
         let apiURL = '/dashboard/submit_email/';    
 
-        try {
-            const response = await fetch(apiURL, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email }),
-            });
+        console.log('Email submitted successfully');
+        navigate('/overview');
 
-            if (response.ok) {
-                console.log('Email submitted successfully');
-                navigate('/overview');
-            } else {
-                console.log('Failed to submit email');
-            }
-        } catch (error) {
-            console.log('Failed to submit email');
-        } 
+        // try {
+        //     const response = await fetch(apiURL, {
+        //         method: 'POST',
+        //         headers: {
+        //             'X-CSRFToken': csrftoken,
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ email: email }),
+        //     });
+
+        //     if (response.ok) {
+        //         console.log('Email submitted successfully');
+        //         navigate('/overview');
+        //     } else {
+        //         console.log('Failed to submit email');
+        //     }
+        // } catch (error) {
+        //     console.log('Failed to submit email');
+        // } 
     }
 
   return (

@@ -101,12 +101,17 @@ const Tutorial = ({ initialStep = 0 }) => {
   
     const location = useLocation();
   
-
+  
   useEffect(() => {
     if (location.state && location.state.tutorialStep) {
       setCurrentStep(location.state.tutorialStep);
     }
   }, [location.state]);
+
+  useEffect(() => { // Reset tutorial on reload
+    setCurrentStep(0);
+  }, []);
+
 
 
   // Function to get the mask styles around a given element
@@ -313,9 +318,11 @@ const Tutorial = ({ initialStep = 0 }) => {
           navigate('/overview', { state: { tutorialStep: 16 } });
       }
     }
-    else{
+    else{ //tutorial done
         setIsModalVisible(false); 
         enableScroll(); 
+        window.location.href = '/overview' //forced reload
+
     }
   };
 
