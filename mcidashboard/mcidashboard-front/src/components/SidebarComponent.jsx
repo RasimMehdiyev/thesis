@@ -13,7 +13,9 @@ const SidebarComponent = () => {
   const [isChatboxVisible, setIsChatboxVisible] = useState(true);
   const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const navigate = useNavigate();
-  const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const [selectedPatientId, setSelectedPatientId] = useState(
+    parseInt(localStorage.getItem('selectedPatientId'), 10)
+  );
 
   // useEffect
   useEffect(() => {
@@ -26,12 +28,14 @@ const SidebarComponent = () => {
       const response = await fetch('/dashboard/patients/');
       const data = await response.json();
       console.log('Fetched Data:', data);
-      
+
       
       if (data) {
         setPatients(data);
-        if (window.location.pathname === '/overview' || window.location.pathname === '/overview/') {
-        getPatient(data[0].id);
+        if (window.location.pathname === '/overview' || window.location.pathname === '/overview/' && localStorage.getItem('selectedPatientId')) {
+          getPatient(localStorage.getItem('selectedPatientId'));
+        }else if(window.location.pathname === '/overview' || window.location.pathname === '/overview/' && !localStorage.getItem('selectedPatientId')){
+          getPatient(data[0].id);
         }
       } else {
         console.error('No patients data found in the response.');
@@ -44,7 +48,9 @@ const SidebarComponent = () => {
   };
 
   const getPatient = async (id) => {
+    console.log('Selected Patient ID:', localStorage.getItem('selectedPatientId'));
     setSelectedPatientId(id);
+    localStorage.setItem('selectedPatientId', id.toString());
     console.log('get patient');
     try {
       const response = await fetch('/dashboard/patient/' + id + '/');
@@ -99,16 +105,20 @@ const SidebarComponent = () => {
       <p className='player-list'>Player List</p>
       <SearchBarComponent searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
       <ul className='patients'>
-        {filteredPatients.map((patient) => (
-          <li onClick={() => getPatient(patient.id)} className={`patient-item ${selectedPatientId === patient.id ? 'selected-patient' : ''}`} key={patient.id}>
+        {filteredPatients.map((patient) => {
+        
+        console.log('selectedPatientId:', selectedPatientId, 'patient.id:', patient.id);
+        console.log('selectedPatientId === patient.id:', Number(selectedPatientId) === patient.id);
+        return(
+          <li onClick={() => getPatient(patient.id)} className={`patient-item ${Number(selectedPatientId) === patient.id? 'selected-patient' : ''}`} key={patient.id}>
             <p>{patient.full_name}</p>
-            <div className='chevron-right-icon'></div>
+              <div className='chevron-right-icon'></div>
           </li>
-        ))}
+        )})}
       </ul>
       <div className="floating-chat-icon">
             <img 
-              src="/static/assets/chat_icon_2.svg" 
+              src="/static/assets/chat_icon_2.svg"  
               alt="Chat Icon" 
               className="chat-icon" 
               title="Start Questionnaire"
