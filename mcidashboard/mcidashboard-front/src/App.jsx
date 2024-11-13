@@ -26,12 +26,11 @@ const App = () => {
 
 
   const handleHelpIconClick = () => {
+    setShowTutorial(true);   
+    setTutorialStep(0);   
     if (location.pathname !== '/overview') {
       navigate('/overview', { state: { tutorialStep: 0 } }); 
-    }
-    
-    setShowTutorial(true);   
-    setTutorialStep(0);     
+    }  
   };
 
   // Check if the current path is the home page
@@ -56,7 +55,7 @@ const App = () => {
       {/* Conditionally render Navbar, Sidebar, and Tutorial only if not on home page */}
       {!isHomePage && (
         <>
-          <NavbarComponent onHelpIconClick={() => setShowTutorial(true)} />
+          <NavbarComponent onHelpIconClick={handleHelpIconClick} />
           <SidebarComponent />
           {showTutorial && <Tutorial initialStep={tutorialStep} />}
         </>

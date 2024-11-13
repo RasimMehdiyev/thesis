@@ -125,10 +125,11 @@ const Tutorial = ({ initialStep = 0 }) => {
   
     const rect = element.getBoundingClientRect();
 
+    /*
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll(); 
-      };
+      };*/
 
   
     
@@ -167,6 +168,9 @@ const Tutorial = ({ initialStep = 0 }) => {
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll();
+        console.log('HANDLING SKIP');
+        navigate('/overview', { replace: true }); 
+        navigate('/overview', { replace: true }); 
       };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
