@@ -14,6 +14,10 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [fetchedSections, setFetchedSections] = useState([]);
   const [logicalSkip, setLogicalSkip] = useState(false);
   const chatBodyRef = useRef(null);
+
+  let rand_string  = "rwreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrr"
+  console.log("Random string is:", rand_string.length);
+
   const fetchSections = async () => {
     let apiUrl = '/dashboard/questionnaire/6/sections/';
     let fallbackUrl = '/questions.json';
@@ -602,7 +606,7 @@ const handleOptionClick = (option) => {
                           }
                         }}
                         placeholder="Please specify..."
-                        rows={message.length > 50 ? 5 : 1}
+                        // rows={message.length > 50 ? 2 : 1}
                         style={{ resize: 'none', width: '100%', fontSize: '16px' }}
                       />
                       <button
@@ -637,7 +641,7 @@ const handleOptionClick = (option) => {
                           }
                         }}
                         placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
-                        rows={message.length > 50 ? 5 : 1}
+                        // rows={message.length > 50 ? 2 : 1}
                         style={{ resize: 'none', width: '100%', fontSize: '16px' }}
                       />
                       <button

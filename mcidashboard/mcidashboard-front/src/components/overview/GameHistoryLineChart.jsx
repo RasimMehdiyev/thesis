@@ -58,7 +58,7 @@ const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
             },
         },
         ticks: {
-            stepSize: 10, 
+            stepSize: maxLimit/4, 
         },
     },
     

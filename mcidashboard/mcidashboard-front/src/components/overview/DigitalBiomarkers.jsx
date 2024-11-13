@@ -84,6 +84,13 @@ const DigitalBiomarkers = ({ patient }) => {
           If {selectedMetric} <span style={{color: "#21AEEE"}}>increases to {threshold}</span>, Solitaire DSS would think the player is normally aging.
         </>
       )}   
+      else if(biomarkerValue === threshold){
+        return(
+          <>
+            The player's {selectedMetric} is at the threshold value of {threshold}. If their value was {isLowGood ? "decreased" : "increased"} they would be considered healthier.
+          </>
+        )
+      }
   };
   
 
@@ -97,9 +104,7 @@ const DigitalBiomarkers = ({ patient }) => {
       const data = await response.json();
       console.log('Fetched Metric Data:', data);
       setMetricData(data);
-      console.log('Threshold:', data.threshold);
-      setThreshold(data.threshold);
-      console.log('Is low good?:', data.isLowGood);
+      setThreshold(Math.round(data.threshold*100)/100);
       setIsLowGood(data.isLowGood);
     } catch (error) {
       console.error('Error fetching metric data:', error);
@@ -143,8 +148,13 @@ const splitData = (gameHistory) => {
         data.push(gameHistory[key]);
         labels.push(formattedDate);
     }
-    const minLimit = Math.floor(Math.min(...data) / 10) * 10;
-    const maxLimit = Math.ceil(Math.max(...data) / 10) * 10 + 40;
+    let minLimit = Math.floor(Math.min(...data) / 10) * 10;
+    let maxLimit = Math.ceil(Math.max(...data)) + Math.abs(minLimit/2.5) + 5;
+
+    if (maxLimit === 0 && minLimit === 0) {
+        maxLimit = 1;
+        minLimit = -1;
+    }        
 
     console.log('splitData:', { data, labels, minLimit, maxLimit });
     return { data, labels, minLimit, maxLimit };

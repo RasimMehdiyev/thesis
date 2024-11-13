@@ -27,6 +27,7 @@ const SidebarComponent = () => {
       const data = await response.json();
       console.log('Fetched Data:', data);
       
+      
       if (data) {
         setPatients(data);
         if (window.location.pathname === '/overview' || window.location.pathname === '/overview/') {
@@ -113,8 +114,6 @@ const SidebarComponent = () => {
               title="Start Questionnaire"
               onClick={toggleChatbox}
             />
-            {/* {!localStorage.getItem('isCompleted') && !isChatboxVisible && <div className="red-dot"></div>} 
-             */}
             {!isChatboxVisible && localStorage.getItem('isCompleted') === 'false' ? <div className="red-dot"></div> : null}
         </div>
         {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
