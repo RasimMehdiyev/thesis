@@ -14,7 +14,7 @@ const OverviewPage = () => {
       age: 45,
       mci: true,
       MMSE: 26,
-      MoCA: 22
+      MoCA: 0
   };
 
 

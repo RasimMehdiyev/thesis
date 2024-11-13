@@ -82,7 +82,7 @@ const PersonalInformation = ({patient}) => {
       <div className='info'>
         
         <div className="test-scores">
-        <h3>Neuropsychological Test Score</h3>
+        <h3>Screening Test Score</h3>
         <hr className='horizontal-line' />
             <ul className='demographics-list'>
                 <li className='demographic-item'>
@@ -97,7 +97,7 @@ const PersonalInformation = ({patient}) => {
                 <span className='not-bold value'
                             style={{
                                 color: MCI === 'MCI' ? '#FA5D5D' : '#21AEEE',
-                            }}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'N/A'}</span>
+                            }}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'Not indicated'}</span>
                 </li>
             </ul>
         </div>
