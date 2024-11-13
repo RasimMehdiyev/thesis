@@ -50,8 +50,8 @@ const MachineLearningModel = ({ patient }) => {
         setLoading(true);
         setError(null);
 
-        const machineLearningApiUrl = '/dashboard/machine-learning-data/';
-        const mciApiUrl = `/dashboard/game/history/${id}/30/`;
+        const machineLearningApiUrl = '/machine-learning-data.json';
+        const mciApiUrl = `/mci-ml-data.json`;
 
         try {
             const [mlData, mciData] = await Promise.all([

@@ -144,7 +144,7 @@ const splitData = (gameHistory) => {
         labels.push(formattedDate);
     }
     const minLimit = Math.floor(Math.min(...data) / 10) * 10;
-    const maxLimit = Math.ceil(Math.max(...data) / 10) * 10 + 20;
+    const maxLimit = Math.ceil(Math.max(...data) / 10) * 10 + 40;
 
     console.log('splitData:', { data, labels, minLimit, maxLimit });
     return { data, labels, minLimit, maxLimit };

@@ -210,14 +210,6 @@ def get_all_biomarkers(request):
                 "type": bio.type.id,
                 'description': bio.description,
             })    
-
-    '''
-    {
-    "id": bio.type.id,
-    "biomarkers": [{}]
-    },
-    ...
-    '''
     organized_data = []
     for bio in unified_data:
         if bio['type'] not in [item['id'] for item in organized_data]:
@@ -240,16 +232,6 @@ def get_all_biomarkers(request):
 
 
 from collections import defaultdict
-
-# Function to aggregate frequencies based on rounded values
-def aggregate_frequency(biomarker_values, decimal_places=2):
-    frequency_dict = defaultdict(int)
-    for value, frequency in Counter(biomarker_values).items():
-        rounded_value = round(value, decimal_places)
-        frequency_dict[rounded_value] += frequency
-    return [{'biomarker_value': rounded_value, 'frequency': frequency} for rounded_value, frequency in sorted(frequency_dict.items())]
-
-
 from .biomarker_calculations import *
 
 from collections import Counter, defaultdict
@@ -275,19 +257,25 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         return JsonResponse({'error': 'User not found'}, status=404)
 
     # Get the latest game for the user
+    timestamps = Game.objects.filter(personID=user).values_list('timestamp', flat=True)
+    print(timestamps)
     last_game_user = Game.objects.filter(personID=user).order_by('-timestamp').first()
-
+    print("Last game user:", last_game_user.timestamp)
+    print("Last game ID user:", last_game_user)
     # Get the current user's biomarker value for the last game
     current_user_biomarker_value = None
     if last_game_user:
         current_user_biomarker_value = PersonBiomarkers.objects.filter(
             biomarkerID=biomarker_id, gameID=last_game_user
         ).values_list('value', flat=True).first()
+        print("Current user biomarker value:", PersonBiomarkers.objects.filter(
+            biomarkerID=biomarker_id, gameID=last_game_user
+        ).values_list('value', flat=True))
         current_user_biomarker_value = round(current_user_biomarker_value, 2) if isinstance(current_user_biomarker_value, float) else current_user_biomarker_value
-
+    print("Current user biomarker value:", current_user_biomarker_value)
     if current_user_biomarker_value is None:
         current_user_biomarker_value = 0
-
+    print("Current user biomarker value:", current_user_biomarker_value)
     # Query for healthy users and their last games
     healthy_users = Person.objects.filter(mci=0)
     healthy_last_games_subquery = Game.objects.filter(personID__in=healthy_users).values('personID').annotate(
@@ -334,8 +322,7 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
     # Calculate threshold (assuming threshold_calc is defined elsewhere)
     threshold = threshold_calc(data)
     isLowGood = Biomarker.objects.get(pk=biomarker_id).low == 'G'
-    # plot_biomarker_bar_chart(data, threshold)
-    # plot_biomarker_line_chart(data, threshold)
+
     # Return JSON response
     return JsonResponse({
         'current_user': {
@@ -348,6 +335,7 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         'isLowGood': isLowGood
     }, safe=False)
 
+from collections import OrderedDict
 
 @api_view(['GET'])
 def get_game_history_per_patient(request, pk, biomarkerID):
@@ -359,13 +347,22 @@ def get_game_history_per_patient(request, pk, biomarkerID):
     
     biomarker_values = PersonBiomarkers.objects.filter(gameID__in=games, biomarkerID=biomarker)
     
+    print(biomarker_values.values_list('value', flat=True))
+
     biomarker_values_list = list(biomarker_values.values_list('value', flat=True))
      
-    game_history = {
-        game.timestamp: round(value, 2) if isinstance(value, float) else value
-        for game, value in zip(games, biomarker_values_list)
-    }
+    game_history = OrderedDict(
+    sorted(
+        {
+            game.timestamp: round(value, 2) if isinstance(value, float) else value
+            for game, value in zip(games, biomarker_values_list)
+        }.items()
+    )
+    )
     
+    print(game_history)
+
+
     return JsonResponse(game_history, safe=False)
 
 from django.db.models import Count, Avg, StdDev
@@ -573,7 +570,7 @@ def create_response(request):
             # Check if a response with the same prolific_id already exists
             if Response.objects.filter(prolific_id=prolific_id).exists():
                 response = Response.objects.get(prolific_id=prolific_id)
-                print(response.id)
+                # print(response.id)
                 return JsonResponse({'response_id': response.id}, status=status.HTTP_200_OK)
             
             # Retrieve the questionnaire, handle if it doesn't exist
@@ -720,7 +717,7 @@ def get_top_3_models(request):
         return JsonResponse({'error': 'One or more data files not found.'}, status=404)
     
     total_no_models = scores_df.shape[0] - 1
-    print(total_no_models)
+    # print(total_no_models)
 
     # Sort by Max Score in descending order and extract top 3 models
     top_3_models = scores_df.sort_values(by='Max Score', ascending=False).head(3)
@@ -762,7 +759,7 @@ def get_top_3_models(request):
 @api_view(['POST'])
 def submit_email(request):
     email = request.data.get('email') + '|'
-    print(len(email))
+    # print(len(email))
     if len(email) == 1:
         return JsonResponse({'message': 'No information will be provided'}, status=201)
     
