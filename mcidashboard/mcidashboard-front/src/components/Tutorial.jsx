@@ -133,6 +133,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     }
   
     const element = document.querySelector(selector);
+    console.log("Calculating mask styles for selector:", selector);
     if (!element) return {};
   
     const rect = element.getBoundingClientRect();
@@ -340,6 +341,8 @@ const Tutorial = ({ initialStep = 0 }) => {
     }
     if(currentStep === 9)
     {
+      updateMaskAfterScroll(tutorialSteps[7].selector);
+      updateMaskAfterScroll(tutorialSteps[8].selector);
       setTimeout(() => navigate('/overview', { state: { tutorialStep: 8 } }), 100); 
     }
   
