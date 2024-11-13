@@ -454,7 +454,9 @@ const handleSendMessage = (answer = message, skip = false) => {
       if (!isCompleted) {
         setIsCompleted(true);
         onQuestionnaireComplete();
-        sendSystemMessage("Thank you for your participation!");
+        sendSystemMessage(
+          `Thank you for your participation!\nPlease follow the link to confirm the completion of the study:\n https://app.prolific.com/submissions/complete?cc=CH86CMYF`
+        );
         submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
       }
     }
@@ -511,19 +513,14 @@ const handleSendMessage = (answer = message, skip = false) => {
 };
 
 
-  const handleOptionClick = (option) => {
-    if (option === "Other" || option === "Other (please specify)") {
-      setShowOtherTextField(true);
-      setMessage(""); 
-      setShowOtherTextField(false);
-      handleSendMessage(option); 
-    }
-    else {
-      setShowOtherTextField(false);
-      handleSendMessage(option); 
-
-    }
-  };
+const handleOptionClick = (option) => {
+  if (option === "Other") {
+    setShowOtherTextField(true);
+    setMessage("");
+  } else {
+    handleSendMessage(option);
+  }
+};
 
   return (
     <div>
