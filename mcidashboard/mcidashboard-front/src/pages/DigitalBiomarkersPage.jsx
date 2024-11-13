@@ -275,7 +275,7 @@ const DigitalBiomarkersPage = () => {
             />
 
             <Tooltip
-                content="Of the 61 biomarkers collected, only <strong>26</strong> were used in the machine learning models, as the others were too similar or not as useful. Focusing on these key biomarkers improves prediction accuracy. Details on those 26 are provided below."
+                content="Of the 61 biomarkers collected, only <strong>26</strong> were used for the machine-learning predictions, as the others were too similar or not as useful. Focusing on these key biomarkers improves prediction accuracy. Details on those 26 are provided below."
                 isVisible={isTooltipVisible}
                 left={170}
                 top={100}
