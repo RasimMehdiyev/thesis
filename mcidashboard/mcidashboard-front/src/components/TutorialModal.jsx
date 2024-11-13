@@ -20,7 +20,7 @@ const TutorialModal = ({
       }}>
     
       <div className="tutorial-modal-h">
-        <h2 style={{ marginLeft: 0, marginTop: 0, fontSize: '16px', fontWeight: 'bold', color: '#DAD3FF', fontStyle: 'italic'}}>STEP <span style={{fontSize: 24, fontStyle: 'normal', color: 'white'}}>{currentStep+1}</span>/17</h2>
+        <h2 style={{ marginLeft: 0, marginTop: 0, fontSize: '16px', fontWeight: 'bold', color: '#DAD3FF', fontStyle: 'italic'}}>STEP <span style={{fontSize: 24, fontStyle: 'normal', color: 'white'}}>{currentStep+1}</span>/18</h2>
         <div >
             <p className='skip'onClick={onSkip}> skip tutorial</p>
         </div>
