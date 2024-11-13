@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+// usenavigate is used to navigate to another page
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
     const [isResultsContactChecked, setIsResultsContactChecked] = useState(false);
@@ -17,6 +19,8 @@ const Home = () => {
     const [isQuestionsContact, setIsQuestionsContact] = useState(false);
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         const emailInput = e.target.value;
@@ -84,6 +88,7 @@ const Home = () => {
 
             if (response.ok) {
                 console.log('Email submitted successfully');
+                navigate('/overview');
             } else {
                 console.log('Failed to submit email');
             }
