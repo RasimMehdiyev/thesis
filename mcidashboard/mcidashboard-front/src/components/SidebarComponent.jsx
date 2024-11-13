@@ -106,9 +106,6 @@ const SidebarComponent = () => {
       <SearchBarComponent searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
       <ul className='patients'>
         {filteredPatients.map((patient) => {
-        
-        console.log('selectedPatientId:', selectedPatientId, 'patient.id:', patient.id);
-        console.log('selectedPatientId === patient.id:', Number(selectedPatientId) === patient.id);
         return(
           <li onClick={() => getPatient(patient.id)} className={`patient-item ${Number(selectedPatientId) === patient.id? 'selected-patient' : ''}`} key={patient.id}>
             <p>{patient.full_name}</p>

@@ -366,6 +366,7 @@ def get_game_history_per_patient(request, pk, biomarkerID):
     return JsonResponse(game_history, safe=False)
 
 from django.db.models import Count, Avg, StdDev
+from django.db.models import Sum
 
 @api_view(['GET'])
 def ML_data(request):
@@ -378,7 +379,10 @@ def ML_data(request):
     mci_avg_age = patients.filter(mci=1).aggregate(avg_age=Avg('age'))['avg_age']
     healthy_avg_age = patients.filter(mci=0).aggregate(avg_age=Avg('age'))['avg_age']
 
-    total_moves = Move.objects.count()
+    # Total moves: from PersonBiomarkers table, sum up all values with biomarkerid = 31
+    total_moves = PersonBiomarkers.objects.filter(biomarkerID=31).aggregate(total_moves=Sum('value'))['total_moves']
+    print(total_moves)
+    # total_moves = Move.objects.count()
 
     meanSD_MMSE_score_healthy = Person.objects.filter(mci=0).aggregate(
         avg_MMSE=Avg('MMSE'), sd_MMSE=StdDev('MMSE'))

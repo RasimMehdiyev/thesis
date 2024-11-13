@@ -153,12 +153,27 @@ const splitData = (gameHistory) => {
         labels.push(formattedDate);
     }
     let minLimit = Math.floor(Math.min(...data) / 10) * 10;
-    let maxLimit = Math.ceil(Math.max(...data)) + Math.abs(minLimit/1.5) + 12;
+    let addedValue = 0;
+    if (Math.abs(minLimit) < 50) {
+        addedValue = minLimit * 10;
+    }else if(Math.abs(minLimit) < 100){
+        addedValue = minLimit * 2;
+    }else if (Math.abs(minLimit) < 1000){
+        addedValue = minLimit * 1.5;
+    }
+    else if (Math.abs(minLimit) < 10000)
+        addedValue = minLimit*1.1;
+      else
+        addedValue = minLimit*0.25;
 
+    if (minLimit === 0)
+        addedValue = 3;     
+    let maxLimit = Math.ceil(Math.max(...data)) + addedValue;
     if (maxLimit === 0 && minLimit === 0) {
-        maxLimit = 1;
-        minLimit = -1;
-    }        
+      maxLimit = 1;
+      minLimit = -1;
+    }
+
 
     console.log('splitData:', { data, labels, minLimit, maxLimit });
     return { data, labels, minLimit, maxLimit };
