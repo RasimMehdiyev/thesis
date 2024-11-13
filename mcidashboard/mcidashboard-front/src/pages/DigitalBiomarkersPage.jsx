@@ -275,10 +275,10 @@ const DigitalBiomarkersPage = () => {
             />
 
             <Tooltip
-                content="Out of the 61 markers, only <strong>26</strong> were used in the machine learning models because some were too similar or not useful. By focusing on the most important ones, the models can make better predictions without being confused by redundant data."
+                content="Of the 61 biomarkers collected, only <strong>26</strong> were used in the machine learning models, as the others were too similar or not as useful. Focusing on these key biomarkers improves prediction accuracy. Details on those 26 are provided below."
                 isVisible={isTooltipVisible}
-                left={100}
-                top={-20}
+                left={170}
+                top={100}
             />
             </div>
             {
