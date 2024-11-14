@@ -130,7 +130,8 @@ const SidebarComponent = ({tutorialOpen}) => {
               title="Start Questionnaire"
               onClick={toggleChatbox}
             />
-            {!isChatboxVisible && localStorage.getItem('isCompleted') === 'false' ? <div className="red-dot"></div> : null}
+            {!isChatboxVisible && (localStorage.getItem('isCompleted') === 'false' || isQuestionnaireComplete === false) ? <div className="red-dot"></div> : null
+            }
         </div>
         {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
         }

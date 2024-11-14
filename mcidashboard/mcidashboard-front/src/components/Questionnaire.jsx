@@ -353,7 +353,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
             
               
         
-        } else if (currentQuestion?.question.includes("What is the number") || currentQuestion?.question.includes("Amy Walker") || currentQuestion?.question.includes("How many values") || currentQuestion?.question.includes("How many") || currentQuestion?.question.includes('threshold')) {
+        } else if (currentQuestion?.question.includes("What is the number") || currentQuestion?.question.includes("Amy Curtis") || currentQuestion?.question.includes("How many values") || currentQuestion?.question.includes("How many") || currentQuestion?.question.includes('threshold')) {
             const isNumeric = /^\d+$/.test(value);
             if (!isNumeric) {
                 setErrorMessage('Please enter an integer value.');
