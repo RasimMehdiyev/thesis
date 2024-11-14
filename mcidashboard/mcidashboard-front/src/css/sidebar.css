@@ -175,11 +175,11 @@
 }
 
 .red-dot {
-    position: absolute;
-    top: -60px;
-    right: -64px;
-    width: 15px;
-    height: 15px;
     background-color: red;
     border-radius: 50%;
+    height: 15px;
+    position: fixed;
+    left: 59px;
+    bottom: 57px;
+    width: 15px;
 }
