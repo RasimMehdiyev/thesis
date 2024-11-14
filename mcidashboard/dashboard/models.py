@@ -81,6 +81,7 @@ class Person(models.Model):
     MMSE = models.IntegerField( blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
     MoCA = models.FloatField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
     education_level = models.CharField(max_length=1, choices=EDUCATION_LEVELS, blank=True, null=True)
+    ml_probability = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.username
