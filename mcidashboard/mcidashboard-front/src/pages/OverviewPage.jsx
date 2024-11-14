@@ -14,7 +14,8 @@ const OverviewPage = () => {
       age: 45,
       mci: true,
       MMSE: 26,
-      MoCA: 0
+      MoCA: 0,
+      ml_probability: 83.3,
   };
 
 

@@ -212,7 +212,7 @@ const MachineLearningModel = ({ patient }) => {
                     >
                         {MCI}
                     </span>{' '}
-                    with a probability of <span id="confidence">83.3%</span>.
+                    with a probability of <span id="confidence">{Math.round(patient.ml_probability * 10)/10}%</span>.
                 </p>
             </div>
 
