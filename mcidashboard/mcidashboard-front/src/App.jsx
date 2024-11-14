@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import Home from './pages/Home';
 import Login from './pages/authentication_pages/Login';
@@ -16,23 +15,28 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
- 
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
-
 
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
-
-  const handleHelpIconClick = () => {
+  const handleHelpIconClick = () => { 
+    setTutorialStep(0);   
+    setShowTutorial(true);  
     if (location.pathname !== '/overview') {
       navigate('/overview', { state: { tutorialStep: 0 } }); 
-    }
-    
-    setShowTutorial(true);   
-    setTutorialStep(0);     
+    }  
   };
+
+  // Automatically trigger the help icon on the first visit
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisited');
+    if (!hasVisited) {
+      handleHelpIconClick(); // Trigger the tutorial on the first visit
+      localStorage.setItem('hasVisited', 'true'); // Mark as visited
+    }
+  }, []); // Empty dependency array ensures this runs only on initial load
 
   // Check if the current path is the home page
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
@@ -53,11 +57,11 @@ const App = () => {
   
   return (
     <>
-      {/* Conditionally render Navbar, Sidebar, and Tutorial only if not on home page */}
+      {/* Conditionally render Navbar, Sidebar, and Tutorial only if not on the home page */}
       {!isHomePage && (
         <>
-          <NavbarComponent onHelpIconClick={() => setShowTutorial(true)} />
-          <SidebarComponent />
+          <NavbarComponent onHelpIconClick={handleHelpIconClick} />
+          <SidebarComponent tutorialOpen={showTutorial}/>
           {showTutorial && <Tutorial initialStep={tutorialStep} />}
         </>
       )}

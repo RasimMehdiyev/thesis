@@ -76,7 +76,9 @@ const Home = () => {
         localStorage.setItem('ICFConfirmed', true);
         let apiURL = '/dashboard/submit_email/';    
 
-        
+        console.log('Email submitted successfully');
+        navigate('/overview');
+
         try {
             const response = await fetch(apiURL, {
                 method: 'POST',

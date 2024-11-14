@@ -4,18 +4,28 @@ import SearchBarComponent from './SearchBarComponent';
 import Questionnaire from './Questionnaire';
 
 
-const SidebarComponent = () => {
+const SidebarComponent = ({tutorialOpen}) => {
 
   // state
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isChatboxVisible, setIsChatboxVisible] = useState(true);
+  const [isChatboxVisible, setIsChatboxVisible] = useState(false);
   const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const navigate = useNavigate();
   const [selectedPatientId, setSelectedPatientId] = useState(
     parseInt(localStorage.getItem('selectedPatientId'), 10)
   );
+
+  useEffect(() => {
+    if (tutorialOpen === true) {
+      setIsChatboxVisible(false);
+    }
+    else
+    {
+      setIsChatboxVisible(true);
+    }
+  }, [tutorialOpen]);
 
   // useEffect
   useEffect(() => {

@@ -155,16 +155,20 @@ const splitData = (gameHistory) => {
     let minLimit = Math.floor(Math.min(...data) / 10) * 10;
     let addedValue = 0;
     if (Math.abs(minLimit) < 50) {
-        addedValue = minLimit * 10;
-    }else if(Math.abs(minLimit) < 100){
-        addedValue = minLimit * 2;
-    }else if (Math.abs(minLimit) < 1000){
-        addedValue = minLimit * 1.5;
+        addedValue = Math.abs(minLimit) * 5;
+    }else if(Math.abs(minLimit) < 100 && Math.abs(minLimit) >= 50){
+        addedValue = Math.abs(minLimit) * 2;
+    }else if (Math.abs(minLimit) < 1000 && Math.abs(minLimit) >= 100) {
+        addedValue = Math.abs(minLimit) * 1.4;
     }
-    else if (Math.abs(minLimit) < 10000)
-        addedValue = minLimit*1.1;
+    else if (Math.abs(minLimit) < 10000 && Math.abs(minLimit) >= 1000)
+        addedValue = Math.abs(minLimit)*1.2;
+    else if (Math.abs(minLimit) < 50000 && Math.abs(minLimit) >= 10000)
+        addedValue = Math.abs(minLimit) * 0.3;
+    else if (Math.abs(minLimit) >= 50000)
+        addedValue = Math.abs(minLimit)*0.45;
       else
-        addedValue = minLimit*0.25;
+        addedValue = Math.abs(minLimit)*0.25;
 
     if (minLimit === 0)
         addedValue = 3;     
@@ -173,7 +177,6 @@ const splitData = (gameHistory) => {
       maxLimit = 1;
       minLimit = -1;
     }
-
 
     console.log('splitData:', { data, labels, minLimit, maxLimit });
     return { data, labels, minLimit, maxLimit };
@@ -199,9 +202,8 @@ const {
 
 
 const xUser = metricData?.xUser || 0;
-
-console.log('MCI Data:', { xData_mci, yData_mci, threshold });
-console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
+// console.log('MCI Data:', { xData_mci, yData_mci, threshold });
+// console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
 
 
 

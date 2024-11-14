@@ -10,7 +10,7 @@ const tutorialSteps = [
   },
   {//1
     title: "OVERVIEW TAB",
-    content: "This tab displays all the information related to a given patient. Feel free to scroll through to see what it contains.",
+    content: "This tab displays all the information related to a given patient. Scroll to explore all available details.",
     selector: '.container', // Highlight the container class
   },
   {//2
@@ -34,34 +34,34 @@ const tutorialSteps = [
     selector: '#dig-card',
   },
   {//6
-    title: "DROPDOWN MENUS",
+    title: "DROPDOWN MENU",
     content: "To view results for <strong>another biomarker</strong>, simply click on this dropdown menu, select your desired biomarker from the options, and all graphs will update accordingly.",
     selector: '.dropdown-header', 
   },
   {//7
-    title: "DROPDOWN MENUS",
-    content: "Similarly, you can adjust the <strong>time frame</strong> to view the progress of the results for the selected biomarker on the purple line chart using the dropdown menu above it. <br><br> Feel free to give it a try.",
-    selector: '.dropdown-container', 
-  },
-  {//8
     title: "FEATURE IMPORTANCE",
     content: "This shows how the <strong>most impactful biomarkers</strong> either increase or decrease the likelihood of the final prediction.",
     selector: '#importance-card',
   },
-  {//9
+  {//8
     title: "MACHINE LEARNING MODEL",
     content: "This final section of the 'Overview page' displays the <strong>type, quantity and origin of the data </strong> used to develop machine learning models able to predict MCI. <br><br>Most importantly, it provides the <strong>most accurate prediction </strong> for a given patient, along with the associated probability. ",
     selector: '#ml-card', 
   },
-  {//10
+  {//9
     title: "DIGITAL BIOMARKERS DETAILS TAB",
     content: "If you want more information about the digital biomarkers used for the prediction, switch to the <strong>Digital Biomarkers Details </strong> tab.",
     selector: '.navbar',
   },
-  {//11
+  {//10
     title: "DIGITAL BIOMARKERS DETAILS TAB",
-    content: "This tab explains the <strong>meaning</strong> of each biomarker, how it is derived from the patient playing <strong>Klondike Solitaire</strong>, its <strong>unit</strong> of measurement, and what <strong>category</strong> it falls into.",
-    selector: '.container', 
+    content: "This section explains the <strong>meaning</strong> of each biomarker, how it is derived from the patient playing <strong>Klondike Solitaire</strong>, its <strong>unit</strong> of measurement, and what <strong>category</strong> it falls into.",
+    selector: '.biomarkers-list', 
+  },
+  {//11
+    title: "SOLITAIRE GAME EXAMPLES",
+    content: "Here, you can explore interactive examples by <strong>hovering your mouse over them</strong> to see how certain biomarkers are derived from gameplay data. <br><br> You can scroll through it to give it a try.",
+    selector: '.solitaire-animated', 
   },
   {//12
     title: "MACHINE LEARNING DETAILS TAB",
@@ -75,16 +75,21 @@ const tutorialSteps = [
   },
   {//14
     title: "CHARTS",
-    content: "Keep in mind that by <strong> moving your mouse over </strong>the different parts of the charts contained on this page, details will appear about what each color represents. <br><br> Please try it before proceeding.",
+    content: "Keep in mind that by <strong> moving your mouse over </strong>the different parts of the charts contained on this page, details will appear about what each color represents. <br><br> Feel free to try it before proceeding.",
     selector: '.container', 
   },
 
   {//15
     title: "INFO ICONS",
-    content: "Similarly, if you <strong>move your mouse over those icons</strong> that can be found on all pages, you will see additional information about the section it is next to. <br> <br> You can try it now!",
+    content: "Similarly, if you <strong>move your mouse over those icons</strong> that can be found on all pages, you will see additional information about the section it is next to. <br> <br> You can try it now.",
     selector: '.icon', 
   },
   {//16
+    title: "TUTORIAL",
+    content: "If you wish to go through the tutorial again, you can do so at anytime by <strong>clicking this icon</strong>.",
+    selector: '.help-icon', 
+  },
+  {//17
     title: "DONE",
     content: "That's it! You are back on the <strong>Overview page</strong> and ready to use the web app.",
     selector: null, 
@@ -101,12 +106,19 @@ const Tutorial = ({ initialStep = 0 }) => {
   
     const location = useLocation();
   
-
+  
   useEffect(() => {
     if (location.state && location.state.tutorialStep) {
       setCurrentStep(location.state.tutorialStep);
+      setIsModalVisible(true);
     }
   }, [location.state]);
+
+  
+  useEffect(() => { // Reset tutorial on reload
+    setCurrentStep(0);
+  }, []);
+
 
 
   // Function to get the mask styles around a given element
@@ -121,14 +133,16 @@ const Tutorial = ({ initialStep = 0 }) => {
     }
   
     const element = document.querySelector(selector);
+    console.log("Calculating mask styles for selector:", selector);
     if (!element) return {};
   
     const rect = element.getBoundingClientRect();
 
+    /*
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll(); 
-      };
+      };*/
 
   
     
@@ -167,6 +181,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll();
+        window.location.href = '/overview' //forced reload
       };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
@@ -199,14 +214,14 @@ const Tutorial = ({ initialStep = 0 }) => {
     setTimeout(() => {
       setMaskStyles(getMaskStyles(selector));
       setTimeout(() => setIsModalVisible(true), 460); 
-    }, 400); 
+    }, 500); 
   };
 
   useEffect(() => {
     const updateMaskStyles = () => {
       setIsModalVisible(false); 
   
-      if (currentStep===1 ||currentStep===11 ||currentStep===13 ||currentStep===14 )
+      if (currentStep===1 ||currentStep===10|| currentStep===11 ||currentStep===13 ||currentStep===14 )
       { 
         enableScroll();
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
@@ -217,6 +232,7 @@ const Tutorial = ({ initialStep = 0 }) => {
             if (element) {
               setMaskStyles(getMaskStyles(step.selector));
               setIsModalVisible(true); 
+              console.log("SELECTOR:", step.selector);
             }
           }
         }, 500); // Add a delay to ensure the scroll is complete
@@ -276,18 +292,18 @@ const Tutorial = ({ initialStep = 0 }) => {
         top = '200px';   
         left = '800px';  
     }
-    else if(currentStep===5 || currentStep===6 || currentStep===7){
+    else if(currentStep===5 || currentStep===6 || currentStep===11){
         left = '300px';
     }
-    else if(currentStep===8)
+    else if(currentStep===7)
     {
         left= '1000px';
     }
-    else if(currentStep===9)
+    else if(currentStep===8)
     {
         left= '500px';
     }
-    else if(currentStep===10 || currentStep===12 || currentStep===2){
+    else if(currentStep===9 || currentStep===12 || currentStep===2){
         top = '200px';  
     }
 
@@ -300,20 +316,22 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep < tutorialSteps.length-1) {
       setCurrentStep(currentStep + 1);
 
-      if (currentStep === 9) { 
-        navigate('/digital-biomarkers', { state: { tutorialStep: 10 } });
+      if (currentStep === 8) { 
+          navigate('/digital-biomarkers', { state: { tutorialStep: 9 } });
       }
       if (currentStep === 11) { 
           navigate('/machine-learning', { state: { tutorialStep: 12} });
       }
       
-      if (currentStep === 15) { 
-          navigate('/overview', { state: { tutorialStep: 16 } });
+      if (currentStep === 16) { 
+          navigate('/overview', { state: { tutorialStep: 17 } });
       }
     }
-    else{
+    else{ //tutorial done
         setIsModalVisible(false); 
         enableScroll(); 
+        window.location.href = '/overview' //forced reload
+
     }
   };
 
@@ -321,24 +339,26 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
-    if(currentStep === 10)
+    if(currentStep === 9)
     {
-        navigate('/overview', { state: { tutorialStep: 9 } });
+      updateMaskAfterScroll(tutorialSteps[7].selector);
+      updateMaskAfterScroll(tutorialSteps[8].selector);
+      setTimeout(() => navigate('/overview', { state: { tutorialStep: 8 } }), 100); 
     }
   
     if (currentStep === 12) {  
         navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
     }
 
-    if (currentStep === 16) {  
-        navigate('/machine-learning', { state: { tutorialStep: 15 } });
+    if (currentStep === 17) {  
+        navigate('/machine-learning', { state: { tutorialStep: 16 } });
     }
     
   };
 
   return (
     <div>
-        {isModalVisible && currentStep!==6 && currentStep!==7 && currentStep!==14 && currentStep!==15 &&(
+        {isModalVisible && currentStep!==6  && currentStep!==11 && currentStep!==14 && currentStep!==15 &&(
         <div
         style={{
           position: 'fixed',
