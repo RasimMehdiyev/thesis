@@ -42,9 +42,9 @@ const SidebarComponent = ({tutorialOpen}) => {
       
       if (data) {
         setPatients(data);
-        if (window.location.pathname === '/overview' || window.location.pathname === '/overview/' && localStorage.getItem('selectedPatientId')) {
+        if ((window.location.pathname === '/overview' || window.location.pathname === '/overview/') && localStorage.getItem('selectedPatientId')) {
           getPatient(localStorage.getItem('selectedPatientId'));
-        }else if(window.location.pathname === '/overview' || window.location.pathname === '/overview/' && !localStorage.getItem('selectedPatientId')){
+        }else if((window.location.pathname === '/overview' || window.location.pathname === '/overview/') && localStorage.getItem('selectedPatientId') === null){
           getPatient(data[0].id);
         }
       } else {
@@ -58,7 +58,6 @@ const SidebarComponent = ({tutorialOpen}) => {
   };
 
   const getPatient = async (id) => {
-    console.log('Selected Patient ID:', localStorage.getItem('selectedPatientId'));
     setSelectedPatientId(id);
     localStorage.setItem('selectedPatientId', id.toString());
     console.log('get patient');
