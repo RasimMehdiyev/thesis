@@ -18,6 +18,9 @@ import './css/tutorial.css'
 import './css/icf.css'
 import './css/questionnaire.css'
 import App from './App';
+import LogRocket from 'logrocket';
+    
+LogRocket.init('znlset/solitaire-dss');
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
