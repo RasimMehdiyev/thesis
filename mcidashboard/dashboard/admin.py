@@ -113,9 +113,9 @@ class AnswerAdmin(admin.ModelAdmin):
 admin.site.register(Answer, AnswerAdmin)
 
 class ResponseAdmin(admin.ModelAdmin):
-    list_display = ('id', 'questionnaire', 'prolific_id')
-    list_filter = ['questionnaire', 'prolific_id']
-    search_fields = ['questionnaire', 'prolific_id']
+    list_display = ('id', 'questionnaire', 'prolific_id', 'updated_at', 'created_at')
+    list_filter = ['questionnaire', 'prolific_id', 'updated_at', 'created_at']
+    search_fields = ['questionnaire', 'prolific_id', 'updated_at', 'created_at']
     ordering = ['questionnaire']
 admin.site.register(Response, ResponseAdmin)
 
