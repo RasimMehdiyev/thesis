@@ -258,24 +258,17 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
 
     # Get the latest game for the user
     timestamps = Game.objects.filter(personID=user).values_list('timestamp', flat=True)
-    print(timestamps)
     last_game_user = Game.objects.filter(personID=user).order_by('-timestamp').first()
-    print("Last game user:", last_game_user.timestamp)
-    print("Last game ID user:", last_game_user)
     # Get the current user's biomarker value for the last game
     current_user_biomarker_value = None
     if last_game_user:
         current_user_biomarker_value = PersonBiomarkers.objects.filter(
             biomarkerID=biomarker_id, gameID=last_game_user
         ).values_list('value', flat=True).first()
-        print("Current user biomarker value:", PersonBiomarkers.objects.filter(
-            biomarkerID=biomarker_id, gameID=last_game_user
-        ).values_list('value', flat=True))
+
         current_user_biomarker_value = round(current_user_biomarker_value, 2) if isinstance(current_user_biomarker_value, float) else current_user_biomarker_value
-    print("Current user biomarker value:", current_user_biomarker_value)
     if current_user_biomarker_value is None:
         current_user_biomarker_value = 0
-    print("Current user biomarker value:", current_user_biomarker_value)
     # Query for healthy users and their last games
     healthy_users = Person.objects.filter(mci=0)
     healthy_last_games_subquery = Game.objects.filter(personID__in=healthy_users).values('personID').annotate(
@@ -381,8 +374,6 @@ def ML_data(request):
 
     # Total moves: from PersonBiomarkers table, sum up all values with biomarkerid = 31
     total_moves = PersonBiomarkers.objects.filter(biomarkerID=31).aggregate(total_moves=Sum('value'))['total_moves']
-    print(total_moves)
-    # total_moves = Move.objects.count()
 
     meanSD_MMSE_score_healthy = Person.objects.filter(mci=0).aggregate(
         avg_MMSE=Avg('MMSE'), sd_MMSE=StdDev('MMSE'))

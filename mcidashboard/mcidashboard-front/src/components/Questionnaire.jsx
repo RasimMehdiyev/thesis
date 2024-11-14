@@ -15,9 +15,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [logicalSkip, setLogicalSkip] = useState(false);
   const chatBodyRef = useRef(null);
 
-  let rand_string  = "rwreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrr"
-  console.log("Random string is:", rand_string.length);
-
   const fetchSections = async () => {
     let apiUrl = '/dashboard/questionnaire/6/sections/';
     let fallbackUrl = '/questions.json';
@@ -217,7 +214,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   }, [currentSectionIndex]);
 
   useEffect(() => {
-    localStorage.setItem('isCompleted', JSON.stringify(isCompleted));
+    localStorage.setItem('isCompleted', isCompleted.toString());
   }, [isCompleted]);
 
   useEffect(() => {
@@ -455,8 +452,13 @@ const handleSendMessage = (answer = message, skip = false) => {
       if (!isCompleted) {
         setIsCompleted(true);
         onQuestionnaireComplete();
+        // make the link clickable
+        let link = document.createElement('a');
+        link.href = 'https://app.prolific.com/submissions/complete?cc=CH86CMYF';
+        link.target = '_blank';
+        
         sendSystemMessage(
-          `Thank you for your participation!\nPlease follow the link to confirm the completion of the study:\n https://app.prolific.com/submissions/complete?cc=CH86CMYF`
+          `Thank you for your participation!\nPlease follow the link to confirm the completion of the study:\n ${link.href}`
         );
         submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
       }
