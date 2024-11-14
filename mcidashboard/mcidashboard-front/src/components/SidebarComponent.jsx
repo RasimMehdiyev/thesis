@@ -124,7 +124,7 @@ const SidebarComponent = ({tutorialOpen}) => {
       </ul>
       <div className="floating-chat-icon">
             <img 
-              src="/static/assets/chat_icon_2.svg"  
+              src={`/static/assets/` + (isChatboxVisible ? 'close-chat.svg' : 'chat_icon_2.svg')}  
               alt="Chat Icon" 
               className="chat-icon" 
               title="Start Questionnaire"
