@@ -248,7 +248,7 @@ const xUser = metricData?.xUser || 0;
             <GameHistoryLineChart data={gameHistoryData} labels={gameHistoryLabels} minLimit = {minLimit} maxLimit = {maxLimit}/>
           </div>
           <div className="grid-item">
-            <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>MCI</strong> players.</p>
+            <p style={{ fontSize: 14 }}>{selectedMetric} of {patient.full_name}'s last session compared to all <strong>MCI</strong> players.</p>
             <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={!isLowGood} xUserLabel={patient.full_name}/>
           </div>
           <div
@@ -268,7 +268,7 @@ const xUser = metricData?.xUser || 0;
             <p className="counterfactuals">{getMessage()}</p>
           </div>
           <div className="grid-item">
-            <p style={{ fontSize: 14 }}>{selectedMetric} of the last session in the histogram of all <strong>Healthy</strong> players.</p>
+            <p style={{ fontSize: 14 }}>{selectedMetric} of {patient.full_name}'s last session compared to all <strong>Healthy</strong> players.</p>
             <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name} swapColors={!isLowGood}/>
           </div>
         </div>

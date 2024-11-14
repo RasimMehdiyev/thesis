@@ -264,7 +264,7 @@ const Home = () => {
                                 Only the data that are strictly necessary to achieve the research objectives will be processed. My data will be kept confidential at all times throughout the study and the researchers will take measures to protect my privacy. 
                                 For example, my personal data will be pseudonymized, meaning that my data can no longer be linked to me without the use of additional information that is only accessible to the researchers. 
                                 I understand that my pseudonymized data may be reused for other scientific research and possibly for teaching or academic lectures. More information about the processing of 
-                                my personal data can be found in the <a href="https://bit.ly/solitairedss-informationletter">information letter.</a>.
+                                my personal data can be found in the <a href="https://bit.ly/solitairedss-informationletter">information letter</a>.
                             </p>
                         </label>
                     </div>
