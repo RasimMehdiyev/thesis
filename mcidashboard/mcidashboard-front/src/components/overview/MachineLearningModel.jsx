@@ -81,10 +81,6 @@ const MachineLearningModel = ({ patient }) => {
         return <p>Loading...</p>;
     }
 
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
-
     if (!machineLearningData) {
         return <p>No data available</p>;
     }
