@@ -306,6 +306,10 @@ const Tutorial = ({ initialStep = 0 }) => {
     else if(currentStep===9 || currentStep===12 || currentStep===2){
         top = '200px';  
     }
+    else if(currentStep===16){
+        top = '200px';  
+        left = '1000px';
+    }
 
     return { top, left };
   };

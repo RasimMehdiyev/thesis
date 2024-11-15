@@ -90,13 +90,14 @@ const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
     <>
       <div className="line-chart-h">
         <p style={{ fontSize: 16 }}>Game history</p>
+        {/*
         <div className="dropdown-container">
           <select className="game-history-dropdown">
             <option>3 months</option>
             <option>6 months</option>
             <option>1 year</option>
           </select>
-        </div>
+        </div>*/}
       </div>
       <div style={{ width: '100%', height: '100%', minWidth: 300 }}>
         <Line data={chartData} options={options} />
