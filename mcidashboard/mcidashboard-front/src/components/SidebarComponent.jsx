@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBarComponent from './SearchBarComponent';
-import Questionnaire from './Questionnaire';
 
 
 const SidebarComponent = ({tutorialOpen}) => {
@@ -90,20 +89,6 @@ const SidebarComponent = ({tutorialOpen}) => {
     return <div className='sidebar'>Loading...</div>;
   }
 
-  const handleQuestionnaireComplete = () => {
-    const isCompleteLocalSt = localStorage.getItem('isCompleted');
-    if (isCompleteLocalSt === 'true') {
-      setIsQuestionnaireComplete(isCompleteLocalSt);
-    }
-  };
-
-
-  const toggleChatbox = () => {
-    setIsChatboxVisible(!isChatboxVisible);
-    console.log('Chatbox Visible?', !isChatboxVisible);
-    console.log('Questionnaire Complete?', isQuestionnaireComplete);
-  };
-
   // Render the sidebar component once data is available
   return (
     <div className='sidebar'>
@@ -122,19 +107,7 @@ const SidebarComponent = ({tutorialOpen}) => {
           </li>
         )})}
       </ul>
-      <div className="floating-chat-icon">
-            <img 
-              src={`/static/assets/` + (isChatboxVisible ? 'close-chat-2.svg' : 'chat_icon_2.svg')}  
-              alt="Chat Icon" 
-              className="chat-icon" 
-              title="Start Questionnaire"
-              onClick={toggleChatbox}
-            />
-            {!isChatboxVisible && (localStorage.getItem('isCompleted') === 'false') ? <div className="red-dot"></div> : null
-            }
-        </div>
-        {isChatboxVisible && <Questionnaire onClose={toggleChatbox} onQuestionnaireComplete={handleQuestionnaireComplete}/>
-        }
+
     </div>
   );
 };

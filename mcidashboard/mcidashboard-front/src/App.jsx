@@ -10,6 +10,7 @@ import DigitalBiomarkersPage from './pages/DigitalBiomarkersPage';
 import MachineLearningPage from './pages/MachineLearningPage';
 import NavbarComponent from './components/NavbarComponent'; 
 import Tutorial from './components/Tutorial'; 
+import Questionnaire from './components/Questionnaire';
 
 const App = () => {
   const location = useLocation();
@@ -54,10 +55,38 @@ const App = () => {
       navigate('/home');
     }
   }, [navigate, isHomePage]);
+
+
+  useEffect(() => {
+    if (showTutorial === true) {
+      setIsChatboxVisible(false);
+    }
+    else
+    {
+      setIsChatboxVisible(true);
+    }
+  }, [showTutorial]);
+  
+  const [isChatboxVisible, setIsChatboxVisible] = useState(true);
+  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
+
+  const handleQuestionnaireComplete = () => {
+    const isCompleteLocalSt = localStorage.getItem('isCompleted');
+    if (isCompleteLocalSt === 'true') {
+      setIsQuestionnaireComplete(isCompleteLocalSt);
+    }
+  };
+
+
+  const toggleChatbox = () => {
+    setIsChatboxVisible(!isChatboxVisible);
+    console.log('Chatbox Visible?', !isChatboxVisible);
+    console.log('Questionnaire Complete?', isQuestionnaireComplete);
+  };
+
   
   return (
     <>
-      {/* Conditionally render Navbar, Sidebar, and Tutorial only if not on the home page */}
       {!isHomePage && (
         <>
           <NavbarComponent onHelpIconClick={handleHelpIconClick} />
@@ -65,7 +94,31 @@ const App = () => {
           {showTutorial && <Tutorial initialStep={tutorialStep} />}
         </>
       )}
-
+        <div style={{ zoom: "0.67" }}>
+          <div className="floating-chat-icon">
+            <img
+              src={`/static/assets/` + (isChatboxVisible ? 'close-chat-2.svg' : 'chat_icon_2.svg')}
+              alt="Chat Icon"
+              className="chat-icon"
+              title="Start Questionnaire"
+              onClick={(e) => {
+                toggleChatbox();
+                if (window.location.pathname !== '/overview') {
+                  navigate('/overview', { state: { tutorialStep: 0 } });
+                }
+              }}
+            />
+            {!isChatboxVisible && localStorage.getItem('isCompleted') === 'false' ? (
+              <div className="red-dot"></div>
+            ) : null}
+          </div>
+          {isChatboxVisible && (
+            <Questionnaire
+              onClose={toggleChatbox}
+              onQuestionnaireComplete={handleQuestionnaireComplete}
+            />
+          )}
+        </div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />

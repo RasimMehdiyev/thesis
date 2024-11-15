@@ -159,12 +159,11 @@
 }
 
 .floating-chat-icon {
-    position: absolute;
-    bottom: 30px;
+    position: fixed;
+    bottom: 70px;
     left: 10px;
+    z-index: 1000;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 }
 
 .floating-chat-icon img {

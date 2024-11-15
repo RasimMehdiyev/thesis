@@ -81,14 +81,15 @@ const MachineLearningModel = ({ patient }) => {
         return <p>Loading...</p>;
     }
 
-    if (!machineLearningData) {
-        return <p>No data available</p>;
-    }
+    // if (!machineLearningData) {
+    //     return <div className="card" id="ml-card">
+    //         <p className="ml-subtitle" id="ml-p">Machine learning model</p>
+    //     </div>;
+    // }
 
     return (
         <div className="card" id="ml-card">
             <p className="ml-subtitle" id="ml-p">Machine learning model</p>
-
             <div className="info">
                 <div className="personal-info-h" style={{ position: 'relative' }}>
                     <h3>Dataset information</h3>
@@ -111,18 +112,18 @@ const MachineLearningModel = ({ patient }) => {
 
                 <hr className="horizontal-line" />
 
-                {machineLearningData.patients ? (
+                {machineLearningData?.patients ? (
                     <div className="demographics-list">
                         <p>
-                            <strong>{machineLearningData.patients.mci + machineLearningData.patients.healthy} </strong>
+                            <strong>{machineLearningData?.patients.mci + machineLearningData?.patients.healthy} </strong>
                             participants in total
                         </p>
                         <ul>
                             <li>
-                                <strong>{machineLearningData.patients.healthy}</strong>{' '}
+                                <strong>{machineLearningData?.patients.healthy}</strong>{' '}
                                 <span style={{ color: '#21AEEE' }}>healthy participants </span>
                                 with an average age of{' '}
-                                <strong>{machineLearningData.patients.healthy_avg_age}</strong>{' '}
+                                <strong>{machineLearningData?.patients.healthy_avg_age}</strong>{' '}
                             </li>
                             <ul>
                                 <em
@@ -137,9 +138,9 @@ const MachineLearningModel = ({ patient }) => {
                                 </em>
                             </ul>
                             <li style={{ marginTop: 10 }}>
-                                <strong>{machineLearningData.patients.mci}</strong>{' '}
+                                <strong>{machineLearningData?.patients.mci}</strong>{' '}
                                 <span style={{ color: '#FA5D5D' }}>MCI participants</span> with an average age of{' '}
-                                <strong>{machineLearningData.patients.mci_avg_age}</strong>
+                                <strong>{machineLearningData?.patients.mci_avg_age}</strong>
                             </li>
                             <ul>
                                 <em
@@ -161,11 +162,11 @@ const MachineLearningModel = ({ patient }) => {
 
                 <hr className="horizontal-line" />
 
-                {machineLearningData.total_games !== undefined ? (
+                {machineLearningData?.total_games !== undefined ? (
                     <p className="demographics-list">
-                        <strong>{machineLearningData.total_games}</strong> game rounds,{' '}
-                        <strong>{machineLearningData.total_moves}</strong> player moves and{' '}
-                        <strong>{machineLearningData.total_game_time}</strong> minutes of gameplay
+                        <strong>{machineLearningData?.total_games}</strong> game rounds,{' '}
+                        <strong>{machineLearningData?.total_moves}</strong> player moves and{' '}
+                        <strong>{machineLearningData?.total_game_time}</strong> minutes of gameplay
                     </p>
                 ) : (
                     <p>Gameplay data is unavailable</p>
