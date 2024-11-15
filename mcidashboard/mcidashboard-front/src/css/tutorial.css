@@ -10,6 +10,9 @@
     -webkit-backdrop-filter: blur(1px);
 }
 
+@supports(-webkit-appearance: none) {}
+
+;
 .highlight {
     /* position: absolute; */
     background: rgba(255, 255, 255, 0.9);

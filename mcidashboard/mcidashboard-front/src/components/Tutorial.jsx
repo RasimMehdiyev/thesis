@@ -181,7 +181,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll();
-        window.location.href = '/overview' //forced reload
+        window.location.href = '/overview'
       };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
