@@ -590,6 +590,8 @@ def create_response(request):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         
+import time
+import datetime
 
 @csrf_exempt
 @api_view(['POST'])
@@ -604,7 +606,7 @@ def add_answer(request, response_id):
 
     for answer in answers:
         question = Question.objects.get(pk=answer['question'])
-
+        current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         if Answer.objects.filter(response=response, question=question).exists():
             answer_instance = Answer.objects.get(response=response, question=question)
             answer_instance.answer = answer['answer']
@@ -613,17 +615,21 @@ def add_answer(request, response_id):
             response_data['answers'].append({
                 'question': question.id,
                 'question_text': question.question,
-                'answer': answer_instance.answer
+                'answer': answer_instance.answer,
+                'submitted_at': current_time
             })
         else:
             answer_instance = Answer.objects.create(response=response, question=question, answer=answer['answer'])
             response_data['answers'].append({
                 'question': question.id,
                 'question_text': question.question,
-                'answer': answer_instance.answer
+                'answer': answer_instance.answer,
+                'submitted_at': current_time
             })
+    timestamp = datetime.datetime.timestamp(response.created_at)
+    timestamp = int(timestamp)
 
-    filename = f'{response.id}_response.json'
+    filename = f'{response.id}_{timestamp}_response.json'
     local_path = save_response_locally(response_data, filename)
 
     remote_user = 'graceage'
@@ -640,6 +646,9 @@ def add_answer(request, response_id):
 @api_view(['GET'])
 def get_answers_by_prolific_id(request, prolific_id):
     response = Response.objects.get(prolific_id=prolific_id)
+    # timestamp = datetime.datetime.timestamp(response.created_at)
+    # timestamp = int(timestamp)
+    # print(timestamp)
     answers = response.answer_set.all()
     serializer = AnswerSerializer(answers, many=True)
     return JsonResponse(serializer.data, safe=False)
@@ -712,7 +721,6 @@ def get_top_3_models(request):
         return JsonResponse({'error': 'One or more data files not found.'}, status=404)
     
     total_no_models = scores_df.shape[0] - 1
-    # print(total_no_models)
 
     # Sort by Max Score in descending order and extract top 3 models
     top_3_models = scores_df.sort_values(by='Max Score', ascending=False).head(3)
