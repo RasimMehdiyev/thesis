@@ -82,7 +82,7 @@ const PersonalInformation = ({patient}) => {
       <div className='info'>
         
         <div className="test-scores">
-        <h3>Screening Test Score</h3>
+        <h3>Screening Test Scores</h3>
         <hr className='horizontal-line' />
             <ul className='demographics-list'>
                 <li className='demographic-item'>

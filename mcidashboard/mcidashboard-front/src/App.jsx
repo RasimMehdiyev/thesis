@@ -18,7 +18,9 @@ const App = () => {
 
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
-
+  const [isChatboxVisible, setIsChatboxVisible] = useState(true);
+  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
+  const [isICFConfirmedGlobal, setIsICFConfirmedGlobal] = useState(localStorage.getItem('ICFConfirmed') === 'true');
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
@@ -44,7 +46,7 @@ const App = () => {
 
   useEffect(() => {
     const isICFConfirmed = localStorage.getItem('ICFConfirmed') === 'true';
-
+    console.log('isICFConfirmed:', isICFConfirmed);
     // Redirect to /overview if the user has already confirmed ICF and tries to access the home page
     if (isICFConfirmed && isHomePage) {
       navigate('/overview');
@@ -67,8 +69,7 @@ const App = () => {
     }
   }, [showTutorial]);
   
-  const [isChatboxVisible, setIsChatboxVisible] = useState(true);
-  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
+
 
   const handleQuestionnaireComplete = () => {
     const isCompleteLocalSt = localStorage.getItem('isCompleted');
@@ -94,7 +95,10 @@ const App = () => {
           {showTutorial && <Tutorial initialStep={tutorialStep} />}
         </>
       )}
-        <div style={{ zoom: "0.67" }}>
+
+      {
+        isICFConfirmedGlobal && (
+          <div style={{ zoom: "0.67" }}>
           <div className="floating-chat-icon">
             <img
               src={`/static/assets/` + (isChatboxVisible ? 'close-chat-2.svg' : 'chat_icon_2.svg')}
@@ -116,6 +120,9 @@ const App = () => {
             />
           )}
         </div>
+        )
+      }
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
