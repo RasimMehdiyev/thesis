@@ -103,9 +103,6 @@ const App = () => {
               title="Start Questionnaire"
               onClick={(e) => {
                 toggleChatbox();
-                if (window.location.pathname !== '/overview') {
-                  navigate('/overview', { state: { tutorialStep: 0 } });
-                }
               }}
             />
             {!isChatboxVisible && localStorage.getItem('isCompleted') === 'false' ? (
