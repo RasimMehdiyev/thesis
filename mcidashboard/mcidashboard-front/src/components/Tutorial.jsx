@@ -120,21 +120,9 @@ const Tutorial = ({ initialStep = 0 }) => {
   }, []);
 
 
-function getPageMaxScroll() {
-  return Math.max(
-    document.body.scrollHeight,
-    document.body.offsetHeight,
-    document.documentElement.clientHeight,
-    document.documentElement.scrollHeight,
-    document.documentElement.offsetHeight
-  );
-}
-
-
 
   // Function to get the mask styles around a given element
   const getMaskStyles = (selector, padding = 0) => {
-
     if (!selector) {
       return {
         topMask: { top: 0, left: 0, width: '100vw', height: '100vh' },
@@ -147,9 +135,17 @@ function getPageMaxScroll() {
     const element = document.querySelector(selector);
     console.log("Calculating mask styles for selector:", selector);
     if (!element) return {};
-    console.log(getPageMaxScroll());
+  
     const rect = element.getBoundingClientRect();
 
+    /*
+    const handleSkip = () => {
+        setIsModalVisible(false); 
+        enableScroll(); 
+      };*/
+
+  
+    
     return {
         topMask: {
           position: 'fixed',
@@ -185,11 +181,10 @@ function getPageMaxScroll() {
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll();
-        window.location.href = '/overview'
+        window.location.href = '/overview' //forced reload
       };
 
-  const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector)); 
-
+  const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
 
 
   const disableScroll = () => {
@@ -229,18 +224,14 @@ function getPageMaxScroll() {
       if (currentStep===1 ||currentStep===10|| currentStep===11 ||currentStep===13 ||currentStep===14 )
       { 
         enableScroll();
-        let local_top = getPageMaxScroll();
-        console.log("LOCAL TOP:", local_top);
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
         setTimeout(() => {
           
           if (step.selector) {
             const element = document.querySelector(step.selector);
             if (element) {
-              setTimeout(() =>{
-                setMaskStyles(getMaskStyles(step.selector));
-                setIsModalVisible(true)}, 
-              50);
+              setMaskStyles(getMaskStyles(step.selector));
+              setIsModalVisible(true); 
               console.log("SELECTOR:", step.selector);
             }
           }
@@ -265,10 +256,8 @@ function getPageMaxScroll() {
           }
         } else {
           // Full overlay if no selector
-          
-          setTimeout(() => {
-            setMaskStyles(getMaskStyles(step.selector));
-            setIsModalVisible(true)}, 500); // Show modal after delay
+          setMaskStyles(getMaskStyles(step.selector));
+          setTimeout(() => setIsModalVisible(true), 500); // Show modal after delay
         }
       }
     };
@@ -316,10 +305,6 @@ function getPageMaxScroll() {
     }
     else if(currentStep===9 || currentStep===12 || currentStep===2){
         top = '200px';  
-    }
-    else if(currentStep===16){
-        top = '200px';  
-        left = '1000px';
     }
 
     return { top, left };
