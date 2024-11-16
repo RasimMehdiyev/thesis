@@ -50,7 +50,7 @@ const tutorialSteps = [
   },
   {//9
     title: "DIGITAL BIOMARKERS DETAILS TAB",
-    content: "If you want more information about the digital biomarkers used for the prediction, switch to the <strong>Digital Biomarkers Details </strong> tab.",
+    content: "You will find more information about the digital biomarkers used for the prediction, by clicking on the <strong>Digital Biomarkers Details </strong> tab.",
     selector: '.navbar',
   },
   {//10
@@ -65,7 +65,7 @@ const tutorialSteps = [
   },
   {//12
     title: "MACHINE LEARNING DETAILS TAB",
-    content: "If you want more information about the machine learning models developed to make the prediction, switch to the <strong>Machine Learning Details </strong> tab.",
+    content: "If you want more information about the machine learning models developed to make the prediction, the <strong>Machine Learning Details </strong> tab is where you will find it.",
     selector: '.navbar', 
   },
   {//13
@@ -305,6 +305,10 @@ const Tutorial = ({ initialStep = 0 }) => {
     }
     else if(currentStep===9 || currentStep===12 || currentStep===2){
         top = '200px';  
+    }
+    else if(currentStep===16){
+      top = '180px'; 
+      left= '1050px' 
     }
 
     return { top, left };
