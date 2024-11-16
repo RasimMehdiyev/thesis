@@ -6,7 +6,7 @@ import DataDistributionChart from './DataDistributionChart';
 
 const DigitalBiomarkers = ({ patient }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-  const [selectedMetric, setSelectedMetric] = useState('Min Move Time');
+  const [selectedMetric, setSelectedMetric] = useState('Average Accuracy');
   const [metricData, setMetricData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [gameHistory, setGameHistory] = useState(null);
@@ -248,7 +248,7 @@ const xUser = metricData?.xUser || 0;
             <GameHistoryLineChart data={gameHistoryData} labels={gameHistoryLabels} minLimit = {minLimit} maxLimit = {maxLimit}/>
           </div>
           <div className="grid-item">
-            <p style={{ fontSize: 14 }}>{selectedMetric} of {patient.full_name}'s last session compared to all <strong>MCI</strong> players.</p>
+            <p style={{ fontSize: 14 }}>{patient.full_name}'s {selectedMetric} for the last session vs the frequency of its occurence compared to all <strong>MCI</strong> players.</p>
             <DataDistributionChart xData={xData_mci} yData={yData_mci} threshold={threshold} xUser={metricData?.current_user.biomarker_value} swapColors={!isLowGood} xUserLabel={patient.full_name}/>
           </div>
           <div
@@ -268,7 +268,7 @@ const xUser = metricData?.xUser || 0;
             <p className="counterfactuals">{getMessage()}</p>
           </div>
           <div className="grid-item">
-            <p style={{ fontSize: 14 }}>{selectedMetric} of {patient.full_name}'s last session compared to all <strong>Healthy</strong> players.</p>
+            <p style={{ fontSize: 14 }}>{patient.full_name}'s {selectedMetric} for the last session vs the frequency of its occurence compared to all <strong>Healthy</strong> players.</p>
             <DataDistributionChart xData={xData_healthy} yData={yData_healthy} threshold={threshold} xUser={metricData?.current_user.biomarker_value} xUserLabel={patient.full_name} swapColors={!isLowGood}/>
           </div>
         </div>

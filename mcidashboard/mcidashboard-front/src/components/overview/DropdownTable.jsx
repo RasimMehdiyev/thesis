@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const DropdownTable = ({ onOptionSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Min Move Time');
+  const [selectedOption, setSelectedOption] = useState('Average Accuracy');
   const dropdownRef = useRef(null);
 
   const handleToggle = () => {

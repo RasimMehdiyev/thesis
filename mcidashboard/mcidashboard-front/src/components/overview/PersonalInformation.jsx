@@ -97,7 +97,7 @@ const PersonalInformation = ({patient}) => {
                 <span className='not-bold value'
                             style={{
                                 color: MCI === 'MCI' ? '#FA5D5D' : '#21AEEE',
-                            }}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'Not indicated'}</span>
+                            }}>{patient.MoCA ? (patient.MoCA.toString()) + "/30" : 'N/A'}</span>
                 </li>
             </ul>
         </div>

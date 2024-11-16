@@ -101,9 +101,8 @@ const MachineLearningModel = ({ patient }) => {
                         onMouseLeave={hideDatasetTooltip}
                         style={{ cursor: 'pointer', marginBottom: 5 }}
                     />
-
                     <Tooltip
-                        content="The machine learning models used data from <strong>46</strong> participants, which is a good starting point for initial research, though for the best results, similar models typically benefit from data from <strong>hundreds or thousands</strong> of participants."
+                        content={`The machine learning models were developed using data from <strong>${machineLearningData?.patients.mci + machineLearningData?.patients.healthy}</strong> participants, which provides a solid foundation for initial research. However, to achieve optimal results, similar models generally perform better when trained on data from <strong>hundreds or even thousands</strong> of participants.`}
                         isVisible={isDatasetTooltipVisible}
                         top={-70}
                         left={270}
@@ -191,7 +190,7 @@ const MachineLearningModel = ({ patient }) => {
                     />
 
                     <Tooltip
-                        content="The system distinguishes between healthy individuals and those with MCI but doesn’t assess MCI severity or predict its progression to dementia, limiting its use for prognosis or treatment guidance."
+                        content="The system can identify healthy individuals and those with MCI, but it doesn’t evaluate the severity of MCI or predict its progression to dementia, which limits its usefulness for forecasting or guiding treatment."
                         isVisible={isPredictionTooltipVisible}
                         top={-70}
                         left={370}

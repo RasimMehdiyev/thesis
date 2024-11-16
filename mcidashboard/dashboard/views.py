@@ -646,9 +646,6 @@ def add_answer(request, response_id):
 @api_view(['GET'])
 def get_answers_by_prolific_id(request, prolific_id):
     response = Response.objects.get(prolific_id=prolific_id)
-    # timestamp = datetime.datetime.timestamp(response.created_at)
-    # timestamp = int(timestamp)
-    # print(timestamp)
     answers = response.answer_set.all()
     serializer = AnswerSerializer(answers, many=True)
     return JsonResponse(serializer.data, safe=False)
