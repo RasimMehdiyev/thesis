@@ -459,7 +459,7 @@ const handleSendMessage = (answer = message, skip = false) => {
         link.target = '_blank';
         
         sendSystemMessage(
-          `Thank you for your participation!\nPlease follow the link to confirm the completion of the study:\n ${link.href}`
+          `Thank you for your participation!\nPlease copy and paste the following link in another tab to confirm the completion of the study:\n${link.href}`
         );
         submitSection(fetchedSections[currentSectionIndex].questions[currentQuestionIndex].id);
       }
