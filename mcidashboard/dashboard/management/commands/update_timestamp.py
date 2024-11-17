@@ -13,7 +13,12 @@ class Command(BaseCommand):
             for game in games:
                 if game.timestamp is not None:
                     # Add a random value between 0 and 1000 to the timestamp
-                    random_seconds = random.randint(0, 1000)
+                    random_seconds = random.randint(500000, 2000000)
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"Adding {random_seconds} seconds to the timestamp of game {game.id}"
+                        )
+                    )
                     game.timestamp += random_seconds
                     game.save()
 
