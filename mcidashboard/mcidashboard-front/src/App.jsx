@@ -11,10 +11,17 @@ import MachineLearningPage from './pages/MachineLearningPage';
 import NavbarComponent from './components/NavbarComponent'; 
 import Tutorial from './components/Tutorial'; 
 import Questionnaire from './components/Questionnaire';
+import LogRocket from 'logrocket';
+
+// LogRocket.init('znlset/solitaire-dss');
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    LogRocket.init('znlset/solitaire-dss');
+  }, []);
 
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
