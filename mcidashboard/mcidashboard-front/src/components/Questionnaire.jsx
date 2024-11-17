@@ -13,6 +13,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
   const [fetchedSections, setFetchedSections] = useState([]);
   const [logicalSkip, setLogicalSkip] = useState(false);
+  const [rowLength, setRowLength] = useState(1);
   const chatBodyRef = useRef(null);
 
   const fetchSections = async () => {
@@ -533,7 +534,10 @@ const handleOptionClick = (option) => {
             <span style={{ fontSize: 14 }}>
               <strong style={{ fontSize: 18 }}>TESTING QUESTIONNAIRE</strong> <br />
               PART <span style={{ fontSize: 24 }}>{currentSectionIndex + 1}</span>/{fetchedSections.length} - QUESTION{' '}
-              <span style={{ fontSize: 24 }}>{currentQuestionIndex + 1}</span>/{questionMap.length}
+              {console.log("Current question index is:", currentQuestionIndex)}
+              {console.log("Question map length", questionMap.length)}
+
+              <span style={{ fontSize: 24 }}>{currentQuestionIndex !== (questionMap.length - 1) ? currentQuestionIndex + 1 : currentQuestionIndex}</span>/{questionMap.length - 1}
             </span>
           </p>
         </div>
@@ -605,7 +609,7 @@ const handleOptionClick = (option) => {
                           }
                         }}
                         placeholder="Please specify..."
-                        rows='1'
+                        rows={message.length <= 30 ? 1 : 3}
                         style={{ resize: 'none', width: '100%', fontSize: '16px' }}
                       />
                       <button
@@ -640,7 +644,7 @@ const handleOptionClick = (option) => {
                           }
                         }}
                         placeholder={showOtherTextField ? 'Please specify...' : 'Type your answer...'}
-                        rows='1'
+                        rows={message.length <= 30 ? 1 : 3}
                         style={{ resize: 'none', width: '100%', fontSize: '16px' }}
                       />
                       <button

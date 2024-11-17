@@ -205,7 +205,7 @@ const Home = () => {
                     </div>
                     <div className='icf-items-div'>
                         <input type="checkbox" id="reward-compensation" name="reward-compensation" onChange={e=>setIsRewardCompensationChecked(e.target.checked)}/>
-                        <label htmlFor="reward-compensation">I know that there will be a reward or compensation for my participation in the research: <strong>£7.5</strong>
+                        <label htmlFor="reward-compensation">I know that there will be a reward or compensation for my participation in the research: <strong>£12</strong>
                             <p>
                                 If I quit participating before the end of the study or if my submission is deemed invalid after manual review (due to lack of effort or failure to meet the study requirements), 
                                 none of my data will be retained and I will not receive compensation.
