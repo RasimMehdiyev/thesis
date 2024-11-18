@@ -105,9 +105,9 @@ class MultipleChoiceOptionAdmin(admin.ModelAdmin):
     ordering = ['question']
 admin.site.register(MultipleChoiceOption, MultipleChoiceOptionAdmin)
 
-class AnswerAdmin(admin.ModelAdmin):
+class AnswerAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id','response' ,'question', 'answer')
-    list_filter = ['question']
+    list_filter = ['response']
     search_fields = ['question']
     ordering = ['question']
 admin.site.register(Answer, AnswerAdmin)

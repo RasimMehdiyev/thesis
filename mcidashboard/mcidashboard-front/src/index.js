@@ -18,10 +18,6 @@ import './css/tutorial.css'
 import './css/icf.css'
 import './css/questionnaire.css'
 import App from './App';
-import LogRocket from 'logrocket';
-    
-
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render( 

@@ -34,21 +34,8 @@ const MachineLearningPage = () => {
   }
 
   const fetchTopModels = async () => {
-    const url = '/dashboard/top-3-models/';
-    const jsonURL = '/top3models.json';
-  
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Fetched data:', data);
-        setTopModels(Array.isArray(data.top_models) ? data.top_models : []); // Access the 'top_models' array
-        setTotalModels(data.total_models);
-      } else {
-        throw new Error('Failed to fetch top models');
-      }
-    } catch (error) {
-      console.error(error);
+    // const url = '/dashboard/top-3-models/';
+    const jsonURL = '/static/top3models.json';
       try {
         const response = await fetch(jsonURL);
         if (response.ok) {
@@ -62,7 +49,7 @@ const MachineLearningPage = () => {
       } catch (jsonError) {
         console.error('Error with fallback fetch:', jsonError);
       }
-    }
+    
   };
   
 

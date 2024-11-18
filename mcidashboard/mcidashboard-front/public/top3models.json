@@ -1,34 +1,34 @@
 {
     "top_models": [{
+            "model_name": "NuSVC",
+            "max_score": 0.8333,
+            "c_matrix": {
+                "TN": 5,
+                "FP": 1,
+                "FN": 1,
+                "TP": 5
+            }
+        },
+        {
             "model_name": "XGBRFC",
-            "max_score": 0.909,
+            "max_score": 0.7692,
             "c_matrix": {
-                "TN": 6,
-                "FP": 0,
+                "TN": 4,
+                "FP": 2,
                 "FN": 1,
                 "TP": 5
             }
-        },
-        {
-            "model_name": "RF",
-            "max_score": 0.8362,
+        }, {
+            "model_name": "DT",
+            "max_score": 0.7272,
             "c_matrix": {
                 "TN": 5,
                 "FP": 1,
-                "FN": 1,
-                "TP": 5
-            }
-        },
-        {
-            "model_name": "ET",
-            "max_score": 0.8362,
-            "c_matrix": {
-                "TN": 5,
-                "FP": 1,
-                "FN": 1,
-                "TP": 5
+                "FN": 2,
+                "TP": 4
             }
         }
+
     ],
     "total_models": 19
 }
