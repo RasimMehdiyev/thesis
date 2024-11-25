@@ -154,15 +154,10 @@ const Home = () => {
                     navigate the web application to locate and interpret specific information, after which they will assess 
                     the system’s usability, usefulness, understandability, and trustworthiness through a combination of 
                     validated questionnaires, an adapted questionnaire for the XAI context based on other validated 
-                    tools, and open questions for explicit feedback. Participants can complete the tasks independently, 
+                    tools, and open questions for explicit feedback.{" "}Participants can complete the tasks independently, 
                     while their screen and mouse activity on the web application will be recorded 
                     remotely. All results from their interaction will be used to refine and enhance the web application's 
                     design and functionality.
-                    {/* For participants willing to provide audio feedback, a 
-                    think-aloud protocol will be employed throughout the experiment, where they will be asked to verbalize 
-                    their thoughts while interacting with the web application in a recorded call with the researchers. */}
-                    {/* If participants prefer not to participate in the think-aloud protocol,  */}
-
                 </p>
             </div>     
             <div className='duration-exp'>
