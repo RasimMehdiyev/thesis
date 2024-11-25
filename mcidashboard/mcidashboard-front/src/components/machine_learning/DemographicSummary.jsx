@@ -152,17 +152,17 @@ return (
             <td className="numbers">{data.patients.mci}</td>
           </tr>
           <tr>
-            <td className="category dt-title">Age<br /><span className="dt-subtitle">Mean(SD)</span></td>
+            <td className="category dt-title">Age<br /><span className="dt-subtitle">Mean(Standard Deviation)</span></td>
             <td className="numbers vertical-line-left vertical-line">{data.patients.meanSD_age_healthy.mean} ({data.patients.meanSD_age_healthy.sd})</td>
             <td className="numbers">{data.patients.meanSD_age_mci.mean} ({data.patients.meanSD_age_mci.sd})</td>
           </tr>
           <tr>
-            <td className="category dt-title">MMSE score<br /><span className="dt-subtitle">Mean(SD)</span></td>
+            <td className="category dt-title">MMSE score<br /><span className="dt-subtitle">Mean(Standard Deviation)</span></td>
             <td className="numbers vertical-line-left vertical-line">{data.patients.meanSD_MMSE_score_healthy.mean} ({data.patients.meanSD_MMSE_score_healthy.sd})</td>
             <td className="numbers">{data.patients.meanSD_MMSE_score_mci.mean} ({data.patients.meanSD_MMSE_score_mci.sd})</td>
           </tr>
           <tr>
-            <td className="category dt-title">MoCA score<br /><span className="dt-subtitle">Mean(SD)</span></td>
+            <td className="category dt-title">MoCA score<br /><span className="dt-subtitle">Mean(Standard Deviation)</span></td>
             <td className="numbers vertical-line-left vertical-line">{data.patients.meanSD_MoCA_score_healthy.mean} ({data.patients.meanSD_MoCA_score_healthy.sd})</td>
             <td className="numbers">{data.patients.meanSD_MoCA_score_mci.mean ? data.patients.meanSD_MoCA_score_mci.mean : 'N/A'} {data.patients.meanSD_MoCA_score_mci.sd ? "(" + data.patients.meanSD_MoCA_score_mci.sd + ")" : ""}</td>
           </tr>
