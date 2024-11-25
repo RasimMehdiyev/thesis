@@ -159,7 +159,7 @@ const Home = () => {
                     think-aloud protocol will be employed throughout the experiment, where they will be asked to verbalize 
                     their thoughts while interacting with the web application in a recorded call with the researchers. */}
                     {/* If participants prefer not to participate in the think-aloud protocol,  */}
-                    Participants can complete the tasks independently, while their screen and mouse activity on the web application will be recorded 
+                     Participants can complete the tasks independently, while their screen and mouse activity on the web application will be recorded 
                     remotely. All results from their interaction will be used to refine and enhance the web application's 
                     design and functionality.
                 </p>
