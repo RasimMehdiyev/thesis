@@ -133,7 +133,7 @@ const Home = () => {
                     <li id='contact-title'><strong>Co-supervisor</strong></li>
                     <li id='contact-name'>Yu Chen</li>
                     <li><a href="">yu.chen@kuleuven.be</a></li>
-                    <li><a href="">+32 16 30 11 05</a></li>
+                    {/* <li><a href="">+32 16 30 11 05</a></li> */}
                     <li>Mens-Machine Interactie (HCI), Campus Groep T Leuven</li>
                     <li>Andreas Vesaliusstraat 13 - 3000 Leuven</li>
                 </ul> 
@@ -154,17 +154,18 @@ const Home = () => {
                     navigate the web application to locate and interpret specific information, after which they will assess 
                     the system’s usability, usefulness, understandability, and trustworthiness through a combination of 
                     validated questionnaires, an adapted questionnaire for the XAI context based on other validated 
-                    tools, and open questions for explicit feedback. For participants willing to provide audio feedback, a 
+                    tools, and open questions for explicit feedback.
+                    {/* For participants willing to provide audio feedback, a 
                     think-aloud protocol will be employed throughout the experiment, where they will be asked to verbalize 
-                    their thoughts while interacting with the web application in a recorded call with the researchers. If 
-                    participants prefer not to participate in the think-aloud protocol, they can complete the tasks 
-                    independently, while their screen and mouse activity on the web application will be recorded 
+                    their thoughts while interacting with the web application in a recorded call with the researchers. */}
+                    {/* If participants prefer not to participate in the think-aloud protocol,  */}
+                    Participants can complete the tasks independently, while their screen and mouse activity on the web application will be recorded 
                     remotely. All results from their interaction will be used to refine and enhance the web application's 
                     design and functionality.
                 </p>
             </div>     
             <div className='duration-exp'>
-                <h3>Duration of the experiment: <strong>45-60 minutes</strong></h3>
+                <h3>Duration of the experiment: <strong>~60 minutes</strong></h3>
             </div>
             <div className="informed-consent">
                 <form>
@@ -177,7 +178,7 @@ const Home = () => {
                         <label htmlFor="participate-trials">I know that I will participate in the following trials or tests:
                             <ul>
                                 <li>Demographic questions (e.g., age range, education, professional background)</li>
-                                <li>Exploration tasks to locate and interpret information on the web application and report the correct answers. Optional think-aloud protocol during.</li>
+                                <li>Exploration tasks to locate and interpret information on the web application and report the correct answers.</li>
                                 <li>AI Technology Acceptance Model</li>
                                 <li>XAI Experience Quality Scale</li>
                                 <li>Recommended Trust Scale for XAI</li>
@@ -210,10 +211,10 @@ const Home = () => {
                                 If I quit participating before the end of the study or if my submission is deemed invalid after manual review (due to lack of effort or failure to meet the study requirements), 
                                 none of my data will be retained and I will not receive compensation.
                             </p>
-                            <p>
+                            {/* <p>
                                 If I engage in the optional think-aloud protocol with the assistance of the researchers, 
                                 I will be awarded a <strong>bonus of £3</strong>.
-                            </p>
+                            </p> */}
                         </label>
                         </div>
                     <div className='icf-items-div'>
@@ -228,22 +229,22 @@ const Home = () => {
                         <input type="checkbox" id="recordings" name="recordings" onChange={e=>setIsRecordingsChecked(e.target.checked)}/>
                         <label htmlFor="recordings">I know that recordings of me will be made in this study: 
                             <p>
-                            As part of this study, we will use LogRocket to record your screen and mouse activity while 
-                            you navigate the web application. LogRocket will capture data such as the pages you visit, 
-                            the buttons you click, and how you interact with various features of the web application. It 
-                            will not record any sensitive information, such as your keystrokes, passwords, or personal 
-                            messages. 
+                                As part of this study, we will use LogRocket to record your screen and mouse activity while 
+                                you navigate the web application. LogRocket will capture data such as the pages you visit, 
+                                the buttons you click, and how you interact with various features of the web application. It 
+                                will not record any sensitive information, such as your keystrokes, passwords, or personal 
+                                messages. 
                             </p>
+                            {/* <p>
+                                As an optional addition, you may choose to engage in a <strong>think-aloud protocol</strong>, which involves 
+                                scheduling a call with the researchers. During the call, you will be asked to share your screen 
+                                and microphone to verbalize your thoughts while navigating the web application. In that 
+                                scenario, the call will be recorded and stored in OneDrive linked to a KU Leuven account. 
+                            </p> */}
                             <p>
-                            As an optional addition, you may choose to engage in a <strong>think-aloud protocol</strong>, which involves 
-                            scheduling a call with the researchers. During the call, you will be asked to share your screen 
-                            and microphone to verbalize your thoughts while navigating the web application. In that 
-                            scenario, the call will be recorded and stored in OneDrive linked to a KU Leuven account. 
-                            </p>
-                            <p>
-                            Both will allow us to gather additional information about how you interact with the features, 
-                            including which areas you use most and any difficulties you may encounter, to help us further 
-                            optimize the tool. 
+                                This will allow us to gather additional information about how you interact with the features, 
+                                including which areas you use most and any difficulties you may encounter, to help us further 
+                                optimize the tool. 
                             </p>       
                         </label>
                     </div>
