@@ -455,7 +455,7 @@ const handleSendMessage = (answer = message, skip = false) => {
         onQuestionnaireComplete();
         // make the link clickable
         let link = document.createElement('a');
-        link.href = 'https://app.prolific.com/submissions/complete?cc=C1NK0D55';
+        link.href = 'https://app.prolific.com/submissions/complete?cc=CTA4OSIY';
         link.target = '_blank';
         
         sendSystemMessage(
