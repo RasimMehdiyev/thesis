@@ -154,7 +154,8 @@ const Home = () => {
                     navigate the web application to locate and interpret specific information, after which they will assess 
                     the system’s usability, usefulness, understandability, and trustworthiness through a combination of 
                     validated questionnaires, an adapted questionnaire for the XAI context based on other validated 
-                    tools, and open questions for explicit feedback.{" "}Participants must complete the tasks during a recorded Zoom call. 
+                    tools, and open questions for explicit feedback.{" "}Participants must engage in a <strong>think-aloud protocol</strong>  
+                    {" "}and complete the tasks during a recorded Zoom call. 
                     In addition, their screen and mouse activity on the web application will be recorded 
                     remotely. All results from their interaction will be used to refine and enhance the web application's 
                     design and functionality.
@@ -175,7 +176,7 @@ const Home = () => {
                             <ul>
                                 <li>Demographic questions (e.g., age range, education, professional background)</li>
                                 
-                                <li>Exploration tasks to locate and interpret information on the web application, verbalize the thought process  and report the correct answers.</li>
+                                <li>Exploration tasks to locate and interpret information on the web application, verbalize my thought process and report my correct answers.</li>
                                 <li>AI Technology Acceptance Model</li>
                                 <li>XAI Experience Quality Scale</li>
                                 <li>Recommended Trust Scale for XAI</li>
