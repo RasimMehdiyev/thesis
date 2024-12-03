@@ -176,7 +176,7 @@ const Home = () => {
                             <ul>
                                 <li>Demographic questions (e.g., age range, education, professional background)</li>
                                 
-                                <li>Exploration tasks to locate and interpret information on the web application, verbalize my thought process and report my correct answers.</li>
+                                <li>Exploration tasks to locate and interpret information on the web application, verbalize my thought process and report my answers.</li>
                                 <li>AI Technology Acceptance Model</li>
                                 <li>XAI Experience Quality Scale</li>
                                 <li>Recommended Trust Scale for XAI</li>
