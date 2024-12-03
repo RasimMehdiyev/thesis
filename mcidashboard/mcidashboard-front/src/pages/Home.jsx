@@ -154,8 +154,8 @@ const Home = () => {
                     navigate the web application to locate and interpret specific information, after which they will assess 
                     the system’s usability, usefulness, understandability, and trustworthiness through a combination of 
                     validated questionnaires, an adapted questionnaire for the XAI context based on other validated 
-                    tools, and open questions for explicit feedback.{" "}Participants must complete the tasks independently, 
-                    while their screen and mouse activity on the web application will be recorded 
+                    tools, and open questions for explicit feedback.{" "}Participants must complete the tasks during a recorded Zoom call. 
+                    In addition, their screen and mouse activity on the web application will be recorded 
                     remotely. All results from their interaction will be used to refine and enhance the web application's 
                     design and functionality.
                 </p>
@@ -175,7 +175,7 @@ const Home = () => {
                             <ul>
                                 <li>Demographic questions (e.g., age range, education, professional background)</li>
                                 
-                                <li>Exploration tasks to locate and interpret information on the web application, {/* verbalize the thought process */}  and report the correct answers.</li>
+                                <li>Exploration tasks to locate and interpret information on the web application, verbalize the thought process  and report the correct answers.</li>
                                 <li>AI Technology Acceptance Model</li>
                                 <li>XAI Experience Quality Scale</li>
                                 <li>Recommended Trust Scale for XAI</li>
@@ -203,7 +203,9 @@ const Home = () => {
                     </div>
                     <div className='icf-items-div'>
                         <input type="checkbox" id="reward-compensation" name="reward-compensation" onChange={e=>setIsRewardCompensationChecked(e.target.checked)}/>
-                        <label htmlFor="reward-compensation">I know that there will be a reward or compensation for my participation in the research: <strong>£12</strong>
+                        <label htmlFor="reward-compensation">
+                            I know that my time can be compensated upon request
+                        {/* I know that there will be a reward or compensation for my participation in the research: <strong>£12</strong> */}
                             <p>
                                 If I quit participating before the end of the study or if my submission is deemed invalid after manual review (due to lack of effort or failure to meet the study requirements), 
                                 none of my data will be retained and I will not receive compensation.
@@ -232,12 +234,12 @@ const Home = () => {
                                 will not record any sensitive information, such as your keystrokes, passwords, or personal 
                                 messages. 
                             </p>
-                            {/* <p>
+                            <p>
                                 You will engage in a <strong>think-aloud protocol</strong>, which involves 
                                 scheduling a call with the researchers. During the call, you will be asked to share your screen 
                                 and microphone to verbalize your thoughts while navigating the web application. 
                                 The call will be recorded and stored in OneDrive linked to a KU Leuven account. 
-                            </p> */}
+                            </p>
                             <p>
                                 This will allow us to gather additional information about how you interact with the features, 
                                 including which areas you use most and any difficulties you may encounter, to help us further 
@@ -262,7 +264,7 @@ const Home = () => {
                                 Only the data that are strictly necessary to achieve the research objectives will be processed. My data will be kept confidential at all times throughout the study and the researchers will take measures to protect my privacy. 
                                 For example, my personal data will be pseudonymized, meaning that my data can no longer be linked to me without the use of additional information that is only accessible to the researchers. 
                                 I understand that my pseudonymized data may be reused for other scientific research and possibly for teaching or academic lectures. More information about the processing of 
-                                my personal data can be found in the <a href="https://bit.ly/interal-info-letter">information letter</a>.
+                                my personal data can be found in the <a href="https://bit.ly/internal-info-letter">information letter</a>.
                             </p>
                         </label>
                     </div>
