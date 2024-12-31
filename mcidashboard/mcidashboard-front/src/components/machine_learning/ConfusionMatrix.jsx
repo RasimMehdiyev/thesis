@@ -47,11 +47,11 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
       // Generate tooltip message dynamically 
       const value = actualData[datasetIndex][index];
       const isCorrect = (datasetIndex === index); 
-      const label = datasetIndex === 0 ? 'healthy individuals' : 'MCI patients';
+      const label = index === 0 ? 'healthy individual(s)' : 'MCI patient(s)';
       const correctText = isCorrect ? 'correctly' : 'incorrectly';
 
       const tooltipContent = `There are <strong>${value}</strong> ${label} <strong>${correctText}</strong> classified as ${
-        index === 0 ? 'healthy' : 'MCI'
+        datasetIndex === 0 ? 'healthy' : 'MCI'
       } by the model.`;
 
       const x = event.clientX;

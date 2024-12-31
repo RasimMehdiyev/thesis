@@ -1,0 +1,198 @@
+{
+    "current_user": {
+        "biomarker_value": 5125,
+        "mci": 1
+    },
+    "mci": [{
+            "biomarker_value": 2403,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2477,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2481,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2743,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2791,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 3139,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 3237,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 5125,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 5958,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 6652,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 7272,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 7606,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 8883,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 9664,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 14248,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 15363,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 18688,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 29337,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 40521,
+            "frequency": 1
+        }
+    ],
+    "healthy": [{
+            "biomarker_value": 645,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 1306,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 1343,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 1374,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 1730,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 1809,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2059,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2627,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2793,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2915,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 2936,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 3171,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 3308,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 3937,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 4902,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 5035,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 5753,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 5757,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 6043,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 6433,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 6530,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 6549,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 6726,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 8604,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 9394,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 13582,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 14027,
+            "frequency": 1
+        },
+        {
+            "biomarker_value": 5125,
+            "frequency": 0
+        }
+    ],
+    "threshold": 5080,
+    "isLowGood": true
+}

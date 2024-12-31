@@ -5,8 +5,8 @@ const DataPreProcessing= () => {
             <p className="ml-subtitle">Data pre-processing</p>
             <table className="datapreproc-table">
                 <tr>
-                    <p >Heavily correlated features (ρ &gt; 0.9)</p>
-                    <td className="vertical-line-left"></td>
+                    <p style={{paddingRight: '20px'}}>Heavily correlated features (ρ &gt; 0.9)</p>
+                    <td  className="vertical-line-left"></td>
                     <p className="centered"><strong> 34/60 (56.6%)</strong></p>
                 </tr>
                 <tr>

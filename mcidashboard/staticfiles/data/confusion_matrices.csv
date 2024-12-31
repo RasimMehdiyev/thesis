@@ -1,0 +1,21 @@
+Model,True Negative,False Positive,False Negative,True Positive
+DC,6,0,6,0
+LR,5,1,1,5
+SGD,6,0,6,0
+LRCV,5,1,1,5
+RF,5,1,1,5
+ET,5,1,1,5
+GB,6,0,1,5
+BAG,6,0,1,5
+ADA,5,1,1,5
+XGB,6,0,1,5
+XGBRFC,6,0,1,5
+MLP,5,1,0,6
+LSVC,4,2,4,2
+NuSVC,5,1,4,2
+SVC,5,1,2,4
+GNB,5,1,2,4
+DT,6,0,1,5
+QDA,1,5,4,2
+KNN,5,1,1,5
+GPC,4,2,5,1

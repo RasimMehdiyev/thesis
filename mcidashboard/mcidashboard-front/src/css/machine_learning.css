@@ -5,6 +5,7 @@
     grid-template-rows: auto auto;
     justify-items: center;
     padding: 20px;
+    margin-right: 30px;
 }
 
 .card {
@@ -52,7 +53,6 @@
     gap: 30px;
     width: 100%;
     margin-bottom: 20px;
-    /* width: 100%; */
 }
 
 .models,

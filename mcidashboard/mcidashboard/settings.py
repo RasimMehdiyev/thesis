@@ -16,8 +16,20 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 WHITE_LIST = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Trusted origins for CSRF (replace with actual allowed origins in production)
+CSRF_TRUSTED_ORIGINS = [
+    "http://ec2-16-171-150-227.eu-north-1.compute.amazonaws.com:8080",
+]
+
+# To allow all headers
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "x-csrftoken",
+    "authorization",
+]
 
 
 # Application definition
@@ -59,7 +71,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
 }
 
@@ -99,14 +111,27 @@ WSGI_APPLICATION = 'mcidashboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'local_solitaire',
-        'USER': 'root',
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'drsolitaire_global',
+        'USER': 'drsolitaire',
         'PASSWORD': 'rasimrasim14',
-        'HOST': '127.0.0.1',
+        'HOST': 'drsolitaire.czma6mqkyvol.eu-north-1.rds.amazonaws.com',
         'PORT': '3306',
-    }
+	'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" ,"use_pure": True},
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dummy_solitaire',
+#         'USER': 'root',
+#         'PASSWORD': 'rasimrasim14',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     },
+# }
+
 
 
 

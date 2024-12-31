@@ -1,6 +1,5 @@
 .search-bar {
     border-radius: 8px;
-
     height: 47px;
     border: none;
     box-shadow: 0px 10px 60px 0px rgba(226, 236, 249, 0.50);
@@ -49,7 +48,7 @@
     -ms-overflow-style: none;
     /* Hide scrollbar for IE and Edge */
     padding-top: 20px;
-    z-index: 0;
+    z-index: 10;
     zoom: 0.67;
 }
 
@@ -144,4 +143,42 @@
 
 .patient-item:hover .chevron-right-icon {
     background: url('../../public/assets/chevron-right-hover.svg') no-repeat center;
+}
+
+.patient-item.selected-patient {
+    border-radius: 8px;
+    background: #7B61FF;
+    /* Same background color as hover */
+    color: #FFF;
+    /* Same text color as hover */
+}
+
+.patient-item.selected-patient .chevron-right-icon {
+    background: url('../../public/assets/chevron-right-hover.svg') no-repeat center;
+    background-size: contain;
+}
+
+.floating-chat-icon {
+    position: fixed;
+    bottom: 70px;
+    left: 10px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.floating-chat-icon img {
+    width: 65px;
+    height: auto;
+    padding-bottom: 60px;
+    position: fixed;
+}
+
+.red-dot {
+    background-color: red;
+    border-radius: 50%;
+    height: 15px;
+    position: fixed;
+    left: 59px;
+    bottom: 57px;
+    width: 15px;
 }

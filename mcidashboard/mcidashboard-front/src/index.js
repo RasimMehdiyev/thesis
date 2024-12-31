@@ -12,10 +12,12 @@ import './css/demographic_summary.css'
 import './css/navbar.css'
 import './css/models.css'
 import './css/dropdown_table.css'
+import './css/solitaire.css'
 import './css/diverging_chart.css'
 import './css/tutorial.css'
+import './css/icf.css'
+import './css/questionnaire.css'
 import App from './App';
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render( 

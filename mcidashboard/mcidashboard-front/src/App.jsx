@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import Home from './pages/Home';
@@ -10,57 +10,125 @@ import DigitalBiomarkersPage from './pages/DigitalBiomarkersPage';
 import MachineLearningPage from './pages/MachineLearningPage';
 import NavbarComponent from './components/NavbarComponent'; 
 import Tutorial from './components/Tutorial'; 
+import Questionnaire from './components/Questionnaire';
+import LogRocket from 'logrocket';
+
+// LogRocket.init('znlset/solitaire-dss');
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
- 
+  useEffect(() => {
+    LogRocket.init('znlset/solitaire-dss');
+  }, []);
+
   const hideSidebarPaths = ['/login', '/signup', '/patients'];
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
-
-
+  const [isChatboxVisible, setIsChatboxVisible] = useState(true);
+  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
+  const [isICFConfirmedGlobal, setIsICFConfirmedGlobal] = useState(localStorage.getItem('ICFConfirmed') === 'true');
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
-  // Comment out the automatic tutorial logic based on route changes
-  // useEffect(() => {
-  //   if (location.pathname === '/overview') {
-  //     // Start tutorial at step 0 for Overview page
-  //     setShowTutorial(true);
-  //     setTutorialStep(0); 
-  //   } else if (
-  //     (location.pathname === '/digital-biomarkers' || location.pathname === '/machine-learning') 
-  //     && location.state?.tutorialStep !== undefined // Ensure tutorialStep is passed in state
-  //   ) {
-  //     // Continue tutorial from passed step on other pages
-  //     setShowTutorial(true);
-  //     setTutorialStep(location.state.tutorialStep);
-  //   } else {
-  //     // If on other pages or no tutorial state is passed, hide tutorial
-  //     setShowTutorial(false);
-  //   }
-  // }, [location]);
-
-
-  const handleHelpIconClick = () => {
+  const handleHelpIconClick = () => { 
+    setTutorialStep(0);   
+    setShowTutorial(true);  
     if (location.pathname !== '/overview') {
       navigate('/overview', { state: { tutorialStep: 0 } }); 
-    }
-    
-    setShowTutorial(true);   
-    setTutorialStep(0);     
+    }  
   };
 
+  // Automatically trigger the help icon on the first visit
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisited');
+    if (!hasVisited) {
+      handleHelpIconClick(); // Trigger the tutorial on the first visit
+      localStorage.setItem('hasVisited', 'true'); // Mark as visited
+    }
+  }, []); // Empty dependency array ensures this runs only on initial load
+
+  // Check if the current path is the home page
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
+
+  useEffect(() => {
+    const isICFConfirmed = localStorage.getItem('ICFConfirmed') === 'true';
+    console.log('isICFConfirmed:', isICFConfirmed);
+    // Redirect to /overview if the user has already confirmed ICF and tries to access the home page
+    if (isICFConfirmed && isHomePage) {
+      navigate('/overview');
+    }
+
+    // Redirect to home if ICFConfirmed is not true and the user tries to access other pages
+    if (!isICFConfirmed && !isHomePage) {
+      navigate('/home');
+    }
+  }, [navigate, isHomePage]);
+
+
+  useEffect(() => {
+    if (showTutorial === true) {
+      setIsChatboxVisible(false);
+    }
+    else
+    {
+      setIsChatboxVisible(true);
+    }
+  }, [showTutorial]);
+  
+
+
+  const handleQuestionnaireComplete = () => {
+    const isCompleteLocalSt = localStorage.getItem('isCompleted');
+    if (isCompleteLocalSt === 'true') {
+      setIsQuestionnaireComplete(isCompleteLocalSt);
+    }
+  };
+
+
+  const toggleChatbox = () => {
+    setIsChatboxVisible(!isChatboxVisible);
+    console.log('Chatbox Visible?', !isChatboxVisible);
+    console.log('Questionnaire Complete?', isQuestionnaireComplete);
+  };
+
+  
   return (
     <>
-      {shouldShowSidebar && (
-        <NavbarComponent onHelpIconClick={handleHelpIconClick} /> // Pass the click handler to Navbar
+      {!isHomePage && (
+        <>
+          <NavbarComponent onHelpIconClick={handleHelpIconClick} />
+          <SidebarComponent tutorialOpen={showTutorial}/>
+          {showTutorial && <Tutorial initialStep={tutorialStep} />}
+        </>
       )}
-      {shouldShowSidebar && <SidebarComponent />}
 
-
-      {showTutorial && <Tutorial initialStep={tutorialStep} />}
+      {
+        isICFConfirmedGlobal && (
+          <div style={{ zoom: "0.67" }}>
+          <div className="floating-chat-icon">
+            <img
+              src={`/static/assets/` + (isChatboxVisible ? 'close-chat-2.svg' : 'chat_icon_2.svg')}
+              alt="Chat Icon"
+              className="chat-icon"
+              title="Start Questionnaire"
+              onClick={(e) => {
+                toggleChatbox();
+              }}
+            />
+            {!isChatboxVisible && localStorage.getItem('isCompleted') === 'false' ? (
+              <div className="red-dot"></div>
+            ) : null}
+          </div>
+          {isChatboxVisible && (
+            <Questionnaire
+              onClose={toggleChatbox}
+              onQuestionnaireComplete={handleQuestionnaireComplete}
+            />
+          )}
+        </div>
+        )
+      }
 
       <Routes>
         <Route path="/" element={<Home />} />

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const DropdownTable = () => {
+const DropdownTable = ({ onOptionSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Total Moves');
+  const [selectedOption, setSelectedOption] = useState('Average Accuracy');
   const dropdownRef = useRef(null);
 
   const handleToggle = () => {
@@ -11,10 +11,10 @@ const DropdownTable = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    setIsOpen(false); // Close the dropdown after selecting
+    setIsOpen(false);
+    onOptionSelect(option); // Pass the selected option to the parent component
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -28,17 +28,49 @@ const DropdownTable = () => {
     };
   }, []);
 
-  const options = [
-    ['Accuracy', 'Average Accuracy', 'Average Move Time'],
-    ['Average Think Time', 'Average Total Time', 'Beta Error'],
-    ['Cards Moved', 'Erroneous Move', 'Final Beta Error'],
-    ['Game Time', 'Max Accuracy', 'Min Accuracy'],
-    ['Min Move Time', 'Min Think Time', 'Min Total Time'],
-    ['Pile Move', 'Rank Error', 'Score'],
-    ['SD Accuracy', 'SD Move Time', 'SD Think Time'],
-    ['SD Total Time', 'Successful Move', 'Suit Error'],
-    ['Taps', 'Total Moves', ''],
-  ];
+ 
+  const biomarkerNametoId = {
+    'Average Accuracy': 14,
+    'Min Move Time': 24,
+    'Beta Error': 10,
+    'Average Move Time': 5,
+    'Cards Moved': 27,
+    'Erroneous Move': 13,
+    'Final Beta Error': 11,
+    'Game Time': 19,
+    'Max Accuracy': 26,
+    'Min Accuracy': 25,
+    'SD Accuracy': 15,
+    'Taps': 16,
+    'SD Total Time': 2,
+    'Successful Move': 12,
+    'Suit Error': 29,
+    'SD Think Time': 4,
+    'Pile Move': 7,
+    'Rank Error': 28,
+    'Score': 20,
+    'Average Total Time': 1,
+    'Average Think Time': 3,
+    'Min Think Time': 23,
+    'Solved': 21,
+    'Min Total Time': 22,
+    'SD Move Time': 6,
+    'Total Moves': 31
+  }
+
+  // take the names from the biomarkerNametoId object and put them in an array like in options, in alphabetical order
+  const options_new = Object.keys(biomarkerNametoId).sort().reduce((acc, key, index) => {
+    const rowIndex = Math.floor(index / 4);
+    if (!acc[rowIndex]) {
+      acc[rowIndex] = [];
+    }
+    acc[rowIndex].push(key);
+    return acc;
+  }
+  , []);
+
+  console.log('options_new:', options_new);
+
 
   return (
     <div className="dropdown-table-container" ref={dropdownRef}>
@@ -51,7 +83,7 @@ const DropdownTable = () => {
         <div className="table-container">
           <table className="metrics-table">
             <tbody>
-              {options.map((row, rowIndex) => (
+              {options_new.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {row.map((option, colIndex) => (
                     <td

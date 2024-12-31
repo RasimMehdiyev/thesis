@@ -37,7 +37,7 @@
     min-width: 300px;
 }
 
-#dig-card{
+#dig-card {
     width: 60%;
     min-width: 700px;
     overflow: hidden;
@@ -51,7 +51,6 @@
 
 #ml-card {
     flex: 1;
- 
     margin-right: 30px;
     font-size: 18px;
 }
@@ -99,8 +98,7 @@
 }
 
 .label {
-
-    width: 120px; 
+    width: 120px;
     text-align: left;
 }
 
@@ -130,7 +128,6 @@
     align-self: start;
 }
 
-
 #prediction-title {
     font-weight: 600;
     font-size: 24px;
@@ -146,10 +143,24 @@
     margin-right: 0;
 }
 
-#prediction-result {
+#prediction-result-mci {
     font-size: 30px;
     color: #FA5D5D;
     font-weight: 600;
+}
+
+#prediction-result-healthy {
+    font-size: 30px;
+    color: #21AEEE;
+    font-weight: 600;
+}
+
+#personal-info-mci {
+    color: #FA5D5D;
+}
+
+#personal-info-healthy {
+    color: #21AEEE;
 }
 
 #confidence {
@@ -246,8 +257,6 @@
     cursor: pointer;
 }
 
-
-
 .line-chart-h {
     display: flex;
     justify-content: space-between;
@@ -256,4 +265,3 @@
     padding-top: 20px;
     padding-bottom: -20px;
 }
-

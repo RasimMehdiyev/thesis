@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBarComponent from './SearchBarComponent';
 
-const SidebarComponent = () => {
+
+const SidebarComponent = ({tutorialOpen}) => {
 
   // state
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const [selectedPatientId, setSelectedPatientId] = useState(
+    parseInt(localStorage.getItem('selectedPatientId'), 10)
+  );
+
 
   // useEffect
   useEffect(() => {
@@ -21,48 +26,56 @@ const SidebarComponent = () => {
       const response = await fetch('/dashboard/patients/');
       const data = await response.json();
       console.log('Fetched Data:', data);
+
       
-      // Check if the data has patients
       if (data) {
         setPatients(data);
-        console.log('Patients state updated:', data);
+        if ((window.location.pathname === '/overview' || window.location.pathname === '/overview/') && localStorage.getItem('selectedPatientId')) {
+          getPatient(localStorage.getItem('selectedPatientId'));
+        }else if((window.location.pathname === '/overview' || window.location.pathname === '/overview/') && localStorage.getItem('selectedPatientId') === null){
+          getPatient(data[0].id);
+        }
       } else {
         console.error('No patients data found in the response.');
       }
     } catch (error) {
       console.error('Error fetching patients:', error);
     } finally {
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false); 
     }
   };
 
-  // Function to handle patient selection
   const getPatient = async (id) => {
+    setSelectedPatientId(id);
+    localStorage.setItem('selectedPatientId', id.toString());
     console.log('get patient');
     try {
       const response = await fetch('/dashboard/patient/' + id + '/');
       const data = await response.json();
       console.log(data);
       
-      // Pass patient data when navigating to /overview
       navigate('/overview', { state: { patient: data } });
+      
     } catch (error) {
       console.error('Error fetching patient:', error);
     }
   };
+  
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  // Filter patients based on search query
   const filteredPatients = patients.filter((patient) => {
-    return patient.username.toLowerCase().includes(searchQuery.toLowerCase());
+    const query = searchQuery.toLowerCase();
+    return (
+      patient.full_name.toLowerCase().includes(query) || 
+      patient.id.toString().includes(query)
+    );
   });
 
-  // If loading, show a loading indicator
   if (loading) {
-    return <div className='sidebar'>Loading...</div>; // Display a loading message or spinner
+    return <div className='sidebar'>Loading...</div>;
   }
 
   // Render the sidebar component once data is available
@@ -74,15 +87,16 @@ const SidebarComponent = () => {
       </div>
       <p className='player-list'>Player List</p>
       <SearchBarComponent searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
-      {/* List all patients */}
       <ul className='patients'>
-        {filteredPatients.map((patient) => (
-          <li onClick={() => getPatient(patient.id)} className='patient-item' key={patient.id}>
+        {filteredPatients.map((patient) => {
+        return(
+          <li onClick={() => getPatient(patient.id)} className={`patient-item ${Number(selectedPatientId) === patient.id? 'selected-patient' : ''}`} key={patient.id}>
             <p>{patient.full_name}</p>
-            <div className='chevron-right-icon'></div>
+              <div className='chevron-right-icon'></div>
           </li>
-        ))}
+        )})}
       </ul>
+
     </div>
   );
 };

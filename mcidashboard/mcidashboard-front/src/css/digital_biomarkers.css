@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     overflow: visible;
-    /* width: 520px; */
     padding: 20px;
     font-family: 'Poppins', sans-serif;
 }
@@ -21,18 +20,16 @@
         width: 720px;
     }
     .biomarkers-list {
-        width: 360px;
+        width: 440px;
     }
-    
-
 }
 
 #biomarker-container {
     display: flex;
     flex-direction: row;
-    justify-self: center;
+    justify-content: space-between;
     margin-bottom: 50px;
-    gap: 0px;
+    padding: 0 40px;
 }
 
 .solitaire-overview img {
@@ -54,11 +51,11 @@
 
 .biomarkers li {
     padding: 5px 0;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .biomarkers li b {
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .biomarker-item {
@@ -66,6 +63,13 @@
 }
 
 .biomarker-desc {
-    font-size: 12px;
+    font-size: 16px;
     color: #666;
+}
+
+.solitaire-animated {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }

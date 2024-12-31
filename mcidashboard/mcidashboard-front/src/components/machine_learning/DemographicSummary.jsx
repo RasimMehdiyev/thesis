@@ -1,21 +1,70 @@
-import React,{useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import StackedBarChart from './StackedBarChart'; 
 import Tooltip from '../Tooltip'; 
 
-const DemographicSummary= () => {
+const DemographicSummary = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDemographicSummary = async () => {
+    let apiUrl = '/dashboard/machine-learning-data/';
+    let fallbackUrl = '/machine-learning-data.json';
+
+    try {
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch from API: ${response.statusText}`);
+      }
+
+      const fetchedData = await response.json();
+      console.log('Fetched Data from API:', fetchedData);
+
+      setData(fetchedData);
+    } catch (error) {
+      console.error('Error fetching from API:', error);
+
+      try {
+        const fallbackResponse = await fetch(fallbackUrl);
+        const fallbackData = await fallbackResponse.json();
+        console.log('Fetched Data from fallback JSON:', fallbackData);
+
+        setData(fallbackData);
+      } catch (fallbackError) {
+        console.error('Error fetching machine learning data from fallback JSON:', fallbackError);
+        setError('Failed to fetch data from both sources');
+      }
+    } finally {
+      setLoading(false); 
+    }
+  };
+
+  useEffect(() => {
+    fetchDemographicSummary();
+  }, []);
 
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
-  // Show tooltip on mouse enter
   const showTooltip = () => {
     setIsTooltipVisible(true);
   };
 
-  // Hide tooltip on mouse leave
   const hideTooltip = () => {
     setIsTooltipVisible(false);
   };
 
+  if (loading) {
+    return <p>Loading...</p>;  // Show a loading message while data is being fetched
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;  // Show an error message if data fails to load
+  }
+
+  if (!data || !data.patients) {
+    return <p>No data available.</p>;  // Handle case where data or patients is null or undefined
+  }
     
     const genderSet = [
         {
@@ -72,7 +121,7 @@ return (
         <div className='personal-info-h' style={{ position: 'relative' }}>
         <p className="ml-subtitle">Demographic summary</p>
           <img
-            src='/assets/info_icon.svg'
+            src='/static/assets/info_icon.svg'
             alt='Info Icon'
             className='icon'
             onMouseEnter={showTooltip}  // Show tooltip on hover
@@ -99,23 +148,23 @@ return (
         <tbody>
           <tr>
             <td className="category dt-title">Sample size<br /><span className="dt-subtitle">Number of participants</span></td>
-            <td className="numbers vertical-line-left vertical-line">23</td>
-            <td className="numbers">23</td>
+            <td className="numbers vertical-line-left vertical-line">{data.patients.healthy}</td>
+            <td className="numbers">{data.patients.mci}</td>
           </tr>
           <tr>
-            <td className="category dt-title">Age<br /><span className="dt-subtitle">Mean(SD)</span></td>
-            <td className="numbers vertical-line-left vertical-line">70 (5.4)</td>
-            <td className="numbers">80 (5.2)</td>
+            <td className="category dt-title">Age<br /><span className="dt-subtitle">Mean (Standard deviation)</span></td>
+            <td className="numbers vertical-line-left vertical-line">{data.patients.meanSD_age_healthy.mean} ({data.patients.meanSD_age_healthy.sd})</td>
+            <td className="numbers">{data.patients.meanSD_age_mci.mean} ({data.patients.meanSD_age_mci.sd})</td>
           </tr>
           <tr>
-            <td className="category dt-title">MMSE score<br /><span className="dt-subtitle">Mean(SD)</span></td>
-            <td className="numbers vertical-line-left vertical-line">29.61 (0.65)</td>
-            <td className="numbers">26.17 (1.75)</td>
+            <td className="category dt-title">MMSE score<br /><span className="dt-subtitle">Mean (Standard deviation)</span></td>
+            <td className="numbers vertical-line-left vertical-line">{data.patients.meanSD_MMSE_score_healthy.mean} ({data.patients.meanSD_MMSE_score_healthy.sd})</td>
+            <td className="numbers">{data.patients.meanSD_MMSE_score_mci.mean} ({data.patients.meanSD_MMSE_score_mci.sd})</td>
           </tr>
           <tr>
-            <td className="category dt-title">MoCA score<br /><span className="dt-subtitle">Mean(SD)</span></td>
-            <td className="numbers vertical-line-left vertical-line">28.09 (1.28)</td>
-            <td className="numbers">N/A</td>
+            <td className="category dt-title">MoCA score<br /><span className="dt-subtitle">Mean (Standard deviation)</span></td>
+            <td className="numbers vertical-line-left vertical-line">{data.patients.meanSD_MoCA_score_healthy.mean} ({data.patients.meanSD_MoCA_score_healthy.sd})</td>
+            <td className="numbers">{data.patients.meanSD_MoCA_score_mci.mean ? data.patients.meanSD_MoCA_score_mci.mean : 'N/A'} {data.patients.meanSD_MoCA_score_mci.sd ? "(" + data.patients.meanSD_MoCA_score_mci.sd + ")" : ""}</td>
           </tr>
           <tr>
             <td className="category dt-title">CDR</td>
@@ -133,7 +182,7 @@ return (
         
             <td >
             <div className="chart-container">
-                <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={false} padding={5}/>
+                <StackedBarChart  dataSets={genderSet} maxRange={100} showLegend={true} padding={5}/>
             </div>
             </td>
           </tr>
@@ -142,13 +191,13 @@ return (
    
             <td className="numbers vertical-line-left vertical-line">
             <div className="chart-container">
-                <StackedBarChart  dataSets={educationSet} maxRange={100}  />
+                <StackedBarChart  dataSets={data.patients.education_level_healthy} maxRange={100}  />
             </div>
             </td>
               
             <td>
             <div className="chart-container">
-                <StackedBarChart  dataSets={educationSet} maxRange={100} showLegend={false}  />
+                <StackedBarChart  dataSets={data.patients.education_level_mci} maxRange={100} showLegend={true}  />
             </div>
             </td>
           </tr>
@@ -156,12 +205,12 @@ return (
             <td className="category dt-title">Tablet use frequency</td>
             <td className="numbers vertical-line-left vertical-line">
             <div className="chart-container">
-               <StackedBarChart  dataSets={tabletSet} maxRange={100}/>
+               <StackedBarChart  dataSets={data.patients.tablet_level_healthy} maxRange={100}/>
             </div>
             </td>
             <td>
             <div className="chart-container">
-               <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+               <StackedBarChart  dataSets={data.patients.tablet_level_mci} maxRange={100} showLegend={true} />
             </div>
             </td>
           </tr>
@@ -169,12 +218,12 @@ return (
             <td className="category dt-title">Klondike use frequency</td>
             <td className="numbers vertical-line-left vertical-line">
             <div className="chart-container">
-                <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false}/>
+                <StackedBarChart  dataSets={data.patients.cardgame_level_healthy} maxRange={100} showLegend={false}/>
             </div>
             </td>
             <td>
             <div className="chart-container">
-                <StackedBarChart  dataSets={tabletSet} maxRange={100} showLegend={false} />
+                <StackedBarChart  dataSets={data.patients.cardgame_level_mci} maxRange={100} showLegend={false} />
             </div> 
             </td>
           </tr>

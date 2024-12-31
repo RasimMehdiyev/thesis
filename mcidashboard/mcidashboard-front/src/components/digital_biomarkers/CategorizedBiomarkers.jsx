@@ -10,18 +10,14 @@ const CategorizedBiomarkers = ({ biomarker_type }) => {
     return <div>No biomarkers found</div>;
   }
 
-  // Helper function to convert description text
   const processDescription = (description) => {
     if (!description) {
-      return <p>No description available</p>; // Handle case where description is null or undefined
+      return <p></p>; 
     }
-  
-    // Split by '*' for bullet points
     const parts = description.split('*');
   
     return (
       <div>
-        {/* First part (before the first *) is treated as regular text */}
         {parts[0].trim() && (
           <p>
             {parts[0].split(':').map((segment, index) => (
@@ -32,7 +28,6 @@ const CategorizedBiomarkers = ({ biomarker_type }) => {
           </p>
         )}
   
-        {/* Rest of the parts are bullet points */}
         {parts.length > 1 && (
           <ul>
             {parts.slice(1).filter(part => part.trim() !== '').map((part, index) => (
@@ -52,19 +47,24 @@ const CategorizedBiomarkers = ({ biomarker_type }) => {
   
 
   return (
-    <div className='biomarker-item'>
+    <div className="biomarker-item">
       <h1>{biomarker_type.name}</h1>
-      <ul className='biomarkers'>
-        {biomarker_type.biomarkers.map(biomarker => (
-          <div style={{borderBottom:" 1px solid #e5e5e5", marginBottom: '20px'}} key={biomarker.id}>
-            <li>
-              <b>{biomarker.name}</b> - {biomarker.unit}
-            </li>
-            <div className='biomarker-desc'>
-              {processDescription(biomarker.description)} {/* Safely process the description */}
+      <ul className="biomarkers">
+        {biomarker_type.biomarkers
+          .filter((biomarker) => biomarker.display)
+          .map((biomarker) => (
+            <div
+              style={{ borderBottom: "1px solid #e5e5e5", marginBottom: "20px" }}
+              key={biomarker.id}
+            >
+              <li>
+                <b>{biomarker.name}</b> - {biomarker.unit}
+              </li>
+              <div className="biomarker-desc">
+                {processDescription(biomarker.description)}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </ul>
     </div>
   );

@@ -19,4 +19,22 @@ urlpatterns = [
     path('biomarkers_type/', get_all_biomarkers, name='biomarker-list'),
     path('biomarkers/list/',get_all_biomarkers_list, name='biomarker-list'),
     path('biomarker/histograms/<int:userID>/<int:biomarker_id>/',biomarker_frequency_histogram, name='biomarker-histograms'),
+    path('game/history/<int:pk>/<int:biomarkerID>/', get_game_history_per_patient, name='game-history'),
+    path('machine-learning-data/', ML_data, name='ML-data'),
+
+    # Questionnaire
+    path('questionnaire/<int:pk>/sections/', get_questionnaire_sections, name='questionnaire-sections'),
+    path('questionnaire/section/<int:section_id>/', get_questions_by_section, name='section-questions'),
+    path('questionnaire/question/<int:question_id>/options/', get_options, name='question-detail'),
+    path('response/create/', create_response, name='response-create'),
+    path('response/<int:response_id>/answer/add/', add_answer, name='answer-create'),
+    path('response/answers/<str:prolific_id>/', get_answers_by_prolific_id, name='answers-by-prolific-id'),
+
+    # ML Model
+    path('feature-importance/',get_shap_contributions, name='feature-importance'),
+    path('top-3-models/',get_top_3_models, name='top-3-models'),
+
+    # ICF email
+    path('submit_email/',submit_email, name='send-email'),
+    
 ]
