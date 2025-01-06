@@ -89,7 +89,6 @@
 
 .demographic-item::before {
     content: '•';
-    /* Custom bullet */
     position: absolute;
     left: 0;
     color: black;

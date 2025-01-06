@@ -13,13 +13,13 @@ const DivergingBarChart = ({ features, percentages }) => {
       {
         label: 'Towards MCI',
         backgroundColor: 'rgba(250, 93, 93, 0.6)', 
-        data: percentages.map((value) => (value > 0 ? value : 0)), // Positive values for MCI
+        data: percentages.map((value) => (value > 0 ? value : 0)), 
         barThickness: 25,
       },
       {
         label: 'Towards healthy',
         backgroundColor: 'rgba(33, 174, 238, 0.6)',
-        data: percentages.map((value) => (value < 0 ? value : 0)), // Negative values for healthy
+        data: percentages.map((value) => (value < 0 ? value : 0)), 
         barThickness: 25, 
       },
     ],
@@ -83,7 +83,7 @@ const DivergingBarChart = ({ features, percentages }) => {
           weight: '500', 
         },
         clip: false,
-        formatter: (value) => (value !== 0 ? `${value}%` : ''), // Only show non-zero values
+        formatter: (value) => (value !== 0 ? `${value}%` : ''),
       },
     },
     responsive: true,
@@ -103,13 +103,11 @@ const DivergingBarChart = ({ features, percentages }) => {
           width: '100%',
         }}
       >
-        {/* Left arrow and text */}
         <div style={{ display: 'flex', alignItems: 'center', flex: 1, marginLeft: 200, fontSize: 18}}>
           <span style={{ fontSize: '24px' }}>&larr;</span>
           <p style={{ marginLeft: '5px', whiteSpace: 'nowrap' }}>Towards healthy</p>
         </div>
 
-        {/* Right arrow and text */}
         <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'flex-end', marginLeft: 20, marginRight: 50}}>
           <p style={{ marginRight: '5px', whiteSpace: 'nowrap', fontSize: 18 }}>Towards MCI</p>
           <span style={{ fontSize: '24px' }}>&rarr;</span>

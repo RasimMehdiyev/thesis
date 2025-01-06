@@ -12,7 +12,7 @@ const DropdownTable = ({ onOptionSelect }) => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    onOptionSelect(option); // Pass the selected option to the parent component
+    onOptionSelect(option);
   };
 
   useEffect(() => {
@@ -58,7 +58,6 @@ const DropdownTable = ({ onOptionSelect }) => {
     'Total Moves': 31
   }
 
-  // take the names from the biomarkerNametoId object and put them in an array like in options, in alphabetical order
   const options_new = Object.keys(biomarkerNametoId).sort().reduce((acc, key, index) => {
     const rowIndex = Math.floor(index / 4);
     if (!acc[rowIndex]) {

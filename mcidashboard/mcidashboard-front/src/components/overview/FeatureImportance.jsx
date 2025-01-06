@@ -17,19 +17,15 @@ const FeatureImportance = () => {
             if (response.ok) {
                 const data = await response.json();
     
-                // Sort the data by contribution values
                 const sortedData = data.sort((a, b) => 
                     parseFloat(b['Contribution (%)']) - parseFloat(a['Contribution (%)'])
                 );
     
-                // Take top 4 positive and top 4 negative contributions
                 const topPositive = sortedData.slice(0, 4);
                 const topNegative = sortedData.slice(-4);
     
-                // Combine top positive and negative contributions
                 const selectedData = [...topPositive, ...topNegative];
     
-                // Extract names and values from the selected features
                 const names = selectedData.map(item => item.Feature);
                 const values = selectedData.map(item => parseFloat(item['Contribution (%)'].replace('%', '')));
     

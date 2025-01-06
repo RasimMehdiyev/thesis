@@ -26,7 +26,6 @@ const Home = () => {
         const emailInput = e.target.value;
         setEmail(emailInput);
 
-        // Simple regex for basic email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailInput)) {
             setEmailError("Please enter a valid email address.");

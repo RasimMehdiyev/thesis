@@ -10,11 +10,10 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
   const [tooltip, setTooltip] = useState({ visible: false, text: '', x: 0, y: 0 });
   const chartRef = useRef(null); 
 
-  // Function to get color shade based on the value 
   const getColorShade = (value) => {
-    const maxValue = Math.max(...actualData.flat()); // Determine max value in the data
-    const intensity = Math.floor((value / maxValue) * 255); // Normalize the value to a scale of 0-255
-    return `rgba(123, 97, 255, ${intensity / 255})`; // Adjust opacity based on value
+    const maxValue = Math.max(...actualData.flat()); 
+    const intensity = Math.floor((value / maxValue) * 255); 
+    return `rgba(123, 97, 255, ${intensity / 255})`;
   };
 
   
@@ -23,8 +22,8 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
     datasets: [
       {
         label: 'True Healthy',
-        data: [1, 1], // Fake data to ensure equal-sized squares
-        backgroundColor: [getColorShade(actualData[0][0]), getColorShade(actualData[0][1])], // Dynamic shading
+        data: [1, 1],
+        backgroundColor: [getColorShade(actualData[0][0]), getColorShade(actualData[0][1])], 
         borderWidth: 1,
       },
       {
@@ -44,7 +43,6 @@ const ConfusionMatrix = ({ model, data: actualData }) => {
       const datasetIndex = hoveredElement.datasetIndex;
       const index = hoveredElement.index;
 
-      // Generate tooltip message dynamically 
       const value = actualData[datasetIndex][index];
       const isCorrect = (datasetIndex === index); 
       const label = index === 0 ? 'healthy individual(s)' : 'MCI patient(s)';

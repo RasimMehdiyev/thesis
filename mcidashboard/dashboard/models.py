@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
 class Game(models.Model):
     id = models.BigAutoField(primary_key=True)
     personID = models.ForeignKey('Person', on_delete=models.CASCADE)  
@@ -13,8 +12,6 @@ class Game(models.Model):
 
     def __str__(self):
         return str(self.id)
-
-
 
 class Move(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -51,6 +48,7 @@ class Person(models.Model):
         ('3' , 'ISCED 5/6'),
     )
 
+    # mapping data in dutch from the csv file to 1-5 levels of proficiency
     TABLET_PROFICIENCY = (
     ('1', 'Dagelijks'),
     ('2', 'Wekelijks'),
@@ -72,11 +70,11 @@ class Person(models.Model):
     full_name = models.CharField(max_length=64, blank=True, null=True)
     username = models.CharField(max_length=45)
     password = models.CharField(max_length=45)
-    mci = models.IntegerField(db_column='MCI')  # Field name made lowercase.
+    mci = models.IntegerField(db_column='MCI') 
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
-    playlevel = models.CharField(db_column='playLevel', max_length=1, choices=CARDGAME_PROFICIENCY)  # Field name made lowercase.
-    tabletlevel = models.CharField(db_column='tabletLevel', max_length=1, choices=TABLET_PROFICIENCY)  # Field name made lowercase.
+    playlevel = models.CharField(db_column='playLevel', max_length=1, choices=CARDGAME_PROFICIENCY) 
+    tabletlevel = models.CharField(db_column='tabletLevel', max_length=1, choices=TABLET_PROFICIENCY) 
     patient_code = models.CharField(max_length=45, blank=True, null=True)
     MMSE = models.IntegerField( blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
     MoCA = models.FloatField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
@@ -115,9 +113,9 @@ class Biomarker(models.Model):
 class BiomarkerStats(models.Model):
     id = models.BigAutoField(primary_key=True)
     biomarkerID = models.ForeignKey(Biomarker, on_delete=models.CASCADE)
-    avgMCI = models.FloatField()  # Field name made lowercase.
-    sdMCI = models.FloatField()  # Field name made lowercase.
-    avgHealthy = models.FloatField()  # Field name made lowercase.
+    avgMCI = models.FloatField() 
+    sdMCI = models.FloatField() 
+    avgHealthy = models.FloatField() 
     sdHealthy = models.FloatField()  
 
     def __str__(self):
@@ -172,10 +170,8 @@ class Question(models.Model):
     def __str__(self):
         return self.section.title + ' | ' + self.question[:20]
 
-    # order by order field
     class Meta:
        ordering = ['order']
-    #  
 
     
 class MultipleChoiceOption(models.Model):

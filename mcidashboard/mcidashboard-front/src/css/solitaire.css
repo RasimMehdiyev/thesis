@@ -3,7 +3,6 @@
     /* flex-wrap: wrap; */
     flex-direction: column;
     justify-content: space-between;
-    /* background gradient green */
     background: linear-gradient(180deg, rgb(56, 132, 15) 10%, #3CB72E 81%);
     width: 1020px;
     height: 750px;
@@ -143,7 +142,6 @@
 }
 
 .highlight-destination {
-    /* shadow */
     box-shadow: 0 0 20px 10px red;
     animation: float 2s ease-in-out infinite;
     transition: transform 0.3s ease-in-out;
@@ -172,15 +170,12 @@
     word-wrap: break-word;
     opacity: 0;
     pointer-events: none;
-    /* Ensure message doesn't block hover events */
     transition: opacity 0.3s ease-in-out;
-    /* fit the text */
     text-align: center;
 }
 
 .card-container:hover .hover-message {
     opacity: 1;
-    /* Show message on hover */
 }
 
 .game-board-container {

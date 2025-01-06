@@ -55,15 +55,15 @@ const DemographicSummary = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;  // Show a loading message while data is being fetched
+    return <p>Loading...</p>;  
   }
 
   if (error) {
-    return <p>Error: {error}</p>;  // Show an error message if data fails to load
+    return <p>Error: {error}</p>;  
   }
 
   if (!data || !data.patients) {
-    return <p>No data available.</p>;  // Handle case where data or patients is null or undefined
+    return <p>No data available.</p>; 
   }
     
     const genderSet = [
@@ -124,8 +124,8 @@ return (
             src='/static/assets/info_icon.svg'
             alt='Info Icon'
             className='icon'
-            onMouseEnter={showTooltip}  // Show tooltip on hover
-            onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
+            onMouseEnter={showTooltip} 
+            onMouseLeave={hideTooltip} 
             style={{ cursor: 'pointer', marginTop: 5 }}
           />
 

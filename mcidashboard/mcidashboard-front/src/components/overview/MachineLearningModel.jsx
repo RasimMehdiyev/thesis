@@ -77,15 +77,6 @@ const MachineLearningModel = ({ patient }) => {
         fetchAllData(patient.id);
     }, [patient.id]);
 
-    // if (loading) {
-    //     return <p>Loading...</p>;
-    // }
-
-    // if (!machineLearningData) {
-    //     return <div className="card" id="ml-card">
-    //         <p className="ml-subtitle" id="ml-p">Machine learning model</p>
-    //     </div>;
-    // }
 
     return (
         <div className="card" id="ml-card">

@@ -48,12 +48,12 @@ class MultipleChoiceOptionSerializer(serializers.ModelSerializer):
 from rest_framework import serializers
 
 class QuestionSerializer(serializers.ModelSerializer):
-    section_title = serializers.CharField(source='section.title', read_only=True)  # Assuming section is a ForeignKey to QuestionnaireSections
-    answers = serializers.SerializerMethodField()  # Add a field for answers
+    section_title = serializers.CharField(source='section.title', read_only=True)
+    answers = serializers.SerializerMethodField()  
     
     class Meta:
         model = Question
-        fields = ['id', 'section_title', 'question', 'q_type', 'required', 'answers', 'charLimit', 'noSpecialChars', 'order']  # Include answers in the fields
+        fields = ['id', 'section_title', 'question', 'q_type', 'required', 'answers', 'charLimit', 'noSpecialChars', 'order']
 
     def get_answers(self, obj):
         """Dynamically fetch answers based on the question type"""
@@ -61,10 +61,8 @@ class QuestionSerializer(serializers.ModelSerializer):
             options = obj.multiplechoiceoption_set.all()
             return [option.option for option in options]
         elif obj.q_type == 'SC':
-            # Hardcode answers for Scale questions
             return ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree']
         else:
-            # Return empty list for Open Ended (OE) questions
             return []
 
 

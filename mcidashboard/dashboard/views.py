@@ -16,11 +16,18 @@ from django.db.models import Max
 from collections import Counter
 from .save_on_server import *
 import os
+from collections import OrderedDict
 import pandas as pd
 from django.conf import settings
+from collections import defaultdict
+from .biomarker_calculations import *
+from collections import Counter, defaultdict
+from django.http import JsonResponse
+from django.db.models import Max
+from rest_framework.decorators import api_view
+from .models import Person, Game, PersonBiomarkers
 
 
-# Create your views here.
 def index(request):
     return HttpResponse("Welcome to the Index Page")
 
@@ -46,10 +53,8 @@ class SignUpView(APIView):
 
 
 class LoginView(APIView):
-    # only staff can access this view
     # permission_classes = [AllowAny]
     def post(self, request):
-        # Check if the user is an admin
         if not request.user.is_staff:
             if request.headers.get('X-Custom-Token') != 'admin_power':
                 self.permission_classes = [IsAdminUser]
@@ -117,13 +122,12 @@ def get_games_count(request, pk):
 
 @api_view(['GET'])
 def get_total_games(request):
-    # Aggregate total number of games per user
+    # Total number of games per user
     total_games_per_user = (
         Person.objects.annotate(total_games=Count('game'))
         .values('id', 'username', 'total_games')
     )
     
-    # Format the response
     response_data = [
         {
             'user': person['username'],
@@ -145,21 +149,15 @@ def get_total_moves_last_session(request, pk):
 
 @api_view(['GET'])
 def get_total_moves_last_session_num(request, pk):
-    # Check if the user with the given pk exists
     if not Person.objects.filter(pk=pk).exists():
         return JsonResponse({'error': 'User does not exist'}, status=404)
     
-    # Get the user if exists
     user = Person.objects.get(pk=pk)
     
-    # Get the last game based on the timestamp (if not null)
     last_game = Game.objects.filter(personID=user).order_by('-timestamp').first()
     
     if last_game:
-        # Count the number of moves for the last game
         move_count = Move.objects.filter(gameID=last_game).count()
-        
-        # Return the count as JSON response
         return JsonResponse({'total_moves': move_count}, safe=False)
     else:
         return JsonResponse({'error': 'No games found for user'}, status=404)
@@ -188,7 +186,6 @@ def get_all_biomarkers(request):
     for bio in biomarkers:
         if bio.name in biomarkers_to_skip:
             continue
-        # if bio.name contains 'Average', drop the word 'Average':
         elif 'Average' in bio.name:
             bio.name = bio.name.replace('Average', '')
             unified_data.append({
@@ -213,7 +210,6 @@ def get_all_biomarkers(request):
     organized_data = []
     for bio in unified_data:
         if bio['type'] not in [item['id'] for item in organized_data]:
-            # get the name of the biomarker type
             biomarker_type = BiomarkerType.objects.get(pk=bio['type'])
             name = biomarker_type.name
             organized_data.append({
@@ -230,17 +226,7 @@ def get_all_biomarkers(request):
     
     return JsonResponse(organized_data, safe=False)
 
-
-from collections import defaultdict
-from .biomarker_calculations import *
-
-from collections import Counter, defaultdict
-from django.http import JsonResponse
-from django.db.models import Max
-from rest_framework.decorators import api_view
-from .models import Person, Game, PersonBiomarkers
-
-# Helper function to aggregate frequencies based on rounded values
+# Aggregate frequencies based on rounded values
 def aggregate_frequency(biomarker_values, decimal_places=2):
     frequency_dict = defaultdict(int)
     for value, frequency in Counter(biomarker_values).items():
@@ -269,7 +255,7 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         current_user_biomarker_value = round(current_user_biomarker_value, 2) if isinstance(current_user_biomarker_value, float) else current_user_biomarker_value
     if current_user_biomarker_value is None:
         current_user_biomarker_value = 0
-    # Query for healthy users and their last games
+    # Healthy users and their last games
     healthy_users = Person.objects.filter(mci=0)
     healthy_last_games_subquery = Game.objects.filter(personID__in=healthy_users).values('personID').annotate(
         last_game_timestamp=Max('timestamp')
@@ -278,7 +264,7 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         timestamp__in=[t[1] for t in healthy_last_games_subquery]
     )
 
-    # Query for MCI users and their last games
+    # MCI users and their last games
     mci_users = Person.objects.filter(mci=1)
     mci_last_games_subquery = Game.objects.filter(personID__in=mci_users).values('personID').annotate(
         last_game_timestamp=Max('timestamp')
@@ -295,7 +281,6 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
     mci_biomarker_frequency_list = aggregate_frequency(mci_biomarker_values, decimal_places=2)
     healthy_biomarker_frequency_list = aggregate_frequency(healthy_biomarker_values, decimal_places=2)
 
-    # Prepare data for response
     data = {
         'mci': mci_biomarker_frequency_list,
         'healthy': healthy_biomarker_frequency_list,
@@ -306,17 +291,14 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         'isLowGood': Biomarker.objects.get(pk=biomarker_id).low == 'G'  
     }
 
-    # if the user is mci, then add the current user's biomarker value in the healthy group with frequency 0 and if teh bioamrker value is not present in the healthy group
     if user.mci and current_user_biomarker_value not in [item['biomarker_value'] for item in healthy_biomarker_frequency_list]:
         data['healthy'].append({'biomarker_value': current_user_biomarker_value, 'frequency': 0})
     elif not user.mci and current_user_biomarker_value not in [item['biomarker_value'] for item in mci_biomarker_frequency_list]:
         data['mci'].append({'biomarker_value': current_user_biomarker_value, 'frequency': 0})
 
-    # Calculate threshold (assuming threshold_calc is defined elsewhere)
     threshold = threshold_calc(data)
     isLowGood = Biomarker.objects.get(pk=biomarker_id).low == 'G'
 
-    # Return JSON response
     return JsonResponse({
         'current_user': {
             'biomarker_value': current_user_biomarker_value,
@@ -328,7 +310,6 @@ def biomarker_frequency_histogram(request, userID, biomarker_id):
         'isLowGood': isLowGood
     }, safe=False)
 
-from collections import OrderedDict
 
 @api_view(['GET'])
 def get_game_history_per_patient(request, pk, biomarkerID):
@@ -537,7 +518,6 @@ def get_options(request, question_id):
     if question.q_type == 'MC':
         options = question.multiplechoiceoption_set.all()
         serializer = MultipleChoiceOptionSerializer(options, many=True)
-        # take the option field from the serializer and put it in a list
         option_list = [option['option'] for option in serializer.data]
         return JsonResponse(option_list, safe=False)
     elif question.q_type == 'Scale':
@@ -555,20 +535,17 @@ def create_response(request):
             prolific_id = request.data.get('prolific_id')
             questionnaire_id = request.data.get('questionnaire')
 
-            # Validate that required data is provided
             if not prolific_id or not questionnaire_id:
                 return JsonResponse(
                     {'error': 'prolific_id and questionnaire are required fields.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Check if a response with the same prolific_id already exists
             if Response.objects.filter(prolific_id=prolific_id).exists():
                 response = Response.objects.get(prolific_id=prolific_id)
                 # print(response.id)
                 return JsonResponse({'response_id': response.id}, status=status.HTTP_200_OK)
             
-            # Retrieve the questionnaire, handle if it doesn't exist
             try:
                 questionnaire = Questionnaire.objects.get(pk=questionnaire_id)
             except Questionnaire.DoesNotExist:
@@ -577,14 +554,12 @@ def create_response(request):
                     status=status.HTTP_404_NOT_FOUND
                 )
 
-            # Create a new response
             response = Response.objects.create(questionnaire=questionnaire, prolific_id=prolific_id)
             response.save()
             
             return JsonResponse({'response_id': response.id}, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            # Catch-all for unexpected errors
             return JsonResponse(
                 {'error': f'An unexpected error occurred: {str(e)}'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -653,6 +628,7 @@ def get_answers_by_prolific_id(request, prolific_id):
 @api_view(['GET'])
 def get_shap_contributions(request):
 
+    # mapping of feature names from the csv to display names
     names_dict = {
             "moveTimeMoveSD":"SD Move Time",
             "moveTimeMoveMax":"Max Move Time",
@@ -706,11 +682,9 @@ def get_shap_contributions(request):
 
 @api_view(['GET'])
 def get_top_3_models(request):
-    # Define file paths
     scores_file = os.path.join(settings.BASE_DIR, 'staticfiles', 'data', 'max_compare_model_scores.csv')
     confusion_file = os.path.join(settings.BASE_DIR, 'staticfiles', 'data', 'confusion_matrices.csv')
 
-    # Load scores and confusion matrices
     try:
         scores_df = pd.read_csv(scores_file)
         confusion_df = pd.read_csv(confusion_file)
@@ -719,14 +693,13 @@ def get_top_3_models(request):
     
     total_no_models = scores_df.shape[0] - 1
 
-    # Sort by Max Score in descending order and extract top 3 models
+    # Top 3 models
     top_3_models = scores_df.sort_values(by='Max Score', ascending=False).head(3)
     
-    # Extract confusion matrix information for the top 3 models
+    # Confusion matrix values for the top 3 models
     top_3_model_names = top_3_models['Model'].tolist()
     top_3_confusions = confusion_df[confusion_df['Model'].isin(top_3_model_names)]
     
-    # Prepare data for JSON response
     response_data = {
         'top_models': [],
         'total_models': total_no_models
@@ -736,10 +709,9 @@ def get_top_3_models(request):
         model_name = row['Model']
         max_score = row['Max Score']
         
-        # Get confusion matrix for this model and rename the columns
         confusion_data = top_3_confusions[top_3_confusions['Model'] == model_name].to_dict(orient='records')
         if confusion_data:
-            # Rename confusion matrix keys
+            # Mapping confusion matrix keys
             confusion_data[0] = {
                 'TP': confusion_data[0].get('True Positive'),
                 'FP': confusion_data[0].get('False Positive'),

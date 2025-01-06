@@ -41,7 +41,7 @@ const NavbarComponent = ({ onHelpIconClick }) => {
           className='help-icon'
           style={{ cursor: 'pointer' }}
           title="Start Tutorial"
-          onClick={onHelpIconClick} // Trigger tutorial on click
+          onClick={onHelpIconClick}
         />
       </div>
     </div>

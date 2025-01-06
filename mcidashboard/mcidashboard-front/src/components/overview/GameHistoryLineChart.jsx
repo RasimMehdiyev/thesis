@@ -10,14 +10,14 @@ const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
   // console.log('GameHistoryLineChart:', { data, labels, minLimit, maxLimit });
 
   const chartData = {
-    labels: labels, // Use labels passed as prop
+    labels: labels, 
     datasets: [
       {
         label: 'Game History',
-        data: data, // Use data passed as prop
+        data: data, 
         borderColor: '#5A21EB', 
         fill: false, 
-        tension: 0.4, // Curve the line
+        tension: 0.4,
         pointBackgroundColor: '#fff',
         pointBorderColor: '#5A21EB', 
         pointHoverBackgroundColor: '#5A21EB', 
@@ -45,16 +45,16 @@ const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
         grid: {
             display: true, 
             color: (context) => {
-                if (context.tick.value === maxLimit) { // Use dynamic maxLimit
-                    return 'rgba(0, 0, 0, 0.1)'; // Set color for the grid line at the max value
+                if (context.tick.value === maxLimit) { 
+                    return 'rgba(0, 0, 0, 0.1)';
                 }
-                return 'rgba(0, 0, 0, 0.05)'; // Show a faint grid for other lines
+                return 'rgba(0, 0, 0, 0.05)'; 
             },
             lineWidth: (context) => {
-                if (context.tick.value === maxLimit) { // Use dynamic maxLimit
-                    return 1; // Set thickness of the grid line at max value
+                if (context.tick.value === maxLimit) { 
+                    return 1; 
                 }
-                return 0.5; // Use a thinner line for other ticks
+                return 0.5; 
             },
         },
         ticks: {
@@ -90,14 +90,6 @@ const GameHistoryLineChart = ({ data, labels, minLimit, maxLimit }) => {
     <>
       <div className="line-chart-h">
         <p style={{ fontSize: 16 }}>Game history</p>
-        {/*
-        <div className="dropdown-container">
-          <select className="game-history-dropdown">
-            <option>3 months</option>
-            <option>6 months</option>
-            <option>1 year</option>
-          </select>
-        </div>*/}
       </div>
       <div style={{ width: '100%', height: '100%', minWidth: 300 }}>
         <Line data={chartData} options={options} />

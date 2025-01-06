@@ -4,24 +4,22 @@ import 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from 'chart.js';
 
-// Register the plugin with Chart.js
 Chart.register(ChartDataLabels);
 
-// Function to apply transparency to the color
 const getTransparentColor = (color, alpha) => {
   const [r, g, b] = color.match(/\w\w/g).map((hex) => parseInt(hex, 16));
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
 const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding = 20 }) => {
-  const baseColor = '#7B61FF'; // Darkest base color
+  const baseColor = '#7B61FF'; 
 
   const data = {
     labels: [''], 
     datasets: dataSets.map((dataSet, index) => ({
       label: dataSet.label,
       data: [dataSet.data], 
-      backgroundColor: getTransparentColor(baseColor, index * 0.2 + 0.2), // Transparency decreases for each dataset
+      backgroundColor: getTransparentColor(baseColor, index * 0.2 + 0.2),
       barThickness: 30,
     })),
   };
@@ -31,7 +29,7 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding 
     indexAxis: 'y', 
     layout: {
       padding: {
-        top: showLegend ? 0 : padding, // Add top padding (margin) depending on legend
+        top: showLegend ? 0 : padding,
         bottom: 0,
       },
     },
@@ -52,7 +50,6 @@ const StackedBarChart = ({ dataSets, maxRange = 100, showLegend = true, padding 
           const chartWidth = context.chart.width;
           const barWidth = (value / maxRange) * chartWidth;
 
-          // Only show the label if the bar is wide enough for the percentage
           return barWidth > 30 ? (percentage % 1 === 0 ? `${percentage.toFixed(0)}%` : `${percentage.toFixed(1)}%`) : '';
         },
         color: '#000', 

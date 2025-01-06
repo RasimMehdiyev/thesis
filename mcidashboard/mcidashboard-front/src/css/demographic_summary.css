@@ -37,22 +37,16 @@
 }
 
 
-/* Add vertical lines between columns */
 
 .vertical-line {
     border-right: 1px solid #000;
 }
-
-
-/* Add vertical line to the left of the Healthy column */
 
 .vertical-line-left {
     border-left: 1px solid #000;
     padding-right: 10px;
 }
 
-
-/* Remove vertical line for last column (MCI) */
 
 .demographic-table td:last-child .vertical-line,
 .demographic-table th:last-child .vertical-line {

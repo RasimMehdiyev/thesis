@@ -46,7 +46,6 @@
     left: 0;
     background-color: rgba(123, 97, 255, 0.16);
     -ms-overflow-style: none;
-    /* Hide scrollbar for IE and Edge */
     padding-top: 20px;
     z-index: 10;
     zoom: 0.67;
@@ -54,7 +53,6 @@
 
 .sidebar::-webkit-scrollbar {
     display: none;
-    /* Webkit-based browsers */
 }
 
 .sidebar ul {
@@ -148,9 +146,7 @@
 .patient-item.selected-patient {
     border-radius: 8px;
     background: #7B61FF;
-    /* Same background color as hover */
     color: #FFF;
-    /* Same text color as hover */
 }
 
 .patient-item.selected-patient .chevron-right-icon {

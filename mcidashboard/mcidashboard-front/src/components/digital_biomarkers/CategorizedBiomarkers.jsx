@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 const CategorizedBiomarkers = ({ biomarker_type }) => {
-  // Log the biomarker_type object for debugging
   useEffect(() => {
     console.log(biomarker_type);
   }, [biomarker_type]);

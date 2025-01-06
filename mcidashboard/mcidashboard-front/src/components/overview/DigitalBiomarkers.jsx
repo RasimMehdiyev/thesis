@@ -205,8 +205,6 @@ const xUser = metricData?.xUser || 0;
 // console.log('MCI Data:', { xData_mci, yData_mci, threshold });
 // console.log('Healthy Data:', { xData_healthy, yData_healthy, threshold });
 
-
-
   return (
     <div className="card" id="dig-card">
       <div className="personal-info-h" style={{ position: 'relative' }}>

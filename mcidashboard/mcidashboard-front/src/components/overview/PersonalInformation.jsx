@@ -15,13 +15,10 @@ const PersonalInformation = ({patient}) => {
     }
   }, [patient.mci]);
 
-
-  // Show tooltip on mouse enter
   const showTooltip = () => {
     setIsTooltipVisible(true);
   };
 
-  // Hide tooltip on mouse leave
   const hideTooltip = () => {
     setIsTooltipVisible(false);
   };
@@ -37,7 +34,6 @@ const PersonalInformation = ({patient}) => {
   }
 
 
-
   return (
     <div className='card' id="pers-card">
       
@@ -47,8 +43,8 @@ const PersonalInformation = ({patient}) => {
           src='/static/assets/info_icon.svg'
           alt='Info Icon'
           className='icon'
-          onMouseEnter={showTooltip}  // Show tooltip on hover
-          onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
+          onMouseEnter={showTooltip}  
+          onMouseLeave={hideTooltip} 
           style={{ cursor: 'pointer' }}
         />
 

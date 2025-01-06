@@ -24,7 +24,7 @@ function Logout() {
     return <button onClick={handleLogout}>Logout</button>;
 }
 
-// Helper function to get CSRF token
+// Get CSRF token
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

@@ -6,12 +6,12 @@ const tutorialSteps = [
   {//0
     title: "START OF THE TUTORIAL",
     content: "Welcome to the <strong>Solitaire Decision Support System!</strong><br>Click 'Next' to start the tutorial.",
-    selector: null, // No highlight for the first step, full overlay
+    selector: null, 
   },
   {//1
     title: "OVERVIEW TAB",
     content: "This tab displays all the information related to a given patient. Scroll to explore all available details.",
-    selector: '.container', // Highlight the container class
+    selector: '.container', 
   },
   {//2
     title: "OVERVIEW TAB",
@@ -98,12 +98,9 @@ const tutorialSteps = [
 
 const Tutorial = ({ initialStep = 0 }) => {
     const [currentStep, setCurrentStep] = useState(initialStep); 
-  
     const [isModalVisible, setIsModalVisible] = useState(false); 
     const step = tutorialSteps[currentStep];
-  
     const navigate = useNavigate();
-  
     const location = useLocation();
   
   
@@ -115,13 +112,10 @@ const Tutorial = ({ initialStep = 0 }) => {
   }, [location.state]);
 
   
-  useEffect(() => { // Reset tutorial on reload
+  useEffect(() => { 
     setCurrentStep(0);
   }, []);
 
-
-
-  // Function to get the mask styles around a given element
   const getMaskStyles = (selector, padding = 0) => {
     if (!selector) {
       return {
@@ -137,22 +131,14 @@ const Tutorial = ({ initialStep = 0 }) => {
     if (!element) return {};
   
     const rect = element.getBoundingClientRect();
-
-    /*
-    const handleSkip = () => {
-        setIsModalVisible(false); 
-        enableScroll(); 
-      };*/
-
   
-    
     return {
         topMask: {
           position: 'fixed',
           top: 0,
           left: 0,
           width: '100vw',
-          height: `${rect.top}px`, // Adjust this for the top overlay
+          height: `${rect.top}px`,
         },
         leftMask: {
           position: 'fixed',
@@ -181,7 +167,7 @@ const Tutorial = ({ initialStep = 0 }) => {
     const handleSkip = () => {
         setIsModalVisible(false); 
         enableScroll();
-        window.location.href = '/overview' //forced reload
+        window.location.href = '/overview'
       };
 
   const [maskStyles, setMaskStyles] = useState(getMaskStyles(step.selector));
@@ -195,21 +181,18 @@ const Tutorial = ({ initialStep = 0 }) => {
     document.body.style.overflow = 'auto';
   };
 
-  // Scroll to element if it's out of view
   const scrollToElement = (selector) => {
     const element = document.querySelector(selector);
     if (element) {
       const rect = element.getBoundingClientRect();
       const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
   
-      // Only scroll if the element is out of view
       if (!isInView) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   };
 
-  // Recalculate mask styles after scrolling
   const updateMaskAfterScroll = (selector) => {
     setTimeout(() => {
       setMaskStyles(getMaskStyles(selector));
@@ -235,36 +218,30 @@ const Tutorial = ({ initialStep = 0 }) => {
               console.log("SELECTOR:", step.selector);
             }
           }
-        }, 500); // Add a delay to ensure the scroll is complete
+        }, 500); 
       } else {
         disableScroll(); 
   
-        // Default behavior for all other steps
         if (step.selector) {
           const element = document.querySelector(step.selector);
   
-          // Check if the element is already in view, only scroll if necessary
           if (element) {
             const rect = element.getBoundingClientRect();
             const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
   
             if (!isInView) {
-              // Scroll only if the element is out of view
               scrollToElement(step.selector);
             }
-            updateMaskAfterScroll(step.selector); // Update the mask after scrolling
+            updateMaskAfterScroll(step.selector); 
           }
         } else {
-          // Full overlay if no selector
           setMaskStyles(getMaskStyles(step.selector));
-          setTimeout(() => setIsModalVisible(true), 500); // Show modal after delay
+          setTimeout(() => setIsModalVisible(true), 500); 
         }
       }
     };
   
     updateMaskStyles();
-  
-    // Listen for window resize
     window.addEventListener('resize', updateMaskStyles);
   
     
@@ -276,18 +253,14 @@ const Tutorial = ({ initialStep = 0 }) => {
   }, [step.selector, currentStep]);
   
   
-
   const getModalPosition = () => {
-
     let top = '50%';
     let left = '50%';
-
     
     if( currentStep===3 ||currentStep===14){
         top = '200px';  
         left = '450px'; 
     }
-
     else if (currentStep === 4) {
         top = '200px';   
         left = '800px';  
@@ -310,7 +283,6 @@ const Tutorial = ({ initialStep = 0 }) => {
       top = '180px'; 
       left= '1050px' 
     }
-
     return { top, left };
   };
 
@@ -331,11 +303,10 @@ const Tutorial = ({ initialStep = 0 }) => {
           navigate('/overview', { state: { tutorialStep: 17 } });
       }
     }
-    else{ //tutorial done
+    else{ 
         setIsModalVisible(false); 
         enableScroll(); 
-        window.location.href = '/overview' //forced reload
-
+        window.location.href = '/overview' 
     }
   };
 
@@ -349,15 +320,12 @@ const Tutorial = ({ initialStep = 0 }) => {
       updateMaskAfterScroll(tutorialSteps[8].selector);
       setTimeout(() => navigate('/overview', { state: { tutorialStep: 8 } }), 100); 
     }
-  
     if (currentStep === 12) {  
         navigate('/digital-biomarkers', { state: { tutorialStep: 11 } });
     }
-
     if (currentStep === 17) {  
         navigate('/machine-learning', { state: { tutorialStep: 16 } });
     }
-    
   };
 
   return (
@@ -370,15 +338,13 @@ const Tutorial = ({ initialStep = 0 }) => {
           left: 0,
           width: '100vw',
           height: '100vh',
-          backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent but blocks interaction
-          zIndex: 1000, // Ensure this is below the modal but above other content
-          pointerEvents: 'all', // Block interaction with everything
+          backgroundColor: 'rgba(0, 0, 0, 0)', 
+          zIndex: 1000,
+          pointerEvents: 'all', 
         }}
       />)}
 
-        
-      {/* Overlay for the mask */}
-      {isModalVisible && (
+        {isModalVisible && (
         <>
              
             <div className="tutorial-overlay" style={{ ...maskStyles.topMask }} />
@@ -408,9 +374,7 @@ const Tutorial = ({ initialStep = 0 }) => {
              left={getModalPosition().left} 
            />
          )}
-          
           </div>
-        
       )}
     </div>
   );

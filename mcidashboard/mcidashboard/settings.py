@@ -109,6 +109,7 @@ WSGI_APPLICATION = 'mcidashboard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# deployed database
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
@@ -120,6 +121,8 @@ DATABASES = {
 	'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" ,"use_pure": True},
     },
 }
+
+# local database
 
 # DATABASES = {
 #     'default': {

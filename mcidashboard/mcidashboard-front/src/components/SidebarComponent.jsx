@@ -5,7 +5,6 @@ import SearchBarComponent from './SearchBarComponent';
 
 const SidebarComponent = ({tutorialOpen}) => {
 
-  // state
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,12 +14,10 @@ const SidebarComponent = ({tutorialOpen}) => {
   );
 
 
-  // useEffect
   useEffect(() => {
     fetchPatients();
   }, []);
 
-  // Fetch patients function
   const fetchPatients = async () => {
     try {
       const response = await fetch('/dashboard/patients/');
@@ -78,7 +75,6 @@ const SidebarComponent = ({tutorialOpen}) => {
     return <div className='sidebar'>Loading...</div>;
   }
 
-  // Render the sidebar component once data is available
   return (
     <div className='sidebar'>
       <div className='logo'>

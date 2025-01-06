@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 280px;
-    width: calc(100% - 280px); /* Keeps the same positioning */
+    width: calc(100% - 280px);
     background-color: #f8f9fa;
     height: 60px;
     display: flex;
@@ -46,12 +46,11 @@
     display: inline-block;
     position: relative;
     white-space: nowrap; 
-    text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+    text-overflow: ellipsis;
     flex-shrink: 0; 
     max-width: 200px;
 }
 
-/* Pseudo-element for underline */
 .navbar-list a:after {
     content: '';
     position: absolute;
@@ -60,7 +59,7 @@
     width: 0;
     height: 2px;
     background-color: #7B61FF;
-    transition: width 0.3s ease; /* Underline effect */
+    transition: width 0.3s ease;
 }
 
 .navbar-list a:hover:after {

@@ -4,9 +4,7 @@ import Card from './Card';
 const Stack = ({ cards, type, isLastColumn, first_empty, card_touch, no_card_highlight, highlight_suit  }) => {
 
   return (
-    <div className={`${type}-stack ${highlight_suit ? "highlight-destination" : ''}` }>
-      
-            
+    <div className={`${type}-stack ${highlight_suit ? "highlight-destination" : ''}` }>   
       {cards && cards.length > 0 && cards.map((card, index) => {
 
         if (type === 'build') {

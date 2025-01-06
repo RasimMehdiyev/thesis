@@ -27,7 +27,7 @@
     position: absolute;
     top: 45px;
     left: 0;
-    width: 750px; /* Width of the table */
+    width: 750px;
     border: 1px solid #000;
     border-radius: 5px;
     background-color: #fff;
@@ -47,7 +47,6 @@
     border: none; 
   }
   
-  /* Highlight a cell on hover */
   .metrics-table td {
     cursor: pointer;
   }

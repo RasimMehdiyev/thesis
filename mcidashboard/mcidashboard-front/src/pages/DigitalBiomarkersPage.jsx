@@ -5,7 +5,6 @@ import CategorizedBiomarker from '../components/digital_biomarkers/CategorizedBi
 import SolitaireAnimated from '../components/digital_biomarkers/SolitaireAnimated';
 const DigitalBiomarkersPage = () => {
 
-//  fetch all digital biomarkers
     const [biomarkers, setBiomarkers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cards, setCards] = useState([]);
@@ -17,30 +16,28 @@ const DigitalBiomarkersPage = () => {
     useEffect(() => {
         fetchBiomarkers();
         fetchFromJsonFile();
-    }, []);  // Empty dependency array ensures it only runs once on mount
+    }, []); 
 
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
-    // Show tooltip on mouse enter
     const showTooltip = () => {
       setIsTooltipVisible(true);
     };
   
-    // Hide tooltip on mouse leave
     const hideTooltip = () => {
       setIsTooltipVisible(false);
     };
     
     const fetchFromJsonFile = async () => {
         try {
-          // Try fetching from /static/ first
+          // For local version, with the Django server running
           const response = await fetch('/static/deck.json');
           const data = await response.json();
           setCards(data);
         } catch (error) {
           console.error("Error fetching deck.json from /static/, trying fallback path", error);
           try {
-            // Fallback to the root path if the first fails
+            // Fallback to the root path if server is not available
             const response = await fetch('/deck.json');
             const data = await response.json();
             setCards(data);
@@ -49,7 +46,6 @@ const DigitalBiomarkersPage = () => {
           }
         }
       
-        // Repeat the same logic for deck-1.json, deck-2.json, and deck-3.json
         try {
           const response2 = await fetch('/static/deck-1.json');
           const data2 = await response2.json();
@@ -133,7 +129,7 @@ const DigitalBiomarkersPage = () => {
             setLoading(false);
         }
     }
-    
+    // test data
     const data = [
         {
             "id": 1,
@@ -269,8 +265,8 @@ const DigitalBiomarkersPage = () => {
                 src='/static/assets/info_icon.svg'
                 alt='Info Icon'
                 className='icon'
-                onMouseEnter={showTooltip}  // Show tooltip on hover
-                onMouseLeave={hideTooltip}  // Hide tooltip when hover ends
+                onMouseEnter={showTooltip}
+                onMouseLeave={hideTooltip}
                 style={{ cursor: 'pointer', marginTop: 5 }}
             />
 

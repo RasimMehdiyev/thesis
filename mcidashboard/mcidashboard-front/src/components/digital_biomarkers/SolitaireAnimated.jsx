@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Stack from './solitaire_components/Stack';
-import Tooltip from '../TooltipSolitaire'; // Import tooltip
+import Tooltip from '../TooltipSolitaire';
 
 const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_card_highlight, movingIcons, thefirstPage }) => {
   const [buildDeck, setBuildDeck] = useState([]);
   const [pileDeck, setPileDeck] = useState([]);
   const [talonDeck, setTalonDeck] = useState([]);
-  const [fourSuits, setFourSuits] = useState([[], [], [], []]); // Empty slots for 4 suits
+  const [fourSuits, setFourSuits] = useState([[], [], [], []]);
   const [highlightState, setHighlightState] = useState(false);
   const [searchTooltipVisible, setSearchTooltipVisible] = useState(false);
   const [menuTooltipVisible, setMenuTooltipVisible] = useState(false);
   const [undoTooltipVisible, setUndoTooltipVisible] = useState(false);
-  const [suitTooltipVisible, setSuitTooltipVisible] = useState(false); // Added state for the four suits tooltip
+  const [suitTooltipVisible, setSuitTooltipVisible] = useState(false); 
   const firstPage = thefirstPage;
 
   const splitDeck = (deck) => {
@@ -119,7 +119,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
 
           <div
             className={`four-suits`}
-            onMouseEnter={() => setSuitTooltipVisible(true)} // Added hover handlers for four suits tooltip
+            onMouseEnter={() => setSuitTooltipVisible(true)}
             onMouseLeave={() => setSuitTooltipVisible(false)}
             style={thefirstPage ? { padding: "5px", border: "2px solid white", borderRadius: '0px'} : {padding: "5px"}}
           >
@@ -138,7 +138,7 @@ const SolitaireAnimated = ({ cards, highlight_suit, first_empty, card_touch, no_
             {highlight_suit && (
               <Tooltip
                 content={"Player should put one of the 4 cards into the empty slot to avoid the Ace β error"}
-                isVisible={suitTooltipVisible} // Use the state to toggle the tooltip
+                isVisible={suitTooltipVisible}
                 right={600}
                 top={'auto'}
                 left={'auto'}

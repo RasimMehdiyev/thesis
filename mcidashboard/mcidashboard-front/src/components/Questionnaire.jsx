@@ -7,7 +7,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [backButtonDisabled, setBackButtonDisabled] = useState(false);
-  const [showOtherTextField, setShowOtherTextField] = useState(false);  // For 'Other' option text input
+  const [showOtherTextField, setShowOtherTextField] = useState(false); 
   const [isCompleted, setIsCompleted] = useState(false);
   const [showAnswerOptions, setShowAnswerOptions] = useState(false);
   const [isQuestionVisible, setIsQuestionVisible] = useState(true); 
@@ -122,10 +122,10 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,  // Include CSRF token
+            'X-CSRFToken': csrftoken, 
           },
           body: JSON.stringify({ sectionsToSubmit }),
-          credentials: 'include'  // Ensure cookies are included with the request
+          credentials: 'include'
         });
   
         if (!response.ok) {
@@ -149,11 +149,9 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     console.log('fetchedSections:', fetchedSections);
   }, [fetchedSections]);
 
-  // Get the current section and question
   const currentSection = fetchedSections[currentSectionIndex] || {};
   const questionMap = currentSection?.questions || [];
 
-  // Restore saved state on load
   useEffect(() => {
     const savedChatLog = JSON.parse(localStorage.getItem('chatLog'));
     const savedMessage = localStorage.getItem('message');
@@ -163,7 +161,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     const savedShowAnswerOptions = JSON.parse(localStorage.getItem('showAnswerOptions'));
     const savedIsQuestionVisible = JSON.parse(localStorage.getItem('isQuestionVisible'));
 
-    // If saved chat log exists, restore the state
     if (savedChatLog && savedChatLog.length > 0) {
       setChatLog(savedChatLog);
       setMessage(savedMessage || '');
@@ -171,18 +168,15 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
       setShowAnswerOptions(savedShowAnswerOptions || false);
       setIsQuestionVisible(savedIsQuestionVisible || false);
 
-      // Restore section and question index
       const validSectionIndex = !isNaN(savedCurrentSectionIndex) ? savedCurrentSectionIndex : 0;
       const validQuestionIndex = !isNaN(savedCurrentQuestionIndex) ? savedCurrentQuestionIndex : 0;
 
       setCurrentSectionIndex(validSectionIndex);
       setCurrentQuestionIndex(validQuestionIndex);
 
-      // Check if section title and question are already in the log
       const sectionTitleInLog = savedChatLog.some(entry => entry.message === currentSection.title_desc);
       const questionInLog = savedChatLog.some(entry => entry.message === questionMap[validQuestionIndex]?.question);
 
-      // Send section title and question if missing in the log
       if (!sectionTitleInLog && currentSection.title_desc) {
         sendSystemMessage(currentSection.title_desc);
       }
@@ -191,13 +185,11 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         sendSystemMessage(questionMap[validQuestionIndex].question);
       }
     } else if (questionMap.length > 0 && currentSection.title_desc) {
-      // If no saved state, show the first section title and question
       sendSystemMessage(currentSection.title_desc);
       sendSystemMessage(questionMap[0].question);
     }
   }, [fetchedSections]);
 
-  // Save chat state to localStorage whenever it updates
   useEffect(() => {
     localStorage.setItem('chatLog', JSON.stringify(chatLog));
   }, [chatLog]);
@@ -226,7 +218,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     localStorage.setItem('isQuestionVisible', JSON.stringify(isQuestionVisible));
   }, [isQuestionVisible]);
 
-  // Scroll chat window to the bottom whenever the chat log updates
   useEffect(() => {
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
@@ -239,7 +230,6 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
     let value = e.target.value;
     const currentQuestion = questionMap[currentQuestionIndex];
 
-    // Clear previous errors
     setErrorMessage('');
     let isValid = true;
 
@@ -274,7 +264,7 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
 
     if (currentQuestion?.charLimit && value.length > currentQuestion.charLimit) {
         setErrorMessage(`Character limit exceeded. Max ${currentQuestion.charLimit} characters allowed.`);
-        value = value.substring(0, currentQuestion.charLimit); // Truncate the value to the charLimit
+        value = value.substring(0, currentQuestion.charLimit);
         isValid = false;
     } 
 
@@ -284,14 +274,13 @@ const Questionnaire = ({ onClose, onQuestionnaireComplete }) => {
         if (containsSpecialChars && !enterChar) {
             setErrorMessage('Special characters are not allowed.');
             if (value.length === 0) isValid = false;
-            value = value.replace(/[^a-zA-Z0-9]/g, ''); // Remove any special characters  
+            value = value.replace(/[^a-zA-Z0-9]/g, ''); 
         } else if (enterChar) {
-            value = value.replace(/[\n\r]/g, ''); // Remove newline characters
+            value = value.replace(/[\n\r]/g, '');
         }
     }
       if (currentSectionIndex === 1)
       {    if (words.includes("percentage") || currentQuestion?.question.includes("What is the accuracy")) {
-            // Check if the value is numeric with an optional dot
             const isNumericAndDot = /^\d*\.?\d*$/.test(value);
             if (!isNumericAndDot) {
                 setErrorMessage('Please enter a valid numeric value.');
@@ -453,7 +442,7 @@ const handleSendMessage = (answer = message, skip = false) => {
       if (!isCompleted) {
         setIsCompleted(true);
         onQuestionnaireComplete();
-        // make the link clickable
+
         let link = document.createElement('a');
         link.href = 'https://app.prolific.com/submissions/complete?cc=C1NK0D55';
         link.target = '_blank';

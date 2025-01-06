@@ -1,5 +1,3 @@
-//import React, { useState, useEffect } from 'react';
-//import { useNavigate } from 'react-router-dom';
 import DemographicSummary from '../components/machine_learning/DemographicSummary';
 import PerformanceMetrics from '../components/machine_learning/PerformanceMetrics';
 import Models from '../components/machine_learning/Models';
@@ -41,7 +39,7 @@ const MachineLearningPage = () => {
         if (response.ok) {
           const data = await response.json();
           console.log('Fetched data from JSON fallback:', data);
-          setTopModels(Array.isArray(data.top_models) ? data.top_models : []); // Access the 'top_models' array
+          setTopModels(Array.isArray(data.top_models) ? data.top_models : []);
           setTotalModels(data.total_models);
         } else {
           throw new Error('Failed to fetch top models from JSON fallback');
@@ -57,7 +55,6 @@ const MachineLearningPage = () => {
     fetchTopModels();
   }, []);
 
-  // Print the top 3 models data
   useEffect(() => {
     console.log("Top Models: ", topModels);
     console.log("Total Models: ", totalModels);
