@@ -39,27 +39,24 @@ const App = () => {
     }  
   };
 
-  // Automatically trigger the help icon on the first visit
+ 
   useEffect(() => {
     const hasVisited = localStorage.getItem('hasVisited');
     if (!hasVisited) {
-      handleHelpIconClick(); // Trigger the tutorial on the first visit
-      localStorage.setItem('hasVisited', 'true'); // Mark as visited
+      handleHelpIconClick(); 
+      localStorage.setItem('hasVisited', 'true'); 
     }
-  }, []); // Empty dependency array ensures this runs only on initial load
+  }, []); 
 
-  // Check if the current path is the home page
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
 
   useEffect(() => {
     const isICFConfirmed = localStorage.getItem('ICFConfirmed') === 'true';
     console.log('isICFConfirmed:', isICFConfirmed);
-    // Redirect to /overview if the user has already confirmed ICF and tries to access the home page
     if (isICFConfirmed && isHomePage) {
       navigate('/overview');
     }
 
-    // Redirect to home if ICFConfirmed is not true and the user tries to access other pages
     if (!isICFConfirmed && !isHomePage) {
       navigate('/home');
     }
