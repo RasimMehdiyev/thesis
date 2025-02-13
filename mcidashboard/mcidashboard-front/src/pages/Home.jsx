@@ -226,21 +226,15 @@ const Home = () => {
                         <input type="checkbox" id="recordings" name="recordings" onChange={e=>setIsRecordingsChecked(e.target.checked)}/>
                         <label htmlFor="recordings">I know that recordings of me will be made in this study: 
                             <p>
-                                As part of this study, we will use LogRocket to record your screen and mouse activity while 
-                                you navigate the web application. LogRocket will capture data such as the pages you visit, 
-                                the buttons you click, and how you interact with various features of the web application. It 
-                                will not record any sensitive information, such as your keystrokes, passwords, or personal 
+                                As part of this study, LogRocket will be used to record my screen and mouse activity while 
+                                I navigate the web application. LogRocket will capture data such as the tabs I visit, 
+                                the buttons I click, and how I interact with various features of the web application. It 
+                                will not record any sensitive information, such as my keystrokes, passwords, or personal 
                                 messages. 
                             </p>
-                            {/* <p>
-                                You will engage in a <strong>think-aloud protocol</strong>, which involves 
-                                scheduling a call with the researchers. During the call, you will be asked to share your screen 
-                                and microphone to verbalize your thoughts while navigating the web application. 
-                                The call will be recorded and stored in OneDrive linked to a KU Leuven account. 
-                            </p> */}
                             <p>
-                                This will allow us to gather additional information about how you interact with the features, 
-                                including which areas you use most and any difficulties you may encounter, to help us further 
+                                This will allow researchers to gather additional information about how I interact with the features, 
+                                including which areas I use most and any difficulties I may encounter, to help them further 
                                 optimize the tool. 
                             </p>       
                         </label>
